@@ -6,3 +6,5 @@ node_modules/
 Thumbs.db
 .firebase/
 firebase-debug.log
+ASHVIK/evidence/raw/*.pdf
+
