@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // TEMPORARY: open access while Firebase Auth providers are being configured.
+    // Replace with auth-based rules before public/production use.
+    match /users/{uid}/patients/{patientId} {
+      allow read, write: if true;
+    }
+  }
+}

@@ -96,6 +96,16 @@ const { useState, useEffect, useMemo, useRef } = React;
 const STORAGE_KEY = "medidesk_patients_v1";
 const uid = () => "p" + Math.random().toString(36).slice(2,10) + Date.now().toString(36);
 
+// ---------- Firebase (Firestore with offline persistence) ----------
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyALc8a7N6TrjTw-JlNzeGb0rtPaZ8XjEfg",
+  authDomain: "ashvik-medical.firebaseapp.com",
+  projectId: "ashvik-medical",
+  storageBucket: "ashvik-medical.firebasestorage.app",
+  messagingSenderId: "525115711937",
+  appId: "1:525115711937:web:e5f68476a64206e6530f40"
+};
+
 // ---------- i18n ----------
 const T = {
   en: {
@@ -234,7 +244,10 @@ const DISEASE_TEMPLATES = {
 function loadPatients() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
 }
-function savePatients(ps) { localStorage.setItem(STORAGE_KEY, JSON.stringify(ps)); }
+function savePatients(ps) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(ps));
+  if (window.__ashvikCloudSync) window.__ashvikCloudSync(ps);
+}
 function seed() {
   return [{ id:uid(), name:"Ramesh Kumar", age:45, sex:"Male", dob:"1980-03-12", phone:"9876543210", address:"Village Rampur, District Lucknow", bloodGroup:"B+", allergies:"Penicillin", chronic:"Type 2 Diabetes, Hypertension", notes:"Regular follow-up.", clinical:[], diagnostic:[], consults:[], reports:[] }];
 }
@@ -243,7 +256,7 @@ function escapeHtml(s){ return String(s||"").replace(/[&<>"']/g, c=>({"&":"&amp;
 function escapeAttr(s){ return String(s||"").replace(/"/g,"&quot;"); }
 
 // ---------- Components ----------
-function Sidebar({ view, setView, lang, setLang, t }) {
+function Sidebar({ view, setView, lang, setLang, t, cloudStatus }) {
   const items = [
     { id:"dashboard", label:t("dashboard",lang), icon:"📊" },
     { id:"patients", label:t("patients",lang), icon:"👥" },
@@ -271,6 +284,10 @@ function Sidebar({ view, setView, lang, setLang, t }) {
           <option value="bn">বাংলা</option>
         </select>
         {t("language",lang)}
+        <div style={{marginTop:8,fontSize:10,opacity:.9,display:"flex",alignItems:"center",gap:4}}>
+          <span style={{width:7,height:7,borderRadius:"50%",background: cloudStatus==="synced" ? "#4ade80" : cloudStatus==="error" ? "#f87171" : "#fbbf24",display:"inline-block"}}></span>
+          {cloudStatus==="synced" ? "Cloud synced" : cloudStatus==="offline" ? "Offline (cached)" : cloudStatus==="syncing" ? "Syncing..." : cloudStatus==="error" ? "Cloud error" : "Connecting..."}
+        </div>
       </div>
     </aside>
   );
@@ -326,10 +343,72 @@ function App() {
   const [view, setView] = useState("dashboard");
   const [selectedId, setSelectedId] = useState("");
   const [online, setOnline] = useState(navigator.onLine);
+  const [cloudStatus, setCloudStatus] = useState("connecting");
+  const cloudRef = useRef({ db:null, uid:null, fs:null });
   useEffect(() => {
     const on = () => setOnline(true), off = () => setOnline(false);
     window.addEventListener("online", on); window.addEventListener("offline", off);
     return () => { window.removeEventListener("online", on); window.removeEventListener("offline", off); };
+  }, []);
+
+  // Firebase init: anonymous auth + Firestore with offline persistence
+  useEffect(() => {
+    let unsub = null;
+    let cancelled = false;
+    (async () => {
+      try {
+        const appMod = await import("https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js");
+        const fsMod = await import("https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js");
+        const app = appMod.initializeApp(FIREBASE_CONFIG);
+        const db = fsMod.initializeFirestore(app, { localCache: fsMod.persistentLocalCache({ tabManager: fsMod.persistentMultipleTabManager() }) });
+        const localUid = localStorage.getItem("ashvik_cloud_uid") || "ashvik-local";
+        localStorage.setItem("ashvik_cloud_uid", localUid);
+        cloudRef.current = { db, uid: localUid, fs: fsMod };
+        const col = fsMod.collection(db, "users", localUid, "patients");
+        const existing = await fsMod.getDocs(col);
+        const local = loadPatients();
+        if (existing.empty && local.length) {
+          const batch = fsMod.writeBatch(db);
+          local.forEach(p => batch.set(fsMod.doc(col, p.id), p));
+          await batch.commit();
+        }
+        if (cancelled) return;
+        unsub = fsMod.onSnapshot(col, snap => {
+          if (!navigator.onLine) setCloudStatus("offline");
+          else if (snap.metadata.hasPendingWrites) setCloudStatus("syncing");
+          else setCloudStatus("synced");
+          const arr = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+          setPatients(arr);
+        }, (err) => { console.warn("Firestore listen failed", err); setCloudStatus("error"); });
+      } catch (e) {
+        console.warn("Firebase init failed", e);
+        setCloudStatus("error");
+      }
+    })();
+    return () => { cancelled = true; if (unsub) unsub(); };
+  }, []);
+
+  // Cloud write-through: every savePatients() call also syncs to Firestore
+  useEffect(() => {
+    window.__ashvikCloudSync = async (ps) => {
+      const { db, uid, fs } = cloudRef.current;
+      if (!db || !uid || !fs) return;
+      try {
+        setCloudStatus("syncing");
+        const col = fs.collection(db, "users", uid, "patients");
+        const existing = await fs.getDocs(col);
+        const batch = fs.writeBatch(db);
+        const ids = new Set(ps.map(p => p.id));
+        ps.forEach(p => batch.set(fs.doc(col, p.id), p));
+        existing.docs.forEach(d => { if (!ids.has(d.id)) batch.delete(d.ref); });
+        await batch.commit();
+        setCloudStatus("synced");
+      } catch (e) {
+        console.warn("Cloud sync failed", e);
+        setCloudStatus("error");
+      }
+    };
+    return () => { delete window.__ashvikCloudSync; };
   }, []);
 
   // Patient modal
@@ -624,7 +703,7 @@ function App() {
 
   return (
     <div className="app">
-      <Sidebar view={view} setView={setView} lang={lang} setLang={setLang} t={t} />
+      <Sidebar view={view} setView={setView} lang={lang} setLang={setLang} t={t} cloudStatus={cloudStatus} />
       <main className="main">
         {view === "dashboard" && (
           <>

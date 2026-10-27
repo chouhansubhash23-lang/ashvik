@@ -19,11 +19,18 @@
   },
   "auth": {
     "providers": {
+      "anonymous": true,
       "emailPassword": true,
       "googleSignIn": {
         "oAuthBrandDisplayName": "ASHVIK Medical",
         "supportEmail": "arogyamvishva@gmail.com"
       }
     }
+  },
+  "firestore": {
+    "database": "(default)",
+    "location": "asia-south1",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
   }
 }

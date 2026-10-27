@@ -21,4 +21,9 @@ Unified React-based medical software (single file, no build step).
 - manifest.json + sw.js included. Use browser "Install" / "Add to Home Screen".
 
 ## Data
-- Stored in browser localStorage (key: medidesk_patients_v1). Export JSON for backup.
+- **Primary store: Firebase Firestore** (`users/ashvik-local/patients`), project `ashvik-medical`.
+- **Offline:** Firestore persistent cache (IndexedDB) — reads/writes work offline and sync when back online.
+- **Fallback cache:** browser localStorage (`medidesk_patients_v1`).
+- Export JSON from Settings for manual backup.
+
+> Security note: Firestore rules are temporarily open (`if true`) while Firebase Auth is being configured. Add auth-based rules before public use.
