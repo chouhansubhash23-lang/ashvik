@@ -1,89 +1,1075 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0f766e" />
+<meta name="description" content="ASHVIK - Clinical consultation, diagnosis and prescription" />
+<title>ASHVIK - Clinical Consultation & Diagnosis</title>
+<link rel="manifest" href="./manifest.json" />
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Sans+Bengali:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --primary:#0f766e; --primary-dark:#115e59; --primary-light:#ccfbf1; --accent:#2563eb; --bg:#f8fafc; --card:#fff; --text:#0f172a; --muted:#64748b; --border:#e2e8f0; --danger:#dc2626; --warn:#d97706; --success:#16a34a; --radius:14px; }
+  * { box-sizing: border-box; }
+  html,body { margin:0; padding:0; }
+  body { font-family:'Inter','Noto Sans Devanagari','Noto Sans Bengali',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; -webkit-font-smoothing:antialiased; }
+  .app { display:grid; grid-template-columns:260px 1fr; min-height:100vh; }
+  .sidebar { background:linear-gradient(180deg,#0f766e 0%,#115e59 100%); color:#fff; padding:20px 16px; display:flex; flex-direction:column; gap:4px; }
+  .brand { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+  .brand-logo { width:40px; height:40px; border-radius:12px; background:rgba(255,255,255,.18); display:grid; place-items:center; font-weight:700; font-size:19px; }
+  .brand h1 { font-size:18px; margin:0; font-weight:700; }
+  .brand p { font-size:11px; margin:0; opacity:.75; }
+  .nav-btn { display:flex; align-items:center; gap:10px; padding:10px 13px; border:none; background:transparent; color:rgba(255,255,255,.85); border-radius:10px; cursor:pointer; font-size:13.5px; font-weight:500; text-align:left; transition:background .15s,color .15s; width:100%; }
+  .nav-btn:hover { background:rgba(255,255,255,.12); color:#fff; }
+  .nav-btn.active { background:#fff; color:var(--primary-dark); font-weight:600; }
+  .sidebar-foot { margin-top:auto; font-size:11px; opacity:.6; padding-top:12px; border-top:1px solid rgba(255,255,255,.15); }
+  .main { padding:24px 28px; overflow-y:auto; }
+  .page-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px; }
+  .page-head h2 { margin:0; font-size:23px; font-weight:700; letter-spacing:-.3px; }
+  .page-head p { margin:4px 0 0; color:var(--muted); font-size:13px; }
+  .btn { padding:9px 16px; border:none; border-radius:10px; cursor:pointer; font-size:14px; font-weight:600; transition:transform .05s, box-shadow .15s; }
+  .btn:active { transform:translateY(1px); }
+  .btn-primary { background:var(--primary); color:#fff; box-shadow:0 4px 12px rgba(13,148,136,.25); }
+  .btn-primary:hover { background:var(--primary-dark); }
+  .btn-outline { background:#fff; border:1px solid var(--border); color:var(--text); }
+  .btn-outline:hover { border-color:var(--primary); color:var(--primary); }
+  .btn-danger { background:var(--danger); color:#fff; }
+  .btn-warn { background:var(--warn); color:#fff; }
+  .btn-sm { padding:6px 12px; font-size:12px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:16px; box-shadow:0 1px 3px rgba(15,23,42,.04); }
+  .card-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap:8px; flex-wrap:wrap; }
+  .card-head h3 { margin:0; font-size:16px; font-weight:600; }
+  .card-head .sub { font-size:12px; color:var(--muted); }
+  .grid { display:grid; gap:12px; }
+  .grid-2 { grid-template-columns:repeat(2,1fr); }
+  .grid-3 { grid-template-columns:repeat(3,1fr); }
+  .grid-4 { grid-template-columns:repeat(4,1fr); }
+  @media (max-width:900px){ .grid-3,.grid-4{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;} }
+  .field { display:flex; flex-direction:column; gap:4px; }
+  .field label { font-size:12px; font-weight:500; color:var(--muted); }
+  .field input, .field select, .field textarea { padding:9px 12px; border:1px solid var(--border); border-radius:10px; font-size:14px; font-family:inherit; background:#fff; transition:border-color .15s, box-shadow .15s; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-light); }
+  .field textarea { min-height:60px; resize:vertical; }
+  .field input[readonly] { background:#f1f5f9; color:var(--muted); }
+  .chip { display:inline-flex; align-items:center; padding:6px 12px; border-radius:999px; font-size:12.5px; font-weight:500; border:1px solid var(--border); background:#fff; cursor:pointer; margin:3px; transition:all .15s; user-select:none; }
+  .chip:hover { border-color:var(--primary); color:var(--primary); }
+  .chip.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+  .alert { padding:12px 14px; border-radius:10px; font-size:13px; margin-bottom:12px; border:1px solid; }
+  .alert-info { background:#eff6ff; color:#1e40af; border-color:#bfdbfe; }
+  .alert-warn { background:#fffbeb; color:#92400e; border-color:#fde68a; }
+  .alert-danger { background:#fef2f2; color:#991b1b; border-color:#fecaca; }
+  .alert-success { background:#f0fdf4; color:#166534; border-color:#bbf7d0; }
+  .alert ul { margin:6px 0 0 18px; padding:0; }
+  .result-item { border:1px solid var(--border); border-radius:10px; padding:12px 14px; margin-bottom:10px; }
+  .score-bar { height:6px; background:#e2e8f0; border-radius:3px; overflow:hidden; margin-top:6px; }
+  .score-fill { height:100%; background:linear-gradient(90deg,var(--primary),#14b8a6); border-radius:3px; transition:width .4s; }
+  .empty { text-align:center; color:var(--muted); padding:30px 10px; font-size:14px; }
+  .badge { display:inline-block; padding:2px 9px; border-radius:999px; font-size:11px; font-weight:600; }
+  .badge-m { background:#dbeafe; color:#1d4ed8; }
+  .badge-f { background:#fce7f3; color:#be185d; }
+  .badge-o { background:#e2e8f0; color:#475569; }
+  .modal-backdrop { position:fixed; inset:0; background:rgba(15,23,42,.45); backdrop-filter:blur(2px); display:none; align-items:center; justify-content:center; z-index:100; }
+  .modal-backdrop.open { display:flex; }
+  .modal { background:var(--card); border-radius:16px; padding:22px; width:92%; max-width:600px; max-height:90vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,.2); }
+  .modal h3 { margin:0 0 14px; font-size:18px; }
+  .modal-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:14px; }
+  .section-title { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.8px; margin:16px 0 8px; }
+  .history-item { border:1px solid var(--border); border-radius:10px; padding:12px 14px; margin-bottom:8px; }
+  .report-card { border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:10px; }
+  .lang-select { padding:6px 10px; border-radius:8px; border:1px solid rgba(255,255,255,.3); background:rgba(255,255,255,.12); color:#fff; font-size:12px; cursor:pointer; }
+  .chart-wrap { background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:10px; }
+  .topbar-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  @media (max-width:820px){ .app{grid-template-columns:1fr;} .sidebar{flex-direction:row; flex-wrap:wrap; padding:12px;} .sidebar-foot{display:none;} .nav-btn{flex:1 1 auto;} }
+</style>
+</head>
+<body>
+<div id="root"></div>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/13.1.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/13.1.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/13.1.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/13.1.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/13.1.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/13.1.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/13.1.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/13.1.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/13.1.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/13.1.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+<script type="text/babel">
+const { useState, useEffect, useMemo, useRef } = React;
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+const STORAGE_KEY = "medidesk_patients_v1";
+const uid = () => "p" + Math.random().toString(36).slice(2,10) + Date.now().toString(36);
+
+// ---------- i18n ----------
+const T = {
+  en: {
+    app:"ASHVIK", tag:"Clinical Consultation & Diagnosis",
+    dashboard:"Dashboard", patients:"Patients", consult:"New Consultation", diagnosis:"Diagnosis Assist",
+    history:"History & Rx", reports:"Test Reports", settings:"Settings/Backup",
+    addPatient:"+ Add Patient", edit:"Edit", delete:"Delete", save:"Save", cancel:"Cancel",
+    name:"Name", age:"Age", sex:"Sex", phone:"Phone", address:"Address", dob:"Date of Birth",
+    bloodGroup:"Blood Group", allergies:"Allergies", chronic:"Chronic Conditions", notes:"Notes",
+    vitals:"Vitals", bp:"BP (mmHg)", pulse:"Pulse (bpm)", temp:"Temp (°F)", spo2:"SpO2 (%)",
+    weight:"Weight (kg)", height:"Height (cm)", symptoms:"Symptoms", diagnosisLabel:"Diagnosis",
+    tests:"Tests Ordered", followup:"Follow-up Date", referral:"Referral", advice:"Advice",
+    printRx:"Print Rx", reset:"Reset", search:"Search...", selectPatient:"Select Patient",
+    noPatients:"No patients yet.", noData:"No data.", generate:"Generate Diagnosis",
+    doctorDx:"Doctor's Suspected Diagnosis", suggested:"Suggested diagnosis",
+    differential:"Differential diagnosis", redFlags:"Red flags", recommendedTests:"Recommended tests",
+    saveNote:"Save to Patient History", copyDx:"Copy Diagnosis",
+    backup:"Backup Data (JSON)", restore:"Restore Data (JSON)", language:"Language",
+    trend:"Vitals Trend", systolic:"Systolic BP", sugar:"Sugar (mg/dL)",
+    patientsCount:"Patients", consultsMonth:"Consultations (this month)", followups:"Follow-ups due",
+    recentConsults:"Recent Consultations", quickActions:"Quick Actions", view:"View",
+    addReport:"+ Add Report", reportName:"Test Name", reportResult:"Result / Findings",
+    reportNotes:"Notes", attachFile:"Attach File", date:"Date",
+    clinicalHistory:"Clinical History", diagnosticHistory:"Diagnostic History", vitalsNotes:"Vitals / Notes",
+    complaint:"Complaint", treatment:"Treatment", result:"Result",
+    lastVisit:"Last Visit", allPatients:"All Patients", startConsult:"Consult",
+    exportOk:"Data exported.", importOk:"Data imported successfully.", importErr:"Import failed.",
+    offline:"Offline mode active", online:"Online"
+  },
+  hi: {
+    app:"ASHVIK", tag:"क्लिनिकल कंसल्टेशन और डायग्नोसिस",
+    dashboard:"डैशबोर्ड", patients:"पेशेंट", consult:"नया कंसल्टेशन", diagnosis:"डायग्नोसिस असिस्ट",
+    history:"हिस्ट्री और Rx", reports:"टेस्ट रिपोर्ट", settings:"सेटिंग्स/बैकअप",
+    addPatient:"+ नया पेशेंट", edit:"एडिट", delete:"डिलीट", save:"सेव", cancel:"कैंसल",
+    name:"नाम", age:"उम्र", sex:"लिंग", phone:"फोन", address:"पता", dob:"जन्म तिथि",
+    bloodGroup:"ब्लड ग्रुप", allergies:"एलर्जी", chronic:"क्रॉनिक बीमारी", notes:"नोट्स",
+    vitals:"वाइटल्स", bp:"BP (mmHg)", pulse:"पल्स (bpm)", temp:"टेम्प (°F)", spo2:"SpO2 (%)",
+    weight:"वजन (kg)", height:"हाइट (cm)", symptoms:"Symptoms", diagnosisLabel:"Diagnosis",
+    tests:"टेस्ट ऑर्डर्ड", followup:"फॉलो-अप डेट", referral:"रेफरल", advice:"सलाह",
+    printRx:"Rx प्रिंट", reset:"रीसेट", search:"खोजें...", selectPatient:"पेशेंट चुनें",
+    noPatients:"कोई पेशेंट नहीं।", noData:"कोई डेटा नहीं।", generate:"डायग्नोसिस जनरेट",
+    doctorDx:"डॉक्टर का संदिग्ध डायग्नोसिस", suggested:"सुझाया गया डायग्नोसिस",
+    differential:"डिफरेंशियल डायग्नोसिस", redFlags:"रेड फ्लैग्स", recommendedTests:"सुझाए गए टेस्ट",
+    saveNote:"पेशेंट हिस्ट्री में सेव", copyDx:"डायग्नोसिस कॉपी",
+    backup:"बैकअप (JSON)", restore:"रिस्टोर (JSON)", language:"भाषा",
+    trend:"वाइटल ट्रेंड", systolic:"सिस्टोलिक BP", sugar:"Sugar (mg/dL)",
+    patientsCount:"पेशेंट", consultsMonth:"इस महीने कंसल्ट", followups:"फॉलो-अप ड्यू",
+    recentConsults:"हाल के कंसल्ट", quickActions:"क्विक एक्शन", view:"देखें",
+    addReport:"+ रिपोर्ट जोड़ें", reportName:"टेस्ट नाम", reportResult:"रिजल्ट/फाइंडिंग्स",
+    reportNotes:"नोट्स", attachFile:"फाइल अटैच", date:"तारीख",
+    clinicalHistory:"क्लिनिकल हिस्ट्री", diagnosticHistory:"डायग्नोस्टिक हिस्ट्री", vitalsNotes:"वाइटल्स/नोट्स",
+    complaint:"शिकायत", treatment:"ट्रीटमेंट", result:"रिजल्ट",
+    lastVisit:"आखिरी विज़िट", allPatients:"सभी पेशेंट", startConsult:"कंसल्ट",
+    exportOk:"डेटा एक्सपोर्ट हो गया।", importOk:"डेटा इम्पोर्ट हो गया।", importErr:"इम्पोर्ट फेल।",
+    offline:"ऑफलाइन मोड", online:"ऑनलाइन"
+  },
+  bn: {
+    app:"ASHVIK", tag:"ক্লিনিক্যাল কনসাল্টেশন ও ডায়াগনোসিস",
+    dashboard:"ড্যাশবোর্ড", patients:"রোগী", consult:"নতুন কনসাল্টেশন", diagnosis:"ডায়াগনোসিস অ্যাসিস্ট",
+    history:"ইতিহাস ও Rx", reports:"টেস্ট রিপোর্ট", settings:"সেটিংস/ব্যাকআপ",
+    addPatient:"+ নতুন রোগী", edit:"এডিট", delete:"ডিলিট", save:"সেভ", cancel:"ক্যানসেল",
+    name:"নাম", age:"বয়স", sex:"লিঙ্গ", phone:"ফোন", address:"ঠিকানা", dob:"জন্ম তারিখ",
+    bloodGroup:"রক্তের গ্রুপ", allergies:"অ্যালার্জি", chronic:"ক্রনিক রোগ", notes:"নোট",
+    vitals:"ভাইটালস", bp:"BP (mmHg)", pulse:"পালস (bpm)", temp:"টেম্প (°F)", spo2:"SpO2 (%)",
+    weight:"ওজন (kg)", height:"উচ্চতা (cm)", symptoms:"Symptoms", diagnosisLabel:"Diagnosis",
+    tests:"টেস্ট অর্ডার্ড", followup:"ফলো-আপ তারিখ", referral:"রেফারাল", advice:"পরামর্শ",
+    printRx:"Rx প্রিন্ট", reset:"রিসেট", search:"খুঁজুন...", selectPatient:"রোগী নির্বাচন",
+    noPatients:"কোনো রোগী নেই।", noData:"কোনো ডেটা নেই।", generate:"ডায়াগনোসিস জেনারেট",
+    doctorDx:"ডাক্তারের সন্দেহজনক ডায়াগনোসিস", suggested:"প্রস্তাবিত ডায়াগনোসিস",
+    differential:"ডিফারেনশিয়াল ডায়াগনোসিস", redFlags:"রেড ফ্ল্যাগ", recommendedTests:"প্রস্তাবিত টেস্ট",
+    saveNote:"রোগীর ইতিহাসে সেভ", copyDx:"ডায়াগনোসিস কপি",
+    backup:"ব্যাকআপ (JSON)", restore:"রিস্টোর (JSON)", language:"ভাষা",
+    trend:"ভাইটাল ট্রেন্ড", systolic:"সিস্টোলিক BP", sugar:"Sugar (mg/dL)",
+    patientsCount:"রোগী", consultsMonth:"এই মাসে কনসাল্ট", followups:"ফলো-আপ ডিউ",
+    recentConsults:"সাম্প্রতিক কনসাল্ট", quickActions:"কুইক অ্যাকশন", view:"দেখুন",
+    addReport:"+ রিপোর্ট যোগ", reportName:"টেস্ট নাম", reportResult:"রিজাল্ট/ফাইন্ডিংস",
+    reportNotes:"নোট", attachFile:"ফাইল অ্যাটাচ", date:"তারিখ",
+    clinicalHistory:"ক্লিনিক্যাল ইতিহাস", diagnosticHistory:"ডায়াগনস্টিক ইতিহাস", vitalsNotes:"ভাইটালস/নোট",
+    complaint:"অভিযোগ", treatment:"ট্রিটমেন্ট", result:"রিজাল্ট",
+    lastVisit:"শেষ ভিজিট", allPatients:"সব রোগী", startConsult:"কনসাল্ট",
+    exportOk:"ডেটা এক্সপোর্ট হয়েছে।", importOk:"ডেটা ইম্পোর্ট হয়েছে।", importErr:"ইম্পোর্ট ব্যর্থ।",
+    offline:"অফলাইন মোড", online:"অনলাইন"
+  }
+};
+const t = (key, lang) => (T[lang] && T[lang][key]) || T.en[key] || key;
+
+// ---------- Data ----------
+const SYMPTOMS = ["Fever","Cough","Cold/Runny nose","Sore throat","Body ache","Headache","Breathlessness","Chest pain","Vomiting","Diarrhoea","Abdominal pain","Burning urination","Rash","Joint pain","Weakness","Dizziness","Loss of appetite","Weight loss","Night sweats","Itching","Wheeze","Chills/Sweating","Frequent urination","Thirst","Constipation","Nausea","Red eyes","Sneezing","Fatigue","Pallor","Weight gain","Dry skin","Sleep disturbance","Low mood"];
+
+const CONDITIONS = [
+  { name:"Viral fever", keywords:["fever","body ache","headache","cold","runny nose","sore throat","weakness"], tests:["CBC","Malaria RDT (if fever>3d)"], advice:"Rest, fluids, paracetamol. Avoid antibiotics unless bacterial signs.", redFlags:["breathlessness","chest pain","confusion","fever>103"] },
+  { name:"Malaria", keywords:["fever","chills","sweating","headache","vomiting","weakness"], tests:["Malaria RDT + smear"], advice:"ACT per protocol. Monitor for severe signs. Refer if danger signs.", redFlags:["confusion","jaundice","bleeding","severe weakness"] },
+  { name:"Dengue", keywords:["fever","body ache","joint pain","rash","headache","vomiting","weakness"], tests:["NS1/IgM dengue","Platelet count","CBC"], advice:"Paracetamol only (no NSAIDs). Hydration. Monitor platelets/warning signs.", redFlags:["bleeding","abdominal pain","vomiting","restlessness"] },
+  { name:"Typhoid", keywords:["fever","abdominal pain","constipation","diarrhoea","headache","weakness","loss of appetite"], tests:["Blood culture","Widal/CBC"], advice:"Antibiotics per local resistance. Soft diet, fluids.", redFlags:["intestinal bleeding","perforation","confusion"] },
+  { name:"Acute diarrhoea", keywords:["diarrhoea","vomiting","abdominal pain","dehydration","fever","weakness"], tests:["Stool exam","Electrolytes if severe"], advice:"ORS + zinc. Continue feeding. Avoid anti-diarrhoeals in children.", redFlags:["blood in stool","severe dehydration","lethargy"] },
+  { name:"Pneumonia", keywords:["cough","fever","breathlessness","chest pain","sputum","weakness"], tests:["CBC","Chest X-ray","SpO2"], advice:"Antibiotics per severity. Oxygen if hypoxic. Refer if severe.", redFlags:["spo2<94","respiratory distress","confusion","hypotension"] },
+  { name:"Acute bronchitis", keywords:["cough","fever","sore throat","chest discomfort","sputum"], tests:["Clinical","CXR if needed"], advice:"Symptomatic care. Avoid unnecessary antibiotics. Steam inhalation.", redFlags:["breathlessness","high fever","chest pain"] },
+  { name:"Asthma", keywords:["wheeze","breathlessness","cough","chest tightness","night cough"], tests:["Peak flow","Spirometry (if available)"], advice:"Inhaler + spacer. Avoid triggers. Action plan.", redFlags:["severe breathlessness","unable to speak","cyanosis"] },
+  { name:"COPD", keywords:["cough","sputum","breathlessness","wheeze","smoking","chest tightness"], tests:["Spirometry","CXR","SpO2"], advice:"Bronchodilators. Stop smoking/biomass. Vaccination.", redFlags:["respiratory failure","confusion","cyanosis"] },
+  { name:"Hypertension", keywords:["headache","dizziness","chest pain","blurred vision","weakness"], tests:["BP (repeated)","ECG","Renal function","Lipids"], advice:"Salt restriction, exercise, medication. Recheck BP.", redFlags:["chest pain","neuro deficit","very high BP"] },
+  { name:"Type 2 Diabetes", keywords:["thirst","frequent urination","weight loss","weakness","blurred vision","fatigue"], tests:["Fasting sugar","HbA1c","Urine"], advice:"Diet, exercise, metformin. Foot/eye screening.", redFlags:["DKA signs","severe hyperglycaemia"] },
+  { name:"UTI", keywords:["burning urination","frequency","urgency","fever","abdominal pain","back pain"], tests:["Urine dipstick/culture"], advice:"Oral antibiotics, hydration. Refer if pyelonephritis.", redFlags:["fever","flank pain","vomiting"] },
+  { name:"Scabies", keywords:["itching","rash","night itching","skin lesions"], tests:["Clinical exam"], advice:"Permethrin 5% whole body. Treat contacts. Wash linen.", redFlags:["secondary infection","crusted scabies"] },
+  { name:"Fungal skin infection", keywords:["itching","rash","ring-shaped","scaling","skin lesions"], tests:["KOH (if available)"], advice:"Topical antifungal, keep dry. Full course.", redFlags:["spreading","immunocompromised"] },
+  { name:"Iron deficiency anaemia", keywords:["weakness","fatigue","pallor","breathlessness","dizziness","palpitations"], tests:["CBC/Hb","Ferritin (if available)"], advice:"Iron + folic acid. Treat worms. Iron-rich diet.", redFlags:["severe anaemia","heart failure"] },
+  { name:"Hypothyroidism", keywords:["weight gain","fatigue","cold intolerance","constipation","dry skin","hair loss"], tests:["TSH","T4"], advice:"Levothyroxine. Recheck TSH in 6-8 weeks.", redFlags:["myxoedema","altered consciousness"] },
+  { name:"Allergic rhinitis", keywords:["sneezing","runny nose","itchy eyes","nasal congestion","itching"], tests:["Clinical"], advice:"Antihistamine, nasal steroid. Avoid allergens.", redFlags:["asthma exacerbation"] },
+  { name:"Migraine", keywords:["headache","nausea","vomiting","photophobia","visual aura"], tests:["Clinical","Neuro exam"], advice:"Analgesics, trigger avoidance. Refer if red flags.", redFlags:["sudden thunderclap","neuro deficit","fever+neck stiffness"] },
+  { name:"Gastroenteritis/food poisoning", keywords:["vomiting","diarrhoea","abdominal pain","nausea","fever"], tests:["Stool exam"], advice:"ORS, rest. Antibiotics only if indicated.", redFlags:["blood in stool","severe dehydration"] },
+  { name:"Tuberculosis", keywords:["cough","weight loss","night sweats","fever","hemoptysis","weakness"], tests:["Sputum AFB/CBNAAT","CXR"], advice:"DOTS. Screen family. Nutritional support.", redFlags:["hemoptysis","respiratory distress"] },
+  { name:"Conjunctivitis", keywords:["red eyes","itching","discharge","tearing","eye pain"], tests:["Clinical"], advice:"Hygiene, topical antibiotics if bacterial. Avoid steroids.", redFlags:["vision loss","severe pain","corneal ulcer"] },
+  { name:"Skin allergy/urticaria", keywords:["itching","rash","hives","swelling"], tests:["Clinical"], advice:"Antihistamine. Identify trigger. Avoid NSAIDs if needed.", redFlags:["angioedema","anaphylaxis"] },
+  { name:"Depression", keywords:["low mood","sleep disturbance","fatigue","loss of interest","appetite change"], tests:["Clinical screening (PHQ-9)"], advice:"Counseling, SSRI if indicated. Follow up.", redFlags:["suicidal ideation"] },
+  { name:"Anxiety", keywords:["anxiety","palpitations","sweating","tremor","restlessness","sleep disturbance"], tests:["Clinical"], advice:"Counseling, breathing exercises. Medication if needed.", redFlags:["panic with chest pain (rule out cardiac)"] }
+];
+
+const DISEASE_TEMPLATES = {
+  "Viral fever": { diagnosis:"Viral fever", meds:[["Paracetamol 500mg","1 tab","TDS","3 days","After food"],["ORS","1 sachet","BD","3 days","If dehydrated"]], advice:"Rest, plenty of fluids, tepid sponging. Avoid antibiotics unless bacterial signs." },
+  "Malaria": { diagnosis:"Malaria (suspected)", meds:[["Artemether-Lumefantrine (as per protocol)","1 tab","BD","3 days","As per national guideline"],["Paracetamol 500mg","1 tab","TDS","3 days","Fever"]], advice:"Confirm with RDT/smear. Monitor for danger signs. Refer if severe." },
+  "Dengue": { diagnosis:"Dengue (suspected)", meds:[["Paracetamol 500mg","1 tab","TDS","5 days","Fever (avoid NSAIDs)"],["ORS","1 sachet","BD","5 days","Hydration"]], advice:"No aspirin/ibuprofen. Monitor platelets. Watch for warning signs." },
+  "Typhoid": { diagnosis:"Enteric fever (typhoid)", meds:[["Azithromycin 500mg","1 tab","OD","7 days","Empty stomach"],["Paracetamol 500mg","1 tab","TDS","5 days","Fever"]], advice:"Soft diet, fluids. Blood culture if available." },
+  "Acute diarrhoea": { diagnosis:"Acute gastroenteritis", meds:[["ORS","1 sachet","After each loose stool","3 days",""],["Zinc 20mg","1 tab","OD","14 days","Children: 10mg"]], advice:"Continue feeding. Hand hygiene. Avoid anti-diarrhoeals in children." },
+  "Hypertension": { diagnosis:"Essential hypertension", meds:[["Amlodipine 5mg","1 tab","OD","30 days","Morning"],["Telmisartan 40mg","1 tab","OD","30 days","If BP uncontrolled"]], advice:"Salt restriction, exercise, weight loss. Recheck BP in 2-4 weeks." },
+  "Type 2 Diabetes": { diagnosis:"Type 2 Diabetes Mellitus", meds:[["Metformin 500mg","1 tab","BD","30 days","After food"],["Glimepiride 1mg","1 tab","OD","30 days","Before breakfast (if needed)"]], advice:"Diet control, exercise 30 min/day. Foot care, eye screening yearly." },
+  "Asthma": { diagnosis:"Bronchial asthma", meds:[["Salbutamol inhaler","2 puffs","SOS","30 days","With spacer"],["Budesonide inhaler","2 puffs","BD","30 days","Daily controller"]], advice:"Avoid triggers, dust, smoke. Inhaler technique check." },
+  "COPD": { diagnosis:"COPD", meds:[["Tiotropium inhaler","2 puffs","OD","30 days",""],["Salbutamol inhaler","2 puffs","SOS","30 days",""]], advice:"Stop smoking/biomass. Pulmonary rehab. Vaccination." },
+  "UTI": { diagnosis:"Uncomplicated UTI", meds:[["Nitrofurantoin 100mg","1 tab","BD","5 days","After food"],["ORS","1 sachet","BD","3 days",""]], advice:"Hydration, hygiene. Refer if fever/flank pain." },
+  "Scabies": { diagnosis:"Scabies", meds:[["Permethrin 5% cream","Apply neck to toe","Once","Repeat day 7","All contacts"],["Cetirizine 10mg","1 tab","HS","7 days","Itching"]], advice:"Treat all household contacts. Wash clothes/bedding." },
+  "Fungal skin infection": { diagnosis:"Tinea corporis", meds:[["Clotrimazole cream","Apply","BD","2 weeks","Affected area"],["Terbinafine 250mg","1 tab","OD","2 weeks","If extensive"]], advice:"Keep area dry. Avoid sharing towels." },
+  "Iron deficiency anaemia": { diagnosis:"Iron deficiency anaemia", meds:[["Ferrous sulphate + folic acid","1 tab","OD","3 months","After food"],["Vitamin C 500mg","1 tab","OD","3 months",""]], advice:"Iron-rich diet. Treat worms. Recheck Hb in 4-6 weeks." },
+  "Hypothyroidism": { diagnosis:"Hypothyroidism", meds:[["Levothyroxine 50mcg","1 tab","OD","30 days","Empty stomach, 30 min before food"]], advice:"TSH recheck in 6-8 weeks. Lifelong therapy usually." },
+  "Acute bronchitis": { diagnosis:"Acute bronchitis", meds:[["Ambroxol syrup","5ml","TDS","5 days",""],["Paracetamol 500mg","1 tab","TDS","3 days","If fever"]], advice:"Avoid unnecessary antibiotics. Hydration, steam inhalation." },
+  "Allergic rhinitis": { diagnosis:"Allergic rhinitis", meds:[["Cetirizine 10mg","1 tab","HS","7 days",""],["Fluticasone nasal spray","2 sprays","OD","14 days","Each nostril"]], advice:"Avoid allergens. Saline nasal rinse." }
+};
+
+function loadPatients() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
+}
+function savePatients(ps) { localStorage.setItem(STORAGE_KEY, JSON.stringify(ps)); }
+function seed() {
+  return [{ id:uid(), name:"Ramesh Kumar", age:45, sex:"Male", dob:"1980-03-12", phone:"9876543210", address:"Village Rampur, District Lucknow", bloodGroup:"B+", allergies:"Penicillin", chronic:"Type 2 Diabetes, Hypertension", notes:"Regular follow-up.", clinical:[], diagnostic:[], consults:[], reports:[] }];
+}
+
+function escapeHtml(s){ return String(s||"").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
+function escapeAttr(s){ return String(s||"").replace(/"/g,"&quot;"); }
+
+// ---------- Components ----------
+function Sidebar({ view, setView, lang, setLang, t }) {
+  const items = [
+    { id:"dashboard", label:t("dashboard",lang), icon:"📊" },
+    { id:"patients", label:t("patients",lang), icon:"👥" },
+    { id:"consult", label:t("consult",lang), icon:"🩺" },
+    { id:"diagnosis", label:t("diagnosis",lang), icon:"🔬" },
+    { id:"history", label:t("history",lang), icon:"📁" },
+    { id:"reports", label:t("reports",lang), icon:"📋" },
+    { id:"settings", label:t("settings",lang), icon:"⚙️" },
+  ];
+  return (
+    <aside className="sidebar">
+      <div className="brand">
+        <div className="brand-logo">A</div>
+        <div><h1>{t("app",lang)}</h1><p>{t("tag",lang)}</p></div>
+      </div>
+      {items.map(it => (
+        <button key={it.id} className={"nav-btn" + (view===it.id?" active":"")} onClick={() => setView(it.id)}>
+          <span>{it.icon}</span>{it.label}
+        </button>
+      ))}
+      <div className="sidebar-foot">
+        <select className="lang-select" value={lang} onChange={e => setLang(e.target.value)} style={{width:"100%",marginBottom:6}}>
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="bn">বাংলা</option>
+        </select>
+        {t("language",lang)}
+      </div>
+    </aside>
+  );
+}
+
+function Field({ label, children, style }) {
+  return <div className="field" style={style}><label>{label}</label>{children}</div>;
+}
+
+function Chip({ label, active, onClick }) {
+  return <span className={"chip" + (active?" active":"")} onClick={onClick}>{label}</span>;
+}
+
+function Chart({ data, label, color }) {
+  // data: [{date, value}]
+  const pts = data.filter(d => d.value !== null && !isNaN(d.value));
+  if (pts.length < 2) return <div className="empty" style={{padding:"12px"}}>Not enough data for {label}.</div>;
+  const w = 320, h = 120, pad = 24;
+  const vals = pts.map(d => d.value);
+  const min = Math.min(...vals), max = Math.max(...vals);
+  const range = (max - min) || 1;
+  const xStep = (w - 2*pad) / (pts.length - 1);
+  const points = pts.map((d,i) => {
+    const x = pad + i * xStep;
+    const y = h - pad - ((d.value - min) / range) * (h - 2*pad);
+    return `${x},${y}`;
+  }).join(" ");
+  return (
+    <div className="chart-wrap">
+      <div style={{fontSize:12,fontWeight:600,color:"var(--muted)",marginBottom:4}}>{label}</div>
+      <svg width="100%" viewBox={`0 0 ${w} ${h}`} style={{maxWidth:w}}>
+        <polyline points={points} fill="none" stroke={color} strokeWidth="2" />
+        {pts.map((d,i) => {
+          const x = pad + i * xStep;
+          const y = h - pad - ((d.value - min) / range) * (h - 2*pad);
+          return <circle key={i} cx={x} cy={y} r="3" fill={color} />;
+        })}
+        <text x={pad} y={h-4} fontSize="9" fill="#64748b">{pts[0].date}</text>
+        <text x={w-pad} y={h-4} fontSize="9" fill="#64748b" textAnchor="end">{pts[pts.length-1].date}</text>
+      </svg>
+      <div style={{fontSize:11,color:"var(--muted)"}}>min {min} · max {max} · latest {pts[pts.length-1].value}</div>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+  );
+}
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+function App() {
+  const [lang, setLang] = useState("en");
+  const [patients, setPatients] = useState(() => {
+    const ps = loadPatients();
+    if (!ps.length) { const s = seed(); savePatients(s); return s; }
+    return ps;
+  });
+  const [view, setView] = useState("dashboard");
+  const [selectedId, setSelectedId] = useState("");
+  const [online, setOnline] = useState(navigator.onLine);
+  useEffect(() => {
+    const on = () => setOnline(true), off = () => setOnline(false);
+    window.addEventListener("online", on); window.addEventListener("offline", off);
+    return () => { window.removeEventListener("online", on); window.removeEventListener("offline", off); };
+  }, []);
 
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+  // Patient modal
+  const [patientModal, setPatientModal] = useState(false);
+  const [editingPatientId, setEditingPatientId] = useState(null);
+  const [patientForm, setPatientForm] = useState({ name:"", age:"", sex:"Male", dob:"", phone:"", address:"", bloodGroup:"", allergies:"", chronic:"", notes:"" });
+  const openPatientModal = (p=null) => {
+    if (p) {
+      setEditingPatientId(p.id);
+      setPatientForm({ name:p.name||"", age:p.age||"", sex:p.sex||"Male", dob:p.dob||"", phone:p.phone||"", address:p.address||"", bloodGroup:p.bloodGroup||"", allergies:p.allergies||"", chronic:p.chronic||"", notes:p.notes||"" });
+    } else {
+      setEditingPatientId(null);
+      setPatientForm({ name:"", age:"", sex:"Male", dob:"", phone:"", address:"", bloodGroup:"", allergies:"", chronic:"", notes:"" });
+    }
+    setPatientModal(true);
+  };
+  const savePatient = () => {
+    const name = patientForm.name.trim();
+    const age = patientForm.age.trim();
+    if (!name || !age) { alert("Name and Age required."); return; }
+    const data = { ...patientForm, age: Number(age) };
+    const ps = [...patients];
+    if (editingPatientId) {
+      const p = ps.find(x => x.id === editingPatientId);
+      Object.assign(p, data);
+    } else {
+      const np = { id:uid(), clinical:[], diagnostic:[], consults:[], reports:[], ...data };
+      ps.push(np);
+      setSelectedId(np.id);
+    }
+    setPatients(ps); savePatients(ps);
+    setPatientModal(false);
+  };
+  const deletePatient = (id) => {
+    if (!confirm("Delete patient and all records?")) return;
+    const ps = patients.filter(p => p.id !== id);
+    setPatients(ps); savePatients(ps);
+    if (selectedId === id) setSelectedId("");
+  };
+
+  const selectedPatient = useMemo(() => patients.find(p => p.id === selectedId), [patients, selectedId]);
+
+  // Consultation form
+  const [consult, setConsult] = useState({
+    date: new Date().toISOString().slice(0,10), bp:"", pulse:"", temp:"", spo2:"", weight:"", height:"", sugar:"",
+    symptoms:[], symptomNotes:"", diagnosis:"", code:"", meds:[["","","","",""]], advice:"", tests:"", follow:"", referral:""
+  });
+  const resetConsult = () => setConsult({ date: new Date().toISOString().slice(0,10), bp:"", pulse:"", temp:"", spo2:"", weight:"", height:"", sugar:"", symptoms:[], symptomNotes:"", diagnosis:"", code:"", meds:[["","","","",""]], advice:"", tests:"", follow:"", referral:"" });
+
+  // when patient changes in consult, load vitals
+  const [consultPatient, setConsultPatient] = useState("");
+  useEffect(() => {
+    if (!consultPatient) return;
+    const p = patients.find(x => x.id === consultPatient);
+    if (!p) return;
+    const cs = (p.consults||[]).slice().sort((a,b)=>b.date.localeCompare(a.date));
+    if (cs.length) {
+      const c = cs[0];
+      setConsult(prev => ({ ...prev, bp: c.vitals.bp||"", pulse: c.vitals.pulse||"", temp: c.vitals.temp||"", spo2: c.vitals.spo2||"", weight: c.vitals.weight||"" }));
+    }
+  }, [consultPatient]);
+
+  const toggleSymptom = (s) => setConsult(prev => ({ ...prev, symptoms: prev.symptoms.includes(s) ? prev.symptoms.filter(x=>x!==s) : [...prev.symptoms, s] }));
+  const addMedRow = (vals) => setConsult(prev => ({ ...prev, meds: [...prev.meds, vals || ["","","","",""]] }));
+  const updateMed = (idx, col, val) => setConsult(prev => {
+    const meds = prev.meds.map((m,i) => i===idx ? m.map((x,j) => j===col ? val : x) : m);
+    return { ...prev, meds };
+  });
+  const removeMed = (idx) => setConsult(prev => ({ ...prev, meds: prev.meds.filter((_,i) => i !== idx) }));
+
+  const applyDisease = (d) => {
+    const t = DISEASE_TEMPLATES[d];
+    if (!t) return;
+    setConsult(prev => ({ ...prev, diagnosis: t.diagnosis, meds: t.meds.map(m => [...m]), advice: t.advice }));
+  };
+
+  const saveConsult = () => {
+    if (!consultPatient) { alert("Select a patient."); return; }
+    if (!consult.diagnosis.trim()) { alert("Diagnosis required."); return; }
+    const pIdx = patients.findIndex(x => x.id === consultPatient);
+    const ps = [...patients];
+    const p = ps[pIdx];
+    const c = {
+      id: uid(), date: consult.date || new Date().toISOString().slice(0,10),
+      vitals: { bp:consult.bp, pulse:consult.pulse, temp:consult.temp, spo2:consult.spo2, weight:consult.weight, height:consult.height, sugar:consult.sugar },
+      symptoms: consult.symptomNotes ? [...consult.symptoms, "Notes: "+consult.symptomNotes] : consult.symptoms,
+      diagnosis: consult.diagnosis, code: consult.code,
+      meds: consult.meds.filter(m => m[0].trim()),
+      advice: consult.advice, tests: consult.tests, follow: consult.follow, referral: consult.referral
+    };
+    // note: sugar field added to consult state? ensure
+    p.consults = p.consults || [];
+    p.consults.push(c);
+    p.clinical = p.clinical || [];
+    p.clinical.push({ id:uid(), date:c.date, complaint: c.symptoms.join(", "), diagnosis: c.diagnosis, treatment: c.meds.map(m=>m[0]+" "+m[1]+" "+m[2]+" x "+m[3]).join("; ") + (c.advice?" | Advice: "+c.advice:""), notes: c.referral ? "Referral: "+c.referral : "" });
+    if (c.tests) { p.diagnostic = p.diagnostic || []; p.diagnostic.push({ id:uid(), date:c.date, test:c.tests, result:"Ordered", notes:"" }); }
+    setPatients(ps); savePatients(ps);
+    alert("Consultation saved.");
+  };
+
+  // sugar field in consult state (add)
+  // (we'll add sugar to initial state via patch below? already referenced; add to reset/init)
+  // Ensure consult has sugar
+  // (handled by spread defaults? not in initial; add now)
+  // We'll patch initial consult state above? It's already defined without sugar. Add sugar property dynamically when needed.
+  // To be safe, normalize:
+  // (no-op; consult.sugar may be undefined -> controlled input value undefined warning; set default)
+  // We'll add sugar to initial state by editing? Instead handle in input value with || "".
+
+  const printRx = () => {
+    // build from consult + consultPatient
+    if (!consultPatient) { alert("Select a patient."); return; }
+    const p = patients.find(x => x.id === consultPatient);
+    const c = {
+      date: consult.date, vitals:{ bp:consult.bp, pulse:consult.pulse, temp:consult.temp, spo2:consult.spo2, weight:consult.weight, sugar:consult.sugar },
+      symptoms: consult.symptomNotes ? [...consult.symptoms, "Notes: "+consult.symptomNotes] : consult.symptoms,
+      diagnosis: consult.diagnosis, code: consult.code,
+      meds: consult.meds.filter(m => m[0].trim()),
+      advice: consult.advice, tests: consult.tests, follow: consult.follow, referral: consult.referral
+    };
+    const w = window.open("", "_blank");
+    const medsHtml = c.meds.map(m => `<tr><td>${escapeHtml(m[0])}</td><td>${escapeHtml(m[1])}</td><td>${escapeHtml(m[2])}</td><td>${escapeHtml(m[3])}</td><td>${escapeHtml(m[4])}</td></tr>`).join("");
+    w.document.write(`<!DOCTYPE html><html><head><title>Rx</title><style>body{font-family:Arial,sans-serif;padding:20px;max-width:800px;margin:auto;}h1{color:#0f766e;}table{width:100%;border-collapse:collapse;margin:10px 0;}th,td{border:1px solid #ccc;padding:6px;}th{background:#f1f5f9;}.hdr{display:flex;justify-content:space-between;border-bottom:2px solid #0f766e;padding-bottom:8px;margin-bottom:12px;}.meta{margin:8px 0;}.section{margin-top:12px;font-weight:700;color:#0f766e;}@media print{button{display:none;}}</style></head><body>
+    <div class="hdr"><h1>ASHVIK Clinic</h1><div>${c.date}</div></div>
+    <div class="meta"><b>Patient:</b> ${escapeHtml(p.name)} &nbsp; <b>Age/Sex:</b> ${p.age}/${p.sex} &nbsp; <b>ID:</b> ${p.id}</div>
+    <div class="meta"><b>Vitals:</b> BP ${escapeHtml(c.vitals.bp||"-")} | Pulse ${escapeHtml(c.vitals.pulse||"-")} | Temp ${escapeHtml(c.vitals.temp||"-")}°F | SpO2 ${escapeHtml(c.vitals.spo2||"-")}% | Wt ${escapeHtml(c.vitals.weight||"-")}kg | Sugar ${escapeHtml(c.vitals.sugar||"-")}</div>
+    <div class="section">Symptoms</div><div>${escapeHtml(c.symptoms.join(", ") || "-")}</div>
+    <div class="section">Diagnosis</div><div>${escapeHtml(c.diagnosis)} ${c.code ? "("+escapeHtml(c.code)+")" : ""}</div>
+    <div class="section">Rx (Prescription)</div>
+    <table><thead><tr><th>Drug</th><th>Dose</th><th>Frequency</th><th>Duration</th><th>Instructions</th></tr></thead><tbody>${medsHtml || "<tr><td colspan=5>-</td></tr>"}</tbody></table>
+    <div class="section">Advice</div><div style="white-space:pre-wrap;">${escapeHtml(c.advice || "-")}</div>
+    <div class="meta" style="margin-top:12px;"><b>Tests:</b> ${escapeHtml(c.tests || "-")} &nbsp; <b>Follow-up:</b> ${escapeHtml(c.follow || "-")} &nbsp; <b>Referral:</b> ${escapeHtml(c.referral || "None")}</div>
+    <div style="margin-top:40px;border-top:1px dashed #999;padding-top:8px;font-size:12px;color:#666;">Doctor's signature: ____________________ &nbsp;&nbsp; Computer-generated prescription.</div>
+    <div style="margin-top:12px;"><button onclick="window.print()">Print</button></div></body></html>`);
+    w.document.close();
+  };
+
+  // Diagnosis assistant state
+  const [dxPatient, setDxPatient] = useState("");
+  const [dxSymptoms, setDxSymptoms] = useState([]);
+  const [dxNotes, setDxNotes] = useState("");
+  const [dxVitals, setDxVitals] = useState({ bp:"", pulse:"", temp:"", spo2:"", weight:"" });
+  const [dxChronic, setDxChronic] = useState("");
+  const [dxAllergies, setDxAllergies] = useState("");
+  const [dxDoctor, setDxDoctor] = useState("");
+  const [dxResult, setDxResult] = useState(null);
+  const toggleDxSymptom = (s) => setDxSymptoms(prev => prev.includes(s) ? prev.filter(x=>x!==s) : [...prev, s]);
+  const generateDx = () => {
+    if (!dxPatient) { alert("Select a patient."); return; }
+    const p = patients.find(x => x.id === dxPatient);
+    const symptomText = (dxSymptoms.join(" ") + " " + dxNotes).toLowerCase();
+    const chronicL = dxChronic.toLowerCase();
+    const temp = parseFloat(dxVitals.temp);
+    const spo2 = parseFloat(dxVitals.spo2);
+    const age = p.age, sex = p.sex;
+    const scored = CONDITIONS.map(cond => {
+      let score = 0; const matched = [];
+      cond.keywords.forEach(kw => { if (symptomText.includes(kw.toLowerCase())) { score += 2; matched.push(kw); } });
+      if (chronicL.includes("diabetes") && cond.name === "Type 2 Diabetes") score += 3;
+      if (chronicL.includes("hypertension") && cond.name === "Hypertension") score += 3;
+      if (chronicL.includes("asthma") && cond.name === "Asthma") score += 3;
+      if (chronicL.includes("copd") && cond.name === "COPD") score += 3;
+      if (age < 5 && ["Pneumonia","Acute diarrhoea"].includes(cond.name)) score += 1;
+      if (age > 60 && ["Hypertension","Type 2 Diabetes","COPD"].includes(cond.name)) score += 1;
+      if (sex === "Female" && cond.name === "UTI") score += 1;
+      if (!isNaN(temp) && temp >= 100.4 && cond.keywords.includes("fever")) score += 1;
+      if (!isNaN(spo2) && spo2 < 94 && (cond.name === "Pneumonia" || cond.name === "COPD" || cond.name === "Asthma")) score += 3;
+      return { ...cond, score, matched };
+    }).filter(c => c.score > 0).sort((a,b) => b.score - a.score);
+    const top = scored.slice(0,5);
+    const suggested = top.length && top[0].score >= 3 ? top[0].name : (top.length ? top[0].name : "Insufficient data — needs clinical evaluation");
+    const redFlags = [];
+    if (symptomText.includes("chest pain")) redFlags.push("Chest pain — rule out cardiac/MI, refer if acute");
+    if (symptomText.includes("breathlessness")) redFlags.push("Breathlessness — assess SpO2, consider pneumonia/asthma/COPD");
+    if (!isNaN(spo2) && spo2 < 94) redFlags.push("SpO2 " + spo2 + "% — hypoxia, urgent evaluation");
+    if (!isNaN(temp) && temp >= 103) redFlags.push("High fever ≥103°F — investigate cause, watch for sepsis");
+    if (symptomText.includes("confusion") || symptomText.includes("altered")) redFlags.push("Altered sensorium — emergency");
+    if (symptomText.includes("bleeding")) redFlags.push("Bleeding — evaluate (dengue/menorrhagia)");
+    if (symptomText.includes("blood in stool")) redFlags.push("Blood in stool — dysentery, refer if severe");
+    if (symptomText.includes("severe dehydration") || symptomText.includes("no urine")) redFlags.push("Severe dehydration — urgent ORS/IV");
+    const tests = new Set();
+    top.slice(0,3).forEach(c => (c.tests||[]).forEach(t => tests.add(t)));
+    const doctorDxL = dxDoctor.trim().toLowerCase();
+    let agreement = "";
+    if (dxDoctor.trim()) {
+      const sys = suggested.toLowerCase();
+      if (sys.includes(doctorDxL) || doctorDxL.includes(sys.split(" ")[0])) agreement = "✅ System agrees with your clinical impression.";
+      else agreement = "⚠️ System suggestion differs from your impression — review both and the differential list.";
+    }
+    setDxResult({ pid: dxPatient, suggested, top, tests:[...tests], redFlags, doctorDx: dxDoctor, agreement, symptoms: dxSymptoms, notes: dxNotes, chronic: dxChronic, vitals: dxVitals, date: new Date().toISOString().slice(0,10) });
+    setTimeout(() => document.getElementById("dxResultCard")?.scrollIntoView({ behavior:"smooth" }), 50);
+  };
+  const saveDxNote = () => {
+    if (!dxResult) return;
+    const ps = [...patients];
+    const p = ps.find(x => x.id === dxResult.pid);
+    p.clinical = p.clinical || [];
+    p.clinical.push({ id:uid(), date: dxResult.date, complaint: dxResult.symptoms.join(", ") + (dxResult.notes ? " | " + dxResult.notes : ""), diagnosis: dxResult.suggested + (dxResult.doctorDx ? " (Dr impression: " + dxResult.doctorDx + ")" : ""), treatment: "Tests: " + dxResult.tests.join(", "), notes: "AI-assisted differential. Red flags: " + (dxResult.redFlags.join("; ") || "none") });
+    setPatients(ps); savePatients(ps);
+    alert("Saved to patient clinical history.");
+  };
+
+  // Reports
+  const [reportModal, setReportModal] = useState(false);
+  const [reportForm, setReportForm] = useState({ pid:"", date:"", name:"", result:"", notes:"", file:null });
+  const saveReport = () => {
+    if (!reportForm.pid || !reportForm.date || !reportForm.name) { alert("Patient, date and test name required."); return; }
+    const finish = (fileData, fileType, fileName) => {
+      const ps = [...patients];
+      const p = ps.find(x => x.id === reportForm.pid);
+      p.reports = p.reports || [];
+      p.reports.push({ id:uid(), date:reportForm.date, name:reportForm.name, result:reportForm.result, notes:reportForm.notes, fileData, fileType, fileName });
+      setPatients(ps); savePatients(ps);
+      setReportModal(false);
+      setReportForm({ pid:"", date:"", name:"", result:"", notes:"", file:null });
+    };
+    if (reportForm.file) {
+      const reader = new FileReader();
+      reader.onload = e => finish(e.target.result, reportForm.file.type, reportForm.file.name);
+      reader.readAsDataURL(reportForm.file);
+    } else finish(null, null, null);
+  };
+  const deleteReport = (pid, rid) => {
+    if (!confirm("Delete this report?")) return;
+    const ps = [...patients];
+    const p = ps.find(x => x.id === pid);
+    p.reports = (p.reports || []).filter(r => r.id !== rid);
+    setPatients(ps); savePatients(ps);
+  };
+
+  // History selected patient
+  const [historyPatient, setHistoryPatient] = useState("");
+
+  // Backup/restore
+  const fileInputRef = useRef(null);
+  const exportData = () => {
+    const blob = new Blob([JSON.stringify(patients, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "ashvik-backup-" + new Date().toISOString().slice(0,10) + ".json";
+    a.click(); URL.revokeObjectURL(url);
+    alert(t("exportOk", lang));
+  };
+  const importData = (e) => {
+    const f = e.target.files[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (!Array.isArray(data)) throw new Error("bad");
+        savePatients(data);
+        setPatients(data);
+        alert(t("importOk", lang));
+      } catch { alert(t("importErr", lang)); }
+    };
+    reader.readAsText(f);
+    e.target.value = "";
+  };
+
+  // Dashboard stats
+  const stats = useMemo(() => {
+    let consults = 0, follow = 0;
+    const now = new Date();
+    const recent = [];
+    patients.forEach(p => {
+      (p.consults || []).forEach(c => {
+        const d = new Date(c.date);
+        if (d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()) consults++;
+        if (c.follow) {
+          const fd = new Date(c.follow);
+          if (fd >= new Date(now.toDateString()) && fd <= new Date(now.getTime() + 7*86400000)) follow++;
         }
+        recent.push({ date: c.date, name: p.name, diagnosis: c.diagnosis, pid: p.id, cid: c.id });
       });
-    </script>
-  </body>
+    });
+    recent.sort((a,b) => b.date.localeCompare(a.date));
+    return { consults, follow, recent: recent.slice(0,8) };
+  }, [patients]);
+
+  const consultsOf = (pid) => {
+    const p = patients.find(x => x.id === pid);
+    return p ? (p.consults || []).slice().sort((a,b) => b.date.localeCompare(a.date)) : [];
+  };
+
+  // Vitals trend data for selected patient (history view)
+  const trendPatient = patients.find(x => x.id === (historyPatient || selectedId));
+  const trendData = trendPatient ? (trendPatient.consults || []).slice().sort((a,b) => a.date.localeCompare(b.date)) : [];
+  const bpTrend = trendData.map(c => ({ date: c.date.slice(5), value: parseFloat((c.vitals.bp||"").split("/")[0]) }));
+  const sugarTrend = trendData.map(c => ({ date: c.date.slice(5), value: parseFloat(c.vitals.sugar) }));
+  const weightTrend = trendData.map(c => ({ date: c.date.slice(5), value: parseFloat(c.vitals.weight) }));
+
+  return (
+    <div className="app">
+      <Sidebar view={view} setView={setView} lang={lang} setLang={setLang} t={t} />
+      <main className="main">
+        {view === "dashboard" && (
+          <>
+            <div className="page-head">
+              <div><h2>{t("dashboard",lang)}</h2><p>{t("tag",lang)}</p></div>
+              <div className="topbar-actions">
+                <span className={"badge " + (online ? "badge-m" : "badge-o")}>{online ? t("online",lang) : t("offline",lang)}</span>
+                <button className="btn btn-primary" onClick={() => setView("consult")}>{t("consult",lang)}</button>
+              </div>
+            </div>
+            <div className="grid grid-3" style={{gap:10}}>
+              <div className="card" style={{padding:"12px 14px"}}><h3 style={{fontSize:13,marginBottom:6}}>{t("patientsCount",lang)}</h3><div style={{fontSize:22,fontWeight:700,color:"var(--primary)"}}>{patients.length}</div></div>
+              <div className="card" style={{padding:"12px 14px"}}><h3 style={{fontSize:13,marginBottom:6}}>{t("consultsMonth",lang)}</h3><div style={{fontSize:22,fontWeight:700,color:"var(--accent)"}}>{stats.consults}</div></div>
+              <div className="card" style={{padding:"12px 14px"}}><h3 style={{fontSize:13,marginBottom:6}}>{t("followups",lang)}</h3><div style={{fontSize:22,fontWeight:700,color:"var(--warn)"}}>{stats.follow}</div></div>
+            </div>
+            <div className="card" style={{padding:"12px 16px",marginBottom:12}}>
+              <div className="card-head" style={{marginBottom:8}}><h3 style={{fontSize:14}}>{t("quickActions",lang)}</h3></div>
+              <button className="btn btn-primary btn-sm" onClick={() => setView("consult")}>+ {t("consult",lang)}</button>
+              <button className="btn btn-outline btn-sm" onClick={() => setView("patients")} style={{marginLeft:6}}>{t("patients",lang)}</button>
+              <button className="btn btn-outline btn-sm" onClick={() => setView("diagnosis")} style={{marginLeft:6}}>{t("diagnosis",lang)}</button>
+            </div>
+            <div className="card" style={{padding:"12px 16px",marginBottom:12}}>
+              <div className="card-head" style={{marginBottom:8}}><h3 style={{fontSize:14}}>{t("recentConsults",lang)}</h3></div>
+              {stats.recent.length === 0 ? <div className="empty">{t("noData",lang)}</div> :
+                <table><thead><tr><th>{t("date",lang)}</th><th>{t("name",lang)}</th><th>{t("diagnosisLabel",lang)}</th><th></th></tr></thead><tbody>
+                  {stats.recent.map(r => (
+                    <tr key={r.cid}><td>{r.date}</td><td>{escapeHtml(r.name)}</td><td>{escapeHtml(r.diagnosis)}</td>
+                      <td><button className="btn btn-outline btn-sm" onClick={() => { setHistoryPatient(r.pid); setView("history"); }}>{t("view",lang)}</button></td></tr>
+                  ))}
+                </tbody></table>}
+            </div>
+          </>
+        )}
+
+        {view === "patients" && (
+          <>
+            <div className="page-head">
+              <div><h2>{t("patients",lang)}</h2><p>{t("allPatients",lang)}</p></div>
+              <button className="btn btn-primary" onClick={() => openPatientModal()}>+ {t("addPatient",lang)}</button>
+            </div>
+            <div className="card">
+              <input placeholder={t("search",lang)} style={{width:"100%",padding:"9px 12px",border:"1px solid var(--border)",borderRadius:10,marginBottom:10}} onChange={e => {
+                const q = e.target.value.toLowerCase();
+                document.querySelectorAll(".pat-row").forEach(row => {
+                  row.style.display = row.textContent.toLowerCase().includes(q) ? "" : "none";
+                });
+              }} />
+              {patients.length === 0 ? <div className="empty">{t("noPatients",lang)}</div> :
+                <table><thead><tr><th>{t("name",lang)}</th><th>{t("age",lang)}</th><th>{t("sex",lang)}</th><th>{t("phone",lang)}</th><th></th></tr></thead><tbody>
+                  {patients.map(p => (
+                    <tr key={p.id} className="pat-row">
+                      <td>{escapeHtml(p.name)}</td><td>{p.age}</td><td><span className={"badge " + (p.sex==="Male"?"badge-m":p.sex==="Female"?"badge-f":"badge-o")}>{p.sex}</span></td><td>{escapeHtml(p.phone||"-")}</td>
+                      <td>
+                        <button className="btn btn-outline btn-sm" onClick={() => openPatientModal(p)}>{t("edit",lang)}</button>{" "}
+                        <button className="btn btn-danger btn-sm" onClick={() => deletePatient(p.id)}>{t("delete",lang)}</button>{" "}
+                        <button className="btn btn-outline btn-sm" onClick={() => { setConsultPatient(p.id); setView("consult"); }}>{t("startConsult",lang)}</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody></table>}
+            </div>
+          </>
+        )}
+
+        {view === "consult" && (
+          <>
+            <div className="page-head">
+              <div><h2>{t("consult",lang)}</h2><p></p></div>
+              <div className="topbar-actions">
+                <button className="btn btn-outline" onClick={resetConsult}>{t("reset",lang)}</button>
+                <button className="btn btn-primary" onClick={saveConsult}>{t("save",lang)}</button>
+                <button className="btn btn-warn" onClick={printRx}>{t("printRx",lang)}</button>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-head"><h3>1. {t("selectPatient",lang)} & {t("vitals",lang)}</h3></div>
+              <div className="grid grid-4">
+                <Field label={t("selectPatient",lang) + " *"}>
+                  <select value={consultPatient} onChange={e => setConsultPatient(e.target.value)}>
+                    <option value="">-- {t("selectPatient",lang)} --</option>
+                    {patients.map(p => <option key={p.id} value={p.id}>{p.name} ({p.age}/{p.sex})</option>)}
+                  </select>
+                </Field>
+                <Field label={t("date",lang)}><input type="date" value={consult.date} onChange={e => setConsult({...consult, date: e.target.value})} /></Field>
+                <Field label={t("bp",lang)}><input placeholder="120/80" value={consult.bp} onChange={e => setConsult({...consult, bp: e.target.value})} /></Field>
+                <Field label={t("pulse",lang)}><input type="number" value={consult.pulse} onChange={e => setConsult({...consult, pulse: e.target.value})} /></Field>
+              </div>
+              <div className="grid grid-4" style={{marginTop:10}}>
+                <Field label={t("temp",lang)}><input type="number" step="0.1" value={consult.temp} onChange={e => setConsult({...consult, temp: e.target.value})} /></Field>
+                <Field label={t("spo2",lang)}><input type="number" value={consult.spo2} onChange={e => setConsult({...consult, spo2: e.target.value})} /></Field>
+                <Field label={t("weight",lang)}><input type="number" step="0.1" value={consult.weight} onChange={e => setConsult({...consult, weight: e.target.value})} /></Field>
+                <Field label="Sugar (mg/dL)"><input type="number" value={consult.sugar||""} onChange={e => setConsult({...consult, sugar: e.target.value})} /></Field>
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="card-head"><h3>2. {t("symptoms",lang)}</h3></div>
+              <div>{SYMPTOMS.map(s => <Chip key={s} label={s} active={consult.symptoms.includes(s)} onClick={() => toggleSymptom(s)} />)}</div>
+              <Field label={t("symptoms",lang) + " notes"} style={{marginTop:10}}>
+                <textarea placeholder="Onset, duration..." value={consult.symptomNotes} onChange={e => setConsult({...consult, symptomNotes: e.target.value})} />
+              </Field>
+            </div>
+
+            <div className="card">
+              <div className="card-head"><h3>3. {t("diagnosisLabel",lang)}</h3></div>
+              <div className="alert alert-info">Click a common condition to auto-fill a treatment template (edit as needed).</div>
+              <div style={{marginBottom:8}}>
+                {Object.keys(DISEASE_TEMPLATES).map(d => <Chip key={d} label={d} active={consult.diagnosis === DISEASE_TEMPLATES[d].diagnosis} onClick={() => applyDisease(d)} />)}
+              </div>
+              <div className="grid grid-2">
+                <Field label={t("diagnosisLabel",lang) + " *"}><input value={consult.diagnosis} onChange={e => setConsult({...consult, diagnosis: e.target.value})} /></Field>
+                <Field label="ICD / Code"><input placeholder="e.g. J20.9" value={consult.code} onChange={e => setConsult({...consult, code: e.target.value})} /></Field>
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="card-head"><h3>4. Treatment / Prescription</h3></div>
+              <table>
+                <thead><tr><th>Drug</th><th>Dose</th><th>Freq</th><th>Duration</th><th>Instructions</th><th></th></tr></thead>
+                <tbody>
+                  {consult.meds.map((m, idx) => (
+                    <tr key={idx}>
+                      {m.map((val, col) => (
+                        <td key={col}><input value={val} onChange={e => updateMed(idx, col, e.target.value)} placeholder={["Drug","Dose","Freq","Duration","Instructions"][col]} /></td>
+                      ))}
+                      <td><button className="btn btn-danger btn-sm" onClick={() => removeMed(idx)}>x</button></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <button className="btn btn-outline btn-sm" style={{marginTop:8}} onClick={() => addMedRow()}>+ Add Medicine</button>
+              <div className="section-title">{t("advice",lang)}</div>
+              <textarea style={{width:"100%",minHeight:70,padding:8,border:"1px solid var(--border)",borderRadius:8}} value={consult.advice} onChange={e => setConsult({...consult, advice: e.target.value})} placeholder="Rest, fluids, diet, activity, precautions..." />
+            </div>
+
+            <div className="card">
+              <div className="card-head"><h3>5. {t("tests",lang)} & {t("followup",lang)}</h3></div>
+              <div className="grid grid-3">
+                <Field label={t("tests",lang)}><input placeholder="CBC, Malaria RDT, CXR..." value={consult.tests} onChange={e => setConsult({...consult, tests: e.target.value})} /></Field>
+                <Field label={t("followup",lang)}><input type="date" value={consult.follow} onChange={e => setConsult({...consult, follow: e.target.value})} /></Field>
+                <Field label={t("referral",lang)}><input placeholder="None / CHC / District hospital" value={consult.referral} onChange={e => setConsult({...consult, referral: e.target.value})} /></Field>
+              </div>
+            </div>
+          </>
+        )}
+
+        {view === "diagnosis" && (
+          <>
+            <div className="page-head">
+              <div><h2>{t("diagnosis",lang)}</h2><p>Symptoms → Differential Diagnosis</p></div>
+              <button className="btn btn-primary" onClick={generateDx}>{t("generate",lang)}</button>
+            </div>
+            <div className="card">
+              <div className="card-head"><h3>1. {t("selectPatient",lang)}</h3></div>
+              <div className="grid grid-4">
+                <Field label={t("selectPatient",lang) + " *"}>
+                  <select value={dxPatient} onChange={e => {
+                    const pid = e.target.value; setDxPatient(pid);
+                    const p = patients.find(x => x.id === pid);
+                    if (p) { setDxChronic(p.chronic||""); setDxAllergies(p.allergies||"");
+                      const cs = (p.consults||[]).slice().sort((a,b)=>b.date.localeCompare(a.date));
+                      if (cs.length) { const c = cs[0]; setDxVitals({ bp:c.vitals.bp||"", pulse:c.vitals.pulse||"", temp:c.vitals.temp||"", spo2:c.vitals.spo2||"", weight:c.vitals.weight||"" }); }
+                    }
+                  }}>
+                    <option value="">-- {t("selectPatient",lang)} --</option>
+                    {patients.map(p => <option key={p.id} value={p.id}>{p.name} ({p.age}/{p.sex})</option>)}
+                  </select>
+                </Field>
+                <Field label="Age / Sex"><input value={dxPatient ? (patients.find(p=>p.id===dxPatient)?.age + " / " + patients.find(p=>p.id===dxPatient)?.sex) : ""} readOnly /></Field>
+                <Field label={t("chronic",lang)}><input value={dxChronic} onChange={e => setDxChronic(e.target.value)} /></Field>
+                <Field label={t("allergies",lang)}><input value={dxAllergies} onChange={e => setDxAllergies(e.target.value)} /></Field>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-head"><h3>2. {t("vitals",lang)}</h3></div>
+              <div className="grid grid-4">
+                <Field label={t("bp",lang)}><input placeholder="120/80" value={dxVitals.bp} onChange={e => setDxVitals({...dxVitals, bp: e.target.value})} /></Field>
+                <Field label={t("pulse",lang)}><input type="number" value={dxVitals.pulse} onChange={e => setDxVitals({...dxVitals, pulse: e.target.value})} /></Field>
+                <Field label={t("temp",lang)}><input type="number" step="0.1" value={dxVitals.temp} onChange={e => setDxVitals({...dxVitals, temp: e.target.value})} /></Field>
+                <Field label={t("spo2",lang)}><input type="number" value={dxVitals.spo2} onChange={e => setDxVitals({...dxVitals, spo2: e.target.value})} /></Field>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-head"><h3>3. {t("symptoms",lang)}</h3></div>
+              <div>{SYMPTOMS.map(s => <Chip key={s} label={s} active={dxSymptoms.includes(s)} onClick={() => toggleDxSymptom(s)} />)}</div>
+              <Field label={t("symptoms",lang) + " notes"} style={{marginTop:10}}>
+                <textarea placeholder="Onset, duration..." value={dxNotes} onChange={e => setDxNotes(e.target.value)} />
+              </Field>
+            </div>
+            <div className="card">
+              <div className="card-head"><h3>4. History & Test Reports (auto-loaded)</h3></div>
+              {!dxPatient ? <div className="empty">{t("selectPatient",lang)}</div> : (() => {
+                const p = patients.find(x => x.id === dxPatient);
+                const cs = (p.consults||[]).slice().sort((a,b)=>b.date.localeCompare(a.date));
+                return (
+                  <>
+                    <div className="alert alert-info" style={{marginBottom:8}}>
+                      <b>Last {Math.min(cs.length,3)} consultations:</b><br/>
+                      {cs.length === 0 ? "No previous consultations." : cs.slice(0,3).map(c => (
+                        <div key={c.id} style={{marginTop:4}}>{c.date} — {c.diagnosis} <span style={{color:"var(--muted)"}}>(Symptoms: {(c.symptoms||[]).join(", ")})</span></div>
+                      ))}
+                    </div>
+                    {(p.reports||[]).length > 0 && (
+                      <div>{(p.reports||[]).slice(0,5).map(r => (
+                        <div key={r.id} style={{fontSize:13,padding:"4px 0",borderBottom:"1px solid var(--border)"}}>{r.date} — <b>{r.name}</b>: {r.result||""}</div>
+                      ))}</div>
+                    )}
+                  </>
+                );
+              })()}
+            </div>
+            <div className="card">
+              <div className="card-head"><h3>5. {t("doctorDx",lang)}</h3></div>
+              <Field label={t("doctorDx",lang)}>
+                <input placeholder="e.g. Malaria, Viral fever, Dengue..." value={dxDoctor} onChange={e => setDxDoctor(e.target.value)} />
+              </Field>
+              <div style={{marginTop:8, display:"flex", gap:6, flexWrap:"wrap"}}>
+                {["Viral fever","Malaria","Dengue","Typhoid","Acute diarrhoea"].map(d => (
+                  <button key={d} className="btn btn-outline btn-sm" onClick={() => setDxDoctor(d)}>{d}</button>
+                ))}
+              </div>
+            </div>
+            {dxResult && (
+              <div className="card" id="dxResultCard">
+                <div className="card-head"><h3>6. {t("diagnosis",lang)} {t("result",lang)}</h3></div>
+                {dxResult.redFlags.length > 0 && (
+                  <div className="alert alert-danger">
+                    <b>{t("redFlags",lang)}:</b>
+                    <ul>{dxResult.redFlags.map((r,i) => <li key={i}>{r}</li>)}</ul>
+                  </div>
+                )}
+                <div className="alert alert-success">
+                  <b>{t("suggested",lang)}:</b> {dxResult.suggested} <span style={{color:"var(--muted)",fontSize:12}}>(score {dxResult.top.length ? dxResult.top[0].score : 0})</span>
+                </div>
+                {dxResult.doctorDx && (
+                  <div className={"alert " + (dxResult.agreement.startsWith("✅") ? "alert-success" : "alert-warn")}>
+                    {dxResult.agreement}<br/>
+                    Your impression: <b>{dxResult.doctorDx}</b> | System: <b>{dxResult.suggested}</b>
+                  </div>
+                )}
+                <div className="section-title">{t("differential",lang)}</div>
+                {dxResult.top.length === 0 ? <div className="empty">No matching conditions. Enter more symptoms.</div> :
+                  dxResult.top.map(c => (
+                    <div className="result-item" key={c.name}>
+                      <div style={{display:"flex",justifyContent:"space-between"}}><b>{c.name}</b><span>Score: {c.score}</span></div>
+                      <div className="score-bar"><div className="score-fill" style={{width: Math.min(100, c.score*10) + "%"}}></div></div>
+                      <div style={{fontSize:12,color:"var(--muted)",marginTop:4}}>Matched: {c.matched.join(", ") || "-"}</div>
+                      <div style={{fontSize:12,marginTop:4}}><b>Tests:</b> {(c.tests||[]).join(", ")}</div>
+                      <div style={{fontSize:12}}><b>Advice:</b> {c.advice}</div>
+                    </div>
+                  ))}
+                <div className="section-title">{t("recommendedTests",lang)}</div>
+                <div>{dxResult.tests.map(tt => <Chip key={tt} label={tt} active={false} onClick={() => {}} />)}</div>
+                <div style={{marginTop:10,fontSize:12,color:"var(--muted)"}}>⚠️ Decision-support suggestion. Final diagnosis must be made by the doctor.</div>
+                <div style={{marginTop:12,display:"flex",gap:8,flexWrap:"wrap"}}>
+                  <button className="btn btn-primary btn-sm" onClick={saveDxNote}>{t("saveNote",lang)}</button>
+                  <button className="btn btn-outline btn-sm" onClick={() => { sessionStorage.setItem("ashvik_dx", JSON.stringify({ diagnosis: dxResult.suggested, tests: dxResult.tests, advice: dxResult.top[0]?.advice || "" })); alert("Copied."); }}>{t("copyDx",lang)}</button>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
+        {view === "history" && (
+          <>
+            <div className="page-head"><div><h2>{t("history",lang)}</h2><p></p></div></div>
+            <div className="card">
+              <Field label={t("selectPatient",lang)}>
+                <select value={historyPatient || selectedId} onChange={e => { setHistoryPatient(e.target.value); setSelectedId(e.target.value); }}>
+                  <option value="">-- {t("selectPatient",lang)} --</option>
+                  {patients.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+                </select>
+              </Field>
+            </div>
+            {!(historyPatient || selectedId) ? <div className="card empty">{t("selectPatient",lang)}</div> : (() => {
+              const pid = historyPatient || selectedId;
+              const p = patients.find(x => x.id === pid);
+              const consults = (p.consults||[]).slice().sort((a,b)=>b.date.localeCompare(a.date));
+              const reports = (p.reports||[]).slice().sort((a,b)=>b.date.localeCompare(a.date));
+              return (
+                <>
+                  <div className="card">
+                    <div className="card-head"><h3>{t("consult",lang)} ({consults.length})</h3></div>
+                    {consults.length === 0 ? <div className="empty">{t("noData",lang)}</div> :
+                      consults.map(c => (
+                        <div className="history-item" key={c.id}>
+                          <b>{c.date}</b> — {c.diagnosis}<br/>
+                          <span style={{fontSize:13}}>{t("symptoms",lang)}: {(c.symptoms||[]).join(", ")}</span><br/>
+                          <span style={{fontSize:13}}>Vitals: BP {c.vitals.bp||"-"} | Pulse {c.vitals.pulse||"-"} | Temp {c.vitals.temp||"-"} | SpO2 {c.vitals.spo2||"-"} | Wt {c.vitals.weight||"-"} | Sugar {c.vitals.sugar||"-"}</span><br/>
+                          <span style={{fontSize:13}}>Rx: {(c.meds||[]).map(m=>m[0]).join(", ") || "-"}</span><br/>
+                          <span style={{fontSize:13}}>{t("advice",lang)}: {c.advice||"-"}</span>
+                        </div>
+                      ))}
+                  </div>
+                  <div className="card">
+                    <div className="card-head"><h3>{t("reports",lang)}</h3></div>
+                    {reports.length === 0 ? <div className="empty">{t("noData",lang)}</div> :
+                      reports.map(r => (
+                        <div className="history-item" key={r.id}>
+                          <b>{r.name}</b> ({r.date}) — {r.result||"-"}
+                          {r.fileData && <span> <a href={r.fileData} target="_blank">📎</a></span>}
+                        </div>
+                      ))}
+                  </div>
+                  <div className="card">
+                    <div className="card-head"><h3>{t("clinicalHistory",lang)}</h3></div>
+                    {(p.clinical||[]).length === 0 ? <div className="empty">{t("noData",lang)}</div> :
+                      (p.clinical||[]).slice().sort((a,b)=>b.date.localeCompare(a.date)).map(e => (
+                        <div className="history-item" key={e.id}>
+                          <b>{e.date}</b> — {e.diagnosis}<br/>
+                          <span style={{fontSize:13}}>{e.complaint}</span><br/>
+                          <span style={{fontSize:13,color:"var(--muted)"}}>{e.treatment}</span>
+                        </div>
+                      ))}
+                  </div>
+                  <div className="card">
+                    <div className="card-head"><h3>{t("trend",lang)}</h3></div>
+                    <div className="grid grid-3">
+                      <Chart data={bpTrend} label={t("systolic",lang)} color="#0f766e" />
+                      <Chart data={sugarTrend} label={t("sugar",lang)} color="#2563eb" />
+                      <Chart data={weightTrend} label={t("weight",lang)} color="#d97706" />
+                    </div>
+                  </div>
+                </>
+              );
+            })()}
+          </>
+        )}
+
+        {view === "reports" && (
+          <>
+            <div className="page-head">
+              <div><h2>{t("reports",lang)}</h2><p></p></div>
+              <button className="btn btn-primary" onClick={() => { setReportForm({ pid: selectedId || "", date: new Date().toISOString().slice(0,10), name:"", result:"", notes:"", file:null }); setReportModal(true); }}>{t("addReport",lang)}</button>
+            </div>
+            <div className="card">
+              <Field label={t("selectPatient",lang)}>
+                <select value={selectedId} onChange={e => setSelectedId(e.target.value)}>
+                  <option value="">-- {t("selectPatient",lang)} --</option>
+                  {patients.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+                </select>
+              </Field>
+            </div>
+            {!selectedPatient ? <div className="card empty">{t("selectPatient",lang)}</div> :
+              (selectedPatient.reports||[]).length === 0 ? <div className="card empty">{t("noData",lang)}</div> :
+              (selectedPatient.reports||[]).slice().sort((a,b)=>b.date.localeCompare(a.date)).map(r => (
+                <div className="report-card" key={r.id}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <h3 style={{margin:0,fontSize:15}}>{r.name} <span style={{fontSize:12,color:"var(--muted)",fontWeight:400}}>{r.date}</span></h3>
+                    <button className="btn btn-danger btn-sm" onClick={() => deleteReport(selectedId, r.id)}>{t("delete",lang)}</button>
+                  </div>
+                  <div style={{marginTop:8}}><b>{t("result",lang)}:</b> {r.result || "-"}</div>
+                  {r.notes && <div><b>{t("reportNotes",lang)}:</b> {r.notes}</div>}
+                  {r.fileData && <div style={{marginTop:8}}><a href={r.fileData} target="_blank" download={r.fileName||"report"}>📎 {r.fileName || "View file"}</a></div>}
+                </div>
+              ))}
+          </>
+        )}
+
+        {view === "settings" && (
+          <>
+            <div className="page-head"><div><h2>{t("settings",lang)}</h2><p></p></div></div>
+            <div className="card">
+              <div className="card-head"><h3>{t("backup",lang)}</h3></div>
+              <button className="btn btn-primary" onClick={exportData}>{t("backup",lang)}</button>
+              <button className="btn btn-outline" style={{marginLeft:8}} onClick={() => fileInputRef.current && fileInputRef.current.click()}>{t("restore",lang)}</button>
+              <input ref={fileInputRef} type="file" accept="application/json" style={{display:"none"}} onChange={importData} />
+              <div style={{marginTop:10,fontSize:12,color:"var(--muted)"}}>Export all patient data to JSON for backup. Restore from a previously exported file.</div>
+            </div>
+            <div className="card">
+              <div className="card-head"><h3>{t("language",lang)}</h3></div>
+              <select value={lang} onChange={e => setLang(e.target.value)} style={{padding:"9px 12px",border:"1px solid var(--border)",borderRadius:10}}>
+                <option value="en">English</option>
+                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="bn">বাংলা (Bangla)</option>
+              </select>
+            </div>
+            <div className="card">
+              <div className="card-head"><h3>Install as App (PWA)</h3></div>
+              <div style={{fontSize:13,color:"var(--muted)"}}>Use browser menu → "Install ASHVIK" or "Add to Home Screen" for offline use.</div>
+            </div>
+          </>
+        )}
+      </main>
+
+      {/* Patient Modal */}
+      <div className={"modal-backdrop" + (patientModal ? " open" : "")} onClick={() => setPatientModal(false)}>
+        <div className="modal" onClick={e => e.stopPropagation()}>
+          <h3>{editingPatientId ? t("edit",lang) : t("addPatient",lang)}</h3>
+          <div className="grid grid-2">
+            <Field label={t("name",lang) + " *"}><input value={patientForm.name} onChange={e => setPatientForm({...patientForm, name: e.target.value})} /></Field>
+            <Field label={t("age",lang) + " *"}><input type="number" min="0" value={patientForm.age} onChange={e => setPatientForm({...patientForm, age: e.target.value})} /></Field>
+            <Field label={t("sex",lang) + " *"}>
+              <select value={patientForm.sex} onChange={e => setPatientForm({...patientForm, sex: e.target.value})}>
+                <option>Male</option><option>Female</option><option>Other</option>
+              </select>
+            </Field>
+            <Field label={t("dob",lang)}><input type="date" value={patientForm.dob} onChange={e => setPatientForm({...patientForm, dob: e.target.value})} /></Field>
+            <Field label={t("phone",lang)}><input value={patientForm.phone} onChange={e => setPatientForm({...patientForm, phone: e.target.value})} /></Field>
+            <Field label={t("bloodGroup",lang)}><input value={patientForm.bloodGroup} onChange={e => setPatientForm({...patientForm, bloodGroup: e.target.value})} /></Field>
+          </div>
+          <Field label={t("address",lang)} style={{marginTop:10}}><textarea value={patientForm.address} onChange={e => setPatientForm({...patientForm, address: e.target.value})} /></Field>
+          <Field label={t("allergies",lang)} style={{marginTop:10}}><input value={patientForm.allergies} onChange={e => setPatientForm({...patientForm, allergies: e.target.value})} /></Field>
+          <Field label={t("chronic",lang)} style={{marginTop:10}}><input value={patientForm.chronic} onChange={e => setPatientForm({...patientForm, chronic: e.target.value})} /></Field>
+          <Field label={t("notes",lang)} style={{marginTop:10}}><textarea value={patientForm.notes} onChange={e => setPatientForm({...patientForm, notes: e.target.value})} /></Field>
+          <div className="modal-actions">
+            <button className="btn btn-outline" onClick={() => setPatientModal(false)}>{t("cancel",lang)}</button>
+            <button className="btn btn-primary" onClick={savePatient}>{t("save",lang)}</button>
+          </div>
+        </div>
+      </div>
+
+      {/* Report Modal */}
+      <div className={"modal-backdrop" + (reportModal ? " open" : "")} onClick={() => setReportModal(false)}>
+        <div className="modal" onClick={e => e.stopPropagation()}>
+          <h3>{t("addReport",lang)}</h3>
+          <Field label={t("selectPatient",lang) + " *"}>
+            <select value={reportForm.pid} onChange={e => setReportForm({...reportForm, pid: e.target.value})}>
+              <option value="">-- {t("selectPatient",lang)} --</option>
+              {patients.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+            </select>
+          </Field>
+          <Field label={t("date",lang) + " *"}><input type="date" value={reportForm.date} onChange={e => setReportForm({...reportForm, date: e.target.value})} /></Field>
+          <Field label={t("reportName",lang) + " *"}><input placeholder="CBC, Malaria RDT, CXR..." value={reportForm.name} onChange={e => setReportForm({...reportForm, name: e.target.value})} /></Field>
+          <Field label={t("reportResult",lang)}><textarea value={reportForm.result} onChange={e => setReportForm({...reportForm, result: e.target.value})} /></Field>
+          <Field label={t("reportNotes",lang)}><textarea value={reportForm.notes} onChange={e => setReportForm({...reportForm, notes: e.target.value})} /></Field>
+          <Field label={t("attachFile",lang)}><input type="file" onChange={e => setReportForm({...reportForm, file: e.target.files[0]})} /></Field>
+          <div className="modal-actions">
+            <button className="btn btn-outline" onClick={() => setReportModal(false)}>{t("cancel",lang)}</button>
+            <button className="btn btn-primary" onClick={saveReport}>{t("save",lang)}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+// Register service worker for PWA offline
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  });
+}
+</script>
+</body>
 </html>
