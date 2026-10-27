@@ -8,3 +8,6 @@ Thumbs.db
 firebase-debug.log
 ASHVIK/evidence/raw/*.pdf
 
+.playwright-cli/
+data-collection/raw/
+
