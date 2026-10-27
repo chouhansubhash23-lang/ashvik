@@ -20,6 +20,14 @@ Status: **Draft — clinician review required** before clinical use.
 | 13 | Peptic ulcer & GERD | [peptic-ulcer-gerd.md](peptic-ulcer-gerd.md) | ICMR STW Vol. 3, NHP | Draft |
 | 14 | Migraine | [migraine.md](migraine.md) | ICMR STW Vol. 3, IHS | Draft |
 | 15 | Depression & anxiety | [depression-anxiety.md](depression-anxiety.md) | ICMR STW Vol. 3, NMHP, WHO mhGAP | Draft |
+| 16 | Chikungunya & viral fever | [chikungunya-viral-fever.md](chikungunya-viral-fever.md) | NVBDCP, NCDC, WHO | Draft |
+| 17 | Snake bite & poisoning | [snake-bite-poisoning.md](snake-bite-poisoning.md) | National Snakebite Protocol, NCDC | Draft |
+| 18 | Acute coronary syndrome | [acute-coronary-syndrome.md](acute-coronary-syndrome.md) | ICMR STW Vol. 3, NPCDCS | Draft |
+| 19 | Stroke | [stroke.md](stroke.md) | ICMR STW Vol. 3, NPCDCS | Draft |
+| 20 | Maternal care | [maternal-care.md](maternal-care.md) | ICMR STW Vol. 3, RMNCH+A | Draft |
+| 21 | Childhood malnutrition | [childhood-malnutrition.md](childhood-malnutrition.md) | POSHAN Abhiyaan, WHO/UNICEF | Draft |
+| 22 | Arthritis (OA/RA) | [arthritis.md](arthritis.md) | ICMR STW Vol. 3, ACR/EULAR | Draft |
+| 23 | Epilepsy | [epilepsy.md](epilepsy.md) | ICMR STW Vol. 3, ILAE | Draft |
 
 ## Evidence and evaluation
 
@@ -30,16 +38,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Chikungunya / viral fever
-2. Snake bite / scorpion sting / poisoning
-3. Acute coronary syndrome (referral)
-4. Stroke (referral)
-5. Maternal care (ANC, anaemia, pre-eclampsia)
-6. Childhood malnutrition (SAM/MAM)
-7. Rheumatoid arthritis / osteoarthritis
-8. Epilepsy
-9. Dengue-like illness (differential)
-10. Skin/soft tissue infections (cellulitis, abscess)
+1. Skin/soft tissue infections (cellulitis, abscess)
+2. Acute kidney injury
+3. Chronic kidney disease
+4. Dengue-like illness (differential)
+5. COVID-19 / influenza
+6. Sexually transmitted infections
+7. Contraception counselling
+8. Geriatric syndromes (falls, polypharmacy)
+9. Palliative care
+10. Eye/ENT infections
 
 ## Medical disclaimer
 

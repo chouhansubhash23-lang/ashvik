@@ -24,6 +24,14 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-27 | Peptic ulcer/GERD | PPI first-line; H. pylori triple therapy | ICMR S1 | High | Draft | Check local H. pylori resistance |
 | 2026-10-27 | Migraine | Acute NSAID/triptan; propranolol prophylaxis | ICMR S1 / IHS | Medium | Draft | Triptan availability |
 | 2026-10-27 | Depression/anxiety | SSRI first-line; suicide risk assessment | ICMR S1 / mhGAP | High | Draft | Ensure referral pathway |
+| 2026-10-27 | Chikungunya/viral fever | Supportive care; avoid NSAIDs until dengue excluded | NVBDCP / NCDC | High | Draft | — |
+| 2026-10-27 | Snake bite/poisoning | First aid, ASV, atropine/pralidoxime | National Snakebite Protocol | High | Draft | Verify ASV availability |
+| 2026-10-27 | ACS | Aspirin load, refer immediately | ICMR S1 | High | Draft | Thrombolysis protocol needed |
+| 2026-10-27 | Stroke | FAST, glucose, CT before aspirin | ICMR S1 | High | Draft | CT access pathway |
+| 2026-10-27 | Maternal care | ANC schedule, anaemia, MgSO4 | ICMR S1 / RMNCH+A | High | Draft | Verify MgSO4 protocol |
+| 2026-10-27 | Childhood malnutrition | SAM criteria, RUTF, NRC referral | POSHAN / WHO | High | Draft | NRC availability |
+| 2026-10-27 | Arthritis | OA vs RA; methotrexate monitoring | ICMR S1 | Medium | Draft | Rheumatology referral |
+| 2026-10-27 | Epilepsy | AED choice; status epilepticus protocol | ICMR S1 / ILAE | High | Draft | Verify AED availability |
 
 ## How to update
 
