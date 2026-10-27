@@ -41,6 +41,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-27 | Geriatric | Deprescribing; falls prevention | ICMR S1 / NPHCE | Medium | Draft | — |
 | 2026-10-27 | Palliative | Oral morphine titration; laxatives | ICMR S1 / WHO | High | Draft | Narcotics licensing |
 | 2026-10-27 | Eye/ENT | No steroid drops without diagnosis | ICMR S1 | High | Draft | — |
+| 2026-10-27 | Fever with rash | Exclude dengue before NSAIDs; syndrome approach | NVBDCP / WHO | High | Draft | — |
+| 2026-10-27 | Immunisation | UIP schedule and AEFI management | UIP / WHO | High | Draft | Verify state schedule |
+| 2026-10-27 | Poisoning | Atropine/pralidoxime; NAC for paracetamol | NCDC / WHO | High | Draft | Poison helpline access |
+| 2026-10-27 | Gout | Acute NSAID/colchicine; allopurinol titration | ICMR S1 / ACR | High | Draft | — |
+| 2026-10-27 | Thyroid | Levothyroxine dosing; antithyroid monitoring | ICMR S1 / ATA | High | Draft | — |
+| 2026-10-27 | Liver disease | Ascites/SBP management; avoid NSAIDs | ICMR S1 / NCDC | High | Draft | — |
+| 2026-10-27 | Menstrual disorders | AUB workup; tranexamic acid | ICMR S1 | High | Draft | — |
+| 2026-10-27 | Infertility | Semen analysis first-line; couple assessment | ICMR S1 / WHO | Medium | Draft | — |
+| 2026-10-27 | Oral health | Non-healing ulcer biopsy | NOHP / ICMR | High | Draft | — |
+| 2026-10-27 | Occupational health | Silicosis prevention; pesticide poisoning | ICMR/NCDC | Medium | Draft | Compensation process |
 
 ## How to update
 

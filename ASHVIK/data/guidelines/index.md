@@ -37,6 +37,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 30 | Geriatric care | [geriatric-care.md](geriatric-care.md) | ICMR STW Vol. 3, NPHCE | Draft |
 | 31 | Palliative care | [palliative-care.md](palliative-care.md) | ICMR STW Vol. 3, NPCP | Draft |
 | 32 | Eye & ENT infections | [eye-ent-infections.md](eye-ent-infections.md) | ICMR STW Vol. 3, NHP | Draft |
+| 33 | Fever with rash (differential) | [fever-with-rash-differential.md](fever-with-rash-differential.md) | NVBDCP, NCDC, WHO | Draft |
+| 34 | Childhood immunisation | [childhood-immunisation.md](childhood-immunisation.md) | UIP, WHO | Draft |
+| 35 | Acute poisoning agents | [acute-poisoning-agents.md](acute-poisoning-agents.md) | NCDC, WHO | Draft |
+| 36 | Gout | [gout.md](gout.md) | ICMR STW Vol. 3, ACR/EULAR | Draft |
+| 37 | Thyroid disorders | [thyroid-disorders.md](thyroid-disorders.md) | ICMR STW Vol. 3, ATA | Draft |
+| 38 | Liver disease | [liver-disease.md](liver-disease.md) | ICMR STW Vol. 3, NCDC | Draft |
+| 39 | Menstrual disorders | [menstrual-disorders.md](menstrual-disorders.md) | ICMR STW Vol. 3, NHP | Draft |
+| 40 | Infertility basics | [infertility-basics.md](infertility-basics.md) | ICMR STW Vol. 3, WHO | Draft |
+| 41 | Oral health | [oral-health.md](oral-health.md) | National Oral Health Programme | Draft |
+| 42 | Occupational health | [occupational-health.md](occupational-health.md) | ICMR/NCDC, WHO | Draft |
 
 ## Evidence and evaluation
 
@@ -47,16 +57,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Dengue-like illness (differential)
-2. Childhood immunisation schedule
-3. Acute poisoning (specific agents)
-4. Gout and hyperuricaemia
-5. Thyroid disorders (hypo/hyper)
-6. Liver disease (hepatitis, cirrhosis)
-7. Menstrual disorders
-8. Infertility basics
-9. Oral health
-10. Occupational health / silicosis
+1. Geriatric falls and fractures
+2. Back pain and sciatica
+3. Allergic reactions / anaphylaxis
+4. Dengue warning-sign triage
+5. Acute asthma exacerbation
+6. Diabetic foot
+7. Pressure ulcers
+8. Fever in the returned traveller
+9. Antibiotic stewardship
+10. Palliative symptom protocols
 
 ## Medical disclaimer
 
