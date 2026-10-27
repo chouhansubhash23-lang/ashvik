@@ -2,7 +2,7 @@
 
 Generated: 2026-10-27
 
-Scope: 42 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 51 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -10,24 +10,31 @@ Scope: 42 guideline files in `ASHVIK/data/guidelines/`.
 
 | File | Score | Checks | Words | Dose mentions | Brand sections |
 |---|---|---|---|---|---|
+| acute-asthma-exacerbation.md | 100% | 12/12 | 449 | 6 | 1 |
 | acute-coronary-syndrome.md | 100% | 12/12 | 515 | 7 | 1 |
 | acute-diarrhoea.md | 100% | 12/12 | 712 | 13 | 2 |
 | acute-kidney-injury.md | 100% | 12/12 | 481 | 1 | 0 |
 | acute-poisoning-agents.md | 100% | 12/12 | 508 | 9 | 0 |
+| anaphylaxis.md | 100% | 12/12 | 437 | 8 | 1 |
+| antibiotic-stewardship.md | 100% | 12/12 | 489 | 6 | 1 |
 | arthritis.md | 100% | 12/12 | 627 | 10 | 2 |
 | asthma-copd.md | 100% | 12/12 | 582 | 4 | 2 |
+| back-pain-sciatica.md | 100% | 12/12 | 442 | 1 | 1 |
 | chikungunya-viral-fever.md | 100% | 12/12 | 457 | 4 | 1 |
 | childhood-immunisation.md | 100% | 12/12 | 467 | 4 | 0 |
 | childhood-malnutrition.md | 100% | 12/12 | 540 | 2 | 0 |
 | chronic-kidney-disease.md | 100% | 12/12 | 552 | 3 | 1 |
 | contraception.md | 100% | 12/12 | 514 | 2 | 2 |
 | covid-influenza.md | 100% | 12/12 | 537 | 4 | 2 |
+| dengue-triage.md | 100% | 12/12 | 458 | 3 | 0 |
 | dengue.md | 100% | 12/12 | 492 | 3 | 1 |
 | depression-anxiety.md | 100% | 12/12 | 609 | 6 | 2 |
+| diabetic-foot.md | 100% | 12/12 | 433 | 1 | 1 |
 | epilepsy.md | 100% | 12/12 | 642 | 10 | 1 |
 | eye-ent-infections.md | 100% | 12/12 | 669 | 1 | 3 |
 | fever-with-rash-differential.md | 100% | 12/12 | 482 | 2 | 1 |
 | geriatric-care.md | 100% | 12/12 | 533 | 1 | 0 |
+| geriatric-falls-fractures.md | 100% | 12/12 | 445 | 2 | 0 |
 | gout.md | 100% | 12/12 | 541 | 9 | 2 |
 | hypertension.md | 100% | 12/12 | 556 | 6 | 1 |
 | infertility-basics.md | 100% | 12/12 | 491 | 5 | 1 |
@@ -40,8 +47,10 @@ Scope: 42 guideline files in `ASHVIK/data/guidelines/`.
 | occupational-health.md | 100% | 12/12 | 494 | 1 | 0 |
 | oral-health.md | 100% | 12/12 | 489 | 2 | 1 |
 | palliative-care.md | 100% | 12/12 | 554 | 6 | 1 |
+| palliative-symptom-protocols.md | 100% | 12/12 | 441 | 13 | 0 |
 | peptic-ulcer-gerd.md | 100% | 12/12 | 614 | 5 | 2 |
 | pneumonia.md | 100% | 12/12 | 585 | 7 | 2 |
+| pressure-ulcers.md | 100% | 12/12 | 423 | 2 | 1 |
 | scabies-fungal-skin.md | 100% | 12/12 | 706 | 6 | 2 |
 | skin-soft-tissue-infections.md | 100% | 12/12 | 564 | 3 | 2 |
 | snake-bite-poisoning.md | 100% | 12/12 | 651 | 3 | 0 |
@@ -76,24 +85,31 @@ All structural checks passed.
 
 | File | Status | Reviewer | Date |
 |---|---|---|---|
+| acute-asthma-exacerbation.md | Draft | — | — |
 | acute-coronary-syndrome.md | Draft | — | — |
 | acute-diarrhoea.md | Draft | — | — |
 | acute-kidney-injury.md | Draft | — | — |
 | acute-poisoning-agents.md | Draft | — | — |
+| anaphylaxis.md | Draft | — | — |
+| antibiotic-stewardship.md | Draft | — | — |
 | arthritis.md | Draft | — | — |
 | asthma-copd.md | Draft | — | — |
+| back-pain-sciatica.md | Draft | — | — |
 | chikungunya-viral-fever.md | Draft | — | — |
 | childhood-immunisation.md | Draft | — | — |
 | childhood-malnutrition.md | Draft | — | — |
 | chronic-kidney-disease.md | Draft | — | — |
 | contraception.md | Draft | — | — |
 | covid-influenza.md | Draft | — | — |
+| dengue-triage.md | Draft | — | — |
 | dengue.md | Draft | — | — |
 | depression-anxiety.md | Draft | — | — |
+| diabetic-foot.md | Draft | — | — |
 | epilepsy.md | Draft | — | — |
 | eye-ent-infections.md | Draft | — | — |
 | fever-with-rash-differential.md | Draft | — | — |
 | geriatric-care.md | Draft | — | — |
+| geriatric-falls-fractures.md | Draft | — | — |
 | gout.md | Draft | — | — |
 | hypertension.md | Draft | — | — |
 | infertility-basics.md | Draft | — | — |
@@ -106,8 +122,10 @@ All structural checks passed.
 | occupational-health.md | Draft | — | — |
 | oral-health.md | Draft | — | — |
 | palliative-care.md | Draft | — | — |
+| palliative-symptom-protocols.md | Draft | — | — |
 | peptic-ulcer-gerd.md | Draft | — | — |
 | pneumonia.md | Draft | — | — |
+| pressure-ulcers.md | Draft | — | — |
 | scabies-fungal-skin.md | Draft | — | — |
 | skin-soft-tissue-infections.md | Draft | — | — |
 | snake-bite-poisoning.md | Draft | — | — |

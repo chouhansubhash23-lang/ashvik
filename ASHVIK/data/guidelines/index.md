@@ -47,6 +47,15 @@ Status: **Draft — clinician review required** before clinical use.
 | 40 | Infertility basics | [infertility-basics.md](infertility-basics.md) | ICMR STW Vol. 3, WHO | Draft |
 | 41 | Oral health | [oral-health.md](oral-health.md) | National Oral Health Programme | Draft |
 | 42 | Occupational health | [occupational-health.md](occupational-health.md) | ICMR/NCDC, WHO | Draft |
+| 43 | Geriatric falls & fractures | [geriatric-falls-fractures.md](geriatric-falls-fractures.md) | ICMR STW Vol. 3, NPHCE | Draft |
+| 44 | Back pain & sciatica | [back-pain-sciatica.md](back-pain-sciatica.md) | ICMR STW Vol. 3, NICE | Draft |
+| 45 | Anaphylaxis | [anaphylaxis.md](anaphylaxis.md) | WHO, NHP | Draft |
+| 46 | Dengue triage | [dengue-triage.md](dengue-triage.md) | NVBDCP, WHO | Draft |
+| 47 | Acute asthma exacerbation | [acute-asthma-exacerbation.md](acute-asthma-exacerbation.md) | ICMR STW Vol. 3, GINA | Draft |
+| 48 | Diabetic foot | [diabetic-foot.md](diabetic-foot.md) | ICMR STW Vol. 3, IWGDF | Draft |
+| 49 | Pressure ulcers | [pressure-ulcers.md](pressure-ulcers.md) | ICMR STW Vol. 3, NHP | Draft |
+| 50 | Antibiotic stewardship | [antibiotic-stewardship.md](antibiotic-stewardship.md) | ICMR, WHO, NCDC AMR | Draft |
+| 51 | Palliative symptom protocols | [palliative-symptom-protocols.md](palliative-symptom-protocols.md) | ICMR STW Vol. 3, WHO | Draft |
 
 ## Evidence and evaluation
 
@@ -57,16 +66,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Geriatric falls and fractures
-2. Back pain and sciatica
-3. Allergic reactions / anaphylaxis
-4. Dengue warning-sign triage
-5. Acute asthma exacerbation
-6. Diabetic foot
-7. Pressure ulcers
-8. Fever in the returned traveller
-9. Antibiotic stewardship
-10. Palliative symptom protocols
+1. Acute abdomen (referral)
+2. Appendicitis (referral)
+3. Intestinal obstruction (referral)
+4. Hernia (referral)
+5. Gallstone disease
+6. Pancreatitis (referral)
+7. Head injury
+8. Burns
+9. Drowning / electrocution
+10. Sexual assault care
 
 ## Medical disclaimer
 

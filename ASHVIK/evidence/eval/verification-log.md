@@ -51,6 +51,15 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-27 | Infertility | Semen analysis first-line; couple assessment | ICMR S1 / WHO | Medium | Draft | — |
 | 2026-10-27 | Oral health | Non-healing ulcer biopsy | NOHP / ICMR | High | Draft | — |
 | 2026-10-27 | Occupational health | Silicosis prevention; pesticide poisoning | ICMR/NCDC | Medium | Draft | Compensation process |
+| 2026-10-27 | Geriatric falls | Hip fracture referral; osteoporosis | ICMR S1 / NPHCE | High | Draft | — |
+| 2026-10-27 | Back pain | Red flags; avoid routine imaging | ICMR S1 / NICE | High | Draft | — |
+| 2026-10-27 | Anaphylaxis | Adrenaline IM first-line | WHO / NHP | High | Draft | Adrenaline availability |
+| 2026-10-27 | Dengue triage | Warning signs and group A/B/C | NVBDCP / WHO | High | Draft | — |
+| 2026-10-27 | Acute asthma | Oxygen + bronchodilator + steroid | ICMR S1 / GINA | High | Draft | — |
+| 2026-10-27 | Diabetic foot | Offloading; infection control | ICMR S1 / IWGDF | High | Draft | — |
+| 2026-10-27 | Pressure ulcers | Staging; repositioning | ICMR S1 / NHP | High | Draft | — |
+| 2026-10-27 | Antibiotic stewardship | Avoid unnecessary antibiotics | ICMR S3 / WHO | High | Draft | Local antibiogram |
+| 2026-10-27 | Palliative symptoms | Morphine titration; laxatives | ICMR S1 / WHO | High | Draft | Narcotics licensing |
 
 ## How to update
 
