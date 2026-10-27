@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Diagnosis Assistant (React) - Clinical Decision Support</title>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0d9488; --primary-dark: #0f766e; --primary-light: #ccfbf1;
+    --accent: #2563eb; --bg: #f8fafc; --card: #ffffff; --text: #0f172a;
+    --muted: #64748b; --border: #e2e8f0; --danger: #dc2626; --warn: #d97706;
+    --success: #16a34a; --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  .app { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+  .sidebar { background: linear-gradient(180deg, #0f766e 0%, #115e59 100%); color: #fff; padding: 24px 18px; display: flex; flex-direction: column; gap: 6px; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .brand-logo { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.18); display: grid; place-items: center; font-weight: 700; font-size: 18px; }
+  .brand h1 { font-size: 17px; margin: 0; font-weight: 700; }
+  .brand p { font-size: 11px; margin: 0; opacity: .75; }
+  .nav-btn { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border: none; background: transparent; color: rgba(255,255,255,.85); border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 500; text-align: left; transition: background .15s, color .15s; }
+  .nav-btn:hover { background: rgba(255,255,255,.12); color: #fff; }
+  .nav-btn.active { background: #fff; color: var(--primary-dark); font-weight: 600; }
+  .nav-icon { width: 18px; text-align: center; }
+  .sidebar-foot { margin-top: auto; font-size: 11px; opacity: .6; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.15); }
+  .main { padding: 28px 32px; overflow-y: auto; }
+  .page-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; flex-wrap: wrap; gap: 12px; }
+  .page-head h2 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.3px; }
+  .page-head p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+  .btn { padding: 9px 16px; border: none; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 600; transition: transform .05s, box-shadow .15s; }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(13,148,136,.25); }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .btn-outline { background: #fff; border: 1px solid var(--border); color: var(--text); }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-sm { padding: 6px 12px; font-size: 12px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; margin-bottom: 18px; box-shadow: 0 1px 3px rgba(15,23,42,.04); }
+  .card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .card-head h3 { margin: 0; font-size: 16px; font-weight: 600; color: var(--text); }
+  .card-head .sub { font-size: 12px; color: var(--muted); }
+  .grid { display: grid; gap: 14px; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 900px) { .grid-3,.grid-4 { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 600px) { .grid-2,.grid-3,.grid-4 { grid-template-columns: 1fr; } }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field label { font-size: 12px; font-weight: 500; color: var(--muted); }
+  .field input, .field select, .field textarea {
+    padding: 9px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px;
+    font-family: inherit; background: #fff; transition: border-color .15s, box-shadow .15s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light);
+  }
+  .field textarea { min-height: 70px; resize: vertical; }
+  .field input[readonly] { background: #f1f5f9; color: var(--muted); }
+  .chip { display: inline-flex; align-items: center; padding: 6px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 500; border: 1px solid var(--border); background: #fff; cursor: pointer; margin: 3px; transition: all .15s; user-select: none; }
+  .chip:hover { border-color: var(--primary); color: var(--primary); }
+  .chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .alert { padding: 12px 14px; border-radius: 10px; font-size: 13px; margin-bottom: 12px; border: 1px solid; }
+  .alert-info { background: #eff6ff; color: #1e40af; border-color: #bfdbfe; }
+  .alert-warn { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+  .alert-danger { background: #fef2f2; color: #991b1b; border-color: #fecaca; }
+  .alert-success { background: #f0fdf4; color: #166534; border-color: #bbf7d0; }
+  .alert ul { margin: 6px 0 0 18px; padding: 0; }
+  .result-item { border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; transition: box-shadow .15s; }
+  .result-item:hover { box-shadow: 0 2px 8px rgba(15,23,42,.06); }
+  .score-bar { height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; margin-top: 6px; }
+  .score-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #14b8a6); border-radius: 3px; transition: width .4s; }
+  .empty { text-align: center; color: var(--muted); padding: 30px 10px; font-size: 14px; }
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+  .badge-m { background: #dbeafe; color: #1d4ed8; }
+  .badge-f { background: #fce7f3; color: #be185d; }
+  .badge-o { background: #e2e8f0; color: #475569; }
+  .modal-backdrop { position: fixed; inset: 0; background: rgba(15,23,42,.45); backdrop-filter: blur(2px); display: none; align-items: center; justify-content: center; z-index: 100; }
+  .modal-backdrop.open { display: flex; }
+  .modal { background: var(--card); border-radius: 16px; padding: 24px; width: 92%; max-width: 560px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.2); }
+  .modal h3 { margin: 0 0 16px; font-size: 18px; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+  .section-title { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; margin: 16px 0 8px; }
+  .report-card { border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+  .history-item { border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
+  @media (max-width: 820px) { .app { grid-template-columns: 1fr; } .sidebar { flex-direction: row; flex-wrap: wrap; padding: 12px; } .sidebar-foot { display: none; } .nav-btn { flex: 1 1 auto; } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useMemo } = React;
+
+const STORAGE_KEY = "medidesk_patients_v1";
+
+const SYMPTOMS = ["Fever","Cough","Cold/Runny nose","Sore throat","Body ache","Headache","Breathlessness","Chest pain","Vomiting","Diarrhoea","Abdominal pain","Burning urination","Rash","Joint pain","Weakness","Dizziness","Loss of appetite","Weight loss","Night sweats","Itching","Wheeze","Chills/Sweating","Frequent urination","Thirst","Constipation","Nausea","Red eyes","Sneezing","Fatigue","Pallor","Weight gain","Dry skin","Sleep disturbance","Low mood"];
+
+const CONDITIONS = [
+  { name:"Viral fever", keywords:["fever","body ache","headache","cold","runny nose","sore throat","weakness"], tests:["CBC","Malaria RDT (if fever>3d)"], advice:"Rest, fluids, paracetamol. Avoid antibiotics unless bacterial signs.", redFlags:["breathlessness","chest pain","confusion","fever>103"] },
+  { name:"Malaria", keywords:["fever","chills","sweating","headache","vomiting","weakness"], tests:["Malaria RDT + smear"], advice:"ACT per protocol. Monitor for severe signs. Refer if danger signs.", redFlags:["confusion","jaundice","bleeding","severe weakness"] },
+  { name:"Dengue", keywords:["fever","body ache","joint pain","rash","headache","vomiting","weakness"], tests:["NS1/IgM dengue","Platelet count","CBC"], advice:"Paracetamol only (no NSAIDs). Hydration. Monitor platelets/warning signs.", redFlags:["bleeding","abdominal pain","vomiting","restlessness"] },
+  { name:"Typhoid", keywords:["fever","abdominal pain","constipation","diarrhoea","headache","weakness","loss of appetite"], tests:["Blood culture","Widal/CBC"], advice:"Antibiotics per local resistance. Soft diet, fluids.", redFlags:["intestinal bleeding","perforation","confusion"] },
+  { name:"Acute diarrhoea", keywords:["diarrhoea","vomiting","abdominal pain","dehydration","fever","weakness"], tests:["Stool exam","Electrolytes if severe"], advice:"ORS + zinc. Continue feeding. Avoid anti-diarrhoeals in children.", redFlags:["blood in stool","severe dehydration","lethargy"] },
+  { name:"Pneumonia", keywords:["cough","fever","breathlessness","chest pain","sputum","weakness"], tests:["CBC","Chest X-ray","SpO2"], advice:"Antibiotics per severity. Oxygen if hypoxic. Refer if severe.", redFlags:["spo2<94","respiratory distress","confusion","hypotension"] },
+  { name:"Acute bronchitis", keywords:["cough","fever","sore throat","chest discomfort","sputum"], tests:["Clinical","CXR if needed"], advice:"Symptomatic care. Avoid unnecessary antibiotics. Steam inhalation.", redFlags:["breathlessness","high fever","chest pain"] },
+  { name:"Asthma", keywords:["wheeze","breathlessness","cough","chest tightness","night cough"], tests:["Peak flow","Spirometry (if available)"], advice:"Inhaler + spacer. Avoid triggers. Action plan.", redFlags:["severe breathlessness","unable to speak","cyanosis"] },
+  { name:"COPD", keywords:["cough","sputum","breathlessness","wheeze","smoking","chest tightness"], tests:["Spirometry","CXR","SpO2"], advice:"Bronchodilators. Stop smoking/biomass. Vaccination.", redFlags:["respiratory failure","confusion","cyanosis"] },
+  { name:"Hypertension", keywords:["headache","dizziness","chest pain","blurred vision","weakness"], tests:["BP (repeated)","ECG","Renal function","Lipids"], advice:"Salt restriction, exercise, medication. Recheck BP.", redFlags:["chest pain","neuro deficit","very high BP"] },
+  { name:"Type 2 Diabetes", keywords:["thirst","frequent urination","weight loss","weakness","blurred vision","fatigue"], tests:["Fasting sugar","HbA1c","Urine"], advice:"Diet, exercise, metformin. Foot/eye screening.", redFlags:["DKA signs","severe hyperglycaemia"] },
+  { name:"UTI", keywords:["burning urination","frequency","urgency","fever","abdominal pain","back pain"], tests:["Urine dipstick/culture"], advice:"Oral antibiotics, hydration. Refer if pyelonephritis.", redFlags:["fever","flank pain","vomiting"] },
+  { name:"Scabies", keywords:["itching","rash","night itching","skin lesions"], tests:["Clinical exam"], advice:"Permethrin 5% whole body. Treat contacts. Wash linen.", redFlags:["secondary infection","crusted scabies"] },
+  { name:"Fungal skin infection", keywords:["itching","rash","ring-shaped","scaling","skin lesions"], tests:["KOH (if available)"], advice:"Topical antifungal, keep dry. Full course.", redFlags:["spreading","immunocompromised"] },
+  { name:"Iron deficiency anaemia", keywords:["weakness","fatigue","pallor","breathlessness","dizziness","palpitations"], tests:["CBC/Hb","Ferritin (if available)"], advice:"Iron + folic acid. Treat worms. Iron-rich diet.", redFlags:["severe anaemia","heart failure"] },
+  { name:"Hypothyroidism", keywords:["weight gain","fatigue","cold intolerance","constipation","dry skin","hair loss"], tests:["TSH","T4"], advice:"Levothyroxine. Recheck TSH in 6-8 weeks.", redFlags:["myxoedema","altered consciousness"] },
+  { name:"Allergic rhinitis", keywords:["sneezing","runny nose","itchy eyes","nasal congestion","itching"], tests:["Clinical"], advice:"Antihistamine, nasal steroid. Avoid allergens.", redFlags:["asthma exacerbation"] },
+  { name:"Migraine", keywords:["headache","nausea","vomiting","photophobia","visual aura"], tests:["Clinical","Neuro exam"], advice:"Analgesics, trigger avoidance. Refer if red flags.", redFlags:["sudden thunderclap","neuro deficit","fever+neck stiffness"] },
+  { name:"Gastroenteritis/food poisoning", keywords:["vomiting","diarrhoea","abdominal pain","nausea","fever"], tests:["Stool exam"], advice:"ORS, rest. Antibiotics only if indicated.", redFlags:["blood in stool","severe dehydration"] },
+  { name:"Tuberculosis", keywords:["cough","weight loss","night sweats","fever","hemoptysis","weakness"], tests:["Sputum AFB/CBNAAT","CXR"], advice:"DOTS. Screen family. Nutritional support.", redFlags:["hemoptysis","respiratory distress"] },
+  { name:"Conjunctivitis", keywords:["red eyes","itching","discharge","tearing","eye pain"], tests:["Clinical"], advice:"Hygiene, topical antibiotics if bacterial. Avoid steroids.", redFlags:["vision loss","severe pain","corneal ulcer"] },
+  { name:"Skin allergy/urticaria", keywords:["itching","rash","hives","swelling"], tests:["Clinical"], advice:"Antihistamine. Identify trigger. Avoid NSAIDs if needed.", redFlags:["angioedema","anaphylaxis"] },
+  { name:"Depression", keywords:["low mood","sleep disturbance","fatigue","loss of interest","appetite change"], tests:["Clinical screening (PHQ-9)"], advice:"Counseling, SSRI if indicated. Follow up.", redFlags:["suicidal ideation"] },
+  { name:"Anxiety", keywords:["anxiety","palpitations","sweating","tremor","restlessness","sleep disturbance"], tests:["Clinical"], advice:"Counseling, breathing exercises. Medication if needed.", redFlags:["panic with chest pain (rule out cardiac)"] }
+];
+
+const uid = () => "p" + Math.random().toString(36).slice(2,10) + Date.now().toString(36);
+
+function loadPatients() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
+}
+function savePatients(ps) { localStorage.setItem(STORAGE_KEY, JSON.stringify(ps)); }
+
+function seed() {
+  return [{ id: uid(), name:"Ramesh Kumar", age:45, sex:"Male", dob:"1980-03-12", phone:"9876543210", address:"Village Rampur, District Lucknow", bloodGroup:"B+", allergies:"Penicillin", chronic:"Type 2 Diabetes, Hypertension", notes:"Regular follow-up.", clinical:[], diagnostic:[], consults:[], reports:[] }];
+}
+
+function escapeHtml(s){ return String(s||"").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
+
+// ---------- Components ----------
+function Sidebar({ view, setView }) {
+  const items = [
+    { id: "assist", label: "Diagnosis Assist", icon: "🩺" },
+    { id: "reports", label: "Test Reports", icon: "📋" },
+    { id: "history", label: "Patient History", icon: "📁" },
+  ];
+  return (
+    <aside className="sidebar">
+      <div className="brand">
+        <div className="brand-logo">M</div>
+        <div><h1>ASHVIK</h1><p>Diagnosis Assistant</p></div>
+      </div>
+      {items.map(it => (
+        <button key={it.id} className={"nav-btn" + (view===it.id?" active":"")} onClick={() => setView(it.id)}>
+          <span className="nav-icon">{it.icon}</span>{it.label}
+        </button>
+      ))}
+      <div className="sidebar-foot">Data stored locally in browser.<br/>Shares data with ASHVIK.</div>
+    </aside>
+  );
+}
+
+function Field({ label, children, style }) {
+  return <div className="field" style={style}><label>{label}</label>{children}</div>;
+}
+
+function Chip({ label, active, onClick }) {
+  return <span className={"chip" + (active?" active":"")} onClick={onClick}>{label}</span>;
+}
+
+function App() {
+  const [patients, setPatients] = useState(() => {
+    const ps = loadPatients();
+    if (!ps.length) { const s = seed(); savePatients(s); return s; }
+    return ps;
+  });
+  const [view, setView] = useState("assist");
+  const [selectedId, setSelectedId] = useState("");
+  const [symptoms, setSymptoms] = useState([]);
+  const [symptomNotes, setSymptomNotes] = useState("");
+  const [vitals, setVitals] = useState({ bp:"", pulse:"", temp:"", spo2:"", weight:"" });
+  const [chronic, setChronic] = useState("");
+  const [allergies, setAllergies] = useState("");
+  const [doctorDx, setDoctorDx] = useState("");
+  const [result, setResult] = useState(null);
+  const [reportModal, setReportModal] = useState(false);
+  const [reportForm, setReportForm] = useState({ pid:"", date:"", name:"", result:"", notes:"", file:null });
+  const [patientModal, setPatientModal] = useState(false);
+  const [editingPatientId, setEditingPatientId] = useState(null);
+  const [patientForm, setPatientForm] = useState({ name:"", age:"", sex:"Male", dob:"", phone:"", address:"", bloodGroup:"", allergies:"", chronic:"", notes:"" });
+
+  const openPatientModal = (p=null) => {
+    if (p) {
+      setEditingPatientId(p.id);
+      setPatientForm({ name:p.name||"", age:p.age||"", sex:p.sex||"Male", dob:p.dob||"", phone:p.phone||"", address:p.address||"", bloodGroup:p.bloodGroup||"", allergies:p.allergies||"", chronic:p.chronic||"", notes:p.notes||"" });
+    } else {
+      setEditingPatientId(null);
+      setPatientForm({ name:"", age:"", sex:"Male", dob:"", phone:"", address:"", bloodGroup:"", allergies:"", chronic:"", notes:"" });
+    }
+    setPatientModal(true);
+  };
+  const savePatient = () => {
+    const name = patientForm.name.trim();
+    const age = patientForm.age.trim();
+    if (!name || !age) { alert("Name and Age required."); return; }
+    const data = { ...patientForm, age: Number(age) };
+    const ps = [...patients];
+    if (editingPatientId) {
+      const p = ps.find(x => x.id === editingPatientId);
+      Object.assign(p, data);
+    } else {
+      const np = { id: uid(), clinical:[], diagnostic:[], consults:[], reports:[], ...data };
+      ps.push(np);
+      setSelectedId(np.id);
+    }
+    setPatients(ps); savePatients(ps);
+    setPatientModal(false);
+  };
+
+  const selectedPatient = useMemo(() => patients.find(p => p.id === selectedId), [patients, selectedId]);
+
+  useEffect(() => {
+    if (!selectedId) return;
+    const p = patients.find(x => x.id === selectedId);
+    if (!p) return;
+    setChronic(p.chronic || "");
+    setAllergies(p.allergies || "");
+    const consults = (p.consults || []).slice().sort((a,b) => b.date.localeCompare(a.date));
+    if (consults.length) {
+      const c = consults[0];
+      setVitals({ bp: c.vitals.bp||"", pulse: c.vitals.pulse||"", temp: c.vitals.temp||"", spo2: c.vitals.spo2||"", weight: c.vitals.weight||"" });
+    } else {
+      setVitals({ bp:"", pulse:"", temp:"", spo2:"", weight:"" });
+    }
+  }, [selectedId, patients]);
+
+  const toggleSymptom = (s) => setSymptoms(prev => prev.includes(s) ? prev.filter(x=>x!==s) : [...prev, s]);
+
+  const generateDiagnosis = () => {
+    if (!selectedId) { alert("Select a patient."); return; }
+    const p = patients.find(x => x.id === selectedId);
+    const symptomText = (symptoms.join(" ") + " " + symptomNotes).toLowerCase();
+    const chronicL = chronic.toLowerCase();
+    const temp = parseFloat(vitals.temp);
+    const spo2 = parseFloat(vitals.spo2);
+    const age = p.age;
+    const sex = p.sex;
+
+    const scored = CONDITIONS.map(cond => {
+      let score = 0; const matched = [];
+      cond.keywords.forEach(kw => {
+        if (symptomText.includes(kw.toLowerCase())) { score += 2; matched.push(kw); }
+      });
+      if (chronicL.includes("diabetes") && cond.name === "Type 2 Diabetes") score += 3;
+      if (chronicL.includes("hypertension") && cond.name === "Hypertension") score += 3;
+      if (chronicL.includes("asthma") && cond.name === "Asthma") score += 3;
+      if (chronicL.includes("copd") && cond.name === "COPD") score += 3;
+      if (age < 5 && ["Pneumonia","Acute diarrhoea"].includes(cond.name)) score += 1;
+      if (age > 60 && ["Hypertension","Type 2 Diabetes","COPD"].includes(cond.name)) score += 1;
+      if (sex === "Female" && cond.name === "UTI") score += 1;
+      if (!isNaN(temp) && temp >= 100.4 && cond.keywords.includes("fever")) score += 1;
+      if (!isNaN(spo2) && spo2 < 94 && (cond.name === "Pneumonia" || cond.name === "COPD" || cond.name === "Asthma")) score += 3;
+      return { ...cond, score, matched };
+    }).filter(c => c.score > 0).sort((a,b) => b.score - a.score);
+
+    const top = scored.slice(0,5);
+    const suggested = top.length && top[0].score >= 3 ? top[0].name : (top.length ? top[0].name : "Insufficient data — needs clinical evaluation");
+
+    const redFlags = [];
+    if (symptomText.includes("chest pain")) redFlags.push("Chest pain — rule out cardiac/MI, refer if acute");
+    if (symptomText.includes("breathlessness")) redFlags.push("Breathlessness — assess SpO2, consider pneumonia/asthma/COPD");
+    if (!isNaN(spo2) && spo2 < 94) redFlags.push("SpO2 " + spo2 + "% — hypoxia, urgent evaluation");
+    if (!isNaN(temp) && temp >= 103) redFlags.push("High fever ≥103°F — investigate cause, watch for sepsis");
+    if (symptomText.includes("confusion") || symptomText.includes("altered")) redFlags.push("Altered sensorium — emergency");
+    if (symptomText.includes("bleeding")) redFlags.push("Bleeding — evaluate (dengue/menorrhagia)");
+    if (symptomText.includes("blood in stool")) redFlags.push("Blood in stool — dysentery, refer if severe");
+    if (symptomText.includes("severe dehydration") || symptomText.includes("no urine")) redFlags.push("Severe dehydration — urgent ORS/IV");
+
+    const tests = new Set();
+    top.slice(0,3).forEach(c => (c.tests||[]).forEach(t => tests.add(t)));
+
+    const doctorDxL = doctorDx.trim().toLowerCase();
+    let agreement = "";
+    if (doctorDx.trim()) {
+      const sys = suggested.toLowerCase();
+      if (sys.includes(doctorDxL) || doctorDxL.includes(sys.split(" ")[0])) agreement = "✅ System agrees with your clinical impression.";
+      else agreement = "⚠️ System suggestion differs from your impression — review both and the differential list.";
+    }
+
+    setResult({ pid: selectedId, suggested, top, tests: [...tests], redFlags, doctorDx, agreement, symptoms, symptomNotes, chronic, vitals, date: new Date().toISOString().slice(0,10) });
+    setTimeout(() => document.getElementById("resultCard")?.scrollIntoView({ behavior: "smooth" }), 50);
+  };
+
+  const saveResultAsNote = () => {
+    if (!result) return;
+    const ps = [...patients];
+    const p = ps.find(x => x.id === result.pid);
+    p.clinical = p.clinical || [];
+    p.clinical.push({
+      id: uid(), date: result.date,
+      complaint: result.symptoms.join(", ") + (result.symptomNotes ? " | " + result.symptomNotes : ""),
+      diagnosis: result.suggested + (result.doctorDx ? " (Dr impression: " + result.doctorDx + ")" : ""),
+      treatment: "Tests: " + result.tests.join(", "),
+      notes: "AI-assisted differential. Red flags: " + (result.redFlags.join("; ") || "none")
+    });
+    setPatients(ps); savePatients(ps);
+    alert("Saved to patient clinical history.");
+  };
+
+  const consults = selectedPatient ? (selectedPatient.consults || []).slice().sort((a,b) => b.date.localeCompare(a.date)) : [];
+  const reports = selectedPatient ? (selectedPatient.reports || []).slice().sort((a,b) => b.date.localeCompare(a.date)) : [];
+
+  const saveReport = () => {
+    if (!reportForm.pid || !reportForm.date || !reportForm.name) { alert("Patient, date and test name required."); return; }
+    const finish = (fileData, fileType, fileName) => {
+      const ps = [...patients];
+      const p = ps.find(x => x.id === reportForm.pid);
+      p.reports = p.reports || [];
+      p.reports.push({ id: uid(), date: reportForm.date, name: reportForm.name, result: reportForm.result, notes: reportForm.notes, fileData, fileType, fileName });
+      setPatients(ps); savePatients(ps);
+      setReportModal(false);
+      setReportForm({ pid:"", date:"", name:"", result:"", notes:"", file:null });
+    };
+    if (reportForm.file) {
+      const reader = new FileReader();
+      reader.onload = e => finish(e.target.result, reportForm.file.type, reportForm.file.name);
+      reader.readAsDataURL(reportForm.file);
+    } else finish(null, null, null);
+  };
+
+  const deleteReport = (pid, rid) => {
+    if (!confirm("Delete this report?")) return;
+    const ps = [...patients];
+    const p = ps.find(x => x.id === pid);
+    p.reports = (p.reports || []).filter(r => r.id !== rid);
+    setPatients(ps); savePatients(ps);
+  };
+
+  return (
+    <div className="app">
+      <Sidebar view={view} setView={setView} />
+      <main className="main">
+        {view === "assist" && (
+          <>
+            <div className="page-head">
+              <div><h2>Diagnosis Assistant</h2><p>Symptoms, history and test reports → differential diagnosis</p></div>
+              <button className="btn btn-primary" onClick={generateDiagnosis}>Generate Diagnosis</button>
+            </div>
+
+            <div className="card">
+              <div className="card-head">
+                <h3>1. Select Patient</h3>
+                <div style={{display:"flex",gap:6}}>
+                  {selectedPatient && <button className="btn btn-outline btn-sm" onClick={() => openPatientModal(selectedPatient)}>Edit</button>}
+                  <button className="btn btn-primary btn-sm" onClick={() => openPatientModal()}>+ Add Patient</button>
+                </div>
+              </div>
+              <div className="grid grid-4">
+                <Field label="Patient *">
+                  <select value={selectedId} onChange={e => setSelectedId(e.target.value)}>
+                    <option value="">-- Select patient --</option>
+                    {patients.map(p => <option key={p.id} value={p.id}>{p.name} ({p.age}/{p.sex})</option>)}
+                  </select>
+                </Field>
+                <Field label="Age / Sex"><input value={selectedPatient ? `${selectedPatient.age} / ${selectedPatient.sex}` : ""} readOnly /></Field>
+                <Field label="Chronic Conditions"><input value={chronic} onChange={e => setChronic(e.target.value)} /></Field>
+                <Field label="Allergies"><input value={allergies} onChange={e => setAllergies(e.target.value)} /></Field>
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="card-head"><h3>2. Vitals</h3></div>
+              <div className="grid grid-4">
+                <Field label="BP (mmHg)"><input placeholder="120/80" value={vitals.bp} onChange={e => setVitals({...vitals, bp: e.target.value})} /></Field>
+                <Field label="Pulse (bpm)"><input type="number" value={vitals.pulse} onChange={e => setVitals({...vitals, pulse: e.target.value})} /></Field>
+                <Field label="Temp (°F)"><input type="number" step="0.1" value={vitals.temp} onChange={e => setVitals({...vitals, temp: e.target.value})} /></Field>
+                <Field label="SpO2 (%)"><input type="number" value={vitals.spo2} onChange={e => setVitals({...vitals, spo2: e.target.value})} /></Field>
+              </div>
+              <div className="grid grid-4" style={{marginTop:10}}>
+                <Field label="Weight (kg)"><input type="number" step="0.1" value={vitals.weight} onChange={e => setVitals({...vitals, weight: e.target.value})} /></Field>
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="card-head"><h3>3. Symptoms</h3></div>
+              <div>{SYMPTOMS.map(s => <Chip key={s} label={s} active={symptoms.includes(s)} onClick={() => toggleSymptom(s)} />)}</div>
+              <Field label="Additional symptom notes" style={{marginTop:10}}>
+                <textarea placeholder="Onset, duration, character, aggravating/relieving factors..." value={symptomNotes} onChange={e => setSymptomNotes(e.target.value)} />
+              </Field>
+            </div>
+
+            <div className="card">
+              <div className="card-head"><h3>4. History & Test Reports (auto-loaded)</h3></div>
+              {!selectedPatient ? <div className="empty">Select a patient to load history.</div> : (
+                <>
+                  <div className="alert alert-info" style={{marginBottom:8}}>
+                    <b>Last {Math.min(consults.length,3)} consultations:</b><br/>
+                    {consults.length === 0 ? "No previous consultations." : consults.slice(0,3).map(c => (
+                      <div key={c.id} style={{marginTop:4}}>{c.date} — {c.diagnosis} <span style={{color:"var(--muted)"}}>(Symptoms: {(c.symptoms||[]).join(", ")})</span></div>
+                    ))}
+                  </div>
+                  {reports.length > 0 && (
+                    <div>
+                      <div className="section-title">Test Reports</div>
+                      {reports.slice(0,6).map(r => (
+                        <div key={r.id} style={{fontSize:13, padding:"4px 0", borderBottom:"1px solid var(--border)"}}>
+                          {r.date} — <b>{r.name}</b>: {r.result || ""}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+
+            <div className="card">
+              <div className="card-head"><h3>5. Doctor's Suspected Diagnosis</h3></div>
+              <Field label="What diagnosis do you think? (your clinical impression)">
+                <input placeholder="e.g. Malaria, Viral fever, Dengue..." value={doctorDx} onChange={e => setDoctorDx(e.target.value)} />
+              </Field>
+              <div style={{marginTop:8, display:"flex", gap:6, flexWrap:"wrap"}}>
+                {["Viral fever","Malaria","Dengue","Typhoid","Acute diarrhoea"].map(d => (
+                  <button key={d} className="btn btn-outline btn-sm" onClick={() => setDoctorDx(d)}>{d}</button>
+                ))}
+              </div>
+            </div>
+
+            {result && (
+              <div className="card" id="resultCard">
+                <div className="card-head"><h3>6. Diagnosis Result</h3></div>
+                {result.redFlags.length > 0 && (
+                  <div className="alert alert-danger">
+                    <b>Red flags:</b>
+                    <ul>{result.redFlags.map((r,i) => <li key={i}>{r}</li>)}</ul>
+                  </div>
+                )}
+                <div className="alert alert-success">
+                  <b>Suggested diagnosis:</b> {result.suggested} <span style={{color:"var(--muted)", fontSize:12}}>(confidence score {result.top.length ? result.top[0].score : 0})</span>
+                </div>
+                {result.doctorDx && (
+                  <div className={"alert " + (result.agreement.startsWith("✅") ? "alert-success" : "alert-warn")}>
+                    {result.agreement}<br/>
+                    Your impression: <b>{result.doctorDx}</b> | System: <b>{result.suggested}</b>
+                  </div>
+                )}
+                <div className="section-title">Differential diagnosis</div>
+                {result.top.length === 0 ? <div className="empty">No matching conditions. Enter more symptoms.</div> :
+                  result.top.map(c => (
+                    <div className="result-item" key={c.name}>
+                      <div style={{display:"flex",justifyContent:"space-between"}}><b>{c.name}</b><span>Score: {c.score}</span></div>
+                      <div className="score-bar"><div className="score-fill" style={{width: Math.min(100, c.score*10) + "%"}}></div></div>
+                      <div style={{fontSize:12,color:"var(--muted)",marginTop:4}}>Matched: {c.matched.join(", ") || "-"}</div>
+                      <div style={{fontSize:12,marginTop:4}}><b>Tests:</b> {(c.tests||[]).join(", ")}</div>
+                      <div style={{fontSize:12}}><b>Advice:</b> {c.advice}</div>
+                    </div>
+                  ))}
+                <div className="section-title">Recommended tests</div>
+                <div>{result.tests.map(t => <Chip key={t} label={t} active={false} onClick={() => {}} />)}</div>
+                <div style={{marginTop:10, fontSize:12, color:"var(--muted)"}}>⚠️ Decision-support suggestion based on symptom keywords. Final diagnosis must be made by the doctor after examination and investigations.</div>
+                <div style={{marginTop:12, display:"flex", gap:8, flexWrap:"wrap"}}>
+                  <button className="btn btn-primary btn-sm" onClick={saveResultAsNote}>Save to Patient History</button>
+                  <button className="btn btn-outline btn-sm" onClick={() => { sessionStorage.setItem("ashvik_dx", JSON.stringify({ diagnosis: result.suggested, tests: result.tests, advice: result.top[0]?.advice || "" })); alert("Copied. Open ASHVIK → New Consultation and paste."); }}>Copy Diagnosis</button>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
+        {view === "reports" && (
+          <>
+            <div className="page-head">
+              <div><h2>Test Reports</h2><p>Manage patient test reports and attachments</p></div>
+              <button className="btn btn-primary" onClick={() => { setReportForm({ pid: selectedId || "", date: new Date().toISOString().slice(0,10), name:"", result:"", notes:"", file:null }); setReportModal(true); }}>+ Add Report</button>
+            </div>
+            <div className="card">
+              <Field label="Select Patient">
+                <select value={selectedId} onChange={e => setSelectedId(e.target.value)}>
+                  <option value="">-- Select patient --</option>
+                  {patients.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+                </select>
+              </Field>
+            </div>
+            {!selectedPatient ? <div className="card empty">Select a patient.</div> :
+              reports.length === 0 ? <div className="card empty">No reports yet.</div> :
+              reports.map(r => (
+                <div className="report-card" key={r.id}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <h3 style={{margin:0,fontSize:15}}>{r.name} <span style={{fontSize:12,color:"var(--muted)",fontWeight:400}}>{r.date}</span></h3>
+                    <button className="btn btn-danger btn-sm" onClick={() => deleteReport(selectedId, r.id)}>Delete</button>
+                  </div>
+                  <div style={{marginTop:8}}><b>Result:</b> {r.result || "-"}</div>
+                  {r.notes && <div><b>Notes:</b> {r.notes}</div>}
+                  {r.fileData && <div style={{marginTop:8}}><a href={r.fileData} target="_blank" download={r.fileName||"report"}>📎 {r.fileName || "View file"}</a></div>}
+                </div>
+              ))}
+          </>
+        )}
+
+        {view === "history" && (
+          <>
+            <div className="page-head"><div><h2>Patient History</h2><p>Consultations, reports and clinical notes</p></div></div>
+            <div className="card">
+              <Field label="Select Patient">
+                <select value={selectedId} onChange={e => setSelectedId(e.target.value)}>
+                  <option value="">-- Select patient --</option>
+                  {patients.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+                </select>
+              </Field>
+            </div>
+            {!selectedPatient ? <div className="card empty">Select a patient.</div> : (
+              <>
+                <div className="card">
+                  <div className="card-head"><h3>Consultations</h3></div>
+                  {consults.length === 0 ? <div className="empty">No consultations.</div> :
+                    consults.map(c => (
+                      <div className="history-item" key={c.id}>
+                        <b>{c.date}</b> — {c.diagnosis}<br/>
+                        <span style={{fontSize:13}}>Symptoms: {(c.symptoms||[]).join(", ")}</span><br/>
+                        <span style={{fontSize:13}}>Vitals: BP {c.vitals.bp||"-"} | Pulse {c.vitals.pulse||"-"} | Temp {c.vitals.temp||"-"} | SpO2 {c.vitals.spo2||"-"}</span><br/>
+                        <span style={{fontSize:13}}>Rx: {(c.meds||[]).map(m=>m.drug).join(", ") || "-"}</span>
+                      </div>
+                    ))}
+                </div>
+                <div className="card">
+                  <div className="card-head"><h3>Test Reports</h3></div>
+                  {reports.length === 0 ? <div className="empty">No reports.</div> :
+                    reports.map(r => (
+                      <div className="history-item" key={r.id}>
+                        <b>{r.name}</b> ({r.date}) — {r.result || "-"}
+                        {r.fileData && <span> <a href={r.fileData} target="_blank">📎</a></span>}
+                      </div>
+                    ))}
+                </div>
+                <div className="card">
+                  <div className="card-head"><h3>Clinical Notes</h3></div>
+                  {(selectedPatient.clinical || []).length === 0 ? <div className="empty">None.</div> :
+                    (selectedPatient.clinical || []).slice().sort((a,b)=>b.date.localeCompare(a.date)).map(e => (
+                      <div className="history-item" key={e.id}>
+                        <b>{e.date}</b> — {e.diagnosis}<br/>
+                        <span style={{fontSize:13}}>{e.complaint}</span><br/>
+                        <span style={{fontSize:13,color:"var(--muted)"}}>{e.treatment}</span>
+                      </div>
+                    ))}
+                </div>
+              </>
+            )}
+          </>
+        )}
+      </main>
+
+      {/* Patient Modal */}
+      <div className={"modal-backdrop" + (patientModal ? " open" : "")} onClick={() => setPatientModal(false)}>
+        <div className="modal" onClick={e => e.stopPropagation()}>
+          <h3>{editingPatientId ? "Edit Patient" : "Add Patient"}</h3>
+          <div className="grid grid-2">
+            <Field label="Name *"><input value={patientForm.name} onChange={e => setPatientForm({...patientForm, name: e.target.value})} /></Field>
+            <Field label="Age *"><input type="number" min="0" value={patientForm.age} onChange={e => setPatientForm({...patientForm, age: e.target.value})} /></Field>
+            <Field label="Sex *">
+              <select value={patientForm.sex} onChange={e => setPatientForm({...patientForm, sex: e.target.value})}>
+                <option>Male</option><option>Female</option><option>Other</option>
+              </select>
+            </Field>
+            <Field label="Date of Birth"><input type="date" value={patientForm.dob} onChange={e => setPatientForm({...patientForm, dob: e.target.value})} /></Field>
+            <Field label="Phone"><input value={patientForm.phone} onChange={e => setPatientForm({...patientForm, phone: e.target.value})} /></Field>
+            <Field label="Blood Group"><input value={patientForm.bloodGroup} onChange={e => setPatientForm({...patientForm, bloodGroup: e.target.value})} /></Field>
+          </div>
+          <Field label="Address" style={{marginTop:10}}><textarea value={patientForm.address} onChange={e => setPatientForm({...patientForm, address: e.target.value})} /></Field>
+          <Field label="Allergies" style={{marginTop:10}}><input value={patientForm.allergies} onChange={e => setPatientForm({...patientForm, allergies: e.target.value})} /></Field>
+          <Field label="Chronic Conditions" style={{marginTop:10}}><input value={patientForm.chronic} onChange={e => setPatientForm({...patientForm, chronic: e.target.value})} /></Field>
+          <Field label="Notes" style={{marginTop:10}}><textarea value={patientForm.notes} onChange={e => setPatientForm({...patientForm, notes: e.target.value})} /></Field>
+          <div className="modal-actions">
+            <button className="btn btn-outline" onClick={() => setPatientModal(false)}>Cancel</button>
+            <button className="btn btn-primary" onClick={savePatient}>Save</button>
+          </div>
+        </div>
+      </div>
+
+      {/* Report Modal */}
+      <div className={"modal-backdrop" + (reportModal ? " open" : "")} onClick={() => setReportModal(false)}>
+        <div className="modal" onClick={e => e.stopPropagation()}>
+          <h3>Add Test Report</h3>
+          <Field label="Patient *">
+            <select value={reportForm.pid} onChange={e => setReportForm({...reportForm, pid: e.target.value})}>
+              <option value="">-- Select --</option>
+              {patients.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+            </select>
+          </Field>
+          <Field label="Date *"><input type="date" value={reportForm.date} onChange={e => setReportForm({...reportForm, date: e.target.value})} /></Field>
+          <Field label="Test Name *"><input placeholder="CBC, Malaria RDT, CXR..." value={reportForm.name} onChange={e => setReportForm({...reportForm, name: e.target.value})} /></Field>
+          <Field label="Result / Findings"><textarea value={reportForm.result} onChange={e => setReportForm({...reportForm, result: e.target.value})} /></Field>
+          <Field label="Notes"><textarea value={reportForm.notes} onChange={e => setReportForm({...reportForm, notes: e.target.value})} /></Field>
+          <Field label="Attach File (optional)"><input type="file" onChange={e => setReportForm({...reportForm, file: e.target.files[0]})} /></Field>
+          <div className="modal-actions">
+            <button className="btn btn-outline" onClick={() => setReportModal(false)}>Cancel</button>
+            <button className="btn btn-primary" onClick={saveReport}>Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

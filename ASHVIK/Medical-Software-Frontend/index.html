@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ASHVIK - Clinical Consultation & Treatment</title>
+<style>
+  :root {
+    --primary: #0f766e; --primary-dark: #115e59; --accent: #2563eb;
+    --bg: #f1f5f9; --card: #ffffff; --text: #1e293b; --muted: #64748b;
+    --border: #e2e8f0; --danger: #dc2626; --success: #16a34a; --warn: #d97706;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Segoe UI", Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  .app { display: flex; min-height: 100vh; }
+  .sidebar { width: 230px; background: var(--card); border-right: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; }
+  .sidebar h1 { font-size: 18px; margin: 0 0 2px; color: var(--primary); }
+  .sidebar .sub { font-size: 11px; color: var(--muted); margin-bottom: 14px; }
+  .nav { display: flex; flex-direction: column; gap: 6px; }
+  .nav button { text-align: left; padding: 10px 12px; border: none; background: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--text); }
+  .nav button:hover { background: #f8fafc; }
+  .nav button.active { background: #ecfdf5; color: var(--primary); }
+  .main { flex: 1; padding: 20px; overflow-y: auto; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+  .topbar h2 { margin: 0; font-size: 20px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  .card h3 { margin: 0 0 12px; font-size: 16px; color: var(--primary); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
+  .field { display: flex; flex-direction: column; }
+  .field label { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+  .field input, .field select, .field textarea {
+    padding: 8px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px;
+  }
+  .field textarea { min-height: 60px; resize: vertical; }
+  .btn { padding: 8px 14px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .btn-outline { background: #fff; border: 1px solid var(--border); color: var(--text); }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-warn { background: var(--warn); color: #fff; }
+  .btn-sm { padding: 4px 8px; font-size: 12px; }
+  .chip { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; border: 1px solid var(--border); background: #fff; cursor: pointer; margin: 3px; }
+  .chip:hover { background: #ecfdf5; border-color: var(--primary); }
+  .chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: #f8fafc; color: var(--muted); font-weight: 600; }
+  .med-row input { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; }
+  .empty { text-align: center; color: var(--muted); padding: 20px; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+  .badge-m { background: #dbeafe; color: #1d4ed8; }
+  .badge-f { background: #fce7f3; color: #be185d; }
+  .badge-o { background: #e2e8f0; color: #475569; }
+  .alert { padding: 10px 12px; border-radius: 8px; font-size: 13px; margin-bottom: 12px; }
+  .alert-info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+  .alert-warn { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+  .section-title { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin: 12px 0 6px; }
+  .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: none; align-items: center; justify-content: center; z-index: 50; }
+  .modal-backdrop.open { display: flex; }
+  .modal { background: var(--card); border-radius: 12px; padding: 20px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; }
+  .modal h3 { margin: 0 0 12px; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+  @media (max-width: 800px) { .app { flex-direction: column; } .sidebar { width: 100%; } }
+  @media print {
+    .sidebar, .topbar, .btn, .chip { display: none !important; }
+    .card { border: none; box-shadow: none; }
+    body { background: #fff; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <h1>ASHVIK</h1>
+    <div class="sub">Clinical Consultation & Treatment</div>
+    <div class="nav">
+      <button class="active" data-view="dashboard" onclick="showView('dashboard')">Dashboard</button>
+      <button data-view="consult" onclick="showView('consult')">New Consultation</button>
+      <button data-view="patients" onclick="showView('patients')">Patients</button>
+      <button data-view="history" onclick="showView('history')">History & Rx</button>
+    </div>
+    <div style="margin-top:auto;font-size:11px;color:var(--muted);">
+      Data stored locally in browser.
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- DASHBOARD -->
+    <div id="view-dashboard">
+      <div class="topbar"><h2>Dashboard</h2></div>
+      <div class="grid">
+        <div class="card"><h3>Patients</h3><div id="statPatients" style="font-size:28px;font-weight:700;color:var(--primary);">0</div></div>
+        <div class="card"><h3>Consultations (this month)</h3><div id="statConsults" style="font-size:28px;font-weight:700;color:var(--accent);">0</div></div>
+        <div class="card"><h3>Follow-ups due</h3><div id="statFollow" style="font-size:28px;font-weight:700;color:var(--warn);">0</div></div>
+      </div>
+      <div class="card">
+        <h3>Quick Actions</h3>
+        <button class="btn btn-primary" onclick="showView('consult')">+ New Consultation</button>
+        <button class="btn btn-outline" onclick="showView('patients')" style="margin-left:8px;">Manage Patients</button>
+      </div>
+      <div class="card">
+        <h3>Recent Consultations</h3>
+        <table>
+          <thead><tr><th>Date</th><th>Patient</th><th>Diagnosis</th><th></th></tr></thead>
+          <tbody id="recentBody"></tbody>
+        </table>
+        <div id="recentEmpty" class="empty" style="display:none;">No consultations yet.</div>
+      </div>
+    </div>
+
+    <!-- CONSULTATION -->
+    <div id="view-consult" style="display:none;">
+      <div class="topbar">
+        <h2>New Consultation</h2>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-outline" onclick="resetConsult()">Reset</button>
+          <button class="btn btn-primary" onclick="saveConsult()">Save Consultation</button>
+          <button class="btn btn-warn" onclick="printRx()">Print Rx</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>1. Patient & Vitals</h3>
+        <div class="grid">
+          <div class="field"><label>Patient *</label>
+            <select id="cPatient"><option value="">-- Select patient --</option></select>
+          </div>
+          <div class="field"><label>Date</label><input id="cDate" type="date" /></div>
+          <div class="field"><label>BP (mmHg)</label><input id="cBp" placeholder="120/80" /></div>
+          <div class="field"><label>Pulse (bpm)</label><input id="cPulse" type="number" /></div>
+          <div class="field"><label>Temp (°F)</label><input id="cTemp" type="number" step="0.1" /></div>
+          <div class="field"><label>SpO2 (%)</label><input id="cSpo2" type="number" /></div>
+          <div class="field"><label>Weight (kg)</label><input id="cWeight" type="number" step="0.1" /></div>
+          <div class="field"><label>Height (cm)</label><input id="cHeight" type="number" /></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>2. Symptoms</h3>
+        <div id="symptomChips"></div>
+        <div class="field" style="margin-top:8px;"><label>Additional symptoms / notes</label>
+          <textarea id="cSymptomNotes" placeholder="Onset, duration, aggravating/relieving factors..."></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>3. Diagnosis</h3>
+        <div class="alert alert-info">Click a common condition to auto-fill a treatment template (edit as needed).</div>
+        <div id="diseaseChips" style="margin-bottom:8px;"></div>
+        <div class="field"><label>Diagnosis *</label><input id="cDiagnosis" placeholder="e.g. Acute bronchitis" /></div>
+        <div class="field" style="margin-top:8px;"><label>ICD / Code (optional)</label><input id="cCode" placeholder="e.g. J20.9" /></div>
+      </div>
+
+      <div class="card">
+        <h3>4. Treatment / Prescription</h3>
+        <table>
+          <thead><tr><th>Drug</th><th>Dose</th><th>Frequency</th><th>Duration</th><th>Instructions</th><th></th></tr></thead>
+          <tbody id="medBody"></tbody>
+        </table>
+        <button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="addMedRow()">+ Add Medicine</button>
+        <div class="section-title">Advice / Non-drug</div>
+        <textarea id="cAdvice" style="width:100%;min-height:70px;padding:8px;border:1px solid var(--border);border-radius:8px;" placeholder="Rest, fluids, diet, activity, precautions..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3>5. Tests Ordered & Follow-up</h3>
+        <div class="grid">
+          <div class="field"><label>Tests Ordered</label><input id="cTests" placeholder="CBC, Malaria RDT, CXR..." /></div>
+          <div class="field"><label>Follow-up Date</label><input id="cFollow" type="date" /></div>
+          <div class="field"><label>Referral</label><input id="cReferral" placeholder="None / CHC / District hospital" /></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PATIENTS -->
+    <div id="view-patients" style="display:none;">
+      <div class="topbar">
+        <h2>Patients</h2>
+        <button class="btn btn-primary" onclick="openPatientModal()">+ Add Patient</button>
+      </div>
+      <div class="card">
+        <input id="pSearch" class="search" placeholder="Search patients..." style="width:100%;padding:8px;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;" />
+        <table>
+          <thead><tr><th>Name</th><th>Age</th><th>Sex</th><th>Phone</th><th>Actions</th></tr></thead>
+          <tbody id="patientsBody"></tbody>
+        </table>
+        <div id="patientsEmpty" class="empty" style="display:none;">No patients yet.</div>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div id="view-history" style="display:none;">
+      <div class="topbar"><h2>History & Prescriptions</h2></div>
+      <div class="card">
+        <div class="field" style="max-width:320px;"><label>Select Patient</label>
+          <select id="hPatient" onchange="renderHistory()"><option value="">-- Select --</option></select>
+        </div>
+      </div>
+      <div id="historyContent"></div>
+    </div>
+  </main>
+</div>
+
+<!-- Patient Modal -->
+<div class="modal-backdrop" id="patientModal">
+  <div class="modal">
+    <h3 id="patientModalTitle">Add Patient</h3>
+    <div class="field"><label>Name *</label><input id="pmName" /></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="field"><label>Age *</label><input id="pmAge" type="number" min="0" /></div>
+      <div class="field"><label>Sex *</label><select id="pmSex"><option>Male</option><option>Female</option><option>Other</option></select></div>
+    </div>
+    <div class="field"><label>DOB</label><input id="pmDob" type="date" /></div>
+    <div class="field"><label>Phone</label><input id="pmPhone" /></div>
+    <div class="field"><label>Address</label><textarea id="pmAddr"></textarea></div>
+    <div class="field"><label>Blood Group</label><input id="pmBg" /></div>
+    <div class="field"><label>Allergies</label><input id="pmAlg" /></div>
+    <div class="field"><label>Chronic</label><input id="pmChronic" /></div>
+    <div class="field"><label>Notes</label><textarea id="pmNotes"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closePatientModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="savePatient()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = "medidesk_patients_v1";
+let patients = [];
+let editingPatientId = null;
+let currentConsult = null;
+
+const SYMPTOMS = ["Fever","Cough","Cold/Runny nose","Sore throat","Body ache","Headache","Breathlessness","Chest pain","Vomiting","Diarrhoea","Abdominal pain","Burning urination","Rash","Joint pain","Weakness","Dizziness","Loss of appetite","Weight loss","Night sweats","Itching"];
+
+const DISEASES = {
+  "Viral fever": { diagnosis: "Viral fever", meds: [["Paracetamol 500mg","1 tab","TDS","3 days","After food"],["ORS","1 sachet","BD","3 days","If dehydrated"]], advice: "Rest, plenty of fluids, tepid sponging. Avoid antibiotics unless bacterial signs." },
+  "Malaria": { diagnosis: "Malaria (suspected)", meds: [["Artemether-Lumefantrine (as per protocol)","1 tab","BD","3 days","As per national guideline"],["Paracetamol 500mg","1 tab","TDS","3 days","Fever"]] , advice: "Confirm with RDT/smear. Monitor for danger signs. Refer if severe." },
+  "Dengue": { diagnosis: "Dengue (suspected)", meds: [["Paracetamol 500mg","1 tab","TDS","5 days","Fever (avoid NSAIDs)"],["ORS","1 sachet","BD","5 days","Hydration"]] , advice: "No aspirin/ibuprofen. Monitor platelets. Watch for warning signs: bleeding, abdominal pain, vomiting." },
+  "Typhoid": { diagnosis: "Enteric fever (typhoid)", meds: [["Azithromycin 500mg","1 tab","OD","7 days","Empty stomach"],["Paracetamol 500mg","1 tab","TDS","5 days","Fever"]] , advice: "Soft diet, fluids. Blood culture if available. Refer if no improvement in 48-72h." },
+  "Acute diarrhoea": { diagnosis: "Acute gastroenteritis", meds: [["ORS","1 sachet","After each loose stool","3 days",""],["Zinc 20mg","1 tab","OD","14 days","Children: 10mg"],["Racecadotril (if available)","100mg","TDS","3 days",""]] , advice: "Continue feeding. Hand hygiene. Avoid anti-diarrhoeals in children." },
+  "Hypertension": { diagnosis: "Essential hypertension", meds: [["Amlodipine 5mg","1 tab","OD","30 days","Morning"],["Telmisartan 40mg","1 tab","OD","30 days","If BP uncontrolled"]] , advice: "Salt restriction, exercise, weight loss. Recheck BP in 2-4 weeks. Renal function monitoring." },
+  "Type 2 Diabetes": { diagnosis: "Type 2 Diabetes Mellitus", meds: [["Metformin 500mg","1 tab","BD","30 days","After food"],["Glimepiride 1mg","1 tab","OD","30 days","Before breakfast (if needed)"]] , advice: "Diet control, exercise 30 min/day. Foot care, eye screening yearly. Monitor HbA1c." },
+  "Asthma": { diagnosis: "Bronchial asthma", meds: [["Salbutamol inhaler","2 puffs","SOS","30 days","With spacer"],["Budesonide inhaler","2 puffs","BD","30 days","Daily controller"]] , advice: "Avoid triggers, dust, smoke. Inhaler technique check. Written action plan." },
+  "COPD": { diagnosis: "COPD", meds: [["Tiotropium inhaler","2 puffs","OD","30 days",""],["Salbutamol inhaler","2 puffs","SOS","30 days",""]] , advice: "Stop smoking/biomass. Pulmonary rehab. Vaccination (influenza/pneumococcal)." },
+  "UTI": { diagnosis: "Uncomplicated UTI", meds: [["Nitrofurantoin 100mg","1 tab","BD","5 days","After food"],["ORS","1 sachet","BD","3 days",""]] , advice: "Hydration, hygiene. Refer if fever/flank pain (pyelonephritis)." },
+  "Scabies": { diagnosis: "Scabies", meds: [["Permethrin 5% cream","Apply neck to toe","Once","Repeat day 7","All contacts"],["Cetirizine 10mg","1 tab","HS","7 days","Itching"]] , advice: "Treat all household contacts. Wash clothes/bedding in hot water." },
+  "Fungal skin infection": { diagnosis: "Tinea corporis", meds: [["Clotrimazole cream","Apply","BD","2 weeks","Affected area"],["Terbinafine 250mg","1 tab","OD","2 weeks","If extensive"]] , advice: "Keep area dry. Avoid sharing towels. Treat for full course." },
+  "Iron deficiency anaemia": { diagnosis: "Iron deficiency anaemia", meds: [["Ferrous sulphate + folic acid","1 tab","OD","3 months","After food"],["Vitamin C 500mg","1 tab","OD","3 months",""]] , advice: "Iron-rich diet. Treat worms. Recheck Hb in 4-6 weeks." },
+  "Hypothyroidism": { diagnosis: "Hypothyroidism", meds: [["Levothyroxine 50mcg","1 tab","OD","30 days","Empty stomach, 30 min before food"]] , advice: "TSH recheck in 6-8 weeks. Lifelong therapy usually." },
+  "Acute bronchitis": { diagnosis: "Acute bronchitis", meds: [["Ambroxol syrup","5ml","TDS","5 days",""],["Paracetamol 500mg","1 tab","TDS","3 days","If fever"]] , advice: "Avoid unnecessary antibiotics. Hydration, steam inhalation." },
+  "Allergic rhinitis": { diagnosis: "Allergic rhinitis", meds: [["Cetirizine 10mg","1 tab","HS","7 days",""],["Fluticasone nasal spray","2 sprays","OD","14 days","Each nostril"]] , advice: "Avoid allergens. Saline nasal rinse." }
+};
+
+const SYMPTOM_LIST = SYMPTOMS;
+
+function load() {
+  try { patients = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { patients = []; }
+  if (!patients.length) seed();
+}
+function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(patients)); }
+function seed() {
+  patients = [{
+    id: uid(), name: "Ramesh Kumar", age: 45, sex: "Male", dob: "1980-03-12",
+    phone: "9876543210", address: "Village Rampur, District Lucknow",
+    bloodGroup: "B+", allergies: "Penicillin", chronic: "Type 2 Diabetes, Hypertension",
+    notes: "Regular follow-up.", clinical: [], diagnostic: [], consults: []
+  }];
+  save();
+}
+function uid() { return "p" + Math.random().toString(36).slice(2, 10) + Date.now().toString(36); }
+
+function showView(v) {
+  ["dashboard","consult","patients","history"].forEach(x => {
+    document.getElementById("view-" + x).style.display = (x === v) ? "block" : "none";
+  });
+  document.querySelectorAll(".nav button").forEach(b => b.classList.toggle("active", b.dataset.view === v));
+  if (v === "dashboard") renderDashboard();
+  if (v === "patients") renderPatients();
+  if (v === "consult") initConsult();
+  if (v === "history") initHistory();
+}
+
+// ---------- Dashboard ----------
+function renderDashboard() {
+  document.getElementById("statPatients").textContent = patients.length;
+  let consults = 0, follow = 0, today = new Date();
+  const month = today.getMonth(), year = today.getFullYear();
+  const recent = [];
+  patients.forEach(p => {
+    (p.consults || []).forEach(c => {
+      const d = new Date(c.date);
+      if (d.getMonth() === month && d.getFullYear() === year) consults++;
+      if (c.follow && new Date(c.follow) >= new Date(today.toDateString()) && new Date(c.follow) <= new Date(today.getTime() + 7*86400000)) follow++;
+      recent.push({ date: c.date, name: p.name, diagnosis: c.diagnosis, pid: p.id, cid: c.id });
+    });
+  });
+  document.getElementById("statConsults").textContent = consults;
+  document.getElementById("statFollow").textContent = follow;
+  recent.sort((a,b) => b.date.localeCompare(a.date));
+  const body = document.getElementById("recentBody");
+  body.innerHTML = "";
+  recent.slice(0,8).forEach(r => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${r.date}</td><td>${escapeHtml(r.name)}</td><td>${escapeHtml(r.diagnosis)}</td>
+      <td><button class="btn btn-outline btn-sm" onclick="viewConsult('${r.pid}','${r.cid}')">View</button></td>`;
+    body.appendChild(tr);
+  });
+  document.getElementById("recentEmpty").style.display = recent.length ? "none" : "block";
+}
+
+// ---------- Consultation ----------
+function initConsult() {
+  const sel = document.getElementById("cPatient");
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">-- Select patient --</option>';
+  patients.forEach(p => {
+    const o = document.createElement("option");
+    o.value = p.id; o.textContent = p.name + " (" + p.age + "/" + p.sex + ")";
+    sel.appendChild(o);
+  });
+  if (cur) sel.value = cur;
+  document.getElementById("cDate").value = new Date().toISOString().slice(0,10);
+  if (!document.getElementById("medBody").children.length) addMedRow();
+  // symptom chips
+  const sc = document.getElementById("symptomChips");
+  sc.innerHTML = "";
+  SYMPTOMS.forEach(s => {
+    const chip = document.createElement("span");
+    chip.className = "chip"; chip.textContent = s;
+    chip.onclick = () => chip.classList.toggle("active");
+    sc.appendChild(chip);
+  });
+  // disease chips
+  const dc = document.getElementById("diseaseChips");
+  dc.innerHTML = "";
+  Object.keys(DISEASES).forEach(d => {
+    const chip = document.createElement("span");
+    chip.className = "chip"; chip.textContent = d;
+    chip.onclick = () => applyDisease(d);
+    dc.appendChild(chip);
+  });
+}
+
+function applyDisease(d) {
+  const t = DISEASES[d];
+  document.getElementById("cDiagnosis").value = t.diagnosis;
+  // meds
+  const body = document.getElementById("medBody");
+  body.innerHTML = "";
+  t.meds.forEach(m => addMedRow(m));
+  if (!t.meds.length) addMedRow();
+  document.getElementById("cAdvice").value = t.advice;
+}
+
+function addMedRow(vals) {
+  const body = document.getElementById("medBody");
+  const tr = document.createElement("tr");
+  tr.className = "med-row";
+  const v = vals || ["","","","",""];
+  tr.innerHTML = `
+    <td><input placeholder="Drug name" value="${escapeAttr(v[0])}" /></td>
+    <td><input placeholder="Dose" value="${escapeAttr(v[1])}" /></td>
+    <td><input placeholder="Freq" value="${escapeAttr(v[2])}" /></td>
+    <td><input placeholder="Duration" value="${escapeAttr(v[3])}" /></td>
+    <td><input placeholder="Instructions" value="${escapeAttr(v[4])}" /></td>
+    <td><button class="btn btn-danger btn-sm" onclick="this.closest('tr').remove()">x</button></td>`;
+  body.appendChild(tr);
+}
+
+function resetConsult() {
+  if (!confirm("Reset consultation form?")) return;
+  document.getElementById("cPatient").value = "";
+  document.getElementById("cBp").value = "";
+  document.getElementById("cPulse").value = "";
+  document.getElementById("cTemp").value = "";
+  document.getElementById("cSpo2").value = "";
+  document.getElementById("cWeight").value = "";
+  document.getElementById("cHeight").value = "";
+  document.getElementById("cSymptomNotes").value = "";
+  document.querySelectorAll("#symptomChips .chip").forEach(c => c.classList.remove("active"));
+  document.getElementById("cDiagnosis").value = "";
+  document.getElementById("cCode").value = "";
+  document.getElementById("medBody").innerHTML = "";
+  addMedRow();
+  document.getElementById("cAdvice").value = "";
+  document.getElementById("cTests").value = "";
+  document.getElementById("cFollow").value = "";
+  document.getElementById("cReferral").value = "";
+}
+
+function collectConsult() {
+  const pid = document.getElementById("cPatient").value;
+  if (!pid) { alert("Select a patient."); return null; }
+  const diagnosis = document.getElementById("cDiagnosis").value.trim();
+  if (!diagnosis) { alert("Diagnosis is required."); return null; }
+  const symptoms = [...document.querySelectorAll("#symptomChips .chip.active")].map(c => c.textContent);
+  const extra = document.getElementById("cSymptomNotes").value.trim();
+  const allSymptoms = extra ? symptoms.concat(["Notes: " + extra]) : symptoms;
+  const meds = [...document.querySelectorAll("#medBody tr")].map(tr => {
+    const ins = tr.querySelectorAll("input");
+    return { drug: ins[0].value.trim(), dose: ins[1].value.trim(), freq: ins[2].value.trim(), duration: ins[3].value.trim(), instr: ins[4].value.trim() };
+  }).filter(m => m.drug);
+  const c = {
+    id: uid(),
+    date: document.getElementById("cDate").value || new Date().toISOString().slice(0,10),
+    vitals: {
+      bp: document.getElementById("cBp").value.trim(),
+      pulse: document.getElementById("cPulse").value.trim(),
+      temp: document.getElementById("cTemp").value.trim(),
+      spo2: document.getElementById("cSpo2").value.trim(),
+      weight: document.getElementById("cWeight").value.trim(),
+      height: document.getElementById("cHeight").value.trim()
+    },
+    symptoms: allSymptoms,
+    diagnosis: diagnosis,
+    code: document.getElementById("cCode").value.trim(),
+    meds: meds,
+    advice: document.getElementById("cAdvice").value.trim(),
+    tests: document.getElementById("cTests").value.trim(),
+    follow: document.getElementById("cFollow").value,
+    referral: document.getElementById("cReferral").value.trim()
+  };
+  return { pid, c };
+}
+
+function saveConsult() {
+  const res = collectConsult();
+  if (!res) return;
+  const p = patients.find(x => x.id === res.pid);
+  p.consults = p.consults || [];
+  p.consults.push(res.c);
+  // also append clinical history
+  p.clinical = p.clinical || [];
+  p.clinical.push({
+    id: uid(), date: res.c.date,
+    complaint: res.c.symptoms.join(", "),
+    diagnosis: res.c.diagnosis,
+    treatment: res.c.meds.map(m => m.drug + " " + m.dose + " " + m.freq + " x " + m.duration).join("; ") + (res.c.advice ? " | Advice: " + res.c.advice : ""),
+    notes: res.c.referral ? "Referral: " + res.c.referral : ""
+  });
+  if (res.c.tests) {
+    p.diagnostic = p.diagnostic || [];
+    p.diagnostic.push({ id: uid(), date: res.c.date, test: res.c.tests, result: "Ordered", notes: "" });
+  }
+  save();
+  alert("Consultation saved.");
+  currentConsult = res.c;
+  renderDashboard();
+}
+
+function printRx() {
+  const res = collectConsult();
+  if (!res) return;
+  const p = patients.find(x => x.id === res.pid);
+  const c = res.c;
+  const w = window.open("", "_blank");
+  const medsHtml = c.meds.map(m => `<tr><td>${escapeHtml(m.drug)}</td><td>${escapeHtml(m.dose)}</td><td>${escapeHtml(m.freq)}</td><td>${escapeHtml(m.duration)}</td><td>${escapeHtml(m.instr)}</td></tr>`).join("");
+  w.document.write(`<!DOCTYPE html><html><head><title>Prescription</title>
+  <style>body{font-family:Arial,sans-serif;padding:20px;max-width:800px;margin:auto;}
+  h1{color:#0f766e;} table{width:100%;border-collapse:collapse;margin:10px 0;}
+  th,td{border:1px solid #ccc;padding:6px;} th{background:#f1f5f9;}
+  .hdr{display:flex;justify-content:space-between;border-bottom:2px solid #0f766e;padding-bottom:8px;margin-bottom:12px;}
+  .meta{margin:8px 0;} .section{margin-top:12px;font-weight:700;color:#0f766e;}
+  @media print{button{display:none;}}</style></head><body>
+  <div class="hdr"><h1>ASHVIK Clinic</h1><div>${c.date}</div></div>
+  <div class="meta"><b>Patient:</b> ${escapeHtml(p.name)} &nbsp; <b>Age/Sex:</b> ${p.age}/${p.sex} &nbsp; <b>ID:</b> ${p.id}</div>
+  <div class="meta"><b>Vitals:</b> BP ${escapeHtml(c.vitals.bp||"-")} | Pulse ${escapeHtml(c.vitals.pulse||"-")} | Temp ${escapeHtml(c.vitals.temp||"-")}°F | SpO2 ${escapeHtml(c.vitals.spo2||"-")}% | Wt ${escapeHtml(c.vitals.weight||"-")}kg</div>
+  <div class="section">Symptoms</div><div>${escapeHtml(c.symptoms.join(", ") || "-")}</div>
+  <div class="section">Diagnosis</div><div>${escapeHtml(c.diagnosis)} ${c.code ? "("+escapeHtml(c.code)+")" : ""}</div>
+  <div class="section">Rx (Prescription)</div>
+  <table><thead><tr><th>Drug</th><th>Dose</th><th>Frequency</th><th>Duration</th><th>Instructions</th></tr></thead><tbody>${medsHtml || "<tr><td colspan=5>-</td></tr>"}</tbody></table>
+  <div class="section">Advice</div><div style="white-space:pre-wrap;">${escapeHtml(c.advice || "-")}</div>
+  <div class="meta" style="margin-top:12px;"><b>Tests:</b> ${escapeHtml(c.tests || "-")} &nbsp; <b>Follow-up:</b> ${escapeHtml(c.follow || "-")} &nbsp; <b>Referral:</b> ${escapeHtml(c.referral || "None")}</div>
+  <div style="margin-top:40px;border-top:1px dashed #999;padding-top:8px;font-size:12px;color:#666;">
+    Doctor's signature: ____________________ &nbsp;&nbsp; This is a computer-generated prescription.
+  </div>
+  <div style="margin-top:12px;"><button onclick="window.print()">Print</button></div>
+  </body></html>`);
+  w.document.close();
+}
+
+// ---------- Patients ----------
+function renderPatients() {
+  const q = (document.getElementById("pSearch").value || "").toLowerCase();
+  const body = document.getElementById("patientsBody");
+  body.innerHTML = "";
+  const filtered = patients.filter(p => (p.name + " " + (p.phone||"") + " " + (p.address||"")).toLowerCase().includes(q));
+  filtered.forEach(p => {
+    const tr = document.createElement("tr");
+    const badgeClass = p.sex === "Male" ? "badge-m" : p.sex === "Female" ? "badge-f" : "badge-o";
+    tr.innerHTML = `<td>${escapeHtml(p.name)}</td><td>${p.age}</td><td><span class="badge ${badgeClass}">${p.sex}</span></td><td>${escapeHtml(p.phone||"-")}</td>
+      <td>
+        <button class="btn btn-outline btn-sm" onclick="openPatientModal('${p.id}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deletePatient('${p.id}')">Del</button>
+        <button class="btn btn-outline btn-sm" onclick="startConsultFor('${p.id}')">Consult</button>
+      </td>`;
+    body.appendChild(tr);
+  });
+  document.getElementById("patientsEmpty").style.display = filtered.length ? "none" : "block";
+}
+document.addEventListener("input", e => { if (e.target && e.target.id === "pSearch") renderPatients(); });
+
+function startConsultFor(pid) {
+  showView("consult");
+  document.getElementById("cPatient").value = pid;
+}
+
+function openPatientModal(id) {
+  editingPatientId = id || null;
+  const p = id ? patients.find(x => x.id === id) : null;
+  document.getElementById("patientModalTitle").textContent = id ? "Edit Patient" : "Add Patient";
+  document.getElementById("pmName").value = p ? p.name : "";
+  document.getElementById("pmAge").value = p ? p.age : "";
+  document.getElementById("pmSex").value = p ? p.sex : "Male";
+  document.getElementById("pmDob").value = p ? (p.dob || "") : "";
+  document.getElementById("pmPhone").value = p ? (p.phone || "") : "";
+  document.getElementById("pmAddr").value = p ? (p.address || "") : "";
+  document.getElementById("pmBg").value = p ? (p.bloodGroup || "") : "";
+  document.getElementById("pmAlg").value = p ? (p.allergies || "") : "";
+  document.getElementById("pmChronic").value = p ? (p.chronic || "") : "";
+  document.getElementById("pmNotes").value = p ? (p.notes || "") : "";
+  document.getElementById("patientModal").classList.add("open");
+}
+function closePatientModal() { document.getElementById("patientModal").classList.remove("open"); }
+function savePatient() {
+  const name = document.getElementById("pmName").value.trim();
+  const age = document.getElementById("pmAge").value.trim();
+  const sex = document.getElementById("pmSex").value;
+  if (!name || !age) { alert("Name and Age required."); return; }
+  const data = {
+    name, age: Number(age), sex,
+    dob: document.getElementById("pmDob").value,
+    phone: document.getElementById("pmPhone").value.trim(),
+    address: document.getElementById("pmAddr").value.trim(),
+    bloodGroup: document.getElementById("pmBg").value.trim(),
+    allergies: document.getElementById("pmAlg").value.trim(),
+    chronic: document.getElementById("pmChronic").value.trim(),
+    notes: document.getElementById("pmNotes").value.trim()
+  };
+  if (editingPatientId) {
+    const p = patients.find(x => x.id === editingPatientId);
+    Object.assign(p, data);
+  } else {
+    patients.push({ id: uid(), clinical: [], diagnostic: [], consults: [], ...data });
+  }
+  save();
+  closePatientModal();
+  renderPatients();
+  initConsult();
+}
+function deletePatient(id) {
+  if (!confirm("Delete patient and all records?")) return;
+  patients = patients.filter(p => p.id !== id);
+  save();
+  renderPatients();
+  renderDashboard();
+}
+
+// ---------- History ----------
+function initHistory() {
+  const sel = document.getElementById("hPatient");
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">-- Select --</option>';
+  patients.forEach(p => {
+    const o = document.createElement("option");
+    o.value = p.id; o.textContent = p.name;
+    sel.appendChild(o);
+  });
+  if (cur) sel.value = cur;
+  renderHistory();
+}
+function renderHistory() {
+  const pid = document.getElementById("hPatient").value;
+  const container = document.getElementById("historyContent");
+  if (!pid) { container.innerHTML = '<div class="card empty">Select a patient.</div>'; return; }
+  const p = patients.find(x => x.id === pid);
+  let html = `<div class="card"><h3>${escapeHtml(p.name)} — Consultations</h3>`;
+  const consults = (p.consults || []).slice().sort((a,b) => b.date.localeCompare(a.date));
+  if (!consults.length) html += '<div class="empty">No consultations.</div>';
+  else {
+    consults.forEach(c => {
+      html += `<div style="border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;"><b>${c.date}</b>
+        <button class="btn btn-outline btn-sm" onclick="reprintConsult('${p.id}','${c.id}')">Reprint Rx</button></div>
+        <div><b>Vitals:</b> BP ${escapeHtml(c.vitals.bp||"-")} | Pulse ${escapeHtml(c.vitals.pulse||"-")} | Temp ${escapeHtml(c.vitals.temp||"-")} | SpO2 ${escapeHtml(c.vitals.spo2||"-")}</div>
+        <div><b>Symptoms:</b> ${escapeHtml((c.symptoms||[]).join(", ") || "-")}</div>
+        <div><b>Diagnosis:</b> ${escapeHtml(c.diagnosis)} ${c.code ? "("+escapeHtml(c.code)+")" : ""}</div>
+        <div><b>Rx:</b> ${(c.meds||[]).map(m => escapeHtml(m.drug+" "+m.dose+" "+m.freq+" x "+m.duration)).join("; ") || "-"}</div>
+        <div><b>Advice:</b> ${escapeHtml(c.advice||"-")}</div>
+        <div><b>Tests:</b> ${escapeHtml(c.tests||"-")} | <b>Follow-up:</b> ${escapeHtml(c.follow||"-")} | <b>Referral:</b> ${escapeHtml(c.referral||"None")}</div>
+      </div>`;
+    });
+  }
+  html += "</div>";
+  // clinical + diagnostic
+  html += `<div class="card"><h3>Clinical History</h3>`;
+  const clin = (p.clinical || []).slice().sort((a,b)=>b.date.localeCompare(a.date));
+  if (!clin.length) html += '<div class="empty">None.</div>';
+  else {
+    html += `<table><thead><tr><th>Date</th><th>Complaint</th><th>Diagnosis</th><th>Treatment</th></tr></thead><tbody>`;
+    clin.forEach(e => { html += `<tr><td>${e.date}</td><td>${escapeHtml(e.complaint)}</td><td>${escapeHtml(e.diagnosis)}</td><td>${escapeHtml(e.treatment)}</td></tr>`; });
+    html += "</tbody></table>";
+  }
+  html += "</div>";
+  html += `<div class="card"><h3>Diagnostic History</h3>`;
+  const diag = (p.diagnostic || []).slice().sort((a,b)=>b.date.localeCompare(a.date));
+  if (!diag.length) html += '<div class="empty">None.</div>';
+  else {
+    html += `<table><thead><tr><th>Date</th><th>Test</th><th>Result</th><th>Notes</th></tr></thead><tbody>`;
+    diag.forEach(e => { html += `<tr><td>${e.date}</td><td>${escapeHtml(e.test)}</td><td>${escapeHtml(e.result)}</td><td>${escapeHtml(e.notes)}</td></tr>`; });
+    html += "</tbody></table>";
+  }
+  html += "</div>";
+  container.innerHTML = html;
+}
+
+function viewConsult(pid, cid) {
+  const p = patients.find(x => x.id === pid);
+  const c = (p.consults||[]).find(x => x.id === cid);
+  if (!c) return;
+  // store for reprint
+  window._lastConsult = { pid, cid };
+  alert("Open History tab to view/print this consultation.");
+}
+
+function reprintConsult(pid, cid) {
+  const p = patients.find(x => x.id === pid);
+  const c = (p.consults||[]).find(x => x.id === cid);
+  if (!c) return;
+  // temporarily build a fake consult object for print
+  const orig = collectConsult;
+  // monkey: set form? simpler: call print with data directly
+  printConsultData(p, c);
+}
+
+function printConsultData(p, c) {
+  const w = window.open("", "_blank");
+  const medsHtml = (c.meds||[]).map(m => `<tr><td>${escapeHtml(m.drug)}</td><td>${escapeHtml(m.dose)}</td><td>${escapeHtml(m.freq)}</td><td>${escapeHtml(m.duration)}</td><td>${escapeHtml(m.instr)}</td></tr>`).join("");
+  w.document.write(`<!DOCTYPE html><html><head><title>Prescription</title>
+  <style>body{font-family:Arial,sans-serif;padding:20px;max-width:800px;margin:auto;}
+  h1{color:#0f766e;} table{width:100%;border-collapse:collapse;margin:10px 0;}
+  th,td{border:1px solid #ccc;padding:6px;} th{background:#f1f5f9;}
+  .hdr{display:flex;justify-content:space-between;border-bottom:2px solid #0f766e;padding-bottom:8px;margin-bottom:12px;}
+  .meta{margin:8px 0;} .section{margin-top:12px;font-weight:700;color:#0f766e;}
+  @media print{button{display:none;}}</style></head><body>
+  <div class="hdr"><h1>ASHVIK Clinic</h1><div>${c.date}</div></div>
+  <div class="meta"><b>Patient:</b> ${escapeHtml(p.name)} &nbsp; <b>Age/Sex:</b> ${p.age}/${p.sex} &nbsp; <b>ID:</b> ${p.id}</div>
+  <div class="meta"><b>Vitals:</b> BP ${escapeHtml(c.vitals.bp||"-")} | Pulse ${escapeHtml(c.vitals.pulse||"-")} | Temp ${escapeHtml(c.vitals.temp||"-")}°F | SpO2 ${escapeHtml(c.vitals.spo2||"-")}% | Wt ${escapeHtml(c.vitals.weight||"-")}kg</div>
+  <div class="section">Symptoms</div><div>${escapeHtml((c.symptoms||[]).join(", ") || "-")}</div>
+  <div class="section">Diagnosis</div><div>${escapeHtml(c.diagnosis)} ${c.code ? "("+escapeHtml(c.code)+")" : ""}</div>
+  <div class="section">Rx (Prescription)</div>
+  <table><thead><tr><th>Drug</th><th>Dose</th><th>Frequency</th><th>Duration</th><th>Instructions</th></tr></thead><tbody>${medsHtml || "<tr><td colspan=5>-</td></tr>"}</tbody></table>
+  <div class="section">Advice</div><div style="white-space:pre-wrap;">${escapeHtml(c.advice || "-")}</div>
+  <div class="meta" style="margin-top:12px;"><b>Tests:</b> ${escapeHtml(c.tests || "-")} &nbsp; <b>Follow-up:</b> ${escapeHtml(c.follow || "-")} &nbsp; <b>Referral:</b> ${escapeHtml(c.referral || "None")}</div>
+  <div style="margin-top:40px;border-top:1px dashed #999;padding-top:8px;font-size:12px;color:#666;">
+    Doctor's signature: ____________________ &nbsp;&nbsp; Computer-generated prescription.
+  </div>
+  <div style="margin-top:12px;"><button onclick="window.print()">Print</button></div>
+  </body></html>`);
+  w.document.close();
+}
+
+function escapeHtml(s) { return String(s || "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
+function escapeAttr(s) { return String(s || "").replace(/"/g, "&quot;"); }
+
+load();
+showView("dashboard");
+</script>
+</body>
+</html>

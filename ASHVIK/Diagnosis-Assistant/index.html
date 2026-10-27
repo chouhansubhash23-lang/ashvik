@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Diagnosis Assistant - Symptom to Diagnosis</title>
+<style>
+  :root { --primary:#0f766e; --primary-dark:#115e59; --accent:#2563eb; --bg:#f1f5f9; --card:#fff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --danger:#dc2626; --warn:#d97706; --success:#16a34a; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:"Segoe UI",Roboto,Arial,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+  .app { display:flex; min-height:100vh; }
+  .sidebar { width:240px; background:var(--card); border-right:1px solid var(--border); padding:16px; display:flex; flex-direction:column; }
+  .sidebar h1 { font-size:18px; margin:0 0 2px; color:var(--primary); }
+  .sidebar .sub { font-size:11px; color:var(--muted); margin-bottom:14px; }
+  .nav { display:flex; flex-direction:column; gap:6px; }
+  .nav button { text-align:left; padding:10px 12px; border:none; background:none; border-radius:8px; cursor:pointer; font-size:14px; font-weight:600; color:var(--text); }
+  .nav button:hover { background:#f8fafc; }
+  .nav button.active { background:#ecfdf5; color:var(--primary); }
+  .main { flex:1; padding:20px; overflow-y:auto; }
+  .topbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px; }
+  .topbar h2 { margin:0; font-size:20px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; margin-bottom:16px; }
+  .card h3 { margin:0 0 12px; font-size:16px; color:var(--primary); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; }
+  .field { display:flex; flex-direction:column; }
+  .field label { font-size:12px; color:var(--muted); margin-bottom:2px; }
+  .field input, .field select, .field textarea { padding:8px; border:1px solid var(--border); border-radius:8px; font-size:14px; }
+  .field textarea { min-height:60px; resize:vertical; }
+  .btn { padding:8px 14px; border:none; border-radius:8px; cursor:pointer; font-size:14px; font-weight:600; }
+  .btn-primary { background:var(--primary); color:#fff; }
+  .btn-primary:hover { background:var(--primary-dark); }
+  .btn-outline { background:#fff; border:1px solid var(--border); color:var(--text); }
+  .btn-danger { background:var(--danger); color:#fff; }
+  .btn-sm { padding:4px 8px; font-size:12px; }
+  .chip { display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px; border:1px solid var(--border); background:#fff; cursor:pointer; margin:3px; }
+  .chip:hover { background:#ecfdf5; border-color:var(--primary); }
+  .chip.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+  .empty { text-align:center; color:var(--muted); padding:20px; }
+  .alert { padding:10px 12px; border-radius:8px; font-size:13px; margin-bottom:12px; }
+  .alert-info { background:#eff6ff; color:#1e40af; border:1px solid #bfdbfe; }
+  .alert-warn { background:#fffbeb; color:#92400e; border:1px solid #fde68a; }
+  .alert-danger { background:#fef2f2; color:#991b1b; border:1px solid #fecaca; }
+  .alert-success { background:#f0fdf4; color:#166534; border:1px solid #bbf7d0; }
+  .score-bar { height:8px; background:#e2e8f0; border-radius:4px; overflow:hidden; margin-top:4px; }
+  .score-fill { height:100%; background:var(--primary); }
+  .result-item { border:1px solid var(--border); border-radius:8px; padding:10px; margin-bottom:8px; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:11px; font-weight:600; }
+  .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.4); display:none; align-items:center; justify-content:center; z-index:50; }
+  .modal-backdrop.open { display:flex; }
+  .modal { background:var(--card); border-radius:12px; padding:20px; width:90%; max-width:560px; max-height:90vh; overflow-y:auto; }
+  .modal h3 { margin:0 0 12px; }
+  .modal-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:12px; }
+  @media (max-width:800px){ .app{flex-direction:column;} .sidebar{width:100%;} }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <h1>Diagnosis Assistant</h1>
+    <div class="sub">Symptoms → Diagnosis</div>
+    <div class="nav">
+      <button class="active" data-view="assist" onclick="showView('assist')">Diagnosis Assist</button>
+      <button data-view="reports" onclick="showView('reports')">Test Reports</button>
+      <button data-view="history" onclick="showView('history')">Patient History</button>
+    </div>
+    <div style="margin-top:auto;font-size:11px;color:var(--muted);">Shares data with ASHVIK (localStorage).</div>
+  </aside>
+
+  <main class="main">
+    <!-- ASSIST -->
+    <div id="view-assist">
+      <div class="topbar"><h2>Diagnosis Assistant</h2>
+        <button class="btn btn-primary" onclick="generateDiagnosis()">Generate Diagnosis</button>
+      </div>
+
+      <div class="card">
+        <h3>1. Select Patient</h3>
+        <div class="grid">
+          <div class="field"><label>Patient *</label>
+            <select id="aPatient" onchange="loadPatientData()"><option value="">-- Select patient --</option></select>
+          </div>
+          <div class="field"><label>Age / Sex</label><input id="aAgeSex" readonly /></div>
+          <div class="field"><label>Chronic Conditions</label><input id="aChronic" /></div>
+          <div class="field"><label>Allergies</label><input id="aAllergies" /></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>2. Vitals</h3>
+        <div class="grid">
+          <div class="field"><label>BP</label><input id="aBp" placeholder="120/80" /></div>
+          <div class="field"><label>Pulse</label><input id="aPulse" type="number" /></div>
+          <div class="field"><label>Temp (°F)</label><input id="aTemp" type="number" step="0.1" /></div>
+          <div class="field"><label>SpO2 (%)</label><input id="aSpo2" type="number" /></div>
+          <div class="field"><label>Weight (kg)</label><input id="aWeight" type="number" step="0.1" /></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>3. Symptoms</h3>
+        <div id="symptomChips"></div>
+        <div class="field" style="margin-top:8px;"><label>Additional symptom notes</label>
+          <textarea id="aSymptomNotes" placeholder="Onset, duration, character, aggravating/relieving factors..."></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>4. History & Test Reports (auto-loaded)</h3>
+        <div id="historySummary" class="alert alert-info">Select a patient to load history.</div>
+        <div id="reportsSummary"></div>
+      </div>
+
+      <div class="card">
+        <h3>5. Doctor's Suspected Diagnosis</h3>
+        <div class="field"><label>What diagnosis do you think? (your clinical impression)</label>
+          <input id="aDoctorDx" placeholder="e.g. Malaria, Viral fever, Dengue..." /></div>
+        <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-outline btn-sm" onclick="setDoctorDx('Viral fever')">Viral fever</button>
+          <button class="btn btn-outline btn-sm" onclick="setDoctorDx('Malaria')">Malaria</button>
+          <button class="btn btn-outline btn-sm" onclick="setDoctorDx('Dengue')">Dengue</button>
+          <button class="btn btn-outline btn-sm" onclick="setDoctorDx('Typhoid')">Typhoid</button>
+          <button class="btn btn-outline btn-sm" onclick="setDoctorDx('Acute diarrhoea')">Acute diarrhoea</button>
+        </div>
+      </div>
+
+      <div class="card" id="resultCard" style="display:none;">
+        <h3>6. Diagnosis Result</h3>
+        <div id="resultContent"></div>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-primary btn-sm" onclick="saveResultAsNote()">Save to Patient History</button>
+          <button class="btn btn-outline btn-sm" onclick="applyToASHVIK()">Copy Diagnosis (for ASHVIK)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORTS -->
+    <div id="view-reports" style="display:none;">
+      <div class="topbar"><h2>Test Reports</h2>
+        <button class="btn btn-primary" onclick="openReportModal()">+ Add Report</button>
+      </div>
+      <div class="card">
+        <div class="field" style="max-width:320px;"><label>Select Patient</label>
+          <select id="rPatient" onchange="renderReports()"><option value="">-- Select --</option></select>
+        </div>
+      </div>
+      <div id="reportsList"></div>
+    </div>
+
+    <!-- HISTORY -->
+    <div id="view-history" style="display:none;">
+      <div class="topbar"><h2>Patient History</h2></div>
+      <div class="card">
+        <div class="field" style="max-width:320px;"><label>Select Patient</label>
+          <select id="hPatient" onchange="renderHistory()"><option value="">-- Select --</option></select>
+        </div>
+      </div>
+      <div id="historyContent"></div>
+    </div>
+  </main>
+</div>
+
+<!-- Report Modal -->
+<div class="modal-backdrop" id="reportModal">
+  <div class="modal">
+    <h3>Add Test Report</h3>
+    <div class="field"><label>Patient *</label><select id="rmPatient"></select></div>
+    <div class="field"><label>Date *</label><input id="rmDate" type="date" /></div>
+    <div class="field"><label>Test Name *</label><input id="rmName" placeholder="CBC, Malaria RDT, CXR..." /></div>
+    <div class="field"><label>Result / Findings</label><textarea id="rmResult"></textarea></div>
+    <div class="field"><label>Notes</label><textarea id="rmNotes"></textarea></div>
+    <div class="field"><label>Attach File (optional)</label><input id="rmFile" type="file" /></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeReportModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveReport()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = "medidesk_patients_v1";
+let patients = [];
+let lastResult = null;
+
+// Conditions knowledge base
+const CONDITIONS = [
+  { name:"Viral fever", keywords:["fever","body ache","headache","cold","runny nose","sore throat","weakness"], tests:["CBC","Malaria RDT (if fever>3d)"], advice:"Rest, fluids, paracetamol. Avoid antibiotics unless bacterial signs.", redFlags:["breathlessness","chest pain","confusion","fever>103"] },
+  { name:"Malaria", keywords:["fever","chills","sweating","headache","vomiting","weakness"], tests:["Malaria RDT + smear"], advice:"ACT per protocol. Monitor for severe signs. Refer if danger signs.", redFlags:["confusion","jaundice","bleeding","severe weakness"] },
+  { name:"Dengue", keywords:["fever","body ache","joint pain","rash","headache","vomiting","weakness"], tests:["NS1/IgM dengue","Platelet count","CBC"], advice:"Paracetamol only (no NSAIDs). Hydration. Monitor platelets/warning signs.", redFlags:["bleeding","abdominal pain","vomiting","restlessness"] },
+  { name:"Typhoid", keywords:["fever","abdominal pain","constipation","diarrhoea","headache","weakness","loss of appetite"], tests:["Blood culture","Widal/CBC"], advice:"Antibiotics per local resistance. Soft diet, fluids.", redFlags:["intestinal bleeding","perforation","confusion"] },
+  { name:"Acute diarrhoea", keywords:["diarrhoea","vomiting","abdominal pain","dehydration","fever","weakness"], tests:["Stool exam","Electrolytes if severe"], advice:"ORS + zinc. Continue feeding. Avoid anti-diarrhoeals in children.", redFlags:["blood in stool","severe dehydration","lethargy"] },
+  { name:"Pneumonia", keywords:["cough","fever","breathlessness","chest pain","sputum","weakness"], tests:["CBC","Chest X-ray","SpO2"], advice:"Antibiotics per severity. Oxygen if hypoxic. Refer if severe.", redFlags:["spo2<94","respiratory distress","confusion","hypotension"] },
+  { name:"Acute bronchitis", keywords:["cough","fever","sore throat","chest discomfort","sputum"], tests:["Clinical","CXR if needed"], advice:"Symptomatic care. Avoid unnecessary antibiotics. Steam inhalation.", redFlags:["breathlessness","high fever","chest pain"] },
+  { name:"Asthma", keywords:["wheeze","breathlessness","cough","chest tightness","night cough"], tests:["Peak flow","Spirometry (if available)"], advice:"Inhaler + spacer. Avoid triggers. Action plan.", redFlags:["severe breathlessness","unable to speak","cyanosis"] },
+  { name:"COPD", keywords:["cough","sputum","breathlessness","wheeze","smoking","chest tightness"], tests:["Spirometry","CXR","SpO2"], advice:"Bronchodilators. Stop smoking/biomass. Vaccination.", redFlags:["respiratory failure","confusion","cyanosis"] },
+  { name:"Hypertension", keywords:["headache","dizziness","chest pain","blurred vision","weakness"], tests:["BP (repeated)","ECG","Renal function","Lipids"], advice:"Salt restriction, exercise, medication. Recheck BP.", redFlags:["chest pain","neuro deficit","very high BP"] },
+  { name:"Type 2 Diabetes", keywords:["thirst","frequent urination","weight loss","weakness","blurred vision","fatigue"], tests:["Fasting sugar","HbA1c","Urine"], advice:"Diet, exercise, metformin. Foot/eye screening.", redFlags:["DKA signs","severe hyperglycaemia"] },
+  { name:"UTI", keywords:["burning urination","frequency","urgency","fever","abdominal pain","back pain"], tests:["Urine dipstick/culture"], advice:"Oral antibiotics, hydration. Refer if pyelonephritis.", redFlags:["fever","flank pain","vomiting"] },
+  { name:"Scabies", keywords:["itching","rash","night itching","skin lesions"], tests:["Clinical exam"], advice:"Permethrin 5% whole body. Treat contacts. Wash linen.", redFlags:["secondary infection","crusted scabies"] },
+  { name:"Fungal skin infection", keywords:["itching","rash","ring-shaped","scaling","skin lesions"], tests:["KOH (if available)"], advice:"Topical antifungal, keep dry. Full course.", redFlags:["spreading","immunocompromised"] },
+  { name:"Iron deficiency anaemia", keywords:["weakness","fatigue","pallor","breathlessness","dizziness","palpitations"], tests:["CBC/Hb","Ferritin (if available)"], advice:"Iron + folic acid. Treat worms. Iron-rich diet.", redFlags:["severe anaemia","heart failure"] },
+  { name:"Hypothyroidism", keywords:["weight gain","fatigue","cold intolerance","constipation","dry skin","hair loss"], tests:["TSH","T4"], advice:"Levothyroxine. Recheck TSH in 6-8 weeks.", redFlags:["myxoedema","altered consciousness"] },
+  { name:"Allergic rhinitis", keywords:["sneezing","runny nose","itchy eyes","nasal congestion","itching"], tests:["Clinical"], advice:"Antihistamine, nasal steroid. Avoid allergens.", redFlags:["asthma exacerbation"] },
+  { name:"Migraine", keywords:["headache","nausea","vomiting","photophobia","visual aura"], tests:["Clinical","Neuro exam"], advice:"Analgesics, trigger avoidance. Refer if red flags.", redFlags:["sudden thunderclap","neuro deficit","fever+neck stiffness"] },
+  { name:"Gastroenteritis/food poisoning", keywords:["vomiting","diarrhoea","abdominal pain","nausea","fever"], tests:["Stool exam"], advice:"ORS, rest. Antibiotics only if indicated.", redFlags:["blood in stool","severe dehydration"] },
+  { name:"Tuberculosis", keywords:["cough","weight loss","night sweats","fever","hemoptysis","weakness"], tests:["Sputum AFB/CBNAAT","CXR"], advice:"DOTS. Screen family. Nutritional support.", redFlags:["hemoptysis","respiratory distress"] },
+  { name:"Conjunctivitis", keywords:["red eyes","itching","discharge","tearing","eye pain"], tests:["Clinical"], advice:"Hygiene, topical antibiotics if bacterial. Avoid steroids.", redFlags:["vision loss","severe pain","corneal ulcer"] },
+  { name:"Skin allergy/urticaria", keywords:["itching","rash","hives","swelling"], tests:["Clinical"], advice:"Antihistamine. Identify trigger. Avoid NSAIDs if needed.", redFlags:["angioedema","anaphylaxis"] },
+  { name:"Depression", keywords:["low mood","sleep disturbance","fatigue","loss of interest","appetite change"], tests:["Clinical screening (PHQ-9)"], advice:"Counseling, SSRI if indicated. Follow up.", redFlags:["suicidal ideation"] },
+  { name:"Anxiety", keywords:["anxiety","palpitations","sweating","tremor","restlessness","sleep disturbance"], tests:["Clinical"], advice:"Counseling, breathing exercises. Medication if needed.", redFlags:["panic with chest pain (rule out cardiac)"] }
+];
+
+const SYMPTOMS = ["Fever","Cough","Cold/Runny nose","Sore throat","Body ache","Headache","Breathlessness","Chest pain","Vomiting","Diarrhoea","Abdominal pain","Burning urination","Rash","Joint pain","Weakness","Dizziness","Loss of appetite","Weight loss","Night sweats","Itching","Wheeze","Chills/Sweating","Frequent urination","Thirst","Constipation","Nausea","Red eyes","Sneezing","Fatigue","Pallor","Weight gain","Dry skin","Sleep disturbance","Low mood"];
+
+function load() {
+  try { patients = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { patients = []; }
+  if (!patients.length) seed();
+}
+function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(patients)); }
+function seed() {
+  patients = [{ id: uid(), name:"Ramesh Kumar", age:45, sex:"Male", dob:"1980-03-12", phone:"9876543210", address:"Village Rampur", bloodGroup:"B+", allergies:"Penicillin", chronic:"Type 2 Diabetes, Hypertension", notes:"Regular follow-up.", clinical:[], diagnostic:[], consults:[], reports:[] }];
+  save();
+}
+function uid() { return "p" + Math.random().toString(36).slice(2,10) + Date.now().toString(36); }
+
+function showView(v) {
+  ["assist","reports","history"].forEach(x => document.getElementById("view-"+x).style.display = (x===v)?"block":"none");
+  document.querySelectorAll(".nav button").forEach(b => b.classList.toggle("active", b.dataset.view === v));
+  if (v === "reports") initReports();
+  if (v === "history") initHistory();
+}
+
+function populatePatients(selectId) {
+  const sel = document.getElementById(selectId);
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">-- Select patient --</option>';
+  patients.forEach(p => { const o = document.createElement("option"); o.value = p.id; o.textContent = p.name + " (" + p.age + "/" + p.sex + ")"; sel.appendChild(o); });
+  if (cur) sel.value = cur;
+}
+
+function loadPatientData() {
+  const pid = document.getElementById("aPatient").value;
+  if (!pid) {
+    document.getElementById("aAgeSex").value = "";
+    document.getElementById("aChronic").value = "";
+    document.getElementById("aAllergies").value = "";
+    document.getElementById("aBp").value = "";
+    document.getElementById("aPulse").value = "";
+    document.getElementById("aTemp").value = "";
+    document.getElementById("aSpo2").value = "";
+    document.getElementById("aWeight").value = "";
+    document.getElementById("historySummary").innerHTML = "Select a patient to load history.";
+    document.getElementById("reportsSummary").innerHTML = "";
+    return;
+  }
+  const p = patients.find(x => x.id === pid);
+  document.getElementById("aAgeSex").value = p.age + " / " + p.sex;
+  document.getElementById("aChronic").value = p.chronic || "";
+  document.getElementById("aAllergies").value = p.allergies || "";
+  // last consult vitals
+  const consults = (p.consults || []).slice().sort((a,b) => b.date.localeCompare(a.date));
+  if (consults.length) {
+    const c = consults[0];
+    document.getElementById("aBp").value = c.vitals.bp || "";
+    document.getElementById("aPulse").value = c.vitals.pulse || "";
+    document.getElementById("aTemp").value = c.vitals.temp || "";
+    document.getElementById("aSpo2").value = c.vitals.spo2 || "";
+    document.getElementById("aWeight").value = c.vitals.weight || "";
+  }
+  // symptom chips
+  const sc = document.getElementById("symptomChips");
+  sc.innerHTML = "";
+  SYMPTOMS.forEach(s => {
+    const chip = document.createElement("span");
+    chip.className = "chip"; chip.textContent = s;
+    chip.onclick = () => chip.classList.toggle("active");
+    sc.appendChild(chip);
+  });
+  // history summary
+  let hs = `<b>Last ${Math.min(consults.length,3)} consultations:</b><br>`;
+  if (!consults.length) hs = "No previous consultations.";
+  else consults.slice(0,3).forEach(c => {
+    hs += `${c.date} — ${escapeHtml(c.diagnosis)} (Symptoms: ${escapeHtml((c.symptoms||[]).join(", "))})<br>`;
+  });
+  const reports = p.reports || [];
+  if (reports.length) {
+    hs += `<br><b>Test reports:</b> ${reports.map(r => escapeHtml(r.name) + " (" + r.date + ")").join(", ")}`;
+  }
+  document.getElementById("historySummary").innerHTML = hs;
+  // reports summary
+  if (reports.length) {
+    document.getElementById("reportsSummary").innerHTML = reports.slice(0,5).map(r =>
+      `<div style="font-size:13px;padding:4px 0;border-bottom:1px solid var(--border);">${escapeHtml(r.date)} — <b>${escapeHtml(r.name)}</b>: ${escapeHtml(r.result||"")}</div>`).join("");
+  } else {
+    document.getElementById("reportsSummary").innerHTML = '<div style="font-size:13px;color:var(--muted);">No test reports yet.</div>';
+  }
+}
+
+function setDoctorDx(d) { document.getElementById("aDoctorDx").value = d; }
+
+function collectSymptoms() {
+  return [...document.querySelectorAll("#symptomChips .chip.active")].map(c => c.textContent.toLowerCase());
+}
+
+function generateDiagnosis() {
+  const pid = document.getElementById("aPatient").value;
+  if (!pid) { alert("Select a patient."); return; }
+  const p = patients.find(x => x.id === pid);
+  const symptoms = collectSymptoms();
+  const extra = document.getElementById("aSymptomNotes").value.trim();
+  const symptomText = (symptoms.join(" ") + " " + extra).toLowerCase();
+  const chronic = (document.getElementById("aChronic").value || "").toLowerCase();
+  const temp = parseFloat(document.getElementById("aTemp").value);
+  const spo2 = parseFloat(document.getElementById("aSpo2").value);
+  const age = p.age;
+  const sex = p.sex;
+
+  // score conditions
+  const scored = CONDITIONS.map(cond => {
+    let score = 0;
+    const matched = [];
+    cond.keywords.forEach(kw => {
+      if (symptomText.includes(kw.toLowerCase())) { score += 2; matched.push(kw); }
+    });
+    // chronic boosts
+    if (chronic.includes("diabetes") && cond.name === "Type 2 Diabetes") score += 3;
+    if (chronic.includes("hypertension") && cond.name === "Hypertension") score += 3;
+    if (chronic.includes("asthma") && cond.name === "Asthma") score += 3;
+    if (chronic.includes("copd") && cond.name === "COPD") score += 3;
+    // age/sex
+    if (age < 5 && ["Pneumonia","Acute diarrhoea"].includes(cond.name)) score += 1;
+    if (age > 60 && ["Hypertension","Type 2 Diabetes","COPD"].includes(cond.name)) score += 1;
+    if (sex === "Female" && cond.name === "UTI") score += 1;
+    // temp/spo2
+    if (!isNaN(temp) && temp >= 100.4 && cond.keywords.includes("fever")) score += 1;
+    if (!isNaN(spo2) && spo2 < 94 && (cond.name === "Pneumonia" || cond.name === "COPD" || cond.name === "Asthma")) score += 3;
+    return { ...cond, score, matched };
+  }).filter(c => c.score > 0).sort((a,b) => b.score - a.score);
+
+  const top = scored.slice(0,5);
+  const suggested = top.length && top[0].score >= 3 ? top[0].name : (top.length ? top[0].name : "Insufficient data — needs clinical evaluation");
+
+  // red flags
+  const redFlags = [];
+  if (symptomText.includes("chest pain")) redFlags.push("Chest pain — rule out cardiac/MI, refer if acute");
+  if (symptomText.includes("breathlessness")) redFlags.push("Breathlessness — assess SpO2, consider pneumonia/asthma/COPD");
+  if (!isNaN(spo2) && spo2 < 94) redFlags.push("SpO2 " + spo2 + "% — hypoxia, urgent evaluation");
+  if (!isNaN(temp) && temp >= 103) redFlags.push("High fever ≥103°F — investigate cause, watch for sepsis");
+  if (symptomText.includes("confusion") || symptomText.includes("altered")) redFlags.push("Altered sensorium — emergency");
+  if (symptomText.includes("bleeding")) redFlags.push("Bleeding — dengue/Menorrhagia? evaluate");
+  if (symptomText.includes("blood in stool")) redFlags.push("Blood in stool — dysentery, refer if severe");
+  if (symptomText.includes("severe dehydration") || symptomText.includes("no urine")) redFlags.push("Severe dehydration — urgent ORS/IV");
+  const topCond = top[0];
+  if (topCond && topCond.redFlags) {
+    topCond.redFlags.forEach(rf => {
+      if (symptomText.includes(rf.split(" ")[0].toLowerCase()) || rf.includes("spo2")) {
+        // only add if symptom present-ish; keep simple
+      }
+    });
+  }
+  // recommended tests
+  const tests = new Set();
+  top.slice(0,3).forEach(c => (c.tests||[]).forEach(t => tests.add(t)));
+  if (document.getElementById("aDoctorDx").value.trim()) tests.add("As per doctor's impression");
+
+  // doctor agreement
+  const doctorDx = document.getElementById("aDoctorDx").value.trim();
+  let agreement = "";
+  if (doctorDx) {
+    const dd = doctorDx.toLowerCase();
+    const sys = suggested.toLowerCase();
+    if (sys.includes(dd) || dd.includes(sys.split(" ")[0])) agreement = "✅ System agrees with your impression.";
+    else agreement = "⚠️ System suggestion differs from your impression — review both. Consider the differential list.";
+  }
+
+  lastResult = { pid, suggested, top, tests: [...tests], redFlags, doctorDx, agreement, symptoms, chronic, vitals: {
+    bp: document.getElementById("aBp").value, pulse: document.getElementById("aPulse").value,
+    temp: document.getElementById("aTemp").value, spo2: document.getElementById("aSpo2").value,
+    weight: document.getElementById("aWeight").value
+  }, extra };
+
+  // render
+  let html = "";
+  if (redFlags.length) {
+    html += `<div class="alert alert-danger"><b>Red flags:</b><ul style="margin:4px 0 0 18px;">${redFlags.map(r=>"<li>"+escapeHtml(r)+"</li>").join("")}</ul></div>`;
+  }
+  html += `<div class="alert alert-success"><b>Suggested diagnosis:</b> ${escapeHtml(suggested)} (confidence score ${top.length?top[0].score:0})</div>`;
+  if (doctorDx) html += `<div class="alert ${agreement.startsWith("✅")?"alert-success":"alert-warn"}">${escapeHtml(agreement)}<br>Your impression: <b>${escapeHtml(doctorDx)}</b> | System: <b>${escapeHtml(suggested)}</b></div>`;
+  html += `<div class="section-title" style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin:12px 0 6px;">Differential diagnosis</div>`;
+  if (!top.length) html += '<div class="empty">No matching conditions. Enter more symptoms.</div>';
+  else top.forEach(c => {
+    html += `<div class="result-item">
+      <div style="display:flex;justify-content:space-between;"><b>${escapeHtml(c.name)}</b><span>Score: ${c.score}</span></div>
+      <div class="score-bar"><div class="score-fill" style="width:${Math.min(100,c.score*10)}%;"></div></div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;">Matched: ${escapeHtml(c.matched.join(", ") || "-")}</div>
+      <div style="font-size:12px;margin-top:4px;"><b>Tests:</b> ${escapeHtml((c.tests||[]).join(", "))}</div>
+      <div style="font-size:12px;"><b>Advice:</b> ${escapeHtml(c.advice)}</div>
+    </div>`;
+  });
+  html += `<div class="section-title" style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin:12px 0 6px;">Recommended tests</div>`;
+  html += `<div>${[...tests].map(t => `<span class="chip">${escapeHtml(t)}</span>`).join("") || "-"}</div>`;
+  html += `<div style="margin-top:10px;font-size:12px;color:var(--muted);">⚠️ This is a decision-support suggestion based on symptom keywords. Final diagnosis must be made by the doctor after examination and investigations.</div>`;
+  document.getElementById("resultContent").innerHTML = html;
+  document.getElementById("resultCard").style.display = "block";
+  document.getElementById("resultCard").scrollIntoView({ behavior: "smooth" });
+}
+
+function saveResultAsNote() {
+  if (!lastResult) { alert("Generate diagnosis first."); return; }
+  const p = patients.find(x => x.id === lastResult.pid);
+  p.clinical = p.clinical || [];
+  p.clinical.push({
+    id: uid(), date: new Date().toISOString().slice(0,10),
+    complaint: lastResult.symptoms.join(", ") + (lastResult.extra ? " | " + lastResult.extra : ""),
+    diagnosis: lastResult.suggested + (lastResult.doctorDx ? " (Dr impression: " + lastResult.doctorDx + ")" : ""),
+    treatment: "Tests: " + lastResult.tests.join(", "),
+    notes: "AI-assisted differential. Red flags: " + (lastResult.redFlags.join("; ") || "none")
+  });
+  save();
+  alert("Saved to patient clinical history.");
+}
+
+function applyToASHVIK() {
+  if (!lastResult) { alert("Generate diagnosis first."); return; }
+  // store in sessionStorage for ASHVIK to pick up (if opened)
+  sessionStorage.setItem("ashvik_dx", JSON.stringify({ diagnosis: lastResult.suggested, tests: lastResult.tests, advice: lastResult.top[0]?.advice || "" }));
+  alert("Copied. Open ASHVIK → New Consultation and paste diagnosis/tests. (Auto-fill not wired across files.)");
+}
+
+// ---------- Reports ----------
+function initReports() {
+  populatePatients("rPatient");
+  populatePatients("rmPatient");
+  renderReports();
+}
+function openReportModal() {
+  document.getElementById("rmPatient").innerHTML = '<option value="">-- Select --</option>';
+  patients.forEach(p => { const o = document.createElement("option"); o.value = p.id; o.textContent = p.name; document.getElementById("rmPatient").appendChild(o); });
+  const rp = document.getElementById("rPatient").value;
+  if (rp) document.getElementById("rmPatient").value = rp;
+  document.getElementById("rmDate").value = new Date().toISOString().slice(0,10);
+  document.getElementById("rmName").value = "";
+  document.getElementById("rmResult").value = "";
+  document.getElementById("rmNotes").value = "";
+  document.getElementById("rmFile").value = "";
+  document.getElementById("reportModal").classList.add("open");
+}
+function closeReportModal() { document.getElementById("reportModal").classList.remove("open"); }
+function saveReport() {
+  const pid = document.getElementById("rmPatient").value;
+  const date = document.getElementById("rmDate").value;
+  const name = document.getElementById("rmName").value.trim();
+  if (!pid || !date || !name) { alert("Patient, date and test name required."); return; }
+  const fileInput = document.getElementById("rmFile");
+  const finish = (fileData, fileType, fileName) => {
+    const p = patients.find(x => x.id === pid);
+    p.reports = p.reports || [];
+    p.reports.push({
+      id: uid(), date, name,
+      result: document.getElementById("rmResult").value.trim(),
+      notes: document.getElementById("rmNotes").value.trim(),
+      fileData, fileType, fileName
+    });
+    save();
+    closeReportModal();
+    document.getElementById("rPatient").value = pid;
+    renderReports();
+  };
+  if (fileInput.files && fileInput.files[0]) {
+    const f = fileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = e => finish(e.target.result, f.type, f.name);
+    reader.readAsDataURL(f);
+  } else {
+    finish(null, null, null);
+  }
+}
+function renderReports() {
+  const pid = document.getElementById("rPatient").value;
+  const container = document.getElementById("reportsList");
+  if (!pid) { container.innerHTML = '<div class="card empty">Select a patient.</div>'; return; }
+  const p = patients.find(x => x.id === pid);
+  const reports = (p.reports || []).slice().sort((a,b) => b.date.localeCompare(a.date));
+  if (!reports.length) { container.innerHTML = '<div class="card empty">No reports yet.</div>'; return; }
+  let html = "";
+  reports.forEach(r => {
+    html += `<div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h3 style="margin:0;">${escapeHtml(r.name)} <span style="font-size:12px;color:var(--muted);font-weight:400;">${r.date}</span></h3>
+        <button class="btn btn-danger btn-sm" onclick="deleteReport('${pid}','${r.id}')">Delete</button>
+      </div>
+      <div style="margin-top:8px;"><b>Result:</b> ${escapeHtml(r.result || "-")}</div>
+      ${r.notes ? `<div><b>Notes:</b> ${escapeHtml(r.notes)}</div>` : ""}
+      ${r.fileData ? `<div style="margin-top:8px;"><a href="${r.fileData}" target="_blank" download="${escapeAttr(r.fileName||'report')}">📎 ${escapeHtml(r.fileName||'View file')}</a></div>` : ""}
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+function deleteReport(pid, rid) {
+  if (!confirm("Delete this report?")) return;
+  const p = patients.find(x => x.id === pid);
+  p.reports = (p.reports || []).filter(r => r.id !== rid);
+  save();
+  renderReports();
+}
+
+// ---------- History ----------
+function initHistory() {
+  populatePatients("hPatient");
+  renderHistory();
+}
+function renderHistory() {
+  const pid = document.getElementById("hPatient").value;
+  const container = document.getElementById("historyContent");
+  if (!pid) { container.innerHTML = '<div class="card empty">Select a patient.</div>'; return; }
+  const p = patients.find(x => x.id === pid);
+  let html = `<div class="card"><h3>${escapeHtml(p.name)} — Consultations</h3>`;
+  const consults = (p.consults || []).slice().sort((a,b) => b.date.localeCompare(a.date));
+  if (!consults.length) html += '<div class="empty">No consultations.</div>';
+  else consults.forEach(c => {
+    html += `<div style="border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:8px;">
+      <b>${c.date}</b> — ${escapeHtml(c.diagnosis)}<br>
+      <span style="font-size:13px;">Symptoms: ${escapeHtml((c.symptoms||[]).join(", "))}</span><br>
+      <span style="font-size:13px;">Vitals: BP ${escapeHtml(c.vitals.bp||"-")} | Pulse ${escapeHtml(c.vitals.pulse||"-")} | Temp ${escapeHtml(c.vitals.temp||"-")} | SpO2 ${escapeHtml(c.vitals.spo2||"-")}</span><br>
+      <span style="font-size:13px;">Rx: ${escapeHtml((c.meds||[]).map(m=>m.drug).join(", ")||"-")}</span>
+    </div>`;
+  });
+  html += "</div>";
+  // reports
+  html += `<div class="card"><h3>Test Reports</h3>`;
+  const reps = (p.reports || []).slice().sort((a,b) => b.date.localeCompare(a.date));
+  if (!reps.length) html += '<div class="empty">No reports.</div>';
+  else reps.forEach(r => {
+    html += `<div style="border:1px solid var(--border);border-radius:8px;padding:8px;margin-bottom:6px;">
+      <b>${escapeHtml(r.name)}</b> (${r.date}) — ${escapeHtml(r.result||"-")}
+      ${r.fileData ? ` <a href="${r.fileData}" target="_blank">📎</a>` : ""}
+    </div>`;
+  });
+  html += "</div>";
+  // clinical
+  html += `<div class="card"><h3>Clinical Notes</h3>`;
+  const clin = (p.clinical || []).slice().sort((a,b)=>b.date.localeCompare(a.date));
+  if (!clin.length) html += '<div class="empty">None.</div>';
+  else clin.forEach(e => {
+    html += `<div style="border:1px solid var(--border);border-radius:8px;padding:8px;margin-bottom:6px;">
+      <b>${e.date}</b> — ${escapeHtml(e.diagnosis)}<br>
+      <span style="font-size:13px;">${escapeHtml(e.complaint)}</span><br>
+      <span style="font-size:13px;color:var(--muted);">${escapeHtml(e.treatment)}</span>
+    </div>`;
+  });
+  html += "</div>";
+  container.innerHTML = html;
+}
+
+function escapeHtml(s) { return String(s || "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
+function escapeAttr(s) { return String(s || "").replace(/"/g, "&quot;"); }
+
+load();
+populatePatients("aPatient");
+// symptom chips initial
+const sc = document.getElementById("symptomChips");
+SYMPTOMS.forEach(s => { const chip = document.createElement("span"); chip.className = "chip"; chip.textContent = s; chip.onclick = () => chip.classList.toggle("active"); sc.appendChild(chip); });
+showView("assist");
+</script>
+</body>
+</html>

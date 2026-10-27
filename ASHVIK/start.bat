@@ -1,0 +1,4 @@
+@echo off
+cd /d %~dp0
+start "" http://localhost:8765/index.html
+node -e "const http=require('http'),fs=require('fs'),path=require('path');http.createServer((req,res)=>{let f=path.join(process.cwd(),req.url.split('?')[0]);if(fs.statSync(f,{throwIfNoEntry:false})?.isDirectory())f+='index.html';fs.readFile(f,(e,d)=>{if(e){res.statusCode=404;res.end('not found');return;}const ext=path.extname(f);const m={'.html':'text/html','.json':'application/json','.js':'application/javascript','.css':'text/css'};res.setHeader('Content-Type',m[ext]||'text/plain');res.end(d);});}).listen(8765,()=>console.log('ASHVIK running at http://localhost:8765'));"

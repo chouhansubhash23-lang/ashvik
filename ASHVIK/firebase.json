@@ -1,0 +1,29 @@
+{
+  "hosting": {
+    "site": "ashvik-medical",
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "**/*.bat",
+      "**/*.cmd",
+      "**/*.exe",
+      "README.md",
+      "start.bat",
+      "Diagnosis-Assistant/**",
+      "Diagnosis-Assistant-React/**",
+      "Medical-Software-Frontend/**",
+      "Patient-Home-Page/**"
+    ]
+  },
+  "auth": {
+    "providers": {
+      "emailPassword": true,
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "ASHVIK Medical",
+        "supportEmail": "arogyamvishva@gmail.com"
+      }
+    }
+  }
+}
