@@ -1,6 +1,6 @@
 # ASHVIK Clinical Guidelines — Index
 
-**Pilot set (5 conditions)** — compiled 2026-10-27 from ICMR / NVBDCP / NCDC / WHO sources.
+**Set 1 (10 conditions)** — compiled 2026-10-27 from ICMR / NVBDCP / NCDC / NTEP / WHO sources.
 Status: **Draft — clinician review required** before clinical use.
 
 | # | Condition | File | Source basis | Status |
@@ -10,6 +10,11 @@ Status: **Draft — clinician review required** before clinical use.
 | 3 | Typhoid | [typhoid.md](typhoid.md) | ICMR antimicrobial guidelines, NCDC | Draft |
 | 4 | Acute diarrhoea | [acute-diarrhoea.md](acute-diarrhoea.md) | NHP, ICMR/NCDC, WHO | Draft |
 | 5 | Hypertension | [hypertension.md](hypertension.md) | ICMR STW Vol. 3, NPCDCS | Draft |
+| 6 | Pneumonia | [pneumonia.md](pneumonia.md) | ICMR antimicrobial guidelines, IMNCI | Draft |
+| 7 | Tuberculosis | [tuberculosis.md](tuberculosis.md) | NTEP, WHO | Draft |
+| 8 | Type 2 diabetes | [type-2-diabetes.md](type-2-diabetes.md) | ICMR STW Vol. 3, NPCDCS | Draft |
+| 9 | Iron-deficiency anaemia | [iron-deficiency-anaemia.md](iron-deficiency-anaemia.md) | NHP, National Iron Plus Initiative | Draft |
+| 10 | UTI | [uti.md](uti.md) | ICMR antimicrobial guidelines, NCDC | Draft |
 
 ## Evidence and evaluation
 
@@ -20,16 +25,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Acute respiratory infection / pneumonia
-2. Tuberculosis (NTEP)
-3. Type 2 diabetes
-4. Iron-deficiency anaemia
-5. UTI
-6. Scabies / fungal skin infections
-7. Asthma / COPD
-8. Peptic ulcer / GERD
-9. Migraine
-10. Mental health (depression/anxiety)
+1. Scabies / fungal skin infections
+2. Asthma / COPD
+3. Peptic ulcer / GERD
+4. Migraine
+5. Mental health (depression/anxiety)
+6. Dengue-like illness / chikungunya
+7. Snake bite / poisoning
+8. Acute coronary syndrome (referral)
+9. Stroke (referral)
+10. Maternal care (ANC, anaemia, pre-eclampsia)
 
 ## Medical disclaimer
 

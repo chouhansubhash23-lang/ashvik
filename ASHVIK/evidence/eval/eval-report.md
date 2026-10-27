@@ -2,7 +2,7 @@
 
 Generated: 2026-10-27
 
-Scope: 5 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 10 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -13,8 +13,13 @@ Scope: 5 guideline files in `ASHVIK/data/guidelines/`.
 | acute-diarrhoea.md | 100% | 12/12 | 712 | 13 | 2 |
 | dengue.md | 100% | 12/12 | 492 | 3 | 1 |
 | hypertension.md | 100% | 12/12 | 556 | 6 | 1 |
+| iron-deficiency-anaemia.md | 100% | 12/12 | 578 | 8 | 1 |
 | malaria.md | 100% | 12/12 | 727 | 15 | 3 |
+| pneumonia.md | 100% | 12/12 | 585 | 7 | 2 |
+| tuberculosis.md | 100% | 12/12 | 658 | 5 | 1 |
+| type-2-diabetes.md | 100% | 12/12 | 609 | 8 | 1 |
 | typhoid.md | 100% | 12/12 | 591 | 8 | 1 |
+| uti.md | 100% | 12/12 | 603 | 6 | 1 |
 
 ## Failed checks
 
@@ -42,8 +47,13 @@ All structural checks passed.
 | acute-diarrhoea.md | Draft | — | — |
 | dengue.md | Draft | — | — |
 | hypertension.md | Draft | — | — |
+| iron-deficiency-anaemia.md | Draft | — | — |
 | malaria.md | Draft | — | — |
+| pneumonia.md | Draft | — | — |
+| tuberculosis.md | Draft | — | — |
+| type-2-diabetes.md | Draft | — | — |
 | typhoid.md | Draft | — | — |
+| uti.md | Draft | — | — |
 
 ## Notes
 

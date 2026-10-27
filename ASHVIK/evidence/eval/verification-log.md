@@ -13,6 +13,12 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-27 | Acute diarrhoea | Cholera and dysentery regimens | NHP / NCDC | Medium | Draft | Verify local protocol |
 | 2026-10-27 | Hypertension | First-line amlodipine/telmisartan; target BP | ICMR S1 / NPCDCS S8 | High | Draft | — |
 | 2026-10-27 | Hypertension | Pregnancy contraindication for ACEi/ARB | ICMR S1 | High | Draft | — |
+| 2026-10-27 | Pneumonia | Amoxicillin first-line; severity criteria | ICMR S3 / IMNCI | High | Draft | Verify local resistance |
+| 2026-10-27 | Tuberculosis | NTEP weight-band 4-FDC regimen | NTEP S7 | High | Draft | Confirm current NTEP weight bands |
+| 2026-10-27 | Tuberculosis | Rifampicin interactions | NTEP S7 / WHO S13 | High | Draft | — |
+| 2026-10-27 | Type 2 diabetes | Metformin first-line; HbA1c target | ICMR S1 | High | Draft | — |
+| 2026-10-27 | Iron-deficiency anaemia | Oral iron dose and duration | NHP S10 | High | Draft | Verify paediatric doses |
+| 2026-10-27 | UTI | Nitrofurantoin first-line cystitis | ICMR S3 | High | Draft | Check local resistance |
 
 ## How to update
 
