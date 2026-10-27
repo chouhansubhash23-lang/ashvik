@@ -15,6 +15,11 @@ Status: **Draft — clinician review required** before clinical use.
 | 8 | Type 2 diabetes | [type-2-diabetes.md](type-2-diabetes.md) | ICMR STW Vol. 3, NPCDCS | Draft |
 | 9 | Iron-deficiency anaemia | [iron-deficiency-anaemia.md](iron-deficiency-anaemia.md) | NHP, National Iron Plus Initiative | Draft |
 | 10 | UTI | [uti.md](uti.md) | ICMR antimicrobial guidelines, NCDC | Draft |
+| 11 | Scabies & fungal skin | [scabies-fungal-skin.md](scabies-fungal-skin.md) | NHP, ICMR/NCDC, WHO | Draft |
+| 12 | Asthma & COPD | [asthma-copd.md](asthma-copd.md) | ICMR STW Vol. 3, GINA/GOLD | Draft |
+| 13 | Peptic ulcer & GERD | [peptic-ulcer-gerd.md](peptic-ulcer-gerd.md) | ICMR STW Vol. 3, NHP | Draft |
+| 14 | Migraine | [migraine.md](migraine.md) | ICMR STW Vol. 3, IHS | Draft |
+| 15 | Depression & anxiety | [depression-anxiety.md](depression-anxiety.md) | ICMR STW Vol. 3, NMHP, WHO mhGAP | Draft |
 
 ## Evidence and evaluation
 
@@ -25,16 +30,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Scabies / fungal skin infections
-2. Asthma / COPD
-3. Peptic ulcer / GERD
-4. Migraine
-5. Mental health (depression/anxiety)
-6. Dengue-like illness / chikungunya
-7. Snake bite / poisoning
-8. Acute coronary syndrome (referral)
-9. Stroke (referral)
-10. Maternal care (ANC, anaemia, pre-eclampsia)
+1. Chikungunya / viral fever
+2. Snake bite / scorpion sting / poisoning
+3. Acute coronary syndrome (referral)
+4. Stroke (referral)
+5. Maternal care (ANC, anaemia, pre-eclampsia)
+6. Childhood malnutrition (SAM/MAM)
+7. Rheumatoid arthritis / osteoarthritis
+8. Epilepsy
+9. Dengue-like illness (differential)
+10. Skin/soft tissue infections (cellulitis, abscess)
 
 ## Medical disclaimer
 

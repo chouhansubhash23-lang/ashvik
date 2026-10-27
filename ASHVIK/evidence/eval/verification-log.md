@@ -19,6 +19,11 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-27 | Type 2 diabetes | Metformin first-line; HbA1c target | ICMR S1 | High | Draft | — |
 | 2026-10-27 | Iron-deficiency anaemia | Oral iron dose and duration | NHP S10 | High | Draft | Verify paediatric doses |
 | 2026-10-27 | UTI | Nitrofurantoin first-line cystitis | ICMR S3 | High | Draft | Check local resistance |
+| 2026-10-27 | Scabies/fungal | Permethrin + household treatment; topical antifungal | NHP S10 / WHO | High | Draft | Confirm ivermectin age limits |
+| 2026-10-27 | Asthma/COPD | ICS for asthma; LAMA for COPD; steroid course | ICMR S1 / GINA / GOLD | High | Draft | Spirometry availability |
+| 2026-10-27 | Peptic ulcer/GERD | PPI first-line; H. pylori triple therapy | ICMR S1 | High | Draft | Check local H. pylori resistance |
+| 2026-10-27 | Migraine | Acute NSAID/triptan; propranolol prophylaxis | ICMR S1 / IHS | Medium | Draft | Triptan availability |
+| 2026-10-27 | Depression/anxiety | SSRI first-line; suicide risk assessment | ICMR S1 / mhGAP | High | Draft | Ensure referral pathway |
 
 ## How to update
 
