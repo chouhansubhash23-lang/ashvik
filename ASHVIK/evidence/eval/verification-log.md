@@ -32,6 +32,15 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-27 | Childhood malnutrition | SAM criteria, RUTF, NRC referral | POSHAN / WHO | High | Draft | NRC availability |
 | 2026-10-27 | Arthritis | OA vs RA; methotrexate monitoring | ICMR S1 | Medium | Draft | Rheumatology referral |
 | 2026-10-27 | Epilepsy | AED choice; status epilepticus protocol | ICMR S1 / ILAE | High | Draft | Verify AED availability |
+| 2026-10-27 | Skin/soft tissue | Drainage for abscess; cephalexin/clindamycin | ICMR S3 | High | Draft | — |
+| 2026-10-27 | AKI | Stop nephrotoxins; hyperkalaemia management | KDIGO / ICMR S1 | High | Draft | Dialysis access |
+| 2026-10-27 | CKD | BP/sugar control; avoid NSAIDs | KDIGO / ICMR S1 | High | Draft | — |
+| 2026-10-27 | COVID/influenza | Antivirals; steroid only in severe hypoxia | ICMR S3 / WHO | High | Draft | Check current variant guidance |
+| 2026-10-27 | STI | Syndromic management; partner treatment | NACO/NCDC | High | Draft | Confidentiality protocol |
+| 2026-10-27 | Contraception | Method mix; contraindications | NFPP / WHO | High | Draft | — |
+| 2026-10-27 | Geriatric | Deprescribing; falls prevention | ICMR S1 / NPHCE | Medium | Draft | — |
+| 2026-10-27 | Palliative | Oral morphine titration; laxatives | ICMR S1 / WHO | High | Draft | Narcotics licensing |
+| 2026-10-27 | Eye/ENT | No steroid drops without diagnosis | ICMR S1 | High | Draft | — |
 
 ## How to update
 

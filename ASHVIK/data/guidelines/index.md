@@ -28,6 +28,15 @@ Status: **Draft — clinician review required** before clinical use.
 | 21 | Childhood malnutrition | [childhood-malnutrition.md](childhood-malnutrition.md) | POSHAN Abhiyaan, WHO/UNICEF | Draft |
 | 22 | Arthritis (OA/RA) | [arthritis.md](arthritis.md) | ICMR STW Vol. 3, ACR/EULAR | Draft |
 | 23 | Epilepsy | [epilepsy.md](epilepsy.md) | ICMR STW Vol. 3, ILAE | Draft |
+| 24 | Skin & soft tissue infections | [skin-soft-tissue-infections.md](skin-soft-tissue-infections.md) | ICMR, NCDC | Draft |
+| 25 | Acute kidney injury | [acute-kidney-injury.md](acute-kidney-injury.md) | ICMR STW Vol. 3, KDIGO | Draft |
+| 26 | Chronic kidney disease | [chronic-kidney-disease.md](chronic-kidney-disease.md) | ICMR STW Vol. 3, KDIGO | Draft |
+| 27 | COVID-19 & influenza | [covid-influenza.md](covid-influenza.md) | ICMR, WHO, NCDC | Draft |
+| 28 | STI | [sti.md](sti.md) | NACO/NCDC, WHO | Draft |
+| 29 | Contraception | [contraception.md](contraception.md) | NFPP, WHO | Draft |
+| 30 | Geriatric care | [geriatric-care.md](geriatric-care.md) | ICMR STW Vol. 3, NPHCE | Draft |
+| 31 | Palliative care | [palliative-care.md](palliative-care.md) | ICMR STW Vol. 3, NPCP | Draft |
+| 32 | Eye & ENT infections | [eye-ent-infections.md](eye-ent-infections.md) | ICMR STW Vol. 3, NHP | Draft |
 
 ## Evidence and evaluation
 
@@ -38,16 +47,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Skin/soft tissue infections (cellulitis, abscess)
-2. Acute kidney injury
-3. Chronic kidney disease
-4. Dengue-like illness (differential)
-5. COVID-19 / influenza
-6. Sexually transmitted infections
-7. Contraception counselling
-8. Geriatric syndromes (falls, polypharmacy)
-9. Palliative care
-10. Eye/ENT infections
+1. Dengue-like illness (differential)
+2. Childhood immunisation schedule
+3. Acute poisoning (specific agents)
+4. Gout and hyperuricaemia
+5. Thyroid disorders (hypo/hyper)
+6. Liver disease (hepatitis, cirrhosis)
+7. Menstrual disorders
+8. Infertility basics
+9. Oral health
+10. Occupational health / silicosis
 
 ## Medical disclaimer
 
