@@ -86,6 +86,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 79 | Joint aspiration & injection | [joint-aspiration-injection.md](joint-aspiration-injection.md) | ICMR STW Vol. 3, ACR | Draft |
 | 80 | Lumbar puncture | [lumbar-puncture.md](lumbar-puncture.md) | ICMR STW Vol. 3, WHO | Draft |
 | 81 | Incision & drainage variations | [incision-drainage-variations.md](incision-drainage-variations.md) | ICMR STW Vol. 3 | Draft |
+| 82 | Immunisation cold chain | [immunisation-cold-chain.md](immunisation-cold-chain.md) | UIP, WHO | Draft |
+| 83 | Injection safety & sharps | [injection-safety-sharps.md](injection-safety-sharps.md) | WHO, UIP | Draft |
+| 84 | Hand hygiene & infection control | [hand-hygiene-infection-control.md](hand-hygiene-infection-control.md) | WHO, NCDC | Draft |
+| 85 | Biomedical waste management | [biomedical-waste-management.md](biomedical-waste-management.md) | BMW Rules 2016, CPCB | Draft |
+| 86 | Medical documentation | [medical-documentation.md](medical-documentation.md) | NMC/MCI, WHO | Draft |
+| 87 | Informed consent | [informed-consent.md](informed-consent.md) | NMC/MCI, ICMR | Draft |
+| 88 | Death certification | [death-certification.md](death-certification.md) | RBD Act, WHO ICD | Draft |
+| 89 | Referral communication | [referral-communication.md](referral-communication.md) | NHM, WHO | Draft |
+| 90 | Telemedicine basics | [telemedicine-basics.md](telemedicine-basics.md) | Telemedicine Guidelines, WHO | Draft |
+| 91 | Quality improvement & audit | [quality-improvement-audit.md](quality-improvement-audit.md) | NHM, WHO | Draft |
 
 ## Evidence and evaluation
 
@@ -96,16 +106,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Immunisation cold chain
-2. Injection safety / sharps
-3. Hand hygiene / infection control
-4. Biomedical waste management
-5. Medical documentation
-6. Informed consent
-7. Death certification
-8. Referral communication
-9. Telemedicine basics
-10. Quality improvement / audit
+1. Fever in children (approach)
+2. Neonatal danger signs
+3. Growth monitoring
+4. Adolescent health
+5. Menopause management
+6. Contraceptive emergency
+7. HIV care basics
+8. TB preventive therapy
+9. Snakebite antivenom protocol
+10. Rabies post-exposure prophylaxis
 
 ## Medical disclaimer
 

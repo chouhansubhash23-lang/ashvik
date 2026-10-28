@@ -2,7 +2,7 @@
 
 Generated: 2026-10-28
 
-Scope: 81 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 91 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -26,6 +26,7 @@ Scope: 81 guideline files in `ASHVIK/data/guidelines/`.
 | arthritis.md | 100% | 12/12 | 627 | 10 | 2 |
 | asthma-copd.md | 100% | 12/12 | 582 | 4 | 2 |
 | back-pain-sciatica.md | 100% | 12/12 | 442 | 1 | 1 |
+| biomedical-waste-management.md | 100% | 12/12 | 269 | 1 | 0 |
 | blood-transfusion-basics.md | 100% | 12/12 | 349 | 2 | 0 |
 | burns.md | 100% | 12/12 | 438 | 2 | 1 |
 | chikungunya-viral-fever.md | 100% | 12/12 | 457 | 4 | 1 |
@@ -35,6 +36,7 @@ Scope: 81 guideline files in `ASHVIK/data/guidelines/`.
 | contraception.md | 100% | 12/12 | 514 | 2 | 2 |
 | covid-influenza.md | 100% | 12/12 | 537 | 4 | 2 |
 | cpr-bls.md | 100% | 12/12 | 309 | 2 | 1 |
+| death-certification.md | 100% | 12/12 | 290 | 1 | 0 |
 | dengue-triage.md | 100% | 12/12 | 458 | 3 | 0 |
 | dengue.md | 100% | 12/12 | 492 | 3 | 1 |
 | depression-anxiety.md | 100% | 12/12 | 609 | 6 | 2 |
@@ -49,11 +51,15 @@ Scope: 81 guideline files in `ASHVIK/data/guidelines/`.
 | geriatric-care.md | 100% | 12/12 | 533 | 1 | 0 |
 | geriatric-falls-fractures.md | 100% | 12/12 | 445 | 2 | 0 |
 | gout.md | 100% | 12/12 | 541 | 9 | 2 |
+| hand-hygiene-infection-control.md | 100% | 12/12 | 285 | 1 | 0 |
 | head-injury.md | 100% | 12/12 | 374 | 1 | 1 |
 | hernia.md | 100% | 12/12 | 333 | 3 | 1 |
 | hypertension.md | 100% | 12/12 | 556 | 6 | 1 |
+| immunisation-cold-chain.md | 100% | 12/12 | 327 | 1 | 0 |
 | incision-drainage-variations.md | 100% | 12/12 | 316 | 2 | 1 |
 | infertility-basics.md | 100% | 12/12 | 491 | 5 | 1 |
+| informed-consent.md | 100% | 12/12 | 276 | 1 | 0 |
+| injection-safety-sharps.md | 100% | 12/12 | 291 | 2 | 0 |
 | intestinal-obstruction.md | 100% | 12/12 | 367 | 2 | 1 |
 | iron-deficiency-anaemia.md | 100% | 12/12 | 578 | 8 | 1 |
 | iv-fluid-therapy.md | 100% | 12/12 | 398 | 5 | 1 |
@@ -63,6 +69,7 @@ Scope: 81 guideline files in `ASHVIK/data/guidelines/`.
 | lumbar-puncture.md | 100% | 12/12 | 327 | 1 | 1 |
 | malaria.md | 100% | 12/12 | 727 | 15 | 3 |
 | maternal-care.md | 100% | 12/12 | 645 | 10 | 2 |
+| medical-documentation.md | 100% | 12/12 | 290 | 2 | 0 |
 | menstrual-disorders.md | 100% | 12/12 | 557 | 4 | 2 |
 | migraine.md | 100% | 12/12 | 648 | 12 | 2 |
 | ng-tube-urinary-catheter.md | 100% | 12/12 | 369 | 1 | 1 |
@@ -76,6 +83,8 @@ Scope: 81 guideline files in `ASHVIK/data/guidelines/`.
 | pneumonia.md | 100% | 12/12 | 585 | 7 | 2 |
 | pocus-basics.md | 100% | 12/12 | 353 | 1 | 1 |
 | pressure-ulcers.md | 100% | 12/12 | 423 | 2 | 1 |
+| quality-improvement-audit.md | 100% | 12/12 | 277 | 2 | 0 |
+| referral-communication.md | 100% | 12/12 | 285 | 2 | 0 |
 | scabies-fungal-skin.md | 100% | 12/12 | 706 | 6 | 2 |
 | sexual-assault-care.md | 100% | 12/12 | 424 | 4 | 1 |
 | skin-soft-tissue-infections.md | 100% | 12/12 | 564 | 3 | 2 |
@@ -84,6 +93,7 @@ Scope: 81 guideline files in `ASHVIK/data/guidelines/`.
 | sti.md | 100% | 12/12 | 587 | 12 | 1 |
 | stroke.md | 100% | 12/12 | 500 | 3 | 1 |
 | suture-materials-techniques.md | 100% | 12/12 | 366 | 2 | 1 |
+| telemedicine-basics.md | 100% | 12/12 | 282 | 2 | 0 |
 | thyroid-disorders.md | 100% | 12/12 | 533 | 6 | 2 |
 | tuberculosis.md | 100% | 12/12 | 658 | 5 | 1 |
 | type-2-diabetes.md | 100% | 12/12 | 609 | 8 | 1 |
@@ -131,6 +141,7 @@ All structural checks passed.
 | arthritis.md | Draft | — | — |
 | asthma-copd.md | Draft | — | — |
 | back-pain-sciatica.md | Draft | — | — |
+| biomedical-waste-management.md | Draft | — | — |
 | blood-transfusion-basics.md | Draft | — | — |
 | burns.md | Draft | — | — |
 | chikungunya-viral-fever.md | Draft | — | — |
@@ -140,6 +151,7 @@ All structural checks passed.
 | contraception.md | Draft | — | — |
 | covid-influenza.md | Draft | — | — |
 | cpr-bls.md | Draft | — | — |
+| death-certification.md | Draft | — | — |
 | dengue-triage.md | Draft | — | — |
 | dengue.md | Draft | — | — |
 | depression-anxiety.md | Draft | — | — |
@@ -154,11 +166,15 @@ All structural checks passed.
 | geriatric-care.md | Draft | — | — |
 | geriatric-falls-fractures.md | Draft | — | — |
 | gout.md | Draft | — | — |
+| hand-hygiene-infection-control.md | Draft | — | — |
 | head-injury.md | Draft | — | — |
 | hernia.md | Draft | — | — |
 | hypertension.md | Draft | — | — |
+| immunisation-cold-chain.md | Draft | — | — |
 | incision-drainage-variations.md | Draft | — | — |
 | infertility-basics.md | Draft | — | — |
+| informed-consent.md | Draft | — | — |
+| injection-safety-sharps.md | Draft | — | — |
 | intestinal-obstruction.md | Draft | — | — |
 | iron-deficiency-anaemia.md | Draft | — | — |
 | iv-fluid-therapy.md | Draft | — | — |
@@ -168,6 +184,7 @@ All structural checks passed.
 | lumbar-puncture.md | Draft | — | — |
 | malaria.md | Draft | — | — |
 | maternal-care.md | Draft | — | — |
+| medical-documentation.md | Draft | — | — |
 | menstrual-disorders.md | Draft | — | — |
 | migraine.md | Draft | — | — |
 | ng-tube-urinary-catheter.md | Draft | — | — |
@@ -181,6 +198,8 @@ All structural checks passed.
 | pneumonia.md | Draft | — | — |
 | pocus-basics.md | Draft | — | — |
 | pressure-ulcers.md | Draft | — | — |
+| quality-improvement-audit.md | Draft | — | — |
+| referral-communication.md | Draft | — | — |
 | scabies-fungal-skin.md | Draft | — | — |
 | sexual-assault-care.md | Draft | — | — |
 | skin-soft-tissue-infections.md | Draft | — | — |
@@ -189,6 +208,7 @@ All structural checks passed.
 | sti.md | Draft | — | — |
 | stroke.md | Draft | — | — |
 | suture-materials-techniques.md | Draft | — | — |
+| telemedicine-basics.md | Draft | — | — |
 | thyroid-disorders.md | Draft | — | — |
 | tuberculosis.md | Draft | — | — |
 | type-2-diabetes.md | Draft | — | — |

@@ -90,6 +90,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-28 | Joint aspiration | Aseptic technique; fluid analysis | ICMR S1 / ACR | High | Draft | — |
 | 2026-10-28 | Lumbar puncture | Contraindications; CSF analysis | ICMR S1 / WHO | High | Draft | — |
 | 2026-10-28 | I&D variations | Loop/catheter/marsupialisation | ICMR S1 | Medium | Draft | — |
+| 2026-10-28 | Cold chain | 2–8 °C; VVM; freeze-sensitive vaccines | UIP / WHO | High | Draft | — |
+| 2026-10-28 | Injection safety | One needle/syringe/patient; no recapping | WHO / UIP | High | Draft | — |
+| 2026-10-28 | Hand hygiene | WHO 5 moments; 70% ABHR | WHO / NCDC | High | Draft | — |
+| 2026-10-28 | BMW | Colour-coded segregation; BMW Rules 2016 | CPCB | High | Draft | — |
+| 2026-10-28 | Documentation | Complete, signed, confidential | NMC/MCI | High | Draft | — |
+| 2026-10-28 | Informed consent | Voluntary, informed, documented | NMC/MCI / ICMR | High | Draft | — |
+| 2026-10-28 | Death certification | Cause sequence; medico-legal cases | RBD Act / WHO | High | Draft | — |
+| 2026-10-28 | Referral | Structured note; stabilise first | NHM | High | Draft | — |
+| 2026-10-28 | Telemedicine | Consent; red flags; e-prescription rules | Telemedicine Guidelines | High | Draft | — |
+| 2026-10-28 | QI/audit | PDSA; indicators | NHM / WHO | Medium | Draft | — |
 
 ## How to update
 
