@@ -2,7 +2,7 @@
 
 Generated: 2026-10-28
 
-Scope: 61 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 71 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -10,18 +10,22 @@ Scope: 61 guideline files in `ASHVIK/data/guidelines/`.
 
 | File | Score | Checks | Words | Dose mentions | Brand sections |
 |---|---|---|---|---|---|
+| abscess-drainage.md | 100% | 12/12 | 383 | 4 | 1 |
 | acute-abdomen.md | 100% | 12/12 | 372 | 1 | 1 |
 | acute-asthma-exacerbation.md | 100% | 12/12 | 449 | 6 | 1 |
 | acute-coronary-syndrome.md | 100% | 12/12 | 515 | 7 | 1 |
 | acute-diarrhoea.md | 100% | 12/12 | 712 | 13 | 2 |
 | acute-kidney-injury.md | 100% | 12/12 | 481 | 1 | 0 |
+| acute-limb-ischemia.md | 100% | 12/12 | 327 | 1 | 1 |
 | acute-poisoning-agents.md | 100% | 12/12 | 508 | 9 | 0 |
+| adult-vaccination.md | 100% | 12/12 | 414 | 1 | 0 |
 | anaphylaxis.md | 100% | 12/12 | 437 | 8 | 1 |
 | antibiotic-stewardship.md | 100% | 12/12 | 489 | 6 | 1 |
 | appendicitis.md | 100% | 12/12 | 343 | 2 | 1 |
 | arthritis.md | 100% | 12/12 | 627 | 10 | 2 |
 | asthma-copd.md | 100% | 12/12 | 582 | 4 | 2 |
 | back-pain-sciatica.md | 100% | 12/12 | 442 | 1 | 1 |
+| blood-transfusion-basics.md | 100% | 12/12 | 349 | 2 | 0 |
 | burns.md | 100% | 12/12 | 438 | 2 | 1 |
 | chikungunya-viral-fever.md | 100% | 12/12 | 457 | 4 | 1 |
 | childhood-immunisation.md | 100% | 12/12 | 467 | 4 | 0 |
@@ -37,6 +41,7 @@ Scope: 61 guideline files in `ASHVIK/data/guidelines/`.
 | epilepsy.md | 100% | 12/12 | 642 | 10 | 1 |
 | eye-ent-infections.md | 100% | 12/12 | 669 | 1 | 3 |
 | fever-with-rash-differential.md | 100% | 12/12 | 482 | 2 | 1 |
+| fractures-general.md | 100% | 12/12 | 383 | 3 | 1 |
 | gallstone-disease.md | 100% | 12/12 | 411 | 2 | 1 |
 | geriatric-care.md | 100% | 12/12 | 533 | 1 | 0 |
 | geriatric-falls-fractures.md | 100% | 12/12 | 445 | 2 | 0 |
@@ -47,13 +52,17 @@ Scope: 61 guideline files in `ASHVIK/data/guidelines/`.
 | infertility-basics.md | 100% | 12/12 | 491 | 5 | 1 |
 | intestinal-obstruction.md | 100% | 12/12 | 367 | 2 | 1 |
 | iron-deficiency-anaemia.md | 100% | 12/12 | 578 | 8 | 1 |
+| iv-fluid-therapy.md | 100% | 12/12 | 398 | 5 | 1 |
 | liver-disease.md | 100% | 12/12 | 500 | 4 | 1 |
+| local-anaesthesia.md | 100% | 12/12 | 352 | 10 | 1 |
 | malaria.md | 100% | 12/12 | 727 | 15 | 3 |
 | maternal-care.md | 100% | 12/12 | 645 | 10 | 2 |
 | menstrual-disorders.md | 100% | 12/12 | 557 | 4 | 2 |
 | migraine.md | 100% | 12/12 | 648 | 12 | 2 |
+| ng-tube-urinary-catheter.md | 100% | 12/12 | 369 | 1 | 1 |
 | occupational-health.md | 100% | 12/12 | 494 | 1 | 0 |
 | oral-health.md | 100% | 12/12 | 489 | 2 | 1 |
+| oxygen-therapy.md | 100% | 12/12 | 343 | 1 | 0 |
 | palliative-care.md | 100% | 12/12 | 554 | 6 | 1 |
 | palliative-symptom-protocols.md | 100% | 12/12 | 441 | 13 | 0 |
 | pancreatitis.md | 100% | 12/12 | 372 | 1 | 1 |
@@ -71,6 +80,7 @@ Scope: 61 guideline files in `ASHVIK/data/guidelines/`.
 | type-2-diabetes.md | 100% | 12/12 | 609 | 8 | 1 |
 | typhoid.md | 100% | 12/12 | 591 | 8 | 1 |
 | uti.md | 100% | 12/12 | 603 | 6 | 1 |
+| wound-management-suturing.md | 100% | 12/12 | 424 | 4 | 1 |
 
 ## Failed checks
 
@@ -95,18 +105,22 @@ All structural checks passed.
 
 | File | Status | Reviewer | Date |
 |---|---|---|---|
+| abscess-drainage.md | Draft | — | — |
 | acute-abdomen.md | Draft | — | — |
 | acute-asthma-exacerbation.md | Draft | — | — |
 | acute-coronary-syndrome.md | Draft | — | — |
 | acute-diarrhoea.md | Draft | — | — |
 | acute-kidney-injury.md | Draft | — | — |
+| acute-limb-ischemia.md | Draft | — | — |
 | acute-poisoning-agents.md | Draft | — | — |
+| adult-vaccination.md | Draft | — | — |
 | anaphylaxis.md | Draft | — | — |
 | antibiotic-stewardship.md | Draft | — | — |
 | appendicitis.md | Draft | — | — |
 | arthritis.md | Draft | — | — |
 | asthma-copd.md | Draft | — | — |
 | back-pain-sciatica.md | Draft | — | — |
+| blood-transfusion-basics.md | Draft | — | — |
 | burns.md | Draft | — | — |
 | chikungunya-viral-fever.md | Draft | — | — |
 | childhood-immunisation.md | Draft | — | — |
@@ -122,6 +136,7 @@ All structural checks passed.
 | epilepsy.md | Draft | — | — |
 | eye-ent-infections.md | Draft | — | — |
 | fever-with-rash-differential.md | Draft | — | — |
+| fractures-general.md | Draft | — | — |
 | gallstone-disease.md | Draft | — | — |
 | geriatric-care.md | Draft | — | — |
 | geriatric-falls-fractures.md | Draft | — | — |
@@ -132,13 +147,17 @@ All structural checks passed.
 | infertility-basics.md | Draft | — | — |
 | intestinal-obstruction.md | Draft | — | — |
 | iron-deficiency-anaemia.md | Draft | — | — |
+| iv-fluid-therapy.md | Draft | — | — |
 | liver-disease.md | Draft | — | — |
+| local-anaesthesia.md | Draft | — | — |
 | malaria.md | Draft | — | — |
 | maternal-care.md | Draft | — | — |
 | menstrual-disorders.md | Draft | — | — |
 | migraine.md | Draft | — | — |
+| ng-tube-urinary-catheter.md | Draft | — | — |
 | occupational-health.md | Draft | — | — |
 | oral-health.md | Draft | — | — |
+| oxygen-therapy.md | Draft | — | — |
 | palliative-care.md | Draft | — | — |
 | palliative-symptom-protocols.md | Draft | — | — |
 | pancreatitis.md | Draft | — | — |
@@ -156,6 +175,7 @@ All structural checks passed.
 | type-2-diabetes.md | Draft | — | — |
 | typhoid.md | Draft | — | — |
 | uti.md | Draft | — | — |
+| wound-management-suturing.md | Draft | — | — |
 
 ## Notes
 

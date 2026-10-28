@@ -70,6 +70,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-27 | Burns | Cool water 20 min; Parkland fluids | ICMR S1 / WHO | High | Draft | Burn unit access |
 | 2026-10-27 | Drowning/electrocution | CPR first; switch off power | WHO | High | Draft | — |
 | 2026-10-27 | Sexual assault | Confidential care; PEP; forensic consent | WHO / MoHFW / NACO | High | Draft | Legal protocol |
+| 2026-10-28 | Acute limb ischemia | Heparin, dependent limb, emergency referral | ICMR S1 | High | Draft | Vascular access |
+| 2026-10-28 | Fractures | Immobilise, neurovascular check, open fracture antibiotics | ICMR S1 | High | Draft | — |
+| 2026-10-28 | Wound/suturing | Irrigation, debridement, tetanus | ICMR S1 | High | Draft | — |
+| 2026-10-28 | Local anaesthesia | Lidocaine max dose 3/7 mg/kg | ICMR S1 | High | Draft | — |
+| 2026-10-28 | Abscess drainage | I&D primary; antibiotics if cellulitis | ICMR S1 | High | Draft | — |
+| 2026-10-28 | NG/catheter | Aseptic technique; early removal | ICMR S1 | High | Draft | — |
+| 2026-10-28 | IV fluids | Crystalloid; monitor overload | ICMR S1 / WHO | High | Draft | — |
+| 2026-10-28 | Blood transfusion | Crossmatch, consent, monitor reactions | NBTC / WHO | High | Draft | Blood bank access |
+| 2026-10-28 | Oxygen therapy | Target 94–98% (COPD 88–92%) | ICMR S1 / WHO | High | Draft | — |
+| 2026-10-28 | Adult vaccination | Age/comorbidity-based schedule | UIP / WHO | High | Draft | — |
 
 ## How to update
 

@@ -66,6 +66,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 59 | Burns | [burns.md](burns.md) | ICMR STW Vol. 3, WHO | Draft |
 | 60 | Drowning & electrocution | [drowning-electrocution.md](drowning-electrocution.md) | WHO, ICMR | Draft |
 | 61 | Sexual assault care | [sexual-assault-care.md](sexual-assault-care.md) | WHO, MoHFW, NACO | Draft |
+| 62 | Acute limb ischemia | [acute-limb-ischemia.md](acute-limb-ischemia.md) | ICMR STW Vol. 3 | Draft |
+| 63 | Fractures — general | [fractures-general.md](fractures-general.md) | ICMR STW Vol. 3, WHO | Draft |
+| 64 | Wound management & suturing | [wound-management-suturing.md](wound-management-suturing.md) | ICMR STW Vol. 3, WHO | Draft |
+| 65 | Local anaesthesia | [local-anaesthesia.md](local-anaesthesia.md) | ICMR STW Vol. 3 | Draft |
+| 66 | Abscess drainage | [abscess-drainage.md](abscess-drainage.md) | ICMR STW Vol. 3 | Draft |
+| 67 | NG tube & urinary catheter | [ng-tube-urinary-catheter.md](ng-tube-urinary-catheter.md) | ICMR STW Vol. 3 | Draft |
+| 68 | IV fluid therapy | [iv-fluid-therapy.md](iv-fluid-therapy.md) | ICMR STW Vol. 3, WHO | Draft |
+| 69 | Blood transfusion basics | [blood-transfusion-basics.md](blood-transfusion-basics.md) | NBTC, WHO | Draft |
+| 70 | Oxygen therapy | [oxygen-therapy.md](oxygen-therapy.md) | ICMR STW Vol. 3, WHO | Draft |
+| 71 | Adult vaccination | [adult-vaccination.md](adult-vaccination.md) | UIP / MoHFW, WHO | Draft |
 
 ## Evidence and evaluation
 
@@ -76,16 +86,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Acute limb ischemia
-2. Fractures (general approach)
-3. Wound management / suturing
-4. Local anaesthesia
-5. Abscess drainage
-6. Nasogastric tube / urinary catheter
-7. IV fluid therapy
-8. Blood transfusion basics
-9. Oxygen therapy
-10. Vaccination in adults
+1. CPR / basic life support
+2. ECG interpretation basics
+3. Arterial blood gas basics
+4. X-ray interpretation basics
+5. Ultrasound basics (POCUS)
+6. Suture materials & techniques
+7. Splinting & casting
+8. Joint aspiration/injection
+9. Lumbar puncture
+10. Incision & drainage variations
 
 ## Medical disclaimer
 
