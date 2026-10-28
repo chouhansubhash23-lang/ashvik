@@ -2,7 +2,7 @@
 
 Generated: 2026-10-28
 
-Scope: 121 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 131 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -34,6 +34,7 @@ Scope: 121 guideline files in `ASHVIK/data/guidelines/`.
 | blood-transfusion-basics.md | 100% | 12/12 | 349 | 2 | 0 |
 | bronchiolitis.md | 100% | 12/12 | 336 | 1 | 1 |
 | burns.md | 100% | 12/12 | 438 | 2 | 1 |
+| caregiver-support.md | 100% | 12/12 | 287 | 1 | 1 |
 | chikungunya-viral-fever.md | 100% | 12/12 | 457 | 4 | 1 |
 | childhood-asthma.md | 100% | 12/12 | 321 | 3 | 1 |
 | childhood-immunisation.md | 100% | 12/12 | 467 | 4 | 0 |
@@ -46,6 +47,8 @@ Scope: 121 guideline files in `ASHVIK/data/guidelines/`.
 | cpr-bls.md | 100% | 12/12 | 309 | 2 | 1 |
 | croup.md | 100% | 12/12 | 320 | 5 | 1 |
 | death-certification.md | 100% | 12/12 | 290 | 1 | 0 |
+| delirium.md | 100% | 12/12 | 286 | 2 | 1 |
+| dementia-care.md | 100% | 12/12 | 283 | 2 | 1 |
 | dengue-triage.md | 100% | 12/12 | 458 | 3 | 0 |
 | dengue.md | 100% | 12/12 | 492 | 3 | 1 |
 | depression-anxiety.md | 100% | 12/12 | 609 | 6 | 2 |
@@ -53,9 +56,11 @@ Scope: 121 guideline files in `ASHVIK/data/guidelines/`.
 | diabetic-foot.md | 100% | 12/12 | 433 | 1 | 1 |
 | drowning-electrocution.md | 100% | 12/12 | 405 | 1 | 0 |
 | ecg-basics.md | 100% | 12/12 | 419 | 2 | 1 |
+| elder-abuse-screening.md | 100% | 12/12 | 307 | 1 | 1 |
 | emergency-contraception.md | 100% | 12/12 | 325 | 3 | 1 |
 | epilepsy.md | 100% | 12/12 | 642 | 10 | 1 |
 | eye-ent-infections.md | 100% | 12/12 | 669 | 1 | 3 |
+| falls-prevention-programme.md | 100% | 12/12 | 272 | 2 | 1 |
 | febrile-seizures.md | 100% | 12/12 | 305 | 3 | 1 |
 | fever-in-children.md | 100% | 12/12 | 368 | 2 | 1 |
 | fever-with-rash-differential.md | 100% | 12/12 | 482 | 2 | 1 |
@@ -63,6 +68,7 @@ Scope: 121 guideline files in `ASHVIK/data/guidelines/`.
 | gallstone-disease.md | 100% | 12/12 | 411 | 2 | 1 |
 | geriatric-care.md | 100% | 12/12 | 533 | 1 | 0 |
 | geriatric-falls-fractures.md | 100% | 12/12 | 445 | 2 | 0 |
+| geriatric-nutrition.md | 100% | 12/12 | 288 | 3 | 1 |
 | gout.md | 100% | 12/12 | 541 | 9 | 2 |
 | growth-monitoring.md | 100% | 12/12 | 358 | 2 | 0 |
 | hand-hygiene-infection-control.md | 100% | 12/12 | 285 | 1 | 0 |
@@ -102,15 +108,18 @@ Scope: 121 guideline files in `ASHVIK/data/guidelines/`.
 | paediatric-skin-infections.md | 100% | 12/12 | 298 | 1 | 1 |
 | paediatric-tb.md | 100% | 12/12 | 298 | 2 | 1 |
 | palliative-care.md | 100% | 12/12 | 554 | 6 | 1 |
+| palliative-home-care.md | 100% | 12/12 | 308 | 3 | 1 |
 | palliative-symptom-protocols.md | 100% | 12/12 | 441 | 13 | 0 |
 | pancreatitis.md | 100% | 12/12 | 372 | 1 | 1 |
 | peptic-ulcer-gerd.md | 100% | 12/12 | 614 | 5 | 2 |
 | pneumonia.md | 100% | 12/12 | 585 | 7 | 2 |
 | pocus-basics.md | 100% | 12/12 | 353 | 1 | 1 |
+| polypharmacy-review.md | 100% | 12/12 | 303 | 1 | 1 |
 | pressure-ulcers.md | 100% | 12/12 | 423 | 2 | 1 |
 | quality-improvement-audit.md | 100% | 12/12 | 277 | 2 | 0 |
 | rabies-post-exposure-prophylaxis.md | 100% | 12/12 | 382 | 3 | 1 |
 | referral-communication.md | 100% | 12/12 | 285 | 2 | 0 |
+| sarcopenia-frailty.md | 100% | 12/12 | 279 | 2 | 1 |
 | scabies-fungal-skin.md | 100% | 12/12 | 706 | 6 | 2 |
 | school-health-screening.md | 100% | 12/12 | 311 | 4 | 1 |
 | sexual-assault-care.md | 100% | 12/12 | 424 | 4 | 1 |
@@ -128,6 +137,7 @@ Scope: 121 guideline files in `ASHVIK/data/guidelines/`.
 | type-1-diabetes-children.md | 100% | 12/12 | 304 | 3 | 1 |
 | type-2-diabetes.md | 100% | 12/12 | 609 | 8 | 1 |
 | typhoid.md | 100% | 12/12 | 591 | 8 | 1 |
+| urinary-incontinence.md | 100% | 12/12 | 281 | 1 | 1 |
 | uti.md | 100% | 12/12 | 603 | 6 | 1 |
 | wound-management-suturing.md | 100% | 12/12 | 424 | 4 | 1 |
 | xray-basics.md | 100% | 12/12 | 384 | 1 | 1 |
@@ -179,6 +189,7 @@ All structural checks passed.
 | blood-transfusion-basics.md | Draft | — | — |
 | bronchiolitis.md | Draft | — | — |
 | burns.md | Draft | — | — |
+| caregiver-support.md | Draft | — | — |
 | chikungunya-viral-fever.md | Draft | — | — |
 | childhood-asthma.md | Draft | — | — |
 | childhood-immunisation.md | Draft | — | — |
@@ -191,6 +202,8 @@ All structural checks passed.
 | cpr-bls.md | Draft | — | — |
 | croup.md | Draft | — | — |
 | death-certification.md | Draft | — | — |
+| delirium.md | Draft | — | — |
+| dementia-care.md | Draft | — | — |
 | dengue-triage.md | Draft | — | — |
 | dengue.md | Draft | — | — |
 | depression-anxiety.md | Draft | — | — |
@@ -198,9 +211,11 @@ All structural checks passed.
 | diabetic-foot.md | Draft | — | — |
 | drowning-electrocution.md | Draft | — | — |
 | ecg-basics.md | Draft | — | — |
+| elder-abuse-screening.md | Draft | — | — |
 | emergency-contraception.md | Draft | — | — |
 | epilepsy.md | Draft | — | — |
 | eye-ent-infections.md | Draft | — | — |
+| falls-prevention-programme.md | Draft | — | — |
 | febrile-seizures.md | Draft | — | — |
 | fever-in-children.md | Draft | — | — |
 | fever-with-rash-differential.md | Draft | — | — |
@@ -208,6 +223,7 @@ All structural checks passed.
 | gallstone-disease.md | Draft | — | — |
 | geriatric-care.md | Draft | — | — |
 | geriatric-falls-fractures.md | Draft | — | — |
+| geriatric-nutrition.md | Draft | — | — |
 | gout.md | Draft | — | — |
 | growth-monitoring.md | Draft | — | — |
 | hand-hygiene-infection-control.md | Draft | — | — |
@@ -247,15 +263,18 @@ All structural checks passed.
 | paediatric-skin-infections.md | Draft | — | — |
 | paediatric-tb.md | Draft | — | — |
 | palliative-care.md | Draft | — | — |
+| palliative-home-care.md | Draft | — | — |
 | palliative-symptom-protocols.md | Draft | — | — |
 | pancreatitis.md | Draft | — | — |
 | peptic-ulcer-gerd.md | Draft | — | — |
 | pneumonia.md | Draft | — | — |
 | pocus-basics.md | Draft | — | — |
+| polypharmacy-review.md | Draft | — | — |
 | pressure-ulcers.md | Draft | — | — |
 | quality-improvement-audit.md | Draft | — | — |
 | rabies-post-exposure-prophylaxis.md | Draft | — | — |
 | referral-communication.md | Draft | — | — |
+| sarcopenia-frailty.md | Draft | — | — |
 | scabies-fungal-skin.md | Draft | — | — |
 | school-health-screening.md | Draft | — | — |
 | sexual-assault-care.md | Draft | — | — |
@@ -273,6 +292,7 @@ All structural checks passed.
 | type-1-diabetes-children.md | Draft | — | — |
 | type-2-diabetes.md | Draft | — | — |
 | typhoid.md | Draft | — | — |
+| urinary-incontinence.md | Draft | — | — |
 | uti.md | Draft | — | — |
 | wound-management-suturing.md | Draft | — | — |
 | xray-basics.md | Draft | — | — |

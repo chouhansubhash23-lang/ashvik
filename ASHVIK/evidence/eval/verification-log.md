@@ -130,6 +130,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-28 | Paediatric epilepsy | AED by seizure type; status protocol | ICMR / ILAE | High | Draft | — |
 | 2026-10-28 | Paediatric skin infections | Impetigo/scabies/fungal | ICMR / NCDC | High | Draft | — |
 | 2026-10-28 | Paediatric poisoning | Do not induce vomiting; antidotes | NCDC / WHO | High | Draft | — |
+| 2026-10-28 | Geriatric nutrition | Protein 1.0–1.5 g/kg; vitamin D | NPHCE / WHO | High | Draft | — |
+| 2026-10-28 | Sarcopenia/frailty | Resistance exercise; protein | NPHCE / WHO | Medium | Draft | — |
+| 2026-10-28 | Dementia | Reversible causes; donepezil | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Delirium | Find cause; avoid restraints | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Incontinence | Bladder training; treat cause | NPHCE / WHO | High | Draft | — |
+| 2026-10-28 | Falls prevention | Exercise, med review, home safety | NPHCE / WHO | High | Draft | — |
+| 2026-10-28 | Polypharmacy | Beers criteria; deprescribe | NPHCE / WHO | High | Draft | — |
+| 2026-10-28 | Palliative home care | Caregiver training; opioid access | NPCP / WHO | High | Draft | — |
+| 2026-10-28 | Caregiver support | Screen burden; respite | NPHCE / WHO | Medium | Draft | — |
+| 2026-10-28 | Elder abuse | Private screening; safety plan | WHO / NPHCE | High | Draft | Legal reporting |
 
 ## How to update
 

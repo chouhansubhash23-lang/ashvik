@@ -126,6 +126,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 119 | Paediatric epilepsy | [paediatric-epilepsy.md](paediatric-epilepsy.md) | ICMR, ILAE | Draft |
 | 120 | Paediatric skin infections | [paediatric-skin-infections.md](paediatric-skin-infections.md) | ICMR, NCDC | Draft |
 | 121 | Paediatric poisoning | [paediatric-poisoning.md](paediatric-poisoning.md) | NCDC, WHO | Draft |
+| 122 | Geriatric nutrition | [geriatric-nutrition.md](geriatric-nutrition.md) | NPHCE, WHO | Draft |
+| 123 | Sarcopenia & frailty | [sarcopenia-frailty.md](sarcopenia-frailty.md) | NPHCE, WHO | Draft |
+| 124 | Dementia care | [dementia-care.md](dementia-care.md) | ICMR, WHO | Draft |
+| 125 | Delirium | [delirium.md](delirium.md) | ICMR, WHO | Draft |
+| 126 | Urinary incontinence | [urinary-incontinence.md](urinary-incontinence.md) | NPHCE, WHO | Draft |
+| 127 | Falls prevention programme | [falls-prevention-programme.md](falls-prevention-programme.md) | NPHCE, WHO | Draft |
+| 128 | Polypharmacy review | [polypharmacy-review.md](polypharmacy-review.md) | NPHCE, WHO | Draft |
+| 129 | Palliative home care | [palliative-home-care.md](palliative-home-care.md) | NPCP, WHO | Draft |
+| 130 | Caregiver support | [caregiver-support.md](caregiver-support.md) | NPHCE, WHO | Draft |
+| 131 | Elder abuse screening | [elder-abuse-screening.md](elder-abuse-screening.md) | WHO, NPHCE | Draft |
 
 ## Evidence and evaluation
 
@@ -136,16 +146,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Geriatric nutrition
-2. Sarcopenia and frailty
-3. Dementia care
-4. Delirium
-5. Urinary incontinence
-6. Falls prevention programme
-7. Polypharmacy review
-8. Palliative home care
-9. Caregiver support
-10. Elder abuse screening
+1. Chronic pain management
+2. Opioid prescribing safety
+3. Wound care formulary
+4. Compression therapy
+5. Diabetic retinopathy screening
+6. Hearing loss in adults
+7. Vision screening in adults
+8. Oral cancer screening
+9. Cervical cancer screening
+10. Breast cancer screening
 
 ## Medical disclaimer
 
