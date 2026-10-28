@@ -186,6 +186,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 179 | Family planning counselling | [family-planning-counselling.md](family-planning-counselling.md) | NFPP, WHO | Draft |
 | 180 | Safe abortion care | [safe-abortion-care.md](safe-abortion-care.md) | MTP Act, WHO | Draft |
 | 181 | Infertility referral | [infertility-referral.md](infertility-referral.md) | ICMR, WHO | Draft |
+| 182 | Newborn resuscitation | [newborn-resuscitation.md](newborn-resuscitation.md) | NRP/IAP, WHO | Draft |
+| 183 | Neonatal sepsis | [neonatal-sepsis.md](neonatal-sepsis.md) | WHO, IMNCI | Draft |
+| 184 | Neonatal jaundice | [neonatal-jaundice.md](neonatal-jaundice.md) | WHO, IAP | Draft |
+| 185 | Breastfeeding support | [breastfeeding-support.md](breastfeeding-support.md) | WHO/UNICEF, RMNCH+A | Draft |
+| 186 | Kangaroo mother care | [kangaroo-mother-care.md](kangaroo-mother-care.md) | WHO, RMNCH+A | Draft |
+| 187 | Low birth weight care | [low-birth-weight-care.md](low-birth-weight-care.md) | WHO, RMNCH+A | Draft |
+| 188 | Congenital anomalies | [congenital-anomalies.md](congenital-anomalies.md) | WHO, RBSK | Draft |
+| 189 | Neonatal hypoglycaemia | [neonatal-hypoglycaemia.md](neonatal-hypoglycaemia.md) | WHO, IAP | Draft |
+| 190 | Birth asphyxia | [birth-asphyxia.md](birth-asphyxia.md) | WHO, NRP | Draft |
+| 191 | Neonatal transport | [neonatal-transport.md](neonatal-transport.md) | WHO, RMNCH+A | Draft |
 
 ## Evidence and evaluation
 
@@ -196,16 +206,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Newborn resuscitation
-2. Neonatal sepsis
-3. Neonatal jaundice
-4. Breastfeeding support
-5. Kangaroo mother care
-6. Low birth weight care
-7. Congenital anomalies
-8. Neonatal hypoglycaemia
-9. Birth asphyxia
-10. Neonatal transport
+1. Dengue vaccine / prevention
+2. Malaria chemoprophylaxis
+3. Rabies pre-exposure prophylaxis
+4. Hepatitis B prevention
+5. HIV prevention (PrEP/PEP)
+6. TB infection control
+7. Outbreak investigation
+8. Contact tracing
+9. Quarantine/isolation
+10. Risk communication
 
 ## Medical disclaimer
 

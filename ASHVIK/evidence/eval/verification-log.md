@@ -190,6 +190,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-28 | Family planning | Method mix; contraindications | NFPP / WHO | High | Draft | — |
 | 2026-10-28 | Safe abortion | MTP Act; medical/surgical | MTP Act / WHO | High | Draft | — |
 | 2026-10-28 | Infertility | Couple assessment; referral | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Newborn resuscitation | Warm/dry/stimulate; PPV; compressions | NRP/IAP | High | Draft | — |
+| 2026-10-28 | Neonatal sepsis | Early antibiotics; weight-based doses | WHO/IMNCI | High | Draft | — |
+| 2026-10-28 | Neonatal jaundice | First 24 h pathological; phototherapy | WHO/IAP | High | Draft | — |
+| 2026-10-28 | Breastfeeding | Exclusive 6 months; latch support | WHO/UNICEF | High | Draft | — |
+| 2026-10-28 | KMC | Skin-to-skin; stable LBW | WHO/RMNCH+A | High | Draft | — |
+| 2026-10-28 | LBW care | Warmth/feeding; refer <1.5 kg | WHO/RMNCH+A | High | Draft | — |
+| 2026-10-28 | Congenital anomalies | Screen/refer; folate prevention | WHO/RBSK | High | Draft | — |
+| 2026-10-28 | Neonatal hypoglycaemia | 10% dextrose 2 mL/kg | WHO/IAP | High | Draft | — |
+| 2026-10-28 | Birth asphyxia | Resuscitation; cooling referral | WHO/NRP | High | Draft | — |
+| 2026-10-28 | Neonatal transport | Stabilise before transfer | WHO/RMNCH+A | High | Draft | — |
 
 ## How to update
 

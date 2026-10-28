@@ -2,7 +2,7 @@
 
 Generated: 2026-10-28
 
-Scope: 181 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 191 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -36,9 +36,11 @@ Scope: 181 guideline files in `ASHVIK/data/guidelines/`.
 | autism-screening.md | 100% | 12/12 | 295 | 1 | 1 |
 | back-pain-sciatica.md | 100% | 12/12 | 442 | 1 | 1 |
 | biomedical-waste-management.md | 100% | 12/12 | 269 | 1 | 0 |
+| birth-asphyxia.md | 100% | 12/12 | 259 | 1 | 1 |
 | blood-culture-collection.md | 100% | 12/12 | 274 | 3 | 1 |
 | blood-transfusion-basics.md | 100% | 12/12 | 349 | 2 | 0 |
 | breast-cancer-screening.md | 100% | 12/12 | 285 | 1 | 1 |
+| breastfeeding-support.md | 100% | 12/12 | 284 | 1 | 1 |
 | bronchiolitis.md | 100% | 12/12 | 336 | 1 | 1 |
 | burns.md | 100% | 12/12 | 438 | 2 | 1 |
 | caregiver-support.md | 100% | 12/12 | 287 | 1 | 1 |
@@ -51,6 +53,7 @@ Scope: 181 guideline files in `ASHVIK/data/guidelines/`.
 | chronic-kidney-disease.md | 100% | 12/12 | 552 | 3 | 1 |
 | chronic-pain-management.md | 100% | 12/12 | 297 | 3 | 1 |
 | compression-therapy.md | 100% | 12/12 | 279 | 1 | 1 |
+| congenital-anomalies.md | 100% | 12/12 | 278 | 2 | 1 |
 | congenital-heart-disease-screening.md | 100% | 12/12 | 304 | 2 | 1 |
 | contraception.md | 100% | 12/12 | 514 | 2 | 2 |
 | covid-influenza.md | 100% | 12/12 | 537 | 4 | 2 |
@@ -113,9 +116,11 @@ Scope: 181 guideline files in `ASHVIK/data/guidelines/`.
 | iron-overload-thalassaemia.md | 100% | 12/12 | 292 | 2 | 1 |
 | iv-fluid-therapy.md | 100% | 12/12 | 398 | 5 | 1 |
 | joint-aspiration-injection.md | 100% | 12/12 | 347 | 1 | 1 |
+| kangaroo-mother-care.md | 100% | 12/12 | 266 | 1 | 1 |
 | labour-monitoring.md | 100% | 12/12 | 295 | 1 | 1 |
 | liver-disease.md | 100% | 12/12 | 500 | 4 | 1 |
 | local-anaesthesia.md | 100% | 12/12 | 352 | 10 | 1 |
+| low-birth-weight-care.md | 100% | 12/12 | 267 | 1 | 1 |
 | lumbar-puncture.md | 100% | 12/12 | 327 | 1 | 1 |
 | malaria.md | 100% | 12/12 | 727 | 15 | 3 |
 | maternal-care.md | 100% | 12/12 | 645 | 10 | 2 |
@@ -126,6 +131,11 @@ Scope: 181 guideline files in `ASHVIK/data/guidelines/`.
 | migraine.md | 100% | 12/12 | 648 | 12 | 2 |
 | needlestick-injury-protocol.md | 100% | 12/12 | 298 | 1 | 1 |
 | neonatal-danger-signs.md | 100% | 12/12 | 346 | 2 | 1 |
+| neonatal-hypoglycaemia.md | 100% | 12/12 | 256 | 3 | 1 |
+| neonatal-jaundice.md | 100% | 12/12 | 281 | 1 | 1 |
+| neonatal-sepsis.md | 100% | 12/12 | 281 | 3 | 1 |
+| neonatal-transport.md | 100% | 12/12 | 270 | 1 | 1 |
+| newborn-resuscitation.md | 100% | 12/12 | 290 | 1 | 1 |
 | ng-tube-urinary-catheter.md | 100% | 12/12 | 369 | 1 | 1 |
 | nutritional-anaemia-children.md | 100% | 12/12 | 334 | 6 | 1 |
 | occupational-health.md | 100% | 12/12 | 494 | 1 | 0 |
@@ -241,9 +251,11 @@ All structural checks passed.
 | autism-screening.md | Draft | — | — |
 | back-pain-sciatica.md | Draft | — | — |
 | biomedical-waste-management.md | Draft | — | — |
+| birth-asphyxia.md | Draft | — | — |
 | blood-culture-collection.md | Draft | — | — |
 | blood-transfusion-basics.md | Draft | — | — |
 | breast-cancer-screening.md | Draft | — | — |
+| breastfeeding-support.md | Draft | — | — |
 | bronchiolitis.md | Draft | — | — |
 | burns.md | Draft | — | — |
 | caregiver-support.md | Draft | — | — |
@@ -256,6 +268,7 @@ All structural checks passed.
 | chronic-kidney-disease.md | Draft | — | — |
 | chronic-pain-management.md | Draft | — | — |
 | compression-therapy.md | Draft | — | — |
+| congenital-anomalies.md | Draft | — | — |
 | congenital-heart-disease-screening.md | Draft | — | — |
 | contraception.md | Draft | — | — |
 | covid-influenza.md | Draft | — | — |
@@ -318,9 +331,11 @@ All structural checks passed.
 | iron-overload-thalassaemia.md | Draft | — | — |
 | iv-fluid-therapy.md | Draft | — | — |
 | joint-aspiration-injection.md | Draft | — | — |
+| kangaroo-mother-care.md | Draft | — | — |
 | labour-monitoring.md | Draft | — | — |
 | liver-disease.md | Draft | — | — |
 | local-anaesthesia.md | Draft | — | — |
+| low-birth-weight-care.md | Draft | — | — |
 | lumbar-puncture.md | Draft | — | — |
 | malaria.md | Draft | — | — |
 | maternal-care.md | Draft | — | — |
@@ -331,6 +346,11 @@ All structural checks passed.
 | migraine.md | Draft | — | — |
 | needlestick-injury-protocol.md | Draft | — | — |
 | neonatal-danger-signs.md | Draft | — | — |
+| neonatal-hypoglycaemia.md | Draft | — | — |
+| neonatal-jaundice.md | Draft | — | — |
+| neonatal-sepsis.md | Draft | — | — |
+| neonatal-transport.md | Draft | — | — |
+| newborn-resuscitation.md | Draft | — | — |
 | ng-tube-urinary-catheter.md | Draft | — | — |
 | nutritional-anaemia-children.md | Draft | — | — |
 | occupational-health.md | Draft | — | — |
