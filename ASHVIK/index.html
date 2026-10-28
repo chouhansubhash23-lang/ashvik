@@ -267,6 +267,16 @@ function savePatients(ps) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(ps));
   if (window.__ashvikCloudSync) window.__ashvikCloudSync(ps);
 }
+function ageFromDob(dob) {
+  if (!dob) return "";
+  const d = new Date(dob + "T00:00:00");
+  if (isNaN(d.getTime())) return "";
+  const now = new Date();
+  let a = now.getFullYear() - d.getFullYear();
+  const m = now.getMonth() - d.getMonth();
+  if (m < 0 || (m === 0 && now.getDate() < d.getDate())) a--;
+  return a >= 0 ? a : "";
+}
 function seed() {
   return [{ id:uid(), name:"Ramesh Kumar", age:45, sex:"Male", dob:"1980-03-12", phone:"9876543210", address:"Village Rampur, District Lucknow", bloodGroup:"B+", allergies:"Penicillin", chronic:"Type 2 Diabetes, Hypertension", notes:"Regular follow-up.", clinical:[], diagnostic:[], consults:[], reports:[] }];
 }
@@ -450,20 +460,25 @@ function App() {
   const [patientModal, setPatientModal] = useState(false);
   const [editingPatientId, setEditingPatientId] = useState(null);
   const [patientForm, setPatientForm] = useState({ name:"", age:"", sex:"Male", dob:"", phone:"", address:"", bloodGroup:"", allergies:"", chronic:"", notes:"" });
+  const [ageMode, setAgeMode] = useState("age");
   const openPatientModal = (p=null) => {
     if (p) {
       setEditingPatientId(p.id);
       setPatientForm({ name:p.name||"", age:p.age||"", sex:p.sex||"Male", dob:p.dob||"", phone:p.phone||"", address:p.address||"", bloodGroup:p.bloodGroup||"", allergies:p.allergies||"", chronic:p.chronic||"", notes:p.notes||"" });
+      setAgeMode(p.dob ? "dob" : "age");
     } else {
       setEditingPatientId(null);
       setPatientForm({ name:"", age:"", sex:"Male", dob:"", phone:"", address:"", bloodGroup:"", allergies:"", chronic:"", notes:"" });
+      setAgeMode("age");
     }
     setPatientModal(true);
   };
   const savePatient = () => {
     const name = patientForm.name.trim();
-    const age = patientForm.age.trim();
-    if (!name || !age) { alert("Name and Age required."); return; }
+    const age = ageMode === "dob" ? String(ageFromDob(patientForm.dob)) : patientForm.age.trim();
+    if (!name) { alert("Name required."); return; }
+    if (ageMode === "dob" && !patientForm.dob) { alert("Enter date of birth, or switch to 'Enter Age'."); return; }
+    if (!age) { alert("Age required."); return; }
     const data = { ...patientForm, age: Number(age) };
     const ps = [...patients];
     if (editingPatientId) {
@@ -1202,15 +1217,27 @@ function App() {
       <div className={"modal-backdrop" + (patientModal ? " open" : "")} onClick={() => setPatientModal(false)}>
         <div className="modal" onClick={e => e.stopPropagation()}>
           <h3>{editingPatientId ? t("edit",lang) : t("addPatient",lang)}</h3>
+          <div style={{display:"flex",gap:6,alignItems:"center",marginBottom:12,flexWrap:"wrap"}}>
+            <span style={{fontSize:12,color:"var(--muted)"}}>Age input:</span>
+            <button type="button" className={"btn btn-sm " + (ageMode === "age" ? "btn-primary" : "btn-outline")} onClick={() => setAgeMode("age")}>Enter Age</button>
+            <button type="button" className={"btn btn-sm " + (ageMode === "dob" ? "btn-primary" : "btn-outline")} onClick={() => setAgeMode("dob")}>Use DOB (auto age)</button>
+          </div>
           <div className="grid grid-2">
             <Field label={t("name",lang) + " *"}><input value={patientForm.name} onChange={e => setPatientForm({...patientForm, name: e.target.value})} /></Field>
-            <Field label={t("age",lang) + " *"}><input type="number" min="0" value={patientForm.age} onChange={e => setPatientForm({...patientForm, age: e.target.value})} /></Field>
+            <Field label={t("age",lang) + " *"}>
+              <input type="number" min="0" placeholder={ageMode === "dob" ? "Auto from DOB" : "Years"} value={patientForm.age} readOnly={ageMode === "dob"} onChange={e => setPatientForm({...patientForm, age: e.target.value})} />
+            </Field>
             <Field label={t("sex",lang) + " *"}>
               <select value={patientForm.sex} onChange={e => setPatientForm({...patientForm, sex: e.target.value})}>
                 <option>Male</option><option>Female</option><option>Other</option>
               </select>
             </Field>
-            <Field label={t("dob",lang)}><input type="date" value={patientForm.dob} onChange={e => setPatientForm({...patientForm, dob: e.target.value})} /></Field>
+            <Field label={t("dob",lang) + (ageMode === "dob" ? " *" : " (optional)")}>
+              <input type="date" value={patientForm.dob} onChange={e => {
+                const dob = e.target.value;
+                setPatientForm(prev => ({ ...prev, dob, ...(dob ? { age: String(ageFromDob(dob)) } : {}) }));
+              }} />
+            </Field>
             <Field label={t("phone",lang)}><input value={patientForm.phone} onChange={e => setPatientForm({...patientForm, phone: e.target.value})} /></Field>
             <Field label={t("bloodGroup",lang)}><input value={patientForm.bloodGroup} onChange={e => setPatientForm({...patientForm, bloodGroup: e.target.value})} /></Field>
           </div>
