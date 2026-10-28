@@ -2,7 +2,7 @@
 
 Generated: 2026-10-28
 
-Scope: 131 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 141 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -32,15 +32,19 @@ Scope: 131 guideline files in `ASHVIK/data/guidelines/`.
 | back-pain-sciatica.md | 100% | 12/12 | 442 | 1 | 1 |
 | biomedical-waste-management.md | 100% | 12/12 | 269 | 1 | 0 |
 | blood-transfusion-basics.md | 100% | 12/12 | 349 | 2 | 0 |
+| breast-cancer-screening.md | 100% | 12/12 | 285 | 1 | 1 |
 | bronchiolitis.md | 100% | 12/12 | 336 | 1 | 1 |
 | burns.md | 100% | 12/12 | 438 | 2 | 1 |
 | caregiver-support.md | 100% | 12/12 | 287 | 1 | 1 |
+| cervical-cancer-screening.md | 100% | 12/12 | 289 | 1 | 1 |
 | chikungunya-viral-fever.md | 100% | 12/12 | 457 | 4 | 1 |
 | childhood-asthma.md | 100% | 12/12 | 321 | 3 | 1 |
 | childhood-immunisation.md | 100% | 12/12 | 467 | 4 | 0 |
 | childhood-malnutrition.md | 100% | 12/12 | 540 | 2 | 0 |
 | childhood-obesity.md | 100% | 12/12 | 295 | 1 | 1 |
 | chronic-kidney-disease.md | 100% | 12/12 | 552 | 3 | 1 |
+| chronic-pain-management.md | 100% | 12/12 | 297 | 3 | 1 |
+| compression-therapy.md | 100% | 12/12 | 279 | 1 | 1 |
 | congenital-heart-disease-screening.md | 100% | 12/12 | 304 | 2 | 1 |
 | contraception.md | 100% | 12/12 | 514 | 2 | 2 |
 | covid-influenza.md | 100% | 12/12 | 537 | 4 | 2 |
@@ -54,6 +58,7 @@ Scope: 131 guideline files in `ASHVIK/data/guidelines/`.
 | depression-anxiety.md | 100% | 12/12 | 609 | 6 | 2 |
 | developmental-delay.md | 100% | 12/12 | 324 | 2 | 1 |
 | diabetic-foot.md | 100% | 12/12 | 433 | 1 | 1 |
+| diabetic-retinopathy-screening.md | 100% | 12/12 | 288 | 1 | 1 |
 | drowning-electrocution.md | 100% | 12/12 | 405 | 1 | 0 |
 | ecg-basics.md | 100% | 12/12 | 419 | 2 | 1 |
 | elder-abuse-screening.md | 100% | 12/12 | 307 | 1 | 1 |
@@ -73,6 +78,7 @@ Scope: 131 guideline files in `ASHVIK/data/guidelines/`.
 | growth-monitoring.md | 100% | 12/12 | 358 | 2 | 0 |
 | hand-hygiene-infection-control.md | 100% | 12/12 | 285 | 1 | 0 |
 | head-injury.md | 100% | 12/12 | 374 | 1 | 1 |
+| hearing-loss-adults.md | 100% | 12/12 | 289 | 2 | 1 |
 | hernia.md | 100% | 12/12 | 333 | 3 | 1 |
 | hiv-care-basics.md | 100% | 12/12 | 350 | 1 | 1 |
 | hypertension.md | 100% | 12/12 | 556 | 6 | 1 |
@@ -98,6 +104,8 @@ Scope: 131 guideline files in `ASHVIK/data/guidelines/`.
 | ng-tube-urinary-catheter.md | 100% | 12/12 | 369 | 1 | 1 |
 | nutritional-anaemia-children.md | 100% | 12/12 | 334 | 6 | 1 |
 | occupational-health.md | 100% | 12/12 | 494 | 1 | 0 |
+| opioid-prescribing-safety.md | 100% | 12/12 | 310 | 4 | 1 |
+| oral-cancer-screening.md | 100% | 12/12 | 265 | 1 | 1 |
 | oral-health.md | 100% | 12/12 | 489 | 2 | 1 |
 | oxygen-therapy.md | 100% | 12/12 | 343 | 1 | 0 |
 | paediatric-dehydration.md | 100% | 12/12 | 339 | 10 | 1 |
@@ -139,6 +147,8 @@ Scope: 131 guideline files in `ASHVIK/data/guidelines/`.
 | typhoid.md | 100% | 12/12 | 591 | 8 | 1 |
 | urinary-incontinence.md | 100% | 12/12 | 281 | 1 | 1 |
 | uti.md | 100% | 12/12 | 603 | 6 | 1 |
+| vision-screening-adults.md | 100% | 12/12 | 291 | 1 | 1 |
+| wound-care-formulary.md | 100% | 12/12 | 303 | 1 | 1 |
 | wound-management-suturing.md | 100% | 12/12 | 424 | 4 | 1 |
 | xray-basics.md | 100% | 12/12 | 384 | 1 | 1 |
 
@@ -187,15 +197,19 @@ All structural checks passed.
 | back-pain-sciatica.md | Draft | — | — |
 | biomedical-waste-management.md | Draft | — | — |
 | blood-transfusion-basics.md | Draft | — | — |
+| breast-cancer-screening.md | Draft | — | — |
 | bronchiolitis.md | Draft | — | — |
 | burns.md | Draft | — | — |
 | caregiver-support.md | Draft | — | — |
+| cervical-cancer-screening.md | Draft | — | — |
 | chikungunya-viral-fever.md | Draft | — | — |
 | childhood-asthma.md | Draft | — | — |
 | childhood-immunisation.md | Draft | — | — |
 | childhood-malnutrition.md | Draft | — | — |
 | childhood-obesity.md | Draft | — | — |
 | chronic-kidney-disease.md | Draft | — | — |
+| chronic-pain-management.md | Draft | — | — |
+| compression-therapy.md | Draft | — | — |
 | congenital-heart-disease-screening.md | Draft | — | — |
 | contraception.md | Draft | — | — |
 | covid-influenza.md | Draft | — | — |
@@ -209,6 +223,7 @@ All structural checks passed.
 | depression-anxiety.md | Draft | — | — |
 | developmental-delay.md | Draft | — | — |
 | diabetic-foot.md | Draft | — | — |
+| diabetic-retinopathy-screening.md | Draft | — | — |
 | drowning-electrocution.md | Draft | — | — |
 | ecg-basics.md | Draft | — | — |
 | elder-abuse-screening.md | Draft | — | — |
@@ -228,6 +243,7 @@ All structural checks passed.
 | growth-monitoring.md | Draft | — | — |
 | hand-hygiene-infection-control.md | Draft | — | — |
 | head-injury.md | Draft | — | — |
+| hearing-loss-adults.md | Draft | — | — |
 | hernia.md | Draft | — | — |
 | hiv-care-basics.md | Draft | — | — |
 | hypertension.md | Draft | — | — |
@@ -253,6 +269,8 @@ All structural checks passed.
 | ng-tube-urinary-catheter.md | Draft | — | — |
 | nutritional-anaemia-children.md | Draft | — | — |
 | occupational-health.md | Draft | — | — |
+| opioid-prescribing-safety.md | Draft | — | — |
+| oral-cancer-screening.md | Draft | — | — |
 | oral-health.md | Draft | — | — |
 | oxygen-therapy.md | Draft | — | — |
 | paediatric-dehydration.md | Draft | — | — |
@@ -294,6 +312,8 @@ All structural checks passed.
 | typhoid.md | Draft | — | — |
 | urinary-incontinence.md | Draft | — | — |
 | uti.md | Draft | — | — |
+| vision-screening-adults.md | Draft | — | — |
+| wound-care-formulary.md | Draft | — | — |
 | wound-management-suturing.md | Draft | — | — |
 | xray-basics.md | Draft | — | — |
 

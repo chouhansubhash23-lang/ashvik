@@ -140,6 +140,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-28 | Palliative home care | Caregiver training; opioid access | NPCP / WHO | High | Draft | — |
 | 2026-10-28 | Caregiver support | Screen burden; respite | NPHCE / WHO | Medium | Draft | — |
 | 2026-10-28 | Elder abuse | Private screening; safety plan | WHO / NPHCE | High | Draft | Legal reporting |
+| 2026-10-28 | Chronic pain | Stepwise analgesia; avoid long-term NSAIDs | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Opioid safety | Indication, laxatives, monitoring | ICMR / NPCP | High | Draft | Narcotics rules |
+| 2026-10-28 | Wound formulary | Moist healing; dressing by exudate | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Compression | ABPI before compression | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Retinopathy screening | Annual fundus; refer sight-threatening | ICMR / NPCDCS | High | Draft | — |
+| 2026-10-28 | Hearing loss | Otoscopy/audiometry; refer sudden loss | WHO / ICMR | High | Draft | — |
+| 2026-10-28 | Vision screening | Acuity/pinhole/fundus | WHO / NPCB | High | Draft | — |
+| 2026-10-28 | Oral cancer | Biopsy non-healing ulcer | NOHP / ICMR | High | Draft | — |
+| 2026-10-28 | Cervical screening | VIA/Pap; refer abnormal | NCCP / WHO | High | Draft | — |
+| 2026-10-28 | Breast screening | Clinical exam; refer lump | NCCP / WHO | High | Draft | — |
 
 ## How to update
 

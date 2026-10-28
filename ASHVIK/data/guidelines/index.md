@@ -136,6 +136,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 129 | Palliative home care | [palliative-home-care.md](palliative-home-care.md) | NPCP, WHO | Draft |
 | 130 | Caregiver support | [caregiver-support.md](caregiver-support.md) | NPHCE, WHO | Draft |
 | 131 | Elder abuse screening | [elder-abuse-screening.md](elder-abuse-screening.md) | WHO, NPHCE | Draft |
+| 132 | Chronic pain management | [chronic-pain-management.md](chronic-pain-management.md) | ICMR, WHO | Draft |
+| 133 | Opioid prescribing safety | [opioid-prescribing-safety.md](opioid-prescribing-safety.md) | ICMR, WHO | Draft |
+| 134 | Wound care formulary | [wound-care-formulary.md](wound-care-formulary.md) | ICMR, WHO | Draft |
+| 135 | Compression therapy | [compression-therapy.md](compression-therapy.md) | ICMR, WHO | Draft |
+| 136 | Diabetic retinopathy screening | [diabetic-retinopathy-screening.md](diabetic-retinopathy-screening.md) | ICMR, NPCDCS | Draft |
+| 137 | Hearing loss in adults | [hearing-loss-adults.md](hearing-loss-adults.md) | WHO, ICMR | Draft |
+| 138 | Vision screening in adults | [vision-screening-adults.md](vision-screening-adults.md) | WHO, NPCB | Draft |
+| 139 | Oral cancer screening | [oral-cancer-screening.md](oral-cancer-screening.md) | NOHP, ICMR | Draft |
+| 140 | Cervical cancer screening | [cervical-cancer-screening.md](cervical-cancer-screening.md) | NCCP, WHO | Draft |
+| 141 | Breast cancer screening | [breast-cancer-screening.md](breast-cancer-screening.md) | NCCP, WHO | Draft |
 
 ## Evidence and evaluation
 
@@ -146,16 +156,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Chronic pain management
-2. Opioid prescribing safety
-3. Wound care formulary
-4. Compression therapy
-5. Diabetic retinopathy screening
-6. Hearing loss in adults
-7. Vision screening in adults
-8. Oral cancer screening
-9. Cervical cancer screening
-10. Breast cancer screening
+1. Smoking cessation
+2. Alcohol use disorder
+3. Substance use disorders
+4. Obesity management (adults)
+5. Dyslipidaemia
+6. Metabolic syndrome
+7. Vitamin D deficiency
+8. Vitamin B12 deficiency
+9. Iron overload / thalassaemia
+10. G6PD deficiency
 
 ## Medical disclaimer
 
