@@ -116,6 +116,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 109 | School health screening | [school-health-screening.md](school-health-screening.md) | RBSK, MoHFW | Draft |
 | 110 | Nutritional anaemia (children) | [nutritional-anaemia-children.md](nutritional-anaemia-children.md) | NIPI, WHO | Draft |
 | 111 | Paediatric dehydration | [paediatric-dehydration.md](paediatric-dehydration.md) | WHO/IMNCI | Draft |
+| 112 | Paediatric TB | [paediatric-tb.md](paediatric-tb.md) | NTEP, WHO | Draft |
+| 113 | Paediatric HIV | [paediatric-hiv.md](paediatric-hiv.md) | NACO, WHO | Draft |
+| 114 | Congenital heart disease screening | [congenital-heart-disease-screening.md](congenital-heart-disease-screening.md) | RBSK, ICMR | Draft |
+| 115 | Developmental delay | [developmental-delay.md](developmental-delay.md) | RBSK, WHO | Draft |
+| 116 | Autism screening | [autism-screening.md](autism-screening.md) | RBSK, WHO | Draft |
+| 117 | Childhood obesity | [childhood-obesity.md](childhood-obesity.md) | ICMR, WHO | Draft |
+| 118 | Type 1 diabetes (children) | [type-1-diabetes-children.md](type-1-diabetes-children.md) | ICMR, ISPAD | Draft |
+| 119 | Paediatric epilepsy | [paediatric-epilepsy.md](paediatric-epilepsy.md) | ICMR, ILAE | Draft |
+| 120 | Paediatric skin infections | [paediatric-skin-infections.md](paediatric-skin-infections.md) | ICMR, NCDC | Draft |
+| 121 | Paediatric poisoning | [paediatric-poisoning.md](paediatric-poisoning.md) | NCDC, WHO | Draft |
 
 ## Evidence and evaluation
 
@@ -126,16 +136,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Paediatric TB
-2. Paediatric HIV
-3. Congenital heart disease screening
-4. Developmental delay
-5. Autism screening
-6. Childhood obesity
-7. Type 1 diabetes in children
-8. Paediatric seizures (epilepsy)
-9. Paediatric skin infections
-10. Paediatric poisoning
+1. Geriatric nutrition
+2. Sarcopenia and frailty
+3. Dementia care
+4. Delirium
+5. Urinary incontinence
+6. Falls prevention programme
+7. Polypharmacy review
+8. Palliative home care
+9. Caregiver support
+10. Elder abuse screening
 
 ## Medical disclaimer
 

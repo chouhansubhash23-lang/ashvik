@@ -2,7 +2,7 @@
 
 Generated: 2026-10-28
 
-Scope: 111 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 121 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -28,6 +28,7 @@ Scope: 111 guideline files in `ASHVIK/data/guidelines/`.
 | appendicitis.md | 100% | 12/12 | 343 | 2 | 1 |
 | arthritis.md | 100% | 12/12 | 627 | 10 | 2 |
 | asthma-copd.md | 100% | 12/12 | 582 | 4 | 2 |
+| autism-screening.md | 100% | 12/12 | 295 | 1 | 1 |
 | back-pain-sciatica.md | 100% | 12/12 | 442 | 1 | 1 |
 | biomedical-waste-management.md | 100% | 12/12 | 269 | 1 | 0 |
 | blood-transfusion-basics.md | 100% | 12/12 | 349 | 2 | 0 |
@@ -37,7 +38,9 @@ Scope: 111 guideline files in `ASHVIK/data/guidelines/`.
 | childhood-asthma.md | 100% | 12/12 | 321 | 3 | 1 |
 | childhood-immunisation.md | 100% | 12/12 | 467 | 4 | 0 |
 | childhood-malnutrition.md | 100% | 12/12 | 540 | 2 | 0 |
+| childhood-obesity.md | 100% | 12/12 | 295 | 1 | 1 |
 | chronic-kidney-disease.md | 100% | 12/12 | 552 | 3 | 1 |
+| congenital-heart-disease-screening.md | 100% | 12/12 | 304 | 2 | 1 |
 | contraception.md | 100% | 12/12 | 514 | 2 | 2 |
 | covid-influenza.md | 100% | 12/12 | 537 | 4 | 2 |
 | cpr-bls.md | 100% | 12/12 | 309 | 2 | 1 |
@@ -46,6 +49,7 @@ Scope: 111 guideline files in `ASHVIK/data/guidelines/`.
 | dengue-triage.md | 100% | 12/12 | 458 | 3 | 0 |
 | dengue.md | 100% | 12/12 | 492 | 3 | 1 |
 | depression-anxiety.md | 100% | 12/12 | 609 | 6 | 2 |
+| developmental-delay.md | 100% | 12/12 | 324 | 2 | 1 |
 | diabetic-foot.md | 100% | 12/12 | 433 | 1 | 1 |
 | drowning-electrocution.md | 100% | 12/12 | 405 | 1 | 0 |
 | ecg-basics.md | 100% | 12/12 | 419 | 2 | 1 |
@@ -92,6 +96,11 @@ Scope: 111 guideline files in `ASHVIK/data/guidelines/`.
 | oxygen-therapy.md | 100% | 12/12 | 343 | 1 | 0 |
 | paediatric-dehydration.md | 100% | 12/12 | 339 | 10 | 1 |
 | paediatric-dosing-guide.md | 100% | 12/12 | 383 | 11 | 1 |
+| paediatric-epilepsy.md | 100% | 12/12 | 300 | 3 | 1 |
+| paediatric-hiv.md | 100% | 12/12 | 307 | 1 | 1 |
+| paediatric-poisoning.md | 100% | 12/12 | 307 | 4 | 1 |
+| paediatric-skin-infections.md | 100% | 12/12 | 298 | 1 | 1 |
+| paediatric-tb.md | 100% | 12/12 | 298 | 2 | 1 |
 | palliative-care.md | 100% | 12/12 | 554 | 6 | 1 |
 | palliative-symptom-protocols.md | 100% | 12/12 | 441 | 13 | 0 |
 | pancreatitis.md | 100% | 12/12 | 372 | 1 | 1 |
@@ -116,6 +125,7 @@ Scope: 111 guideline files in `ASHVIK/data/guidelines/`.
 | telemedicine-basics.md | 100% | 12/12 | 282 | 2 | 0 |
 | thyroid-disorders.md | 100% | 12/12 | 533 | 6 | 2 |
 | tuberculosis.md | 100% | 12/12 | 658 | 5 | 1 |
+| type-1-diabetes-children.md | 100% | 12/12 | 304 | 3 | 1 |
 | type-2-diabetes.md | 100% | 12/12 | 609 | 8 | 1 |
 | typhoid.md | 100% | 12/12 | 591 | 8 | 1 |
 | uti.md | 100% | 12/12 | 603 | 6 | 1 |
@@ -163,6 +173,7 @@ All structural checks passed.
 | appendicitis.md | Draft | — | — |
 | arthritis.md | Draft | — | — |
 | asthma-copd.md | Draft | — | — |
+| autism-screening.md | Draft | — | — |
 | back-pain-sciatica.md | Draft | — | — |
 | biomedical-waste-management.md | Draft | — | — |
 | blood-transfusion-basics.md | Draft | — | — |
@@ -172,7 +183,9 @@ All structural checks passed.
 | childhood-asthma.md | Draft | — | — |
 | childhood-immunisation.md | Draft | — | — |
 | childhood-malnutrition.md | Draft | — | — |
+| childhood-obesity.md | Draft | — | — |
 | chronic-kidney-disease.md | Draft | — | — |
+| congenital-heart-disease-screening.md | Draft | — | — |
 | contraception.md | Draft | — | — |
 | covid-influenza.md | Draft | — | — |
 | cpr-bls.md | Draft | — | — |
@@ -181,6 +194,7 @@ All structural checks passed.
 | dengue-triage.md | Draft | — | — |
 | dengue.md | Draft | — | — |
 | depression-anxiety.md | Draft | — | — |
+| developmental-delay.md | Draft | — | — |
 | diabetic-foot.md | Draft | — | — |
 | drowning-electrocution.md | Draft | — | — |
 | ecg-basics.md | Draft | — | — |
@@ -227,6 +241,11 @@ All structural checks passed.
 | oxygen-therapy.md | Draft | — | — |
 | paediatric-dehydration.md | Draft | — | — |
 | paediatric-dosing-guide.md | Draft | — | — |
+| paediatric-epilepsy.md | Draft | — | — |
+| paediatric-hiv.md | Draft | — | — |
+| paediatric-poisoning.md | Draft | — | — |
+| paediatric-skin-infections.md | Draft | — | — |
+| paediatric-tb.md | Draft | — | — |
 | palliative-care.md | Draft | — | — |
 | palliative-symptom-protocols.md | Draft | — | — |
 | pancreatitis.md | Draft | — | — |
@@ -251,6 +270,7 @@ All structural checks passed.
 | telemedicine-basics.md | Draft | — | — |
 | thyroid-disorders.md | Draft | — | — |
 | tuberculosis.md | Draft | — | — |
+| type-1-diabetes-children.md | Draft | — | — |
 | type-2-diabetes.md | Draft | — | — |
 | typhoid.md | Draft | — | — |
 | uti.md | Draft | — | — |

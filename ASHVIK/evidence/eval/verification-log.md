@@ -120,6 +120,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-28 | School screening | Vision/hearing/anaemia | RBSK | High | Draft | — |
 | 2026-10-28 | Nutritional anaemia | Iron 3 mg/kg/day; 3 months after normal | NIPI / WHO | High | Draft | — |
 | 2026-10-28 | Paediatric dehydration | Plan A/B/C; ORS/zinc | WHO/IMNCI | High | Draft | — |
+| 2026-10-28 | Paediatric TB | NTEP weight bands; 2HRZE/4HRE | NTEP / WHO | High | Draft | — |
+| 2026-10-28 | Paediatric HIV | Early infant diagnosis; ART link | NACO / WHO | High | Draft | — |
+| 2026-10-28 | CHD screening | Pulse oximetry; murmur; referral | RBSK / ICMR | High | Draft | Echo access |
+| 2026-10-28 | Developmental delay | Milestones; early intervention | RBSK / WHO | High | Draft | — |
+| 2026-10-28 | Autism screening | M-CHAT; refer | RBSK / WHO | Medium | Draft | — |
+| 2026-10-28 | Childhood obesity | BMI percentile; lifestyle | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Type 1 diabetes | Insulin; DKA emergency | ICMR / ISPAD | High | Draft | — |
+| 2026-10-28 | Paediatric epilepsy | AED by seizure type; status protocol | ICMR / ILAE | High | Draft | — |
+| 2026-10-28 | Paediatric skin infections | Impetigo/scabies/fungal | ICMR / NCDC | High | Draft | — |
+| 2026-10-28 | Paediatric poisoning | Do not induce vomiting; antidotes | NCDC / WHO | High | Draft | — |
 
 ## How to update
 
