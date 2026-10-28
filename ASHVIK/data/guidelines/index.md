@@ -106,6 +106,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 99 | TB preventive therapy | [tb-preventive-therapy.md](tb-preventive-therapy.md) | NTEP, WHO | Draft |
 | 100 | Snakebite antivenom protocol | [snakebite-antivenom-protocol.md](snakebite-antivenom-protocol.md) | National Snakebite Protocol | Draft |
 | 101 | Rabies PEP | [rabies-post-exposure-prophylaxis.md](rabies-post-exposure-prophylaxis.md) | NRCP, WHO | Draft |
+| 102 | Acute otitis media (children) | [acute-otitis-media-children.md](acute-otitis-media-children.md) | ICMR STW Vol. 3 | Draft |
+| 103 | Bronchiolitis | [bronchiolitis.md](bronchiolitis.md) | ICMR STW Vol. 3, IMNCI | Draft |
+| 104 | Croup | [croup.md](croup.md) | ICMR STW Vol. 3 | Draft |
+| 105 | Febrile seizures | [febrile-seizures.md](febrile-seizures.md) | ICMR STW Vol. 3 | Draft |
+| 106 | Childhood asthma | [childhood-asthma.md](childhood-asthma.md) | ICMR STW Vol. 3, GINA | Draft |
+| 107 | Paediatric dosing guide | [paediatric-dosing-guide.md](paediatric-dosing-guide.md) | IAP, WHO | Draft |
+| 108 | AEFI reporting | [aefi-reporting.md](aefi-reporting.md) | UIP, WHO | Draft |
+| 109 | School health screening | [school-health-screening.md](school-health-screening.md) | RBSK, MoHFW | Draft |
+| 110 | Nutritional anaemia (children) | [nutritional-anaemia-children.md](nutritional-anaemia-children.md) | NIPI, WHO | Draft |
+| 111 | Paediatric dehydration | [paediatric-dehydration.md](paediatric-dehydration.md) | WHO/IMNCI | Draft |
 
 ## Evidence and evaluation
 
@@ -116,16 +126,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Acute otitis media in children
-2. Bronchiolitis
-3. Croup
-4. Febrile seizures
-5. Childhood asthma
-6. Paediatric dosing guide
-7. Immunisation AEFI reporting
-8. School health screening
-9. Nutritional anaemia in children
-10. Paediatric dehydration
+1. Paediatric TB
+2. Paediatric HIV
+3. Congenital heart disease screening
+4. Developmental delay
+5. Autism screening
+6. Childhood obesity
+7. Type 1 diabetes in children
+8. Paediatric seizures (epilepsy)
+9. Paediatric skin infections
+10. Paediatric poisoning
 
 ## Medical disclaimer
 

@@ -110,6 +110,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-28 | TB preventive therapy | Rule out active TB; 6H/3HP | NTEP / WHO | High | Draft | — |
 | 2026-10-28 | Snakebite antivenom | ASV indications; anaphylaxis readiness | National Protocol | High | Draft | ASV availability |
 | 2026-10-28 | Rabies PEP | Wound wash; vaccine 0/3/7/14/28; RIG | NRCP / WHO | High | Draft | — |
+| 2026-10-28 | Otitis media | Amoxicillin 40–45 mg/kg/day | ICMR S1 | High | Draft | — |
+| 2026-10-28 | Bronchiolitis | Supportive; no routine antibiotics | ICMR S1 / IMNCI | High | Draft | — |
+| 2026-10-28 | Croup | Dexamethasone 0.15–0.6 mg/kg | ICMR S1 | High | Draft | — |
+| 2026-10-28 | Febrile seizures | Exclude meningitis; lorazepam if ongoing | ICMR S1 | High | Draft | — |
+| 2026-10-28 | Childhood asthma | ICS controller; spacer | ICMR S1 / GINA | High | Draft | — |
+| 2026-10-28 | Paediatric dosing | Weight-based; max dose | IAP / WHO | High | Draft | — |
+| 2026-10-28 | AEFI | Report serious events; adrenaline | UIP / WHO | High | Draft | — |
+| 2026-10-28 | School screening | Vision/hearing/anaemia | RBSK | High | Draft | — |
+| 2026-10-28 | Nutritional anaemia | Iron 3 mg/kg/day; 3 months after normal | NIPI / WHO | High | Draft | — |
+| 2026-10-28 | Paediatric dehydration | Plan A/B/C; ORS/zinc | WHO/IMNCI | High | Draft | — |
 
 ## How to update
 

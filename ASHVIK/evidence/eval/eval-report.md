@@ -2,7 +2,7 @@
 
 Generated: 2026-10-28
 
-Scope: 101 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 111 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -18,9 +18,11 @@ Scope: 101 guideline files in `ASHVIK/data/guidelines/`.
 | acute-diarrhoea.md | 100% | 12/12 | 712 | 13 | 2 |
 | acute-kidney-injury.md | 100% | 12/12 | 481 | 1 | 0 |
 | acute-limb-ischemia.md | 100% | 12/12 | 327 | 1 | 1 |
+| acute-otitis-media-children.md | 100% | 12/12 | 340 | 4 | 1 |
 | acute-poisoning-agents.md | 100% | 12/12 | 508 | 9 | 0 |
 | adolescent-health.md | 100% | 12/12 | 355 | 4 | 0 |
 | adult-vaccination.md | 100% | 12/12 | 414 | 1 | 0 |
+| aefi-reporting.md | 100% | 12/12 | 292 | 4 | 0 |
 | anaphylaxis.md | 100% | 12/12 | 437 | 8 | 1 |
 | antibiotic-stewardship.md | 100% | 12/12 | 489 | 6 | 1 |
 | appendicitis.md | 100% | 12/12 | 343 | 2 | 1 |
@@ -29,14 +31,17 @@ Scope: 101 guideline files in `ASHVIK/data/guidelines/`.
 | back-pain-sciatica.md | 100% | 12/12 | 442 | 1 | 1 |
 | biomedical-waste-management.md | 100% | 12/12 | 269 | 1 | 0 |
 | blood-transfusion-basics.md | 100% | 12/12 | 349 | 2 | 0 |
+| bronchiolitis.md | 100% | 12/12 | 336 | 1 | 1 |
 | burns.md | 100% | 12/12 | 438 | 2 | 1 |
 | chikungunya-viral-fever.md | 100% | 12/12 | 457 | 4 | 1 |
+| childhood-asthma.md | 100% | 12/12 | 321 | 3 | 1 |
 | childhood-immunisation.md | 100% | 12/12 | 467 | 4 | 0 |
 | childhood-malnutrition.md | 100% | 12/12 | 540 | 2 | 0 |
 | chronic-kidney-disease.md | 100% | 12/12 | 552 | 3 | 1 |
 | contraception.md | 100% | 12/12 | 514 | 2 | 2 |
 | covid-influenza.md | 100% | 12/12 | 537 | 4 | 2 |
 | cpr-bls.md | 100% | 12/12 | 309 | 2 | 1 |
+| croup.md | 100% | 12/12 | 320 | 5 | 1 |
 | death-certification.md | 100% | 12/12 | 290 | 1 | 0 |
 | dengue-triage.md | 100% | 12/12 | 458 | 3 | 0 |
 | dengue.md | 100% | 12/12 | 492 | 3 | 1 |
@@ -47,6 +52,7 @@ Scope: 101 guideline files in `ASHVIK/data/guidelines/`.
 | emergency-contraception.md | 100% | 12/12 | 325 | 3 | 1 |
 | epilepsy.md | 100% | 12/12 | 642 | 10 | 1 |
 | eye-ent-infections.md | 100% | 12/12 | 669 | 1 | 3 |
+| febrile-seizures.md | 100% | 12/12 | 305 | 3 | 1 |
 | fever-in-children.md | 100% | 12/12 | 368 | 2 | 1 |
 | fever-with-rash-differential.md | 100% | 12/12 | 482 | 2 | 1 |
 | fractures-general.md | 100% | 12/12 | 383 | 3 | 1 |
@@ -80,9 +86,12 @@ Scope: 101 guideline files in `ASHVIK/data/guidelines/`.
 | migraine.md | 100% | 12/12 | 648 | 12 | 2 |
 | neonatal-danger-signs.md | 100% | 12/12 | 346 | 2 | 1 |
 | ng-tube-urinary-catheter.md | 100% | 12/12 | 369 | 1 | 1 |
+| nutritional-anaemia-children.md | 100% | 12/12 | 334 | 6 | 1 |
 | occupational-health.md | 100% | 12/12 | 494 | 1 | 0 |
 | oral-health.md | 100% | 12/12 | 489 | 2 | 1 |
 | oxygen-therapy.md | 100% | 12/12 | 343 | 1 | 0 |
+| paediatric-dehydration.md | 100% | 12/12 | 339 | 10 | 1 |
+| paediatric-dosing-guide.md | 100% | 12/12 | 383 | 11 | 1 |
 | palliative-care.md | 100% | 12/12 | 554 | 6 | 1 |
 | palliative-symptom-protocols.md | 100% | 12/12 | 441 | 13 | 0 |
 | pancreatitis.md | 100% | 12/12 | 372 | 1 | 1 |
@@ -94,6 +103,7 @@ Scope: 101 guideline files in `ASHVIK/data/guidelines/`.
 | rabies-post-exposure-prophylaxis.md | 100% | 12/12 | 382 | 3 | 1 |
 | referral-communication.md | 100% | 12/12 | 285 | 2 | 0 |
 | scabies-fungal-skin.md | 100% | 12/12 | 706 | 6 | 2 |
+| school-health-screening.md | 100% | 12/12 | 311 | 4 | 1 |
 | sexual-assault-care.md | 100% | 12/12 | 424 | 4 | 1 |
 | skin-soft-tissue-infections.md | 100% | 12/12 | 564 | 3 | 2 |
 | snake-bite-poisoning.md | 100% | 12/12 | 651 | 3 | 0 |
@@ -143,9 +153,11 @@ All structural checks passed.
 | acute-diarrhoea.md | Draft | — | — |
 | acute-kidney-injury.md | Draft | — | — |
 | acute-limb-ischemia.md | Draft | — | — |
+| acute-otitis-media-children.md | Draft | — | — |
 | acute-poisoning-agents.md | Draft | — | — |
 | adolescent-health.md | Draft | — | — |
 | adult-vaccination.md | Draft | — | — |
+| aefi-reporting.md | Draft | — | — |
 | anaphylaxis.md | Draft | — | — |
 | antibiotic-stewardship.md | Draft | — | — |
 | appendicitis.md | Draft | — | — |
@@ -154,14 +166,17 @@ All structural checks passed.
 | back-pain-sciatica.md | Draft | — | — |
 | biomedical-waste-management.md | Draft | — | — |
 | blood-transfusion-basics.md | Draft | — | — |
+| bronchiolitis.md | Draft | — | — |
 | burns.md | Draft | — | — |
 | chikungunya-viral-fever.md | Draft | — | — |
+| childhood-asthma.md | Draft | — | — |
 | childhood-immunisation.md | Draft | — | — |
 | childhood-malnutrition.md | Draft | — | — |
 | chronic-kidney-disease.md | Draft | — | — |
 | contraception.md | Draft | — | — |
 | covid-influenza.md | Draft | — | — |
 | cpr-bls.md | Draft | — | — |
+| croup.md | Draft | — | — |
 | death-certification.md | Draft | — | — |
 | dengue-triage.md | Draft | — | — |
 | dengue.md | Draft | — | — |
@@ -172,6 +187,7 @@ All structural checks passed.
 | emergency-contraception.md | Draft | — | — |
 | epilepsy.md | Draft | — | — |
 | eye-ent-infections.md | Draft | — | — |
+| febrile-seizures.md | Draft | — | — |
 | fever-in-children.md | Draft | — | — |
 | fever-with-rash-differential.md | Draft | — | — |
 | fractures-general.md | Draft | — | — |
@@ -205,9 +221,12 @@ All structural checks passed.
 | migraine.md | Draft | — | — |
 | neonatal-danger-signs.md | Draft | — | — |
 | ng-tube-urinary-catheter.md | Draft | — | — |
+| nutritional-anaemia-children.md | Draft | — | — |
 | occupational-health.md | Draft | — | — |
 | oral-health.md | Draft | — | — |
 | oxygen-therapy.md | Draft | — | — |
+| paediatric-dehydration.md | Draft | — | — |
+| paediatric-dosing-guide.md | Draft | — | — |
 | palliative-care.md | Draft | — | — |
 | palliative-symptom-protocols.md | Draft | — | — |
 | pancreatitis.md | Draft | — | — |
@@ -219,6 +238,7 @@ All structural checks passed.
 | rabies-post-exposure-prophylaxis.md | Draft | — | — |
 | referral-communication.md | Draft | — | — |
 | scabies-fungal-skin.md | Draft | — | — |
+| school-health-screening.md | Draft | — | — |
 | sexual-assault-care.md | Draft | — | — |
 | skin-soft-tissue-infections.md | Draft | — | — |
 | snake-bite-poisoning.md | Draft | — | — |
