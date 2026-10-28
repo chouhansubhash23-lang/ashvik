@@ -76,6 +76,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 69 | Blood transfusion basics | [blood-transfusion-basics.md](blood-transfusion-basics.md) | NBTC, WHO | Draft |
 | 70 | Oxygen therapy | [oxygen-therapy.md](oxygen-therapy.md) | ICMR STW Vol. 3, WHO | Draft |
 | 71 | Adult vaccination | [adult-vaccination.md](adult-vaccination.md) | UIP / MoHFW, WHO | Draft |
+| 72 | CPR / BLS | [cpr-bls.md](cpr-bls.md) | IRC, AHA/ILCOR | Draft |
+| 73 | ECG basics | [ecg-basics.md](ecg-basics.md) | ICMR STW Vol. 3, AHA | Draft |
+| 74 | ABG basics | [abg-basics.md](abg-basics.md) | ICMR STW Vol. 3 | Draft |
+| 75 | Chest X-ray basics | [xray-basics.md](xray-basics.md) | ICMR STW Vol. 3 | Draft |
+| 76 | POCUS basics | [pocus-basics.md](pocus-basics.md) | ICMR STW Vol. 3, WHO | Draft |
+| 77 | Suture materials & techniques | [suture-materials-techniques.md](suture-materials-techniques.md) | ICMR STW Vol. 3 | Draft |
+| 78 | Splinting & casting | [splinting-casting.md](splinting-casting.md) | ICMR STW Vol. 3 | Draft |
+| 79 | Joint aspiration & injection | [joint-aspiration-injection.md](joint-aspiration-injection.md) | ICMR STW Vol. 3, ACR | Draft |
+| 80 | Lumbar puncture | [lumbar-puncture.md](lumbar-puncture.md) | ICMR STW Vol. 3, WHO | Draft |
+| 81 | Incision & drainage variations | [incision-drainage-variations.md](incision-drainage-variations.md) | ICMR STW Vol. 3 | Draft |
 
 ## Evidence and evaluation
 
@@ -86,16 +96,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. CPR / basic life support
-2. ECG interpretation basics
-3. Arterial blood gas basics
-4. X-ray interpretation basics
-5. Ultrasound basics (POCUS)
-6. Suture materials & techniques
-7. Splinting & casting
-8. Joint aspiration/injection
-9. Lumbar puncture
-10. Incision & drainage variations
+1. Immunisation cold chain
+2. Injection safety / sharps
+3. Hand hygiene / infection control
+4. Biomedical waste management
+5. Medical documentation
+6. Informed consent
+7. Death certification
+8. Referral communication
+9. Telemedicine basics
+10. Quality improvement / audit
 
 ## Medical disclaimer
 

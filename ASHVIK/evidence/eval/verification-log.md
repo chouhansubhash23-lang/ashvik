@@ -80,6 +80,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-28 | Blood transfusion | Crossmatch, consent, monitor reactions | NBTC / WHO | High | Draft | Blood bank access |
 | 2026-10-28 | Oxygen therapy | Target 94–98% (COPD 88–92%) | ICMR S1 / WHO | High | Draft | — |
 | 2026-10-28 | Adult vaccination | Age/comorbidity-based schedule | UIP / WHO | High | Draft | — |
+| 2026-10-28 | CPR/BLS | 30:2, depth 5–6 cm, adrenaline 1 mg | IRC/AHA | High | Draft | — |
+| 2026-10-28 | ECG | Systematic reading; STEMI recognition | ICMR S1 / AHA | High | Draft | — |
+| 2026-10-28 | ABG | Stepwise acid-base interpretation | ICMR S1 | High | Draft | — |
+| 2026-10-28 | X-ray | ABCDE approach | ICMR S1 | High | Draft | — |
+| 2026-10-28 | POCUS | Focused applications; operator-dependent | ICMR S1 / WHO | Medium | Draft | Training needed |
+| 2026-10-28 | Sutures | Material/size by site | ICMR S1 | High | Draft | — |
+| 2026-10-28 | Splinting | Neurovascular check before/after | ICMR S1 | High | Draft | — |
+| 2026-10-28 | Joint aspiration | Aseptic technique; fluid analysis | ICMR S1 / ACR | High | Draft | — |
+| 2026-10-28 | Lumbar puncture | Contraindications; CSF analysis | ICMR S1 / WHO | High | Draft | — |
+| 2026-10-28 | I&D variations | Loop/catheter/marsupialisation | ICMR S1 | Medium | Draft | — |
 
 ## How to update
 

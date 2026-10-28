@@ -2,7 +2,7 @@
 
 Generated: 2026-10-28
 
-Scope: 71 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 81 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -10,6 +10,7 @@ Scope: 71 guideline files in `ASHVIK/data/guidelines/`.
 
 | File | Score | Checks | Words | Dose mentions | Brand sections |
 |---|---|---|---|---|---|
+| abg-basics.md | 100% | 12/12 | 400 | 1 | 1 |
 | abscess-drainage.md | 100% | 12/12 | 383 | 4 | 1 |
 | acute-abdomen.md | 100% | 12/12 | 372 | 1 | 1 |
 | acute-asthma-exacerbation.md | 100% | 12/12 | 449 | 6 | 1 |
@@ -33,11 +34,13 @@ Scope: 71 guideline files in `ASHVIK/data/guidelines/`.
 | chronic-kidney-disease.md | 100% | 12/12 | 552 | 3 | 1 |
 | contraception.md | 100% | 12/12 | 514 | 2 | 2 |
 | covid-influenza.md | 100% | 12/12 | 537 | 4 | 2 |
+| cpr-bls.md | 100% | 12/12 | 309 | 2 | 1 |
 | dengue-triage.md | 100% | 12/12 | 458 | 3 | 0 |
 | dengue.md | 100% | 12/12 | 492 | 3 | 1 |
 | depression-anxiety.md | 100% | 12/12 | 609 | 6 | 2 |
 | diabetic-foot.md | 100% | 12/12 | 433 | 1 | 1 |
 | drowning-electrocution.md | 100% | 12/12 | 405 | 1 | 0 |
+| ecg-basics.md | 100% | 12/12 | 419 | 2 | 1 |
 | epilepsy.md | 100% | 12/12 | 642 | 10 | 1 |
 | eye-ent-infections.md | 100% | 12/12 | 669 | 1 | 3 |
 | fever-with-rash-differential.md | 100% | 12/12 | 482 | 2 | 1 |
@@ -49,12 +52,15 @@ Scope: 71 guideline files in `ASHVIK/data/guidelines/`.
 | head-injury.md | 100% | 12/12 | 374 | 1 | 1 |
 | hernia.md | 100% | 12/12 | 333 | 3 | 1 |
 | hypertension.md | 100% | 12/12 | 556 | 6 | 1 |
+| incision-drainage-variations.md | 100% | 12/12 | 316 | 2 | 1 |
 | infertility-basics.md | 100% | 12/12 | 491 | 5 | 1 |
 | intestinal-obstruction.md | 100% | 12/12 | 367 | 2 | 1 |
 | iron-deficiency-anaemia.md | 100% | 12/12 | 578 | 8 | 1 |
 | iv-fluid-therapy.md | 100% | 12/12 | 398 | 5 | 1 |
+| joint-aspiration-injection.md | 100% | 12/12 | 347 | 1 | 1 |
 | liver-disease.md | 100% | 12/12 | 500 | 4 | 1 |
 | local-anaesthesia.md | 100% | 12/12 | 352 | 10 | 1 |
+| lumbar-puncture.md | 100% | 12/12 | 327 | 1 | 1 |
 | malaria.md | 100% | 12/12 | 727 | 15 | 3 |
 | maternal-care.md | 100% | 12/12 | 645 | 10 | 2 |
 | menstrual-disorders.md | 100% | 12/12 | 557 | 4 | 2 |
@@ -68,19 +74,23 @@ Scope: 71 guideline files in `ASHVIK/data/guidelines/`.
 | pancreatitis.md | 100% | 12/12 | 372 | 1 | 1 |
 | peptic-ulcer-gerd.md | 100% | 12/12 | 614 | 5 | 2 |
 | pneumonia.md | 100% | 12/12 | 585 | 7 | 2 |
+| pocus-basics.md | 100% | 12/12 | 353 | 1 | 1 |
 | pressure-ulcers.md | 100% | 12/12 | 423 | 2 | 1 |
 | scabies-fungal-skin.md | 100% | 12/12 | 706 | 6 | 2 |
 | sexual-assault-care.md | 100% | 12/12 | 424 | 4 | 1 |
 | skin-soft-tissue-infections.md | 100% | 12/12 | 564 | 3 | 2 |
 | snake-bite-poisoning.md | 100% | 12/12 | 651 | 3 | 0 |
+| splinting-casting.md | 100% | 12/12 | 322 | 1 | 0 |
 | sti.md | 100% | 12/12 | 587 | 12 | 1 |
 | stroke.md | 100% | 12/12 | 500 | 3 | 1 |
+| suture-materials-techniques.md | 100% | 12/12 | 366 | 2 | 1 |
 | thyroid-disorders.md | 100% | 12/12 | 533 | 6 | 2 |
 | tuberculosis.md | 100% | 12/12 | 658 | 5 | 1 |
 | type-2-diabetes.md | 100% | 12/12 | 609 | 8 | 1 |
 | typhoid.md | 100% | 12/12 | 591 | 8 | 1 |
 | uti.md | 100% | 12/12 | 603 | 6 | 1 |
 | wound-management-suturing.md | 100% | 12/12 | 424 | 4 | 1 |
+| xray-basics.md | 100% | 12/12 | 384 | 1 | 1 |
 
 ## Failed checks
 
@@ -105,6 +115,7 @@ All structural checks passed.
 
 | File | Status | Reviewer | Date |
 |---|---|---|---|
+| abg-basics.md | Draft | — | — |
 | abscess-drainage.md | Draft | — | — |
 | acute-abdomen.md | Draft | — | — |
 | acute-asthma-exacerbation.md | Draft | — | — |
@@ -128,11 +139,13 @@ All structural checks passed.
 | chronic-kidney-disease.md | Draft | — | — |
 | contraception.md | Draft | — | — |
 | covid-influenza.md | Draft | — | — |
+| cpr-bls.md | Draft | — | — |
 | dengue-triage.md | Draft | — | — |
 | dengue.md | Draft | — | — |
 | depression-anxiety.md | Draft | — | — |
 | diabetic-foot.md | Draft | — | — |
 | drowning-electrocution.md | Draft | — | — |
+| ecg-basics.md | Draft | — | — |
 | epilepsy.md | Draft | — | — |
 | eye-ent-infections.md | Draft | — | — |
 | fever-with-rash-differential.md | Draft | — | — |
@@ -144,12 +157,15 @@ All structural checks passed.
 | head-injury.md | Draft | — | — |
 | hernia.md | Draft | — | — |
 | hypertension.md | Draft | — | — |
+| incision-drainage-variations.md | Draft | — | — |
 | infertility-basics.md | Draft | — | — |
 | intestinal-obstruction.md | Draft | — | — |
 | iron-deficiency-anaemia.md | Draft | — | — |
 | iv-fluid-therapy.md | Draft | — | — |
+| joint-aspiration-injection.md | Draft | — | — |
 | liver-disease.md | Draft | — | — |
 | local-anaesthesia.md | Draft | — | — |
+| lumbar-puncture.md | Draft | — | — |
 | malaria.md | Draft | — | — |
 | maternal-care.md | Draft | — | — |
 | menstrual-disorders.md | Draft | — | — |
@@ -163,19 +179,23 @@ All structural checks passed.
 | pancreatitis.md | Draft | — | — |
 | peptic-ulcer-gerd.md | Draft | — | — |
 | pneumonia.md | Draft | — | — |
+| pocus-basics.md | Draft | — | — |
 | pressure-ulcers.md | Draft | — | — |
 | scabies-fungal-skin.md | Draft | — | — |
 | sexual-assault-care.md | Draft | — | — |
 | skin-soft-tissue-infections.md | Draft | — | — |
 | snake-bite-poisoning.md | Draft | — | — |
+| splinting-casting.md | Draft | — | — |
 | sti.md | Draft | — | — |
 | stroke.md | Draft | — | — |
+| suture-materials-techniques.md | Draft | — | — |
 | thyroid-disorders.md | Draft | — | — |
 | tuberculosis.md | Draft | — | — |
 | type-2-diabetes.md | Draft | — | — |
 | typhoid.md | Draft | — | — |
 | uti.md | Draft | — | — |
 | wound-management-suturing.md | Draft | — | — |
+| xray-basics.md | Draft | — | — |
 
 ## Notes
 
