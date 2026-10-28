@@ -146,6 +146,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 139 | Oral cancer screening | [oral-cancer-screening.md](oral-cancer-screening.md) | NOHP, ICMR | Draft |
 | 140 | Cervical cancer screening | [cervical-cancer-screening.md](cervical-cancer-screening.md) | NCCP, WHO | Draft |
 | 141 | Breast cancer screening | [breast-cancer-screening.md](breast-cancer-screening.md) | NCCP, WHO | Draft |
+| 142 | Smoking cessation | [smoking-cessation.md](smoking-cessation.md) | WHO, NTCP | Draft |
+| 143 | Alcohol use disorder | [alcohol-use-disorder.md](alcohol-use-disorder.md) | WHO, ICMR | Draft |
+| 144 | Substance use disorders | [substance-use-disorders.md](substance-use-disorders.md) | WHO, ICMR | Draft |
+| 145 | Adult obesity | [adult-obesity.md](adult-obesity.md) | ICMR, WHO | Draft |
+| 146 | Dyslipidaemia | [dyslipidaemia.md](dyslipidaemia.md) | ICMR, NPCDCS | Draft |
+| 147 | Metabolic syndrome | [metabolic-syndrome.md](metabolic-syndrome.md) | ICMR, NPCDCS | Draft |
+| 148 | Vitamin D deficiency | [vitamin-d-deficiency.md](vitamin-d-deficiency.md) | ICMR, WHO | Draft |
+| 149 | Vitamin B12 deficiency | [vitamin-b12-deficiency.md](vitamin-b12-deficiency.md) | ICMR, WHO | Draft |
+| 150 | Iron overload & thalassaemia | [iron-overload-thalassaemia.md](iron-overload-thalassaemia.md) | ICMR, WHO | Draft |
+| 151 | G6PD deficiency | [g6pd-deficiency.md](g6pd-deficiency.md) | ICMR, WHO | Draft |
 
 ## Evidence and evaluation
 
@@ -156,16 +166,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Smoking cessation
-2. Alcohol use disorder
-3. Substance use disorders
-4. Obesity management (adults)
-5. Dyslipidaemia
-6. Metabolic syndrome
-7. Vitamin D deficiency
-8. Vitamin B12 deficiency
-9. Iron overload / thalassaemia
-10. G6PD deficiency
+1. Electrolyte disorders (Na/K/Ca)
+2. Acid-base disorders
+3. Sepsis recognition
+4. Shock management
+5. Anaphylaxis follow-up
+6. Fever of unknown origin
+7. Antimicrobial resistance basics
+8. Hospital-acquired infection
+9. Needlestick injury protocol
+10. Blood culture collection
 
 ## Medical disclaimer
 

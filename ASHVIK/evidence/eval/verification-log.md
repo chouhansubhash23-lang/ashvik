@@ -150,6 +150,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-28 | Oral cancer | Biopsy non-healing ulcer | NOHP / ICMR | High | Draft | — |
 | 2026-10-28 | Cervical screening | VIA/Pap; refer abnormal | NCCP / WHO | High | Draft | — |
 | 2026-10-28 | Breast screening | Clinical exam; refer lump | NCCP / WHO | High | Draft | — |
+| 2026-10-28 | Smoking cessation | 5A; NRT/varenicline | WHO / NTCP | High | Draft | — |
+| 2026-10-28 | Alcohol use disorder | Withdrawal management; thiamine | WHO / ICMR | High | Draft | — |
+| 2026-10-28 | Substance use | Naloxone for overdose; OST | WHO / ICMR | High | Draft | — |
+| 2026-10-28 | Adult obesity | BMI Asian cut-offs; lifestyle | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Dyslipidaemia | Statin first-line; targets by risk | ICMR / NPCDCS | High | Draft | — |
+| 2026-10-28 | Metabolic syndrome | Waist/BP/sugar/lipids criteria | ICMR / NPCDCS | High | Draft | — |
+| 2026-10-28 | Vitamin D | 60,000 IU weekly x 8 | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Vitamin B12 | IM/oral repletion; find cause | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Iron overload | Avoid iron; chelation in major | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | G6PD | Avoid triggers; transfusion if severe | ICMR / WHO | High | Draft | — |
 
 ## How to update
 

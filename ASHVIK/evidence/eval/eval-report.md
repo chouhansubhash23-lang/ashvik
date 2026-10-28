@@ -2,7 +2,7 @@
 
 Generated: 2026-10-28
 
-Scope: 141 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 151 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -21,8 +21,10 @@ Scope: 141 guideline files in `ASHVIK/data/guidelines/`.
 | acute-otitis-media-children.md | 100% | 12/12 | 340 | 4 | 1 |
 | acute-poisoning-agents.md | 100% | 12/12 | 508 | 9 | 0 |
 | adolescent-health.md | 100% | 12/12 | 355 | 4 | 0 |
+| adult-obesity.md | 100% | 12/12 | 294 | 1 | 1 |
 | adult-vaccination.md | 100% | 12/12 | 414 | 1 | 0 |
 | aefi-reporting.md | 100% | 12/12 | 292 | 4 | 0 |
+| alcohol-use-disorder.md | 100% | 12/12 | 292 | 2 | 1 |
 | anaphylaxis.md | 100% | 12/12 | 437 | 8 | 1 |
 | antibiotic-stewardship.md | 100% | 12/12 | 489 | 6 | 1 |
 | appendicitis.md | 100% | 12/12 | 343 | 2 | 1 |
@@ -60,6 +62,7 @@ Scope: 141 guideline files in `ASHVIK/data/guidelines/`.
 | diabetic-foot.md | 100% | 12/12 | 433 | 1 | 1 |
 | diabetic-retinopathy-screening.md | 100% | 12/12 | 288 | 1 | 1 |
 | drowning-electrocution.md | 100% | 12/12 | 405 | 1 | 0 |
+| dyslipidaemia.md | 100% | 12/12 | 277 | 5 | 1 |
 | ecg-basics.md | 100% | 12/12 | 419 | 2 | 1 |
 | elder-abuse-screening.md | 100% | 12/12 | 307 | 1 | 1 |
 | emergency-contraception.md | 100% | 12/12 | 325 | 3 | 1 |
@@ -70,6 +73,7 @@ Scope: 141 guideline files in `ASHVIK/data/guidelines/`.
 | fever-in-children.md | 100% | 12/12 | 368 | 2 | 1 |
 | fever-with-rash-differential.md | 100% | 12/12 | 482 | 2 | 1 |
 | fractures-general.md | 100% | 12/12 | 383 | 3 | 1 |
+| g6pd-deficiency.md | 100% | 12/12 | 259 | 2 | 1 |
 | gallstone-disease.md | 100% | 12/12 | 411 | 2 | 1 |
 | geriatric-care.md | 100% | 12/12 | 533 | 1 | 0 |
 | geriatric-falls-fractures.md | 100% | 12/12 | 445 | 2 | 0 |
@@ -89,6 +93,7 @@ Scope: 141 guideline files in `ASHVIK/data/guidelines/`.
 | injection-safety-sharps.md | 100% | 12/12 | 291 | 2 | 0 |
 | intestinal-obstruction.md | 100% | 12/12 | 367 | 2 | 1 |
 | iron-deficiency-anaemia.md | 100% | 12/12 | 578 | 8 | 1 |
+| iron-overload-thalassaemia.md | 100% | 12/12 | 292 | 2 | 1 |
 | iv-fluid-therapy.md | 100% | 12/12 | 398 | 5 | 1 |
 | joint-aspiration-injection.md | 100% | 12/12 | 347 | 1 | 1 |
 | liver-disease.md | 100% | 12/12 | 500 | 4 | 1 |
@@ -99,6 +104,7 @@ Scope: 141 guideline files in `ASHVIK/data/guidelines/`.
 | medical-documentation.md | 100% | 12/12 | 290 | 2 | 0 |
 | menopause-management.md | 100% | 12/12 | 363 | 1 | 1 |
 | menstrual-disorders.md | 100% | 12/12 | 557 | 4 | 2 |
+| metabolic-syndrome.md | 100% | 12/12 | 279 | 3 | 1 |
 | migraine.md | 100% | 12/12 | 648 | 12 | 2 |
 | neonatal-danger-signs.md | 100% | 12/12 | 346 | 2 | 1 |
 | ng-tube-urinary-catheter.md | 100% | 12/12 | 369 | 1 | 1 |
@@ -132,11 +138,13 @@ Scope: 141 guideline files in `ASHVIK/data/guidelines/`.
 | school-health-screening.md | 100% | 12/12 | 311 | 4 | 1 |
 | sexual-assault-care.md | 100% | 12/12 | 424 | 4 | 1 |
 | skin-soft-tissue-infections.md | 100% | 12/12 | 564 | 3 | 2 |
+| smoking-cessation.md | 100% | 12/12 | 304 | 5 | 1 |
 | snake-bite-poisoning.md | 100% | 12/12 | 651 | 3 | 0 |
 | snakebite-antivenom-protocol.md | 100% | 12/12 | 334 | 3 | 1 |
 | splinting-casting.md | 100% | 12/12 | 322 | 1 | 0 |
 | sti.md | 100% | 12/12 | 587 | 12 | 1 |
 | stroke.md | 100% | 12/12 | 500 | 3 | 1 |
+| substance-use-disorders.md | 100% | 12/12 | 321 | 3 | 1 |
 | suture-materials-techniques.md | 100% | 12/12 | 366 | 2 | 1 |
 | tb-preventive-therapy.md | 100% | 12/12 | 323 | 6 | 1 |
 | telemedicine-basics.md | 100% | 12/12 | 282 | 2 | 0 |
@@ -148,6 +156,8 @@ Scope: 141 guideline files in `ASHVIK/data/guidelines/`.
 | urinary-incontinence.md | 100% | 12/12 | 281 | 1 | 1 |
 | uti.md | 100% | 12/12 | 603 | 6 | 1 |
 | vision-screening-adults.md | 100% | 12/12 | 291 | 1 | 1 |
+| vitamin-b12-deficiency.md | 100% | 12/12 | 280 | 4 | 1 |
+| vitamin-d-deficiency.md | 100% | 12/12 | 278 | 1 | 1 |
 | wound-care-formulary.md | 100% | 12/12 | 303 | 1 | 1 |
 | wound-management-suturing.md | 100% | 12/12 | 424 | 4 | 1 |
 | xray-basics.md | 100% | 12/12 | 384 | 1 | 1 |
@@ -186,8 +196,10 @@ All structural checks passed.
 | acute-otitis-media-children.md | Draft | — | — |
 | acute-poisoning-agents.md | Draft | — | — |
 | adolescent-health.md | Draft | — | — |
+| adult-obesity.md | Draft | — | — |
 | adult-vaccination.md | Draft | — | — |
 | aefi-reporting.md | Draft | — | — |
+| alcohol-use-disorder.md | Draft | — | — |
 | anaphylaxis.md | Draft | — | — |
 | antibiotic-stewardship.md | Draft | — | — |
 | appendicitis.md | Draft | — | — |
@@ -225,6 +237,7 @@ All structural checks passed.
 | diabetic-foot.md | Draft | — | — |
 | diabetic-retinopathy-screening.md | Draft | — | — |
 | drowning-electrocution.md | Draft | — | — |
+| dyslipidaemia.md | Draft | — | — |
 | ecg-basics.md | Draft | — | — |
 | elder-abuse-screening.md | Draft | — | — |
 | emergency-contraception.md | Draft | — | — |
@@ -235,6 +248,7 @@ All structural checks passed.
 | fever-in-children.md | Draft | — | — |
 | fever-with-rash-differential.md | Draft | — | — |
 | fractures-general.md | Draft | — | — |
+| g6pd-deficiency.md | Draft | — | — |
 | gallstone-disease.md | Draft | — | — |
 | geriatric-care.md | Draft | — | — |
 | geriatric-falls-fractures.md | Draft | — | — |
@@ -254,6 +268,7 @@ All structural checks passed.
 | injection-safety-sharps.md | Draft | — | — |
 | intestinal-obstruction.md | Draft | — | — |
 | iron-deficiency-anaemia.md | Draft | — | — |
+| iron-overload-thalassaemia.md | Draft | — | — |
 | iv-fluid-therapy.md | Draft | — | — |
 | joint-aspiration-injection.md | Draft | — | — |
 | liver-disease.md | Draft | — | — |
@@ -264,6 +279,7 @@ All structural checks passed.
 | medical-documentation.md | Draft | — | — |
 | menopause-management.md | Draft | — | — |
 | menstrual-disorders.md | Draft | — | — |
+| metabolic-syndrome.md | Draft | — | — |
 | migraine.md | Draft | — | — |
 | neonatal-danger-signs.md | Draft | — | — |
 | ng-tube-urinary-catheter.md | Draft | — | — |
@@ -297,11 +313,13 @@ All structural checks passed.
 | school-health-screening.md | Draft | — | — |
 | sexual-assault-care.md | Draft | — | — |
 | skin-soft-tissue-infections.md | Draft | — | — |
+| smoking-cessation.md | Draft | — | — |
 | snake-bite-poisoning.md | Draft | — | — |
 | snakebite-antivenom-protocol.md | Draft | — | — |
 | splinting-casting.md | Draft | — | — |
 | sti.md | Draft | — | — |
 | stroke.md | Draft | — | — |
+| substance-use-disorders.md | Draft | — | — |
 | suture-materials-techniques.md | Draft | — | — |
 | tb-preventive-therapy.md | Draft | — | — |
 | telemedicine-basics.md | Draft | — | — |
@@ -313,6 +331,8 @@ All structural checks passed.
 | urinary-incontinence.md | Draft | — | — |
 | uti.md | Draft | — | — |
 | vision-screening-adults.md | Draft | — | — |
+| vitamin-b12-deficiency.md | Draft | — | — |
+| vitamin-d-deficiency.md | Draft | — | — |
 | wound-care-formulary.md | Draft | — | — |
 | wound-management-suturing.md | Draft | — | — |
 | xray-basics.md | Draft | — | — |
