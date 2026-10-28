@@ -160,6 +160,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-28 | Vitamin B12 | IM/oral repletion; find cause | ICMR / WHO | High | Draft | — |
 | 2026-10-28 | Iron overload | Avoid iron; chelation in major | ICMR / WHO | High | Draft | — |
 | 2026-10-28 | G6PD | Avoid triggers; transfusion if severe | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Electrolytes | Slow correction; ECG monitoring | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Acid-base | ABG interpretation; treat cause | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Sepsis | Antibiotics within 1 h; fluids | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Shock | Type-specific resuscitation | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | FUO | Systematic workup; avoid blind antibiotics | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | AMR | Culture-guided; de-escalate | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | HAI | Device bundles; hand hygiene | NCDC / WHO | High | Draft | — |
+| 2026-10-28 | Needlestick | HIV PEP within 72 h; HBV prophylaxis | NACO / WHO | High | Draft | — |
+| 2026-10-28 | Blood culture | Before antibiotics; adequate volume | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | SBAR | Structured handover | WHO / NHM | High | Draft | — |
 
 ## How to update
 

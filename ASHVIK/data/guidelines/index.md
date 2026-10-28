@@ -156,6 +156,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 149 | Vitamin B12 deficiency | [vitamin-b12-deficiency.md](vitamin-b12-deficiency.md) | ICMR, WHO | Draft |
 | 150 | Iron overload & thalassaemia | [iron-overload-thalassaemia.md](iron-overload-thalassaemia.md) | ICMR, WHO | Draft |
 | 151 | G6PD deficiency | [g6pd-deficiency.md](g6pd-deficiency.md) | ICMR, WHO | Draft |
+| 152 | Electrolyte disorders | [electrolyte-disorders.md](electrolyte-disorders.md) | ICMR, WHO | Draft |
+| 153 | Acid-base disorders | [acid-base-disorders.md](acid-base-disorders.md) | ICMR, WHO | Draft |
+| 154 | Sepsis recognition | [sepsis-recognition.md](sepsis-recognition.md) | ICMR, WHO | Draft |
+| 155 | Shock management | [shock-management.md](shock-management.md) | ICMR, WHO | Draft |
+| 156 | Fever of unknown origin | [fever-of-unknown-origin.md](fever-of-unknown-origin.md) | ICMR, WHO | Draft |
+| 157 | AMR basics | [antimicrobial-resistance-basics.md](antimicrobial-resistance-basics.md) | ICMR, WHO | Draft |
+| 158 | Hospital-acquired infection | [hospital-acquired-infection.md](hospital-acquired-infection.md) | NCDC, WHO | Draft |
+| 159 | Needlestick injury protocol | [needlestick-injury-protocol.md](needlestick-injury-protocol.md) | NACO, WHO | Draft |
+| 160 | Blood culture collection | [blood-culture-collection.md](blood-culture-collection.md) | ICMR, WHO | Draft |
+| 161 | SBAR handover | [sbar-handover.md](sbar-handover.md) | WHO, NHM | Draft |
 
 ## Evidence and evaluation
 
@@ -166,16 +176,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Electrolyte disorders (Na/K/Ca)
-2. Acid-base disorders
-3. Sepsis recognition
-4. Shock management
-5. Anaphylaxis follow-up
-6. Fever of unknown origin
-7. Antimicrobial resistance basics
-8. Hospital-acquired infection
-9. Needlestick injury protocol
-10. Blood culture collection
+1. Snakebite first aid
+2. Scorpion sting
+3. Dog bite wound care
+4. Heat stroke
+5. Hypothermia
+6. Drowning
+7. Electrocution
+8. Poisoning antidotes
+9. Envenomation referral
+10. Disaster triage
 
 ## Medical disclaimer
 

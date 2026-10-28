@@ -2,7 +2,7 @@
 
 Generated: 2026-10-28
 
-Scope: 151 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 161 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -12,6 +12,7 @@ Scope: 151 guideline files in `ASHVIK/data/guidelines/`.
 |---|---|---|---|---|---|
 | abg-basics.md | 100% | 12/12 | 400 | 1 | 1 |
 | abscess-drainage.md | 100% | 12/12 | 383 | 4 | 1 |
+| acid-base-disorders.md | 100% | 12/12 | 301 | 1 | 1 |
 | acute-abdomen.md | 100% | 12/12 | 372 | 1 | 1 |
 | acute-asthma-exacerbation.md | 100% | 12/12 | 449 | 6 | 1 |
 | acute-coronary-syndrome.md | 100% | 12/12 | 515 | 7 | 1 |
@@ -27,12 +28,14 @@ Scope: 151 guideline files in `ASHVIK/data/guidelines/`.
 | alcohol-use-disorder.md | 100% | 12/12 | 292 | 2 | 1 |
 | anaphylaxis.md | 100% | 12/12 | 437 | 8 | 1 |
 | antibiotic-stewardship.md | 100% | 12/12 | 489 | 6 | 1 |
+| antimicrobial-resistance-basics.md | 100% | 12/12 | 280 | 2 | 1 |
 | appendicitis.md | 100% | 12/12 | 343 | 2 | 1 |
 | arthritis.md | 100% | 12/12 | 627 | 10 | 2 |
 | asthma-copd.md | 100% | 12/12 | 582 | 4 | 2 |
 | autism-screening.md | 100% | 12/12 | 295 | 1 | 1 |
 | back-pain-sciatica.md | 100% | 12/12 | 442 | 1 | 1 |
 | biomedical-waste-management.md | 100% | 12/12 | 269 | 1 | 0 |
+| blood-culture-collection.md | 100% | 12/12 | 274 | 3 | 1 |
 | blood-transfusion-basics.md | 100% | 12/12 | 349 | 2 | 0 |
 | breast-cancer-screening.md | 100% | 12/12 | 285 | 1 | 1 |
 | bronchiolitis.md | 100% | 12/12 | 336 | 1 | 1 |
@@ -65,12 +68,14 @@ Scope: 151 guideline files in `ASHVIK/data/guidelines/`.
 | dyslipidaemia.md | 100% | 12/12 | 277 | 5 | 1 |
 | ecg-basics.md | 100% | 12/12 | 419 | 2 | 1 |
 | elder-abuse-screening.md | 100% | 12/12 | 307 | 1 | 1 |
+| electrolyte-disorders.md | 100% | 12/12 | 337 | 2 | 1 |
 | emergency-contraception.md | 100% | 12/12 | 325 | 3 | 1 |
 | epilepsy.md | 100% | 12/12 | 642 | 10 | 1 |
 | eye-ent-infections.md | 100% | 12/12 | 669 | 1 | 3 |
 | falls-prevention-programme.md | 100% | 12/12 | 272 | 2 | 1 |
 | febrile-seizures.md | 100% | 12/12 | 305 | 3 | 1 |
 | fever-in-children.md | 100% | 12/12 | 368 | 2 | 1 |
+| fever-of-unknown-origin.md | 100% | 12/12 | 305 | 3 | 1 |
 | fever-with-rash-differential.md | 100% | 12/12 | 482 | 2 | 1 |
 | fractures-general.md | 100% | 12/12 | 383 | 3 | 1 |
 | g6pd-deficiency.md | 100% | 12/12 | 259 | 2 | 1 |
@@ -85,6 +90,7 @@ Scope: 151 guideline files in `ASHVIK/data/guidelines/`.
 | hearing-loss-adults.md | 100% | 12/12 | 289 | 2 | 1 |
 | hernia.md | 100% | 12/12 | 333 | 3 | 1 |
 | hiv-care-basics.md | 100% | 12/12 | 350 | 1 | 1 |
+| hospital-acquired-infection.md | 100% | 12/12 | 283 | 2 | 1 |
 | hypertension.md | 100% | 12/12 | 556 | 6 | 1 |
 | immunisation-cold-chain.md | 100% | 12/12 | 327 | 1 | 0 |
 | incision-drainage-variations.md | 100% | 12/12 | 316 | 2 | 1 |
@@ -106,6 +112,7 @@ Scope: 151 guideline files in `ASHVIK/data/guidelines/`.
 | menstrual-disorders.md | 100% | 12/12 | 557 | 4 | 2 |
 | metabolic-syndrome.md | 100% | 12/12 | 279 | 3 | 1 |
 | migraine.md | 100% | 12/12 | 648 | 12 | 2 |
+| needlestick-injury-protocol.md | 100% | 12/12 | 298 | 1 | 1 |
 | neonatal-danger-signs.md | 100% | 12/12 | 346 | 2 | 1 |
 | ng-tube-urinary-catheter.md | 100% | 12/12 | 369 | 1 | 1 |
 | nutritional-anaemia-children.md | 100% | 12/12 | 334 | 6 | 1 |
@@ -134,9 +141,12 @@ Scope: 151 guideline files in `ASHVIK/data/guidelines/`.
 | rabies-post-exposure-prophylaxis.md | 100% | 12/12 | 382 | 3 | 1 |
 | referral-communication.md | 100% | 12/12 | 285 | 2 | 0 |
 | sarcopenia-frailty.md | 100% | 12/12 | 279 | 2 | 1 |
+| sbar-handover.md | 100% | 12/12 | 267 | 2 | 1 |
 | scabies-fungal-skin.md | 100% | 12/12 | 706 | 6 | 2 |
 | school-health-screening.md | 100% | 12/12 | 311 | 4 | 1 |
+| sepsis-recognition.md | 100% | 12/12 | 324 | 4 | 1 |
 | sexual-assault-care.md | 100% | 12/12 | 424 | 4 | 1 |
+| shock-management.md | 100% | 12/12 | 282 | 2 | 1 |
 | skin-soft-tissue-infections.md | 100% | 12/12 | 564 | 3 | 2 |
 | smoking-cessation.md | 100% | 12/12 | 304 | 5 | 1 |
 | snake-bite-poisoning.md | 100% | 12/12 | 651 | 3 | 0 |
@@ -187,6 +197,7 @@ All structural checks passed.
 |---|---|---|---|
 | abg-basics.md | Draft | — | — |
 | abscess-drainage.md | Draft | — | — |
+| acid-base-disorders.md | Draft | — | — |
 | acute-abdomen.md | Draft | — | — |
 | acute-asthma-exacerbation.md | Draft | — | — |
 | acute-coronary-syndrome.md | Draft | — | — |
@@ -202,12 +213,14 @@ All structural checks passed.
 | alcohol-use-disorder.md | Draft | — | — |
 | anaphylaxis.md | Draft | — | — |
 | antibiotic-stewardship.md | Draft | — | — |
+| antimicrobial-resistance-basics.md | Draft | — | — |
 | appendicitis.md | Draft | — | — |
 | arthritis.md | Draft | — | — |
 | asthma-copd.md | Draft | — | — |
 | autism-screening.md | Draft | — | — |
 | back-pain-sciatica.md | Draft | — | — |
 | biomedical-waste-management.md | Draft | — | — |
+| blood-culture-collection.md | Draft | — | — |
 | blood-transfusion-basics.md | Draft | — | — |
 | breast-cancer-screening.md | Draft | — | — |
 | bronchiolitis.md | Draft | — | — |
@@ -240,12 +253,14 @@ All structural checks passed.
 | dyslipidaemia.md | Draft | — | — |
 | ecg-basics.md | Draft | — | — |
 | elder-abuse-screening.md | Draft | — | — |
+| electrolyte-disorders.md | Draft | — | — |
 | emergency-contraception.md | Draft | — | — |
 | epilepsy.md | Draft | — | — |
 | eye-ent-infections.md | Draft | — | — |
 | falls-prevention-programme.md | Draft | — | — |
 | febrile-seizures.md | Draft | — | — |
 | fever-in-children.md | Draft | — | — |
+| fever-of-unknown-origin.md | Draft | — | — |
 | fever-with-rash-differential.md | Draft | — | — |
 | fractures-general.md | Draft | — | — |
 | g6pd-deficiency.md | Draft | — | — |
@@ -260,6 +275,7 @@ All structural checks passed.
 | hearing-loss-adults.md | Draft | — | — |
 | hernia.md | Draft | — | — |
 | hiv-care-basics.md | Draft | — | — |
+| hospital-acquired-infection.md | Draft | — | — |
 | hypertension.md | Draft | — | — |
 | immunisation-cold-chain.md | Draft | — | — |
 | incision-drainage-variations.md | Draft | — | — |
@@ -281,6 +297,7 @@ All structural checks passed.
 | menstrual-disorders.md | Draft | — | — |
 | metabolic-syndrome.md | Draft | — | — |
 | migraine.md | Draft | — | — |
+| needlestick-injury-protocol.md | Draft | — | — |
 | neonatal-danger-signs.md | Draft | — | — |
 | ng-tube-urinary-catheter.md | Draft | — | — |
 | nutritional-anaemia-children.md | Draft | — | — |
@@ -309,9 +326,12 @@ All structural checks passed.
 | rabies-post-exposure-prophylaxis.md | Draft | — | — |
 | referral-communication.md | Draft | — | — |
 | sarcopenia-frailty.md | Draft | — | — |
+| sbar-handover.md | Draft | — | — |
 | scabies-fungal-skin.md | Draft | — | — |
 | school-health-screening.md | Draft | — | — |
+| sepsis-recognition.md | Draft | — | — |
 | sexual-assault-care.md | Draft | — | — |
+| shock-management.md | Draft | — | — |
 | skin-soft-tissue-infections.md | Draft | — | — |
 | smoking-cessation.md | Draft | — | — |
 | snake-bite-poisoning.md | Draft | — | — |
