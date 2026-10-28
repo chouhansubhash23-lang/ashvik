@@ -2,7 +2,7 @@
 
 Generated: 2026-10-28
 
-Scope: 161 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 171 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -64,12 +64,17 @@ Scope: 161 guideline files in `ASHVIK/data/guidelines/`.
 | developmental-delay.md | 100% | 12/12 | 324 | 2 | 1 |
 | diabetic-foot.md | 100% | 12/12 | 433 | 1 | 1 |
 | diabetic-retinopathy-screening.md | 100% | 12/12 | 288 | 1 | 1 |
+| disaster-triage.md | 100% | 12/12 | 278 | 2 | 1 |
+| dog-bite-wound-care.md | 100% | 12/12 | 302 | 2 | 1 |
 | drowning-electrocution.md | 100% | 12/12 | 405 | 1 | 0 |
+| drowning.md | 100% | 12/12 | 273 | 1 | 1 |
 | dyslipidaemia.md | 100% | 12/12 | 277 | 5 | 1 |
 | ecg-basics.md | 100% | 12/12 | 419 | 2 | 1 |
 | elder-abuse-screening.md | 100% | 12/12 | 307 | 1 | 1 |
+| electrocution.md | 100% | 12/12 | 271 | 1 | 1 |
 | electrolyte-disorders.md | 100% | 12/12 | 337 | 2 | 1 |
 | emergency-contraception.md | 100% | 12/12 | 325 | 3 | 1 |
+| envenomation-referral.md | 100% | 12/12 | 272 | 2 | 1 |
 | epilepsy.md | 100% | 12/12 | 642 | 10 | 1 |
 | eye-ent-infections.md | 100% | 12/12 | 669 | 1 | 3 |
 | falls-prevention-programme.md | 100% | 12/12 | 272 | 2 | 1 |
@@ -88,10 +93,12 @@ Scope: 161 guideline files in `ASHVIK/data/guidelines/`.
 | hand-hygiene-infection-control.md | 100% | 12/12 | 285 | 1 | 0 |
 | head-injury.md | 100% | 12/12 | 374 | 1 | 1 |
 | hearing-loss-adults.md | 100% | 12/12 | 289 | 2 | 1 |
+| heat-stroke.md | 100% | 12/12 | 303 | 1 | 1 |
 | hernia.md | 100% | 12/12 | 333 | 3 | 1 |
 | hiv-care-basics.md | 100% | 12/12 | 350 | 1 | 1 |
 | hospital-acquired-infection.md | 100% | 12/12 | 283 | 2 | 1 |
 | hypertension.md | 100% | 12/12 | 556 | 6 | 1 |
+| hypothermia.md | 100% | 12/12 | 287 | 1 | 1 |
 | immunisation-cold-chain.md | 100% | 12/12 | 327 | 1 | 0 |
 | incision-drainage-variations.md | 100% | 12/12 | 316 | 2 | 1 |
 | infertility-basics.md | 100% | 12/12 | 491 | 5 | 1 |
@@ -135,6 +142,7 @@ Scope: 161 guideline files in `ASHVIK/data/guidelines/`.
 | peptic-ulcer-gerd.md | 100% | 12/12 | 614 | 5 | 2 |
 | pneumonia.md | 100% | 12/12 | 585 | 7 | 2 |
 | pocus-basics.md | 100% | 12/12 | 353 | 1 | 1 |
+| poisoning-antidotes.md | 100% | 12/12 | 316 | 6 | 1 |
 | polypharmacy-review.md | 100% | 12/12 | 303 | 1 | 1 |
 | pressure-ulcers.md | 100% | 12/12 | 423 | 2 | 1 |
 | quality-improvement-audit.md | 100% | 12/12 | 277 | 2 | 0 |
@@ -144,6 +152,7 @@ Scope: 161 guideline files in `ASHVIK/data/guidelines/`.
 | sbar-handover.md | 100% | 12/12 | 267 | 2 | 1 |
 | scabies-fungal-skin.md | 100% | 12/12 | 706 | 6 | 2 |
 | school-health-screening.md | 100% | 12/12 | 311 | 4 | 1 |
+| scorpion-sting.md | 100% | 12/12 | 274 | 2 | 1 |
 | sepsis-recognition.md | 100% | 12/12 | 324 | 4 | 1 |
 | sexual-assault-care.md | 100% | 12/12 | 424 | 4 | 1 |
 | shock-management.md | 100% | 12/12 | 282 | 2 | 1 |
@@ -151,6 +160,7 @@ Scope: 161 guideline files in `ASHVIK/data/guidelines/`.
 | smoking-cessation.md | 100% | 12/12 | 304 | 5 | 1 |
 | snake-bite-poisoning.md | 100% | 12/12 | 651 | 3 | 0 |
 | snakebite-antivenom-protocol.md | 100% | 12/12 | 334 | 3 | 1 |
+| snakebite-first-aid.md | 100% | 12/12 | 290 | 1 | 1 |
 | splinting-casting.md | 100% | 12/12 | 322 | 1 | 0 |
 | sti.md | 100% | 12/12 | 587 | 12 | 1 |
 | stroke.md | 100% | 12/12 | 500 | 3 | 1 |
@@ -249,12 +259,17 @@ All structural checks passed.
 | developmental-delay.md | Draft | — | — |
 | diabetic-foot.md | Draft | — | — |
 | diabetic-retinopathy-screening.md | Draft | — | — |
+| disaster-triage.md | Draft | — | — |
+| dog-bite-wound-care.md | Draft | — | — |
 | drowning-electrocution.md | Draft | — | — |
+| drowning.md | Draft | — | — |
 | dyslipidaemia.md | Draft | — | — |
 | ecg-basics.md | Draft | — | — |
 | elder-abuse-screening.md | Draft | — | — |
+| electrocution.md | Draft | — | — |
 | electrolyte-disorders.md | Draft | — | — |
 | emergency-contraception.md | Draft | — | — |
+| envenomation-referral.md | Draft | — | — |
 | epilepsy.md | Draft | — | — |
 | eye-ent-infections.md | Draft | — | — |
 | falls-prevention-programme.md | Draft | — | — |
@@ -273,10 +288,12 @@ All structural checks passed.
 | hand-hygiene-infection-control.md | Draft | — | — |
 | head-injury.md | Draft | — | — |
 | hearing-loss-adults.md | Draft | — | — |
+| heat-stroke.md | Draft | — | — |
 | hernia.md | Draft | — | — |
 | hiv-care-basics.md | Draft | — | — |
 | hospital-acquired-infection.md | Draft | — | — |
 | hypertension.md | Draft | — | — |
+| hypothermia.md | Draft | — | — |
 | immunisation-cold-chain.md | Draft | — | — |
 | incision-drainage-variations.md | Draft | — | — |
 | infertility-basics.md | Draft | — | — |
@@ -320,6 +337,7 @@ All structural checks passed.
 | peptic-ulcer-gerd.md | Draft | — | — |
 | pneumonia.md | Draft | — | — |
 | pocus-basics.md | Draft | — | — |
+| poisoning-antidotes.md | Draft | — | — |
 | polypharmacy-review.md | Draft | — | — |
 | pressure-ulcers.md | Draft | — | — |
 | quality-improvement-audit.md | Draft | — | — |
@@ -329,6 +347,7 @@ All structural checks passed.
 | sbar-handover.md | Draft | — | — |
 | scabies-fungal-skin.md | Draft | — | — |
 | school-health-screening.md | Draft | — | — |
+| scorpion-sting.md | Draft | — | — |
 | sepsis-recognition.md | Draft | — | — |
 | sexual-assault-care.md | Draft | — | — |
 | shock-management.md | Draft | — | — |
@@ -336,6 +355,7 @@ All structural checks passed.
 | smoking-cessation.md | Draft | — | — |
 | snake-bite-poisoning.md | Draft | — | — |
 | snakebite-antivenom-protocol.md | Draft | — | — |
+| snakebite-first-aid.md | Draft | — | — |
 | splinting-casting.md | Draft | — | — |
 | sti.md | Draft | — | — |
 | stroke.md | Draft | — | — |

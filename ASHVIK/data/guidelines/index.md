@@ -166,6 +166,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 159 | Needlestick injury protocol | [needlestick-injury-protocol.md](needlestick-injury-protocol.md) | NACO, WHO | Draft |
 | 160 | Blood culture collection | [blood-culture-collection.md](blood-culture-collection.md) | ICMR, WHO | Draft |
 | 161 | SBAR handover | [sbar-handover.md](sbar-handover.md) | WHO, NHM | Draft |
+| 162 | Snakebite first aid | [snakebite-first-aid.md](snakebite-first-aid.md) | National Protocol, WHO | Draft |
+| 163 | Scorpion sting | [scorpion-sting.md](scorpion-sting.md) | NCDC, ICMR | Draft |
+| 164 | Dog bite wound care | [dog-bite-wound-care.md](dog-bite-wound-care.md) | NRCP, WHO | Draft |
+| 165 | Heat stroke | [heat-stroke.md](heat-stroke.md) | ICMR, WHO | Draft |
+| 166 | Hypothermia | [hypothermia.md](hypothermia.md) | WHO, ICMR | Draft |
+| 167 | Drowning | [drowning.md](drowning.md) | WHO, ICMR | Draft |
+| 168 | Electrocution | [electrocution.md](electrocution.md) | WHO, ICMR | Draft |
+| 169 | Poisoning antidotes | [poisoning-antidotes.md](poisoning-antidotes.md) | NCDC, WHO | Draft |
+| 170 | Envenomation referral | [envenomation-referral.md](envenomation-referral.md) | National Protocol, WHO | Draft |
+| 171 | Disaster triage | [disaster-triage.md](disaster-triage.md) | WHO, NDMA | Draft |
 
 ## Evidence and evaluation
 
@@ -176,16 +186,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Snakebite first aid
-2. Scorpion sting
-3. Dog bite wound care
-4. Heat stroke
-5. Hypothermia
-6. Drowning
-7. Electrocution
-8. Poisoning antidotes
-9. Envenomation referral
-10. Disaster triage
+1. Antenatal care schedule
+2. Postnatal care
+3. Labour monitoring
+4. Postpartum haemorrhage
+5. Pre-eclampsia/eclampsia
+6. Sepsis in pregnancy
+7. Gestational diabetes
+8. Family planning counselling
+9. Safe abortion care
+10. Infertility referral
 
 ## Medical disclaimer
 

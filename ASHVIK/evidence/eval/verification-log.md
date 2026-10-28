@@ -170,6 +170,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-28 | Needlestick | HIV PEP within 72 h; HBV prophylaxis | NACO / WHO | High | Draft | — |
 | 2026-10-28 | Blood culture | Before antibiotics; adequate volume | ICMR / WHO | High | Draft | — |
 | 2026-10-28 | SBAR | Structured handover | WHO / NHM | High | Draft | — |
+| 2026-10-28 | Snakebite first aid | Immobilise; no tourniquet/cut | National Protocol | High | Draft | — |
+| 2026-10-28 | Scorpion sting | Analgesia; monitor; prazosin specialist | NCDC | High | Draft | — |
+| 2026-10-28 | Dog bite | Wash 15 min; PEP; RIG category III | NRCP / WHO | High | Draft | — |
+| 2026-10-28 | Heat stroke | Cool immediately; fluids | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Hypothermia | Gentle rewarming | WHO / ICMR | High | Draft | — |
+| 2026-10-28 | Drowning | CPR with rescue breaths | WHO / ICMR | High | Draft | — |
+| 2026-10-28 | Electrocution | Switch off power; ECG | WHO / ICMR | High | Draft | — |
+| 2026-10-28 | Poisoning antidotes | Agent-specific antidotes | NCDC / WHO | High | Draft | — |
+| 2026-10-28 | Envenomation referral | Stabilise; ASV; refer | National Protocol | High | Draft | — |
+| 2026-10-28 | Disaster triage | Colour triage; reassess | WHO / NDMA | High | Draft | — |
 
 ## How to update
 
