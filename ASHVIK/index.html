@@ -112,6 +112,11 @@ const FIREBASE_CONFIG = {
   appId: "1:525115711937:web:e5f68476a64206e6530f40"
 };
 
+const DEFAULT_CLINIC = "demo-clinic";
+const DEFAULT_DOCTOR = "doctor-1";
+const getClinicId = () => localStorage.getItem("ashvik_clinic_id") || DEFAULT_CLINIC;
+const getDoctorId = () => localStorage.getItem("ashvik_doctor_id") || DEFAULT_DOCTOR;
+
 // ---------- i18n ----------
 const T = {
   en: {
@@ -294,6 +299,9 @@ function Sidebar({ view, setView, lang, setLang, t, cloudStatus }) {
           <span style={{width:7,height:7,borderRadius:"50%",background: cloudStatus==="synced" ? "#4ade80" : cloudStatus==="error" ? "#f87171" : "#fbbf24",display:"inline-block"}}></span>
           {cloudStatus==="synced" ? "Cloud synced" : cloudStatus==="offline" ? "Offline (cached)" : cloudStatus==="syncing" ? "Syncing..." : cloudStatus==="error" ? "Cloud error" : "Connecting..."}
         </div>
+        <div style={{marginTop:4,fontSize:10,opacity:.65,wordBreak:"break-all"}}>
+          {getClinicId()} · {getDoctorId()}
+        </div>
       </div>
     </aside>
   );
@@ -341,6 +349,8 @@ function Chart({ data, label, color }) {
 
 function App() {
   const [lang, setLang] = useState("en");
+  const [clinicId, setClinicId] = useState(getClinicId());
+  const [doctorId, setDoctorId] = useState(getDoctorId());
   const [patients, setPatients] = useState(() => {
     const ps = loadPatients();
     if (!ps.length) { const s = seed(); savePatients(s); return s; }
@@ -369,14 +379,25 @@ function App() {
         const db = fsMod.initializeFirestore(app, { localCache: fsMod.persistentLocalCache({ tabManager: fsMod.persistentMultipleTabManager() }) });
         const localUid = localStorage.getItem("ashvik_cloud_uid") || "ashvik-local";
         localStorage.setItem("ashvik_cloud_uid", localUid);
-        cloudRef.current = { db, uid: localUid, fs: fsMod };
-        const col = fsMod.collection(db, "users", localUid, "patients");
+        const activeClinic = getClinicId();
+        const activeDoctor = getDoctorId();
+        cloudRef.current = { db, uid: localUid, fs: fsMod, clinicId: activeClinic, doctorId: activeDoctor };
+        const col = fsMod.collection(db, "clinics", activeClinic, "doctors", activeDoctor, "patients");
         const existing = await fsMod.getDocs(col);
-        const local = loadPatients();
-        if (existing.empty && local.length) {
-          const batch = fsMod.writeBatch(db);
-          local.forEach(p => batch.set(fsMod.doc(col, p.id), p));
-          await batch.commit();
+        if (existing.empty) {
+          // One-time migration: old flat path or local cache -> clinic/doctor scope
+          const legacyCol = fsMod.collection(db, "users", localUid, "patients");
+          let source = [];
+          try {
+            const legacySnap = await fsMod.getDocs(legacyCol);
+            if (!legacySnap.empty) source = legacySnap.docs.map(d => ({ id: d.id, ...d.data() }));
+          } catch (e) { /* ignore legacy read errors */ }
+          if (!source.length) source = loadPatients();
+          if (source.length) {
+            const batch = fsMod.writeBatch(db);
+            source.forEach(p => batch.set(fsMod.doc(col, p.id), p));
+            await batch.commit();
+          }
         }
         if (cancelled) return;
         unsub = fsMod.onSnapshot(col, snap => {
@@ -397,11 +418,11 @@ function App() {
   // Cloud write-through: every savePatients() call also syncs to Firestore
   useEffect(() => {
     window.__ashvikCloudSync = async (ps) => {
-      const { db, uid, fs } = cloudRef.current;
+      const { db, uid, fs, clinicId, doctorId } = cloudRef.current;
       if (!db || !uid || !fs) return;
       try {
         setCloudStatus("syncing");
-        const col = fs.collection(db, "users", uid, "patients");
+        const col = fs.collection(db, "clinics", clinicId, "doctors", doctorId, "patients");
         const existing = await fs.getDocs(col);
         const batch = fs.writeBatch(db);
         const ids = new Set(ps.map(p => p.id));
@@ -1096,7 +1117,25 @@ function App() {
 
         {view === "settings" && (
           <>
-            <div className="page-head"><div><h2>{t("settings",lang)}</h2><p></p></div></div>
+            <div className="page-head"><div><h2>{t("settings",lang)}</h2><p>Clinic, doctor, data and app settings</p></div></div>
+            <div className="card">
+              <div className="card-head"><h3>Clinic / Company & Doctor</h3></div>
+              <div className="grid grid-2">
+                <Field label="Clinic / Company ID">
+                  <input value={clinicId} onChange={e => setClinicId(e.target.value)} placeholder="e.g. clinic-varanasi-01" />
+                </Field>
+                <Field label="Doctor ID">
+                  <input value={doctorId} onChange={e => setDoctorId(e.target.value)} placeholder="e.g. doctor-sunita" />
+                </Field>
+              </div>
+              <div style={{marginTop:10,fontSize:12,color:"var(--muted)"}}>
+                Patient data is isolated per clinic and doctor: <code>clinics/{clinicId}/doctors/{doctorId}/patients</code>
+              </div>
+              <button className="btn btn-primary" style={{marginTop:10}}
+                onClick={() => { localStorage.setItem("ashvik_clinic_id", clinicId.trim() || DEFAULT_CLINIC); localStorage.setItem("ashvik_doctor_id", doctorId.trim() || DEFAULT_DOCTOR); location.reload(); }}>
+                Save & Reload
+              </button>
+            </div>
             <div className="card">
               <div className="card-head"><h3>{t("backup",lang)}</h3></div>
               <button className="btn btn-primary" onClick={exportData}>{t("backup",lang)}</button>

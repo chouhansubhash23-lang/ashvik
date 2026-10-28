@@ -1,8 +1,18 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // TEMPORARY: open access while Firebase Auth providers are being configured.
-    // Replace with auth-based rules before public/production use.
+    // Public read-only clinical knowledge base
+    match /guidelines/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // TEMPORARY: clinic-scoped patient data (auth rules to be added with SaaS login)
+    match /clinics/{clinicId}/doctors/{doctorId}/patients/{patientId} {
+      allow read, write: if true;
+    }
+
+    // Legacy path (migration only)
     match /users/{uid}/patients/{patientId} {
       allow read, write: if true;
     }

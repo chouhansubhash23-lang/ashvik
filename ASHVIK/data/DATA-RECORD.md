@@ -4,8 +4,9 @@
 **Guidelines:** 201
 **Total words:** 74,616
 **Dose mentions:** 653
-**Git commit:** `a851dd5`
+**Git commit:** `f1ce659`
 **Evaluation:** 201/201 files checked; **100% structural pass**
+**Firestore:** collection `guidelines` (project `ashvik-medical`)
 
 > Structural evaluation only. Clinical accuracy still requires clinician sign-off.
 

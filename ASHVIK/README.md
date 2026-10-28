@@ -28,9 +28,18 @@ Unified React-based medical software (single file, no build step).
 
 > Security note: Firestore rules are temporarily open (`if true`) while Firebase Auth is being configured. Add auth-based rules before public use.
 
+## Multi-tenant (SaaS) data scope
+
+- All patient data is scoped to **clinic/company + doctor**:
+  `clinics/{clinicId}/doctors/{doctorId}/patients`
+- Set IDs in **Settings → Clinic / Company & Doctor → Save & Reload**.
+- Defaults: `demo-clinic` / `doctor-1` (change per clinic).
+- Current Firestore rules are temporary/open; add Auth-based rules before real multi-tenant use.
+
 ## Clinical knowledge base (record)
 
 - **201 guidelines**, 21 categories, **74,616 words**, 653 dose mentions.
+- Also uploaded to Firestore collection **`guidelines`** (read-only) for the chatbot.
 - Guidelines: `data/guidelines/` (`index.md` for the full list).
 - Evidence: `evidence/` (sources, raw extracted text, quality checklist, verification log).
 - Evaluation: `evidence/eval/eval-report.md` — **201/201 files 100% structural pass**.

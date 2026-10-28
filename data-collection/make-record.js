@@ -72,7 +72,8 @@ md += `**Guidelines:** ${rows.length}\n`;
 md += `**Total words:** ${totalWords.toLocaleString()}\n`;
 md += `**Dose mentions:** ${totalDoses}\n`;
 md += `**Git commit:** \`${commit}\`\n`;
-md += `**Evaluation:** ${evalScores.length}/${rows.length} files checked; ${all100 ? "**100% structural pass**" : "see eval report"}\n\n`;
+md += `**Evaluation:** ${evalScores.length}/${rows.length} files checked; ${all100 ? "**100% structural pass**" : "see eval report"}\n`;
+md += `**Firestore:** collection \`guidelines\` (project \`ashvik-medical\`)\n\n`;
 md += `> Structural evaluation only. Clinical accuracy still requires clinician sign-off.\n\n`;
 
 md += `## Category breakdown\n\n| Category | Files |\n|---|---|\n`;
