@@ -2,7 +2,7 @@
 
 Generated: 2026-10-28
 
-Scope: 191 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 201 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -55,6 +55,7 @@ Scope: 191 guideline files in `ASHVIK/data/guidelines/`.
 | compression-therapy.md | 100% | 12/12 | 279 | 1 | 1 |
 | congenital-anomalies.md | 100% | 12/12 | 278 | 2 | 1 |
 | congenital-heart-disease-screening.md | 100% | 12/12 | 304 | 2 | 1 |
+| contact-tracing.md | 100% | 12/12 | 252 | 1 | 1 |
 | contraception.md | 100% | 12/12 | 514 | 2 | 2 |
 | covid-influenza.md | 100% | 12/12 | 537 | 4 | 2 |
 | cpr-bls.md | 100% | 12/12 | 309 | 2 | 1 |
@@ -62,6 +63,7 @@ Scope: 191 guideline files in `ASHVIK/data/guidelines/`.
 | death-certification.md | 100% | 12/12 | 290 | 1 | 0 |
 | delirium.md | 100% | 12/12 | 286 | 2 | 1 |
 | dementia-care.md | 100% | 12/12 | 283 | 2 | 1 |
+| dengue-prevention.md | 100% | 12/12 | 262 | 1 | 1 |
 | dengue-triage.md | 100% | 12/12 | 458 | 3 | 0 |
 | dengue.md | 100% | 12/12 | 492 | 3 | 1 |
 | depression-anxiety.md | 100% | 12/12 | 609 | 6 | 2 |
@@ -100,8 +102,10 @@ Scope: 191 guideline files in `ASHVIK/data/guidelines/`.
 | head-injury.md | 100% | 12/12 | 374 | 1 | 1 |
 | hearing-loss-adults.md | 100% | 12/12 | 289 | 2 | 1 |
 | heat-stroke.md | 100% | 12/12 | 303 | 1 | 1 |
+| hepatitis-b-prevention.md | 100% | 12/12 | 263 | 1 | 1 |
 | hernia.md | 100% | 12/12 | 333 | 3 | 1 |
 | hiv-care-basics.md | 100% | 12/12 | 350 | 1 | 1 |
+| hiv-prevention-prep-pep.md | 100% | 12/12 | 292 | 1 | 1 |
 | hospital-acquired-infection.md | 100% | 12/12 | 283 | 2 | 1 |
 | hypertension.md | 100% | 12/12 | 556 | 6 | 1 |
 | hypothermia.md | 100% | 12/12 | 287 | 1 | 1 |
@@ -114,6 +118,7 @@ Scope: 191 guideline files in `ASHVIK/data/guidelines/`.
 | intestinal-obstruction.md | 100% | 12/12 | 367 | 2 | 1 |
 | iron-deficiency-anaemia.md | 100% | 12/12 | 578 | 8 | 1 |
 | iron-overload-thalassaemia.md | 100% | 12/12 | 292 | 2 | 1 |
+| isolation-quarantine.md | 100% | 12/12 | 265 | 1 | 1 |
 | iv-fluid-therapy.md | 100% | 12/12 | 398 | 5 | 1 |
 | joint-aspiration-injection.md | 100% | 12/12 | 347 | 1 | 1 |
 | kangaroo-mother-care.md | 100% | 12/12 | 266 | 1 | 1 |
@@ -122,6 +127,7 @@ Scope: 191 guideline files in `ASHVIK/data/guidelines/`.
 | local-anaesthesia.md | 100% | 12/12 | 352 | 10 | 1 |
 | low-birth-weight-care.md | 100% | 12/12 | 267 | 1 | 1 |
 | lumbar-puncture.md | 100% | 12/12 | 327 | 1 | 1 |
+| malaria-chemoprophylaxis.md | 100% | 12/12 | 277 | 4 | 1 |
 | malaria.md | 100% | 12/12 | 727 | 15 | 3 |
 | maternal-care.md | 100% | 12/12 | 645 | 10 | 2 |
 | medical-documentation.md | 100% | 12/12 | 290 | 2 | 0 |
@@ -142,6 +148,7 @@ Scope: 191 guideline files in `ASHVIK/data/guidelines/`.
 | opioid-prescribing-safety.md | 100% | 12/12 | 310 | 4 | 1 |
 | oral-cancer-screening.md | 100% | 12/12 | 265 | 1 | 1 |
 | oral-health.md | 100% | 12/12 | 489 | 2 | 1 |
+| outbreak-investigation.md | 100% | 12/12 | 267 | 1 | 1 |
 | oxygen-therapy.md | 100% | 12/12 | 343 | 1 | 0 |
 | paediatric-dehydration.md | 100% | 12/12 | 339 | 10 | 1 |
 | paediatric-dosing-guide.md | 100% | 12/12 | 383 | 11 | 1 |
@@ -165,7 +172,9 @@ Scope: 191 guideline files in `ASHVIK/data/guidelines/`.
 | pressure-ulcers.md | 100% | 12/12 | 423 | 2 | 1 |
 | quality-improvement-audit.md | 100% | 12/12 | 277 | 2 | 0 |
 | rabies-post-exposure-prophylaxis.md | 100% | 12/12 | 382 | 3 | 1 |
+| rabies-pre-exposure-prophylaxis.md | 100% | 12/12 | 247 | 4 | 1 |
 | referral-communication.md | 100% | 12/12 | 285 | 2 | 0 |
+| risk-communication.md | 100% | 12/12 | 268 | 1 | 1 |
 | safe-abortion-care.md | 100% | 12/12 | 293 | 3 | 1 |
 | sarcopenia-frailty.md | 100% | 12/12 | 279 | 2 | 1 |
 | sbar-handover.md | 100% | 12/12 | 267 | 2 | 1 |
@@ -186,6 +195,7 @@ Scope: 191 guideline files in `ASHVIK/data/guidelines/`.
 | stroke.md | 100% | 12/12 | 500 | 3 | 1 |
 | substance-use-disorders.md | 100% | 12/12 | 321 | 3 | 1 |
 | suture-materials-techniques.md | 100% | 12/12 | 366 | 2 | 1 |
+| tb-infection-control.md | 100% | 12/12 | 261 | 1 | 1 |
 | tb-preventive-therapy.md | 100% | 12/12 | 323 | 6 | 1 |
 | telemedicine-basics.md | 100% | 12/12 | 282 | 2 | 0 |
 | thyroid-disorders.md | 100% | 12/12 | 533 | 6 | 2 |
@@ -270,6 +280,7 @@ All structural checks passed.
 | compression-therapy.md | Draft | — | — |
 | congenital-anomalies.md | Draft | — | — |
 | congenital-heart-disease-screening.md | Draft | — | — |
+| contact-tracing.md | Draft | — | — |
 | contraception.md | Draft | — | — |
 | covid-influenza.md | Draft | — | — |
 | cpr-bls.md | Draft | — | — |
@@ -277,6 +288,7 @@ All structural checks passed.
 | death-certification.md | Draft | — | — |
 | delirium.md | Draft | — | — |
 | dementia-care.md | Draft | — | — |
+| dengue-prevention.md | Draft | — | — |
 | dengue-triage.md | Draft | — | — |
 | dengue.md | Draft | — | — |
 | depression-anxiety.md | Draft | — | — |
@@ -315,8 +327,10 @@ All structural checks passed.
 | head-injury.md | Draft | — | — |
 | hearing-loss-adults.md | Draft | — | — |
 | heat-stroke.md | Draft | — | — |
+| hepatitis-b-prevention.md | Draft | — | — |
 | hernia.md | Draft | — | — |
 | hiv-care-basics.md | Draft | — | — |
+| hiv-prevention-prep-pep.md | Draft | — | — |
 | hospital-acquired-infection.md | Draft | — | — |
 | hypertension.md | Draft | — | — |
 | hypothermia.md | Draft | — | — |
@@ -329,6 +343,7 @@ All structural checks passed.
 | intestinal-obstruction.md | Draft | — | — |
 | iron-deficiency-anaemia.md | Draft | — | — |
 | iron-overload-thalassaemia.md | Draft | — | — |
+| isolation-quarantine.md | Draft | — | — |
 | iv-fluid-therapy.md | Draft | — | — |
 | joint-aspiration-injection.md | Draft | — | — |
 | kangaroo-mother-care.md | Draft | — | — |
@@ -337,6 +352,7 @@ All structural checks passed.
 | local-anaesthesia.md | Draft | — | — |
 | low-birth-weight-care.md | Draft | — | — |
 | lumbar-puncture.md | Draft | — | — |
+| malaria-chemoprophylaxis.md | Draft | — | — |
 | malaria.md | Draft | — | — |
 | maternal-care.md | Draft | — | — |
 | medical-documentation.md | Draft | — | — |
@@ -357,6 +373,7 @@ All structural checks passed.
 | opioid-prescribing-safety.md | Draft | — | — |
 | oral-cancer-screening.md | Draft | — | — |
 | oral-health.md | Draft | — | — |
+| outbreak-investigation.md | Draft | — | — |
 | oxygen-therapy.md | Draft | — | — |
 | paediatric-dehydration.md | Draft | — | — |
 | paediatric-dosing-guide.md | Draft | — | — |
@@ -380,7 +397,9 @@ All structural checks passed.
 | pressure-ulcers.md | Draft | — | — |
 | quality-improvement-audit.md | Draft | — | — |
 | rabies-post-exposure-prophylaxis.md | Draft | — | — |
+| rabies-pre-exposure-prophylaxis.md | Draft | — | — |
 | referral-communication.md | Draft | — | — |
+| risk-communication.md | Draft | — | — |
 | safe-abortion-care.md | Draft | — | — |
 | sarcopenia-frailty.md | Draft | — | — |
 | sbar-handover.md | Draft | — | — |
@@ -401,6 +420,7 @@ All structural checks passed.
 | stroke.md | Draft | — | — |
 | substance-use-disorders.md | Draft | — | — |
 | suture-materials-techniques.md | Draft | — | — |
+| tb-infection-control.md | Draft | — | — |
 | tb-preventive-therapy.md | Draft | — | — |
 | telemedicine-basics.md | Draft | — | — |
 | thyroid-disorders.md | Draft | — | — |

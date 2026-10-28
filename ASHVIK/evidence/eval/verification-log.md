@@ -200,6 +200,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-28 | Neonatal hypoglycaemia | 10% dextrose 2 mL/kg | WHO/IAP | High | Draft | — |
 | 2026-10-28 | Birth asphyxia | Resuscitation; cooling referral | WHO/NRP | High | Draft | — |
 | 2026-10-28 | Neonatal transport | Stabilise before transfer | WHO/RMNCH+A | High | Draft | — |
+| 2026-10-28 | Dengue prevention | Source reduction; repellents | NVBDCP / WHO | High | Draft | — |
+| 2026-10-28 | Malaria prophylaxis | Destination-based regimen | NVBDCP / WHO | High | Draft | — |
+| 2026-10-28 | Rabies PrEP | 0/7/21–28 | NRCP / WHO | High | Draft | — |
+| 2026-10-28 | Hepatitis B | Birth dose; HBIG; vaccine | WHO / NVHP | High | Draft | — |
+| 2026-10-28 | HIV PrEP/PEP | PEP within 72 h; 28 days | NACO / WHO | High | Draft | — |
+| 2026-10-28 | TB infection control | Administrative/environmental/PPE | NTEP / WHO | High | Draft | — |
+| 2026-10-28 | Outbreak investigation | Case definition; line list; control | NCDC / WHO | High | Draft | — |
+| 2026-10-28 | Contact tracing | Identify/follow contacts | NCDC / WHO | High | Draft | — |
+| 2026-10-28 | Isolation/quarantine | Disease-specific duration | NCDC / WHO | High | Draft | — |
+| 2026-10-28 | Risk communication | Trusted channels; clear messages | WHO / NCDC | High | Draft | — |
 
 ## How to update
 

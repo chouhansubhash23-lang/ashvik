@@ -196,6 +196,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 189 | Neonatal hypoglycaemia | [neonatal-hypoglycaemia.md](neonatal-hypoglycaemia.md) | WHO, IAP | Draft |
 | 190 | Birth asphyxia | [birth-asphyxia.md](birth-asphyxia.md) | WHO, NRP | Draft |
 | 191 | Neonatal transport | [neonatal-transport.md](neonatal-transport.md) | WHO, RMNCH+A | Draft |
+| 192 | Dengue prevention | [dengue-prevention.md](dengue-prevention.md) | NVBDCP, WHO | Draft |
+| 193 | Malaria chemoprophylaxis | [malaria-chemoprophylaxis.md](malaria-chemoprophylaxis.md) | NVBDCP, WHO | Draft |
+| 194 | Rabies PrEP | [rabies-pre-exposure-prophylaxis.md](rabies-pre-exposure-prophylaxis.md) | NRCP, WHO | Draft |
+| 195 | Hepatitis B prevention | [hepatitis-b-prevention.md](hepatitis-b-prevention.md) | WHO, NVHP | Draft |
+| 196 | HIV PrEP & PEP | [hiv-prevention-prep-pep.md](hiv-prevention-prep-pep.md) | NACO, WHO | Draft |
+| 197 | TB infection control | [tb-infection-control.md](tb-infection-control.md) | NTEP, WHO | Draft |
+| 198 | Outbreak investigation | [outbreak-investigation.md](outbreak-investigation.md) | NCDC, WHO | Draft |
+| 199 | Contact tracing | [contact-tracing.md](contact-tracing.md) | NCDC, WHO | Draft |
+| 200 | Isolation & quarantine | [isolation-quarantine.md](isolation-quarantine.md) | NCDC, WHO | Draft |
+| 201 | Risk communication | [risk-communication.md](risk-communication.md) | WHO, NCDC | Draft |
 
 ## Evidence and evaluation
 
@@ -206,16 +216,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Dengue vaccine / prevention
-2. Malaria chemoprophylaxis
-3. Rabies pre-exposure prophylaxis
-4. Hepatitis B prevention
-5. HIV prevention (PrEP/PEP)
-6. TB infection control
-7. Outbreak investigation
-8. Contact tracing
-9. Quarantine/isolation
-10. Risk communication
+1. Medical certification of cause of death
+2. Medico-legal case documentation
+3. Injury reporting
+4. Poisoning reporting
+5. Adverse drug reaction reporting
+6. Blood transfusion reaction reporting
+7. Biomedical waste audit
+8. Infection control audit
+9. Antibiotic audit
+10. Clinical audit
 
 ## Medical disclaimer
 
