@@ -56,6 +56,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 49 | Pressure ulcers | [pressure-ulcers.md](pressure-ulcers.md) | ICMR STW Vol. 3, NHP | Draft |
 | 50 | Antibiotic stewardship | [antibiotic-stewardship.md](antibiotic-stewardship.md) | ICMR, WHO, NCDC AMR | Draft |
 | 51 | Palliative symptom protocols | [palliative-symptom-protocols.md](palliative-symptom-protocols.md) | ICMR STW Vol. 3, WHO | Draft |
+| 52 | Acute abdomen | [acute-abdomen.md](acute-abdomen.md) | ICMR STW Vol. 3, WHO | Draft |
+| 53 | Appendicitis | [appendicitis.md](appendicitis.md) | ICMR STW Vol. 3 | Draft |
+| 54 | Intestinal obstruction | [intestinal-obstruction.md](intestinal-obstruction.md) | ICMR STW Vol. 3 | Draft |
+| 55 | Hernia | [hernia.md](hernia.md) | ICMR STW Vol. 3 | Draft |
+| 56 | Gallstone disease | [gallstone-disease.md](gallstone-disease.md) | ICMR STW Vol. 3, Tokyo Guidelines | Draft |
+| 57 | Acute pancreatitis | [pancreatitis.md](pancreatitis.md) | ICMR STW Vol. 3, IAP/APA | Draft |
+| 58 | Head injury | [head-injury.md](head-injury.md) | ICMR STW Vol. 3, WHO | Draft |
+| 59 | Burns | [burns.md](burns.md) | ICMR STW Vol. 3, WHO | Draft |
+| 60 | Drowning & electrocution | [drowning-electrocution.md](drowning-electrocution.md) | WHO, ICMR | Draft |
+| 61 | Sexual assault care | [sexual-assault-care.md](sexual-assault-care.md) | WHO, MoHFW, NACO | Draft |
 
 ## Evidence and evaluation
 
@@ -66,16 +76,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Acute abdomen (referral)
-2. Appendicitis (referral)
-3. Intestinal obstruction (referral)
-4. Hernia (referral)
-5. Gallstone disease
-6. Pancreatitis (referral)
-7. Head injury
-8. Burns
-9. Drowning / electrocution
-10. Sexual assault care
+1. Acute limb ischemia
+2. Fractures (general approach)
+3. Wound management / suturing
+4. Local anaesthesia
+5. Abscess drainage
+6. Nasogastric tube / urinary catheter
+7. IV fluid therapy
+8. Blood transfusion basics
+9. Oxygen therapy
+10. Vaccination in adults
 
 ## Medical disclaimer
 

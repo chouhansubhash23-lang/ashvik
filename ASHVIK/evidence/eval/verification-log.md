@@ -60,6 +60,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-27 | Pressure ulcers | Staging; repositioning | ICMR S1 / NHP | High | Draft | — |
 | 2026-10-27 | Antibiotic stewardship | Avoid unnecessary antibiotics | ICMR S3 / WHO | High | Draft | Local antibiogram |
 | 2026-10-27 | Palliative symptoms | Morphine titration; laxatives | ICMR S1 / WHO | High | Draft | Narcotics licensing |
+| 2026-10-27 | Acute abdomen | Stabilise and refer; analgesia | ICMR S1 | High | Draft | — |
+| 2026-10-27 | Appendicitis | Early referral; pre-op antibiotics | ICMR S1 | High | Draft | — |
+| 2026-10-27 | Intestinal obstruction | NG tube, fluids, no laxatives | ICMR S1 | High | Draft | — |
+| 2026-10-27 | Hernia | Strangulation is emergency | ICMR S1 | High | Draft | — |
+| 2026-10-27 | Gallstones | Cholangitis emergency; cholecystitis antibiotics | ICMR S1 | High | Draft | — |
+| 2026-10-27 | Pancreatitis | Fluids, analgesia, early referral | ICMR S1 | High | Draft | — |
+| 2026-10-27 | Head injury | GCS, pupils, cervical spine | ICMR S1 / WHO | High | Draft | CT access |
+| 2026-10-27 | Burns | Cool water 20 min; Parkland fluids | ICMR S1 / WHO | High | Draft | Burn unit access |
+| 2026-10-27 | Drowning/electrocution | CPR first; switch off power | WHO | High | Draft | — |
+| 2026-10-27 | Sexual assault | Confidential care; PEP; forensic consent | WHO / MoHFW / NACO | High | Draft | Legal protocol |
 
 ## How to update
 
