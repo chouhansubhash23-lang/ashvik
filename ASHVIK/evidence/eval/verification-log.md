@@ -180,6 +180,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-28 | Poisoning antidotes | Agent-specific antidotes | NCDC / WHO | High | Draft | — |
 | 2026-10-28 | Envenomation referral | Stabilise; ASV; refer | National Protocol | High | Draft | — |
 | 2026-10-28 | Disaster triage | Colour triage; reassess | WHO / NDMA | High | Draft | — |
+| 2026-10-28 | ANC schedule | 4 visits; IFA/calcium; danger signs | RMNCH+A / WHO | High | Draft | — |
+| 2026-10-28 | Postnatal care | Day 1/3/7/14/28 review | RMNCH+A / WHO | High | Draft | — |
+| 2026-10-28 | Labour monitoring | Partograph; fetal heart | RMNCH+A / WHO | High | Draft | — |
+| 2026-10-28 | PPH | Uterine massage; oxytocin; TXA | RMNCH+A / WHO | High | Draft | — |
+| 2026-10-28 | Pre-eclampsia | MgSO4; BP control; refer | RMNCH+A / WHO | High | Draft | — |
+| 2026-10-28 | Maternal sepsis | Antibiotics within 1 h; source control | WHO / ICMR | High | Draft | — |
+| 2026-10-28 | GDM | OGTT; lifestyle; insulin | ICMR / WHO | High | Draft | — |
+| 2026-10-28 | Family planning | Method mix; contraindications | NFPP / WHO | High | Draft | — |
+| 2026-10-28 | Safe abortion | MTP Act; medical/surgical | MTP Act / WHO | High | Draft | — |
+| 2026-10-28 | Infertility | Couple assessment; referral | ICMR / WHO | High | Draft | — |
 
 ## How to update
 

@@ -176,6 +176,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 169 | Poisoning antidotes | [poisoning-antidotes.md](poisoning-antidotes.md) | NCDC, WHO | Draft |
 | 170 | Envenomation referral | [envenomation-referral.md](envenomation-referral.md) | National Protocol, WHO | Draft |
 | 171 | Disaster triage | [disaster-triage.md](disaster-triage.md) | WHO, NDMA | Draft |
+| 172 | Antenatal care schedule | [antenatal-care-schedule.md](antenatal-care-schedule.md) | RMNCH+A, WHO | Draft |
+| 173 | Postnatal care | [postnatal-care.md](postnatal-care.md) | RMNCH+A, WHO | Draft |
+| 174 | Labour monitoring | [labour-monitoring.md](labour-monitoring.md) | RMNCH+A, WHO | Draft |
+| 175 | Postpartum haemorrhage | [postpartum-haemorrhage.md](postpartum-haemorrhage.md) | RMNCH+A, WHO | Draft |
+| 176 | Pre-eclampsia/eclampsia | [pre-eclampsia-eclampsia.md](pre-eclampsia-eclampsia.md) | RMNCH+A, WHO | Draft |
+| 177 | Sepsis in pregnancy | [sepsis-in-pregnancy.md](sepsis-in-pregnancy.md) | WHO, ICMR | Draft |
+| 178 | Gestational diabetes | [gestational-diabetes.md](gestational-diabetes.md) | ICMR, WHO | Draft |
+| 179 | Family planning counselling | [family-planning-counselling.md](family-planning-counselling.md) | NFPP, WHO | Draft |
+| 180 | Safe abortion care | [safe-abortion-care.md](safe-abortion-care.md) | MTP Act, WHO | Draft |
+| 181 | Infertility referral | [infertility-referral.md](infertility-referral.md) | ICMR, WHO | Draft |
 
 ## Evidence and evaluation
 
@@ -186,16 +196,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Antenatal care schedule
-2. Postnatal care
-3. Labour monitoring
-4. Postpartum haemorrhage
-5. Pre-eclampsia/eclampsia
-6. Sepsis in pregnancy
-7. Gestational diabetes
-8. Family planning counselling
-9. Safe abortion care
-10. Infertility referral
+1. Newborn resuscitation
+2. Neonatal sepsis
+3. Neonatal jaundice
+4. Breastfeeding support
+5. Kangaroo mother care
+6. Low birth weight care
+7. Congenital anomalies
+8. Neonatal hypoglycaemia
+9. Birth asphyxia
+10. Neonatal transport
 
 ## Medical disclaimer
 

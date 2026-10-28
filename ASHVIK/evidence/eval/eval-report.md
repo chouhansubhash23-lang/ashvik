@@ -2,7 +2,7 @@
 
 Generated: 2026-10-28
 
-Scope: 171 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 181 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -27,6 +27,7 @@ Scope: 171 guideline files in `ASHVIK/data/guidelines/`.
 | aefi-reporting.md | 100% | 12/12 | 292 | 4 | 0 |
 | alcohol-use-disorder.md | 100% | 12/12 | 292 | 2 | 1 |
 | anaphylaxis.md | 100% | 12/12 | 437 | 8 | 1 |
+| antenatal-care-schedule.md | 100% | 12/12 | 349 | 5 | 1 |
 | antibiotic-stewardship.md | 100% | 12/12 | 489 | 6 | 1 |
 | antimicrobial-resistance-basics.md | 100% | 12/12 | 280 | 2 | 1 |
 | appendicitis.md | 100% | 12/12 | 343 | 2 | 1 |
@@ -78,6 +79,7 @@ Scope: 171 guideline files in `ASHVIK/data/guidelines/`.
 | epilepsy.md | 100% | 12/12 | 642 | 10 | 1 |
 | eye-ent-infections.md | 100% | 12/12 | 669 | 1 | 3 |
 | falls-prevention-programme.md | 100% | 12/12 | 272 | 2 | 1 |
+| family-planning-counselling.md | 100% | 12/12 | 299 | 2 | 1 |
 | febrile-seizures.md | 100% | 12/12 | 305 | 3 | 1 |
 | fever-in-children.md | 100% | 12/12 | 368 | 2 | 1 |
 | fever-of-unknown-origin.md | 100% | 12/12 | 305 | 3 | 1 |
@@ -88,6 +90,7 @@ Scope: 171 guideline files in `ASHVIK/data/guidelines/`.
 | geriatric-care.md | 100% | 12/12 | 533 | 1 | 0 |
 | geriatric-falls-fractures.md | 100% | 12/12 | 445 | 2 | 0 |
 | geriatric-nutrition.md | 100% | 12/12 | 288 | 3 | 1 |
+| gestational-diabetes.md | 100% | 12/12 | 277 | 3 | 1 |
 | gout.md | 100% | 12/12 | 541 | 9 | 2 |
 | growth-monitoring.md | 100% | 12/12 | 358 | 2 | 0 |
 | hand-hygiene-infection-control.md | 100% | 12/12 | 285 | 1 | 0 |
@@ -102,6 +105,7 @@ Scope: 171 guideline files in `ASHVIK/data/guidelines/`.
 | immunisation-cold-chain.md | 100% | 12/12 | 327 | 1 | 0 |
 | incision-drainage-variations.md | 100% | 12/12 | 316 | 2 | 1 |
 | infertility-basics.md | 100% | 12/12 | 491 | 5 | 1 |
+| infertility-referral.md | 100% | 12/12 | 299 | 3 | 1 |
 | informed-consent.md | 100% | 12/12 | 276 | 1 | 0 |
 | injection-safety-sharps.md | 100% | 12/12 | 291 | 2 | 0 |
 | intestinal-obstruction.md | 100% | 12/12 | 367 | 2 | 1 |
@@ -109,6 +113,7 @@ Scope: 171 guideline files in `ASHVIK/data/guidelines/`.
 | iron-overload-thalassaemia.md | 100% | 12/12 | 292 | 2 | 1 |
 | iv-fluid-therapy.md | 100% | 12/12 | 398 | 5 | 1 |
 | joint-aspiration-injection.md | 100% | 12/12 | 347 | 1 | 1 |
+| labour-monitoring.md | 100% | 12/12 | 295 | 1 | 1 |
 | liver-disease.md | 100% | 12/12 | 500 | 4 | 1 |
 | local-anaesthesia.md | 100% | 12/12 | 352 | 10 | 1 |
 | lumbar-puncture.md | 100% | 12/12 | 327 | 1 | 1 |
@@ -144,15 +149,20 @@ Scope: 171 guideline files in `ASHVIK/data/guidelines/`.
 | pocus-basics.md | 100% | 12/12 | 353 | 1 | 1 |
 | poisoning-antidotes.md | 100% | 12/12 | 316 | 6 | 1 |
 | polypharmacy-review.md | 100% | 12/12 | 303 | 1 | 1 |
+| postnatal-care.md | 100% | 12/12 | 304 | 3 | 1 |
+| postpartum-haemorrhage.md | 100% | 12/12 | 315 | 4 | 1 |
+| pre-eclampsia-eclampsia.md | 100% | 12/12 | 300 | 5 | 1 |
 | pressure-ulcers.md | 100% | 12/12 | 423 | 2 | 1 |
 | quality-improvement-audit.md | 100% | 12/12 | 277 | 2 | 0 |
 | rabies-post-exposure-prophylaxis.md | 100% | 12/12 | 382 | 3 | 1 |
 | referral-communication.md | 100% | 12/12 | 285 | 2 | 0 |
+| safe-abortion-care.md | 100% | 12/12 | 293 | 3 | 1 |
 | sarcopenia-frailty.md | 100% | 12/12 | 279 | 2 | 1 |
 | sbar-handover.md | 100% | 12/12 | 267 | 2 | 1 |
 | scabies-fungal-skin.md | 100% | 12/12 | 706 | 6 | 2 |
 | school-health-screening.md | 100% | 12/12 | 311 | 4 | 1 |
 | scorpion-sting.md | 100% | 12/12 | 274 | 2 | 1 |
+| sepsis-in-pregnancy.md | 100% | 12/12 | 286 | 1 | 1 |
 | sepsis-recognition.md | 100% | 12/12 | 324 | 4 | 1 |
 | sexual-assault-care.md | 100% | 12/12 | 424 | 4 | 1 |
 | shock-management.md | 100% | 12/12 | 282 | 2 | 1 |
@@ -222,6 +232,7 @@ All structural checks passed.
 | aefi-reporting.md | Draft | — | — |
 | alcohol-use-disorder.md | Draft | — | — |
 | anaphylaxis.md | Draft | — | — |
+| antenatal-care-schedule.md | Draft | — | — |
 | antibiotic-stewardship.md | Draft | — | — |
 | antimicrobial-resistance-basics.md | Draft | — | — |
 | appendicitis.md | Draft | — | — |
@@ -273,6 +284,7 @@ All structural checks passed.
 | epilepsy.md | Draft | — | — |
 | eye-ent-infections.md | Draft | — | — |
 | falls-prevention-programme.md | Draft | — | — |
+| family-planning-counselling.md | Draft | — | — |
 | febrile-seizures.md | Draft | — | — |
 | fever-in-children.md | Draft | — | — |
 | fever-of-unknown-origin.md | Draft | — | — |
@@ -283,6 +295,7 @@ All structural checks passed.
 | geriatric-care.md | Draft | — | — |
 | geriatric-falls-fractures.md | Draft | — | — |
 | geriatric-nutrition.md | Draft | — | — |
+| gestational-diabetes.md | Draft | — | — |
 | gout.md | Draft | — | — |
 | growth-monitoring.md | Draft | — | — |
 | hand-hygiene-infection-control.md | Draft | — | — |
@@ -297,6 +310,7 @@ All structural checks passed.
 | immunisation-cold-chain.md | Draft | — | — |
 | incision-drainage-variations.md | Draft | — | — |
 | infertility-basics.md | Draft | — | — |
+| infertility-referral.md | Draft | — | — |
 | informed-consent.md | Draft | — | — |
 | injection-safety-sharps.md | Draft | — | — |
 | intestinal-obstruction.md | Draft | — | — |
@@ -304,6 +318,7 @@ All structural checks passed.
 | iron-overload-thalassaemia.md | Draft | — | — |
 | iv-fluid-therapy.md | Draft | — | — |
 | joint-aspiration-injection.md | Draft | — | — |
+| labour-monitoring.md | Draft | — | — |
 | liver-disease.md | Draft | — | — |
 | local-anaesthesia.md | Draft | — | — |
 | lumbar-puncture.md | Draft | — | — |
@@ -339,15 +354,20 @@ All structural checks passed.
 | pocus-basics.md | Draft | — | — |
 | poisoning-antidotes.md | Draft | — | — |
 | polypharmacy-review.md | Draft | — | — |
+| postnatal-care.md | Draft | — | — |
+| postpartum-haemorrhage.md | Draft | — | — |
+| pre-eclampsia-eclampsia.md | Draft | — | — |
 | pressure-ulcers.md | Draft | — | — |
 | quality-improvement-audit.md | Draft | — | — |
 | rabies-post-exposure-prophylaxis.md | Draft | — | — |
 | referral-communication.md | Draft | — | — |
+| safe-abortion-care.md | Draft | — | — |
 | sarcopenia-frailty.md | Draft | — | — |
 | sbar-handover.md | Draft | — | — |
 | scabies-fungal-skin.md | Draft | — | — |
 | school-health-screening.md | Draft | — | — |
 | scorpion-sting.md | Draft | — | — |
+| sepsis-in-pregnancy.md | Draft | — | — |
 | sepsis-recognition.md | Draft | — | — |
 | sexual-assault-care.md | Draft | — | — |
 | shock-management.md | Draft | — | — |
