@@ -1,0 +1,2046 @@
+{
+  "generatedAt": "2026-10-28T08:20:40.181Z",
+  "commit": "a851dd5",
+  "total": 201,
+  "totalWords": 74616,
+  "totalDoses": 653,
+  "evaluation": {
+    "checked": 201,
+    "all100": true
+  },
+  "categories": {
+    "General medicine & seasonal": 10,
+    "Skin, respiratory, GI, neuro, mental health": 5,
+    "Emergency, maternal, paediatric, neuro": 8,
+    "Skin, renal, COVID, STI, geriatric, palliative, eye/ENT": 9,
+    "Fever/rash, immunisation, poisoning, metabolic, women's health, oral, occupational": 10,
+    "Geriatric emergencies, pain, stewardship, palliative": 9,
+    "Surgical & emergency referral": 10,
+    "Procedures & skills": 10,
+    "Diagnostics & monitoring": 10,
+    "System, quality & documentation": 10,
+    "Paediatric, maternal & infectious disease": 10,
+    "Paediatric core": 10,
+    "Paediatric specialty": 10,
+    "Geriatric care": 10,
+    "Pain & screening": 10,
+    "Lifestyle & metabolic": 10,
+    "Critical care": 10,
+    "Emergency & envenomation": 10,
+    "Maternal health": 10,
+    "Newborn care": 10,
+    "Public health & prevention": 10
+  },
+  "guidelines": [
+    {
+      "number": 1,
+      "title": "Malaria",
+      "file": "malaria.md",
+      "category": "General medicine & seasonal",
+      "source": "NVBDCP drug policy, WHO",
+      "status": "Draft",
+      "words": 727,
+      "doses": 15
+    },
+    {
+      "number": 2,
+      "title": "Dengue",
+      "file": "dengue.md",
+      "category": "General medicine & seasonal",
+      "source": "NVBDCP, WHO",
+      "status": "Draft",
+      "words": 492,
+      "doses": 3
+    },
+    {
+      "number": 3,
+      "title": "Typhoid",
+      "file": "typhoid.md",
+      "category": "General medicine & seasonal",
+      "source": "ICMR antimicrobial guidelines, NCDC",
+      "status": "Draft",
+      "words": 591,
+      "doses": 8
+    },
+    {
+      "number": 4,
+      "title": "Acute diarrhoea",
+      "file": "acute-diarrhoea.md",
+      "category": "General medicine & seasonal",
+      "source": "NHP, ICMR/NCDC, WHO",
+      "status": "Draft",
+      "words": 712,
+      "doses": 13
+    },
+    {
+      "number": 5,
+      "title": "Hypertension",
+      "file": "hypertension.md",
+      "category": "General medicine & seasonal",
+      "source": "ICMR STW Vol. 3, NPCDCS",
+      "status": "Draft",
+      "words": 556,
+      "doses": 6
+    },
+    {
+      "number": 6,
+      "title": "Pneumonia",
+      "file": "pneumonia.md",
+      "category": "General medicine & seasonal",
+      "source": "ICMR antimicrobial guidelines, IMNCI",
+      "status": "Draft",
+      "words": 585,
+      "doses": 7
+    },
+    {
+      "number": 7,
+      "title": "Tuberculosis",
+      "file": "tuberculosis.md",
+      "category": "General medicine & seasonal",
+      "source": "NTEP, WHO",
+      "status": "Draft",
+      "words": 658,
+      "doses": 5
+    },
+    {
+      "number": 8,
+      "title": "Type 2 diabetes",
+      "file": "type-2-diabetes.md",
+      "category": "General medicine & seasonal",
+      "source": "ICMR STW Vol. 3, NPCDCS",
+      "status": "Draft",
+      "words": 609,
+      "doses": 8
+    },
+    {
+      "number": 9,
+      "title": "Iron-deficiency anaemia",
+      "file": "iron-deficiency-anaemia.md",
+      "category": "General medicine & seasonal",
+      "source": "NHP, National Iron Plus Initiative",
+      "status": "Draft",
+      "words": 578,
+      "doses": 8
+    },
+    {
+      "number": 10,
+      "title": "UTI",
+      "file": "uti.md",
+      "category": "General medicine & seasonal",
+      "source": "ICMR antimicrobial guidelines, NCDC",
+      "status": "Draft",
+      "words": 603,
+      "doses": 6
+    },
+    {
+      "number": 11,
+      "title": "Scabies & fungal skin",
+      "file": "scabies-fungal-skin.md",
+      "category": "Skin, respiratory, GI, neuro, mental health",
+      "source": "NHP, ICMR/NCDC, WHO",
+      "status": "Draft",
+      "words": 706,
+      "doses": 6
+    },
+    {
+      "number": 12,
+      "title": "Asthma & COPD",
+      "file": "asthma-copd.md",
+      "category": "Skin, respiratory, GI, neuro, mental health",
+      "source": "ICMR STW Vol. 3, GINA/GOLD",
+      "status": "Draft",
+      "words": 582,
+      "doses": 4
+    },
+    {
+      "number": 13,
+      "title": "Peptic ulcer & GERD",
+      "file": "peptic-ulcer-gerd.md",
+      "category": "Skin, respiratory, GI, neuro, mental health",
+      "source": "ICMR STW Vol. 3, NHP",
+      "status": "Draft",
+      "words": 614,
+      "doses": 5
+    },
+    {
+      "number": 14,
+      "title": "Migraine",
+      "file": "migraine.md",
+      "category": "Skin, respiratory, GI, neuro, mental health",
+      "source": "ICMR STW Vol. 3, IHS",
+      "status": "Draft",
+      "words": 648,
+      "doses": 12
+    },
+    {
+      "number": 15,
+      "title": "Depression & anxiety",
+      "file": "depression-anxiety.md",
+      "category": "Skin, respiratory, GI, neuro, mental health",
+      "source": "ICMR STW Vol. 3, NMHP, WHO mhGAP",
+      "status": "Draft",
+      "words": 609,
+      "doses": 6
+    },
+    {
+      "number": 16,
+      "title": "Chikungunya & viral fever",
+      "file": "chikungunya-viral-fever.md",
+      "category": "Emergency, maternal, paediatric, neuro",
+      "source": "NVBDCP, NCDC, WHO",
+      "status": "Draft",
+      "words": 457,
+      "doses": 4
+    },
+    {
+      "number": 17,
+      "title": "Snake bite & poisoning",
+      "file": "snake-bite-poisoning.md",
+      "category": "Emergency, maternal, paediatric, neuro",
+      "source": "National Snakebite Protocol, NCDC",
+      "status": "Draft",
+      "words": 651,
+      "doses": 3
+    },
+    {
+      "number": 18,
+      "title": "Acute coronary syndrome",
+      "file": "acute-coronary-syndrome.md",
+      "category": "Emergency, maternal, paediatric, neuro",
+      "source": "ICMR STW Vol. 3, NPCDCS",
+      "status": "Draft",
+      "words": 515,
+      "doses": 7
+    },
+    {
+      "number": 19,
+      "title": "Stroke",
+      "file": "stroke.md",
+      "category": "Emergency, maternal, paediatric, neuro",
+      "source": "ICMR STW Vol. 3, NPCDCS",
+      "status": "Draft",
+      "words": 500,
+      "doses": 3
+    },
+    {
+      "number": 20,
+      "title": "Maternal care",
+      "file": "maternal-care.md",
+      "category": "Emergency, maternal, paediatric, neuro",
+      "source": "ICMR STW Vol. 3, RMNCH+A",
+      "status": "Draft",
+      "words": 645,
+      "doses": 10
+    },
+    {
+      "number": 21,
+      "title": "Childhood malnutrition",
+      "file": "childhood-malnutrition.md",
+      "category": "Emergency, maternal, paediatric, neuro",
+      "source": "POSHAN Abhiyaan, WHO/UNICEF",
+      "status": "Draft",
+      "words": 540,
+      "doses": 4
+    },
+    {
+      "number": 22,
+      "title": "Arthritis (OA/RA)",
+      "file": "arthritis.md",
+      "category": "Emergency, maternal, paediatric, neuro",
+      "source": "ICMR STW Vol. 3, ACR/EULAR",
+      "status": "Draft",
+      "words": 627,
+      "doses": 10
+    },
+    {
+      "number": 23,
+      "title": "Epilepsy",
+      "file": "epilepsy.md",
+      "category": "Emergency, maternal, paediatric, neuro",
+      "source": "ICMR STW Vol. 3, ILAE",
+      "status": "Draft",
+      "words": 642,
+      "doses": 10
+    },
+    {
+      "number": 24,
+      "title": "Skin & soft tissue infections",
+      "file": "skin-soft-tissue-infections.md",
+      "category": "Skin, renal, COVID, STI, geriatric, palliative, eye/ENT",
+      "source": "ICMR, NCDC",
+      "status": "Draft",
+      "words": 564,
+      "doses": 3
+    },
+    {
+      "number": 25,
+      "title": "Acute kidney injury",
+      "file": "acute-kidney-injury.md",
+      "category": "Skin, renal, COVID, STI, geriatric, palliative, eye/ENT",
+      "source": "ICMR STW Vol. 3, KDIGO",
+      "status": "Draft",
+      "words": 481,
+      "doses": 2
+    },
+    {
+      "number": 26,
+      "title": "Chronic kidney disease",
+      "file": "chronic-kidney-disease.md",
+      "category": "Skin, renal, COVID, STI, geriatric, palliative, eye/ENT",
+      "source": "ICMR STW Vol. 3, KDIGO",
+      "status": "Draft",
+      "words": 552,
+      "doses": 3
+    },
+    {
+      "number": 27,
+      "title": "COVID-19 & influenza",
+      "file": "covid-influenza.md",
+      "category": "Skin, renal, COVID, STI, geriatric, palliative, eye/ENT",
+      "source": "ICMR, WHO, NCDC",
+      "status": "Draft",
+      "words": 537,
+      "doses": 4
+    },
+    {
+      "number": 28,
+      "title": "STI",
+      "file": "sti.md",
+      "category": "Skin, renal, COVID, STI, geriatric, palliative, eye/ENT",
+      "source": "NACO/NCDC, WHO",
+      "status": "Draft",
+      "words": 587,
+      "doses": 12
+    },
+    {
+      "number": 29,
+      "title": "Contraception",
+      "file": "contraception.md",
+      "category": "Skin, renal, COVID, STI, geriatric, palliative, eye/ENT",
+      "source": "NFPP, WHO",
+      "status": "Draft",
+      "words": 514,
+      "doses": 2
+    },
+    {
+      "number": 30,
+      "title": "Geriatric care",
+      "file": "geriatric-care.md",
+      "category": "Skin, renal, COVID, STI, geriatric, palliative, eye/ENT",
+      "source": "ICMR STW Vol. 3, NPHCE",
+      "status": "Draft",
+      "words": 533,
+      "doses": 2
+    },
+    {
+      "number": 31,
+      "title": "Palliative care",
+      "file": "palliative-care.md",
+      "category": "Skin, renal, COVID, STI, geriatric, palliative, eye/ENT",
+      "source": "ICMR STW Vol. 3, NPCP",
+      "status": "Draft",
+      "words": 554,
+      "doses": 6
+    },
+    {
+      "number": 32,
+      "title": "Eye & ENT infections",
+      "file": "eye-ent-infections.md",
+      "category": "Skin, renal, COVID, STI, geriatric, palliative, eye/ENT",
+      "source": "ICMR STW Vol. 3, NHP",
+      "status": "Draft",
+      "words": 669,
+      "doses": 1
+    },
+    {
+      "number": 33,
+      "title": "Fever with rash (differential)",
+      "file": "fever-with-rash-differential.md",
+      "category": "Fever/rash, immunisation, poisoning, metabolic, women's health, oral, occupational",
+      "source": "NVBDCP, NCDC, WHO",
+      "status": "Draft",
+      "words": 482,
+      "doses": 2
+    },
+    {
+      "number": 34,
+      "title": "Childhood immunisation",
+      "file": "childhood-immunisation.md",
+      "category": "Fever/rash, immunisation, poisoning, metabolic, women's health, oral, occupational",
+      "source": "UIP, WHO",
+      "status": "Draft",
+      "words": 467,
+      "doses": 4
+    },
+    {
+      "number": 35,
+      "title": "Acute poisoning agents",
+      "file": "acute-poisoning-agents.md",
+      "category": "Fever/rash, immunisation, poisoning, metabolic, women's health, oral, occupational",
+      "source": "NCDC, WHO",
+      "status": "Draft",
+      "words": 508,
+      "doses": 9
+    },
+    {
+      "number": 36,
+      "title": "Gout",
+      "file": "gout.md",
+      "category": "Fever/rash, immunisation, poisoning, metabolic, women's health, oral, occupational",
+      "source": "ICMR STW Vol. 3, ACR/EULAR",
+      "status": "Draft",
+      "words": 541,
+      "doses": 9
+    },
+    {
+      "number": 37,
+      "title": "Thyroid disorders",
+      "file": "thyroid-disorders.md",
+      "category": "Fever/rash, immunisation, poisoning, metabolic, women's health, oral, occupational",
+      "source": "ICMR STW Vol. 3, ATA",
+      "status": "Draft",
+      "words": 533,
+      "doses": 6
+    },
+    {
+      "number": 38,
+      "title": "Liver disease",
+      "file": "liver-disease.md",
+      "category": "Fever/rash, immunisation, poisoning, metabolic, women's health, oral, occupational",
+      "source": "ICMR STW Vol. 3, NCDC",
+      "status": "Draft",
+      "words": 500,
+      "doses": 4
+    },
+    {
+      "number": 39,
+      "title": "Menstrual disorders",
+      "file": "menstrual-disorders.md",
+      "category": "Fever/rash, immunisation, poisoning, metabolic, women's health, oral, occupational",
+      "source": "ICMR STW Vol. 3, NHP",
+      "status": "Draft",
+      "words": 557,
+      "doses": 4
+    },
+    {
+      "number": 40,
+      "title": "Infertility basics",
+      "file": "infertility-basics.md",
+      "category": "Fever/rash, immunisation, poisoning, metabolic, women's health, oral, occupational",
+      "source": "ICMR STW Vol. 3, WHO",
+      "status": "Draft",
+      "words": 491,
+      "doses": 5
+    },
+    {
+      "number": 41,
+      "title": "Oral health",
+      "file": "oral-health.md",
+      "category": "Fever/rash, immunisation, poisoning, metabolic, women's health, oral, occupational",
+      "source": "National Oral Health Programme",
+      "status": "Draft",
+      "words": 489,
+      "doses": 2
+    },
+    {
+      "number": 42,
+      "title": "Occupational health",
+      "file": "occupational-health.md",
+      "category": "Fever/rash, immunisation, poisoning, metabolic, women's health, oral, occupational",
+      "source": "ICMR/NCDC, WHO",
+      "status": "Draft",
+      "words": 494,
+      "doses": 1
+    },
+    {
+      "number": 43,
+      "title": "Geriatric falls & fractures",
+      "file": "geriatric-falls-fractures.md",
+      "category": "Geriatric emergencies, pain, stewardship, palliative",
+      "source": "ICMR STW Vol. 3, NPHCE",
+      "status": "Draft",
+      "words": 445,
+      "doses": 3
+    },
+    {
+      "number": 44,
+      "title": "Back pain & sciatica",
+      "file": "back-pain-sciatica.md",
+      "category": "Geriatric emergencies, pain, stewardship, palliative",
+      "source": "ICMR STW Vol. 3, NICE",
+      "status": "Draft",
+      "words": 442,
+      "doses": 1
+    },
+    {
+      "number": 45,
+      "title": "Anaphylaxis",
+      "file": "anaphylaxis.md",
+      "category": "Geriatric emergencies, pain, stewardship, palliative",
+      "source": "WHO, NHP",
+      "status": "Draft",
+      "words": 437,
+      "doses": 8
+    },
+    {
+      "number": 46,
+      "title": "Dengue triage",
+      "file": "dengue-triage.md",
+      "category": "Geriatric emergencies, pain, stewardship, palliative",
+      "source": "NVBDCP, WHO",
+      "status": "Draft",
+      "words": 458,
+      "doses": 3
+    },
+    {
+      "number": 47,
+      "title": "Acute asthma exacerbation",
+      "file": "acute-asthma-exacerbation.md",
+      "category": "Geriatric emergencies, pain, stewardship, palliative",
+      "source": "ICMR STW Vol. 3, GINA",
+      "status": "Draft",
+      "words": 449,
+      "doses": 6
+    },
+    {
+      "number": 48,
+      "title": "Diabetic foot",
+      "file": "diabetic-foot.md",
+      "category": "Geriatric emergencies, pain, stewardship, palliative",
+      "source": "ICMR STW Vol. 3, IWGDF",
+      "status": "Draft",
+      "words": 433,
+      "doses": 1
+    },
+    {
+      "number": 49,
+      "title": "Pressure ulcers",
+      "file": "pressure-ulcers.md",
+      "category": "Geriatric emergencies, pain, stewardship, palliative",
+      "source": "ICMR STW Vol. 3, NHP",
+      "status": "Draft",
+      "words": 423,
+      "doses": 2
+    },
+    {
+      "number": 50,
+      "title": "Antibiotic stewardship",
+      "file": "antibiotic-stewardship.md",
+      "category": "Geriatric emergencies, pain, stewardship, palliative",
+      "source": "ICMR, WHO, NCDC AMR",
+      "status": "Draft",
+      "words": 489,
+      "doses": 6
+    },
+    {
+      "number": 51,
+      "title": "Palliative symptom protocols",
+      "file": "palliative-symptom-protocols.md",
+      "category": "Geriatric emergencies, pain, stewardship, palliative",
+      "source": "ICMR STW Vol. 3, WHO",
+      "status": "Draft",
+      "words": 441,
+      "doses": 13
+    },
+    {
+      "number": 52,
+      "title": "Acute abdomen",
+      "file": "acute-abdomen.md",
+      "category": "Surgical & emergency referral",
+      "source": "ICMR STW Vol. 3, WHO",
+      "status": "Draft",
+      "words": 372,
+      "doses": 1
+    },
+    {
+      "number": 53,
+      "title": "Appendicitis",
+      "file": "appendicitis.md",
+      "category": "Surgical & emergency referral",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 343,
+      "doses": 2
+    },
+    {
+      "number": 54,
+      "title": "Intestinal obstruction",
+      "file": "intestinal-obstruction.md",
+      "category": "Surgical & emergency referral",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 367,
+      "doses": 2
+    },
+    {
+      "number": 55,
+      "title": "Hernia",
+      "file": "hernia.md",
+      "category": "Surgical & emergency referral",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 333,
+      "doses": 3
+    },
+    {
+      "number": 56,
+      "title": "Gallstone disease",
+      "file": "gallstone-disease.md",
+      "category": "Surgical & emergency referral",
+      "source": "ICMR STW Vol. 3, Tokyo Guidelines",
+      "status": "Draft",
+      "words": 411,
+      "doses": 2
+    },
+    {
+      "number": 57,
+      "title": "Acute pancreatitis",
+      "file": "pancreatitis.md",
+      "category": "Surgical & emergency referral",
+      "source": "ICMR STW Vol. 3, IAP/APA",
+      "status": "Draft",
+      "words": 372,
+      "doses": 1
+    },
+    {
+      "number": 58,
+      "title": "Head injury",
+      "file": "head-injury.md",
+      "category": "Surgical & emergency referral",
+      "source": "ICMR STW Vol. 3, WHO",
+      "status": "Draft",
+      "words": 374,
+      "doses": 1
+    },
+    {
+      "number": 59,
+      "title": "Burns",
+      "file": "burns.md",
+      "category": "Surgical & emergency referral",
+      "source": "ICMR STW Vol. 3, WHO",
+      "status": "Draft",
+      "words": 438,
+      "doses": 2
+    },
+    {
+      "number": 60,
+      "title": "Drowning & electrocution",
+      "file": "drowning-electrocution.md",
+      "category": "Surgical & emergency referral",
+      "source": "WHO, ICMR",
+      "status": "Draft",
+      "words": 405,
+      "doses": 1
+    },
+    {
+      "number": 61,
+      "title": "Sexual assault care",
+      "file": "sexual-assault-care.md",
+      "category": "Surgical & emergency referral",
+      "source": "WHO, MoHFW, NACO",
+      "status": "Draft",
+      "words": 424,
+      "doses": 4
+    },
+    {
+      "number": 62,
+      "title": "Acute limb ischemia",
+      "file": "acute-limb-ischemia.md",
+      "category": "Procedures & skills",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 327,
+      "doses": 2
+    },
+    {
+      "number": 63,
+      "title": "Fractures — general",
+      "file": "fractures-general.md",
+      "category": "Procedures & skills",
+      "source": "ICMR STW Vol. 3, WHO",
+      "status": "Draft",
+      "words": 383,
+      "doses": 3
+    },
+    {
+      "number": 64,
+      "title": "Wound management & suturing",
+      "file": "wound-management-suturing.md",
+      "category": "Procedures & skills",
+      "source": "ICMR STW Vol. 3, WHO",
+      "status": "Draft",
+      "words": 424,
+      "doses": 4
+    },
+    {
+      "number": 65,
+      "title": "Local anaesthesia",
+      "file": "local-anaesthesia.md",
+      "category": "Procedures & skills",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 352,
+      "doses": 10
+    },
+    {
+      "number": 66,
+      "title": "Abscess drainage",
+      "file": "abscess-drainage.md",
+      "category": "Procedures & skills",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 383,
+      "doses": 4
+    },
+    {
+      "number": 67,
+      "title": "NG tube & urinary catheter",
+      "file": "ng-tube-urinary-catheter.md",
+      "category": "Procedures & skills",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 369,
+      "doses": 1
+    },
+    {
+      "number": 68,
+      "title": "IV fluid therapy",
+      "file": "iv-fluid-therapy.md",
+      "category": "Procedures & skills",
+      "source": "ICMR STW Vol. 3, WHO",
+      "status": "Draft",
+      "words": 398,
+      "doses": 8
+    },
+    {
+      "number": 69,
+      "title": "Blood transfusion basics",
+      "file": "blood-transfusion-basics.md",
+      "category": "Procedures & skills",
+      "source": "NBTC, WHO",
+      "status": "Draft",
+      "words": 349,
+      "doses": 2
+    },
+    {
+      "number": 70,
+      "title": "Oxygen therapy",
+      "file": "oxygen-therapy.md",
+      "category": "Procedures & skills",
+      "source": "ICMR STW Vol. 3, WHO",
+      "status": "Draft",
+      "words": 343,
+      "doses": 1
+    },
+    {
+      "number": 71,
+      "title": "Adult vaccination",
+      "file": "adult-vaccination.md",
+      "category": "Procedures & skills",
+      "source": "UIP / MoHFW, WHO",
+      "status": "Draft",
+      "words": 414,
+      "doses": 1
+    },
+    {
+      "number": 72,
+      "title": "CPR / BLS",
+      "file": "cpr-bls.md",
+      "category": "Diagnostics & monitoring",
+      "source": "IRC, AHA/ILCOR",
+      "status": "Draft",
+      "words": 309,
+      "doses": 2
+    },
+    {
+      "number": 73,
+      "title": "ECG basics",
+      "file": "ecg-basics.md",
+      "category": "Diagnostics & monitoring",
+      "source": "ICMR STW Vol. 3, AHA",
+      "status": "Draft",
+      "words": 419,
+      "doses": 2
+    },
+    {
+      "number": 74,
+      "title": "ABG basics",
+      "file": "abg-basics.md",
+      "category": "Diagnostics & monitoring",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 400,
+      "doses": 3
+    },
+    {
+      "number": 75,
+      "title": "Chest X-ray basics",
+      "file": "xray-basics.md",
+      "category": "Diagnostics & monitoring",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 384,
+      "doses": 1
+    },
+    {
+      "number": 76,
+      "title": "POCUS basics",
+      "file": "pocus-basics.md",
+      "category": "Diagnostics & monitoring",
+      "source": "ICMR STW Vol. 3, WHO",
+      "status": "Draft",
+      "words": 353,
+      "doses": 1
+    },
+    {
+      "number": 77,
+      "title": "Suture materials & techniques",
+      "file": "suture-materials-techniques.md",
+      "category": "Diagnostics & monitoring",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 366,
+      "doses": 2
+    },
+    {
+      "number": 78,
+      "title": "Splinting & casting",
+      "file": "splinting-casting.md",
+      "category": "Diagnostics & monitoring",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 322,
+      "doses": 1
+    },
+    {
+      "number": 79,
+      "title": "Joint aspiration & injection",
+      "file": "joint-aspiration-injection.md",
+      "category": "Diagnostics & monitoring",
+      "source": "ICMR STW Vol. 3, ACR",
+      "status": "Draft",
+      "words": 347,
+      "doses": 1
+    },
+    {
+      "number": 80,
+      "title": "Lumbar puncture",
+      "file": "lumbar-puncture.md",
+      "category": "Diagnostics & monitoring",
+      "source": "ICMR STW Vol. 3, WHO",
+      "status": "Draft",
+      "words": 327,
+      "doses": 1
+    },
+    {
+      "number": 81,
+      "title": "Incision & drainage variations",
+      "file": "incision-drainage-variations.md",
+      "category": "Diagnostics & monitoring",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 316,
+      "doses": 2
+    },
+    {
+      "number": 82,
+      "title": "Immunisation cold chain",
+      "file": "immunisation-cold-chain.md",
+      "category": "System, quality & documentation",
+      "source": "UIP, WHO",
+      "status": "Draft",
+      "words": 327,
+      "doses": 1
+    },
+    {
+      "number": 83,
+      "title": "Injection safety & sharps",
+      "file": "injection-safety-sharps.md",
+      "category": "System, quality & documentation",
+      "source": "WHO, UIP",
+      "status": "Draft",
+      "words": 291,
+      "doses": 2
+    },
+    {
+      "number": 84,
+      "title": "Hand hygiene & infection control",
+      "file": "hand-hygiene-infection-control.md",
+      "category": "System, quality & documentation",
+      "source": "WHO, NCDC",
+      "status": "Draft",
+      "words": 285,
+      "doses": 1
+    },
+    {
+      "number": 85,
+      "title": "Biomedical waste management",
+      "file": "biomedical-waste-management.md",
+      "category": "System, quality & documentation",
+      "source": "BMW Rules 2016, CPCB",
+      "status": "Draft",
+      "words": 269,
+      "doses": 1
+    },
+    {
+      "number": 86,
+      "title": "Medical documentation",
+      "file": "medical-documentation.md",
+      "category": "System, quality & documentation",
+      "source": "NMC/MCI, WHO",
+      "status": "Draft",
+      "words": 290,
+      "doses": 2
+    },
+    {
+      "number": 87,
+      "title": "Informed consent",
+      "file": "informed-consent.md",
+      "category": "System, quality & documentation",
+      "source": "NMC/MCI, ICMR",
+      "status": "Draft",
+      "words": 276,
+      "doses": 1
+    },
+    {
+      "number": 88,
+      "title": "Death certification",
+      "file": "death-certification.md",
+      "category": "System, quality & documentation",
+      "source": "RBD Act, WHO ICD",
+      "status": "Draft",
+      "words": 290,
+      "doses": 1
+    },
+    {
+      "number": 89,
+      "title": "Referral communication",
+      "file": "referral-communication.md",
+      "category": "System, quality & documentation",
+      "source": "NHM, WHO",
+      "status": "Draft",
+      "words": 285,
+      "doses": 2
+    },
+    {
+      "number": 90,
+      "title": "Telemedicine basics",
+      "file": "telemedicine-basics.md",
+      "category": "System, quality & documentation",
+      "source": "Telemedicine Guidelines, WHO",
+      "status": "Draft",
+      "words": 282,
+      "doses": 2
+    },
+    {
+      "number": 91,
+      "title": "Quality improvement & audit",
+      "file": "quality-improvement-audit.md",
+      "category": "System, quality & documentation",
+      "source": "NHM, WHO",
+      "status": "Draft",
+      "words": 277,
+      "doses": 2
+    },
+    {
+      "number": 92,
+      "title": "Fever in children",
+      "file": "fever-in-children.md",
+      "category": "Paediatric, maternal & infectious disease",
+      "source": "IMNCI, WHO",
+      "status": "Draft",
+      "words": 368,
+      "doses": 2
+    },
+    {
+      "number": 93,
+      "title": "Neonatal danger signs",
+      "file": "neonatal-danger-signs.md",
+      "category": "Paediatric, maternal & infectious disease",
+      "source": "IMNCI/F-IMNCI, WHO",
+      "status": "Draft",
+      "words": 346,
+      "doses": 2
+    },
+    {
+      "number": 94,
+      "title": "Growth monitoring",
+      "file": "growth-monitoring.md",
+      "category": "Paediatric, maternal & infectious disease",
+      "source": "WHO, POSHAN",
+      "status": "Draft",
+      "words": 358,
+      "doses": 3
+    },
+    {
+      "number": 95,
+      "title": "Adolescent health",
+      "file": "adolescent-health.md",
+      "category": "Paediatric, maternal & infectious disease",
+      "source": "RKSK, WHO",
+      "status": "Draft",
+      "words": 355,
+      "doses": 4
+    },
+    {
+      "number": 96,
+      "title": "Menopause management",
+      "file": "menopause-management.md",
+      "category": "Paediatric, maternal & infectious disease",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 363,
+      "doses": 2
+    },
+    {
+      "number": 97,
+      "title": "Emergency contraception",
+      "file": "emergency-contraception.md",
+      "category": "Paediatric, maternal & infectious disease",
+      "source": "NFPP, WHO",
+      "status": "Draft",
+      "words": 325,
+      "doses": 3
+    },
+    {
+      "number": 98,
+      "title": "HIV care basics",
+      "file": "hiv-care-basics.md",
+      "category": "Paediatric, maternal & infectious disease",
+      "source": "NACO, WHO",
+      "status": "Draft",
+      "words": 350,
+      "doses": 1
+    },
+    {
+      "number": 99,
+      "title": "TB preventive therapy",
+      "file": "tb-preventive-therapy.md",
+      "category": "Paediatric, maternal & infectious disease",
+      "source": "NTEP, WHO",
+      "status": "Draft",
+      "words": 323,
+      "doses": 6
+    },
+    {
+      "number": 100,
+      "title": "Snakebite antivenom protocol",
+      "file": "snakebite-antivenom-protocol.md",
+      "category": "Paediatric, maternal & infectious disease",
+      "source": "National Snakebite Protocol",
+      "status": "Draft",
+      "words": 334,
+      "doses": 3
+    },
+    {
+      "number": 101,
+      "title": "Rabies PEP",
+      "file": "rabies-post-exposure-prophylaxis.md",
+      "category": "Paediatric, maternal & infectious disease",
+      "source": "NRCP, WHO",
+      "status": "Draft",
+      "words": 382,
+      "doses": 3
+    },
+    {
+      "number": 102,
+      "title": "Acute otitis media (children)",
+      "file": "acute-otitis-media-children.md",
+      "category": "Paediatric core",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 340,
+      "doses": 4
+    },
+    {
+      "number": 103,
+      "title": "Bronchiolitis",
+      "file": "bronchiolitis.md",
+      "category": "Paediatric core",
+      "source": "ICMR STW Vol. 3, IMNCI",
+      "status": "Draft",
+      "words": 336,
+      "doses": 1
+    },
+    {
+      "number": 104,
+      "title": "Croup",
+      "file": "croup.md",
+      "category": "Paediatric core",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 320,
+      "doses": 5
+    },
+    {
+      "number": 105,
+      "title": "Febrile seizures",
+      "file": "febrile-seizures.md",
+      "category": "Paediatric core",
+      "source": "ICMR STW Vol. 3",
+      "status": "Draft",
+      "words": 305,
+      "doses": 3
+    },
+    {
+      "number": 106,
+      "title": "Childhood asthma",
+      "file": "childhood-asthma.md",
+      "category": "Paediatric core",
+      "source": "ICMR STW Vol. 3, GINA",
+      "status": "Draft",
+      "words": 321,
+      "doses": 3
+    },
+    {
+      "number": 107,
+      "title": "Paediatric dosing guide",
+      "file": "paediatric-dosing-guide.md",
+      "category": "Paediatric core",
+      "source": "IAP, WHO",
+      "status": "Draft",
+      "words": 383,
+      "doses": 13
+    },
+    {
+      "number": 108,
+      "title": "AEFI reporting",
+      "file": "aefi-reporting.md",
+      "category": "Paediatric core",
+      "source": "UIP, WHO",
+      "status": "Draft",
+      "words": 292,
+      "doses": 4
+    },
+    {
+      "number": 109,
+      "title": "School health screening",
+      "file": "school-health-screening.md",
+      "category": "Paediatric core",
+      "source": "RBSK, MoHFW",
+      "status": "Draft",
+      "words": 311,
+      "doses": 4
+    },
+    {
+      "number": 110,
+      "title": "Nutritional anaemia (children)",
+      "file": "nutritional-anaemia-children.md",
+      "category": "Paediatric core",
+      "source": "NIPI, WHO",
+      "status": "Draft",
+      "words": 334,
+      "doses": 6
+    },
+    {
+      "number": 111,
+      "title": "Paediatric dehydration",
+      "file": "paediatric-dehydration.md",
+      "category": "Paediatric core",
+      "source": "WHO/IMNCI",
+      "status": "Draft",
+      "words": 339,
+      "doses": 10
+    },
+    {
+      "number": 112,
+      "title": "Paediatric TB",
+      "file": "paediatric-tb.md",
+      "category": "Paediatric specialty",
+      "source": "NTEP, WHO",
+      "status": "Draft",
+      "words": 298,
+      "doses": 2
+    },
+    {
+      "number": 113,
+      "title": "Paediatric HIV",
+      "file": "paediatric-hiv.md",
+      "category": "Paediatric specialty",
+      "source": "NACO, WHO",
+      "status": "Draft",
+      "words": 307,
+      "doses": 1
+    },
+    {
+      "number": 114,
+      "title": "Congenital heart disease screening",
+      "file": "congenital-heart-disease-screening.md",
+      "category": "Paediatric specialty",
+      "source": "RBSK, ICMR",
+      "status": "Draft",
+      "words": 304,
+      "doses": 2
+    },
+    {
+      "number": 115,
+      "title": "Developmental delay",
+      "file": "developmental-delay.md",
+      "category": "Paediatric specialty",
+      "source": "RBSK, WHO",
+      "status": "Draft",
+      "words": 324,
+      "doses": 2
+    },
+    {
+      "number": 116,
+      "title": "Autism screening",
+      "file": "autism-screening.md",
+      "category": "Paediatric specialty",
+      "source": "RBSK, WHO",
+      "status": "Draft",
+      "words": 295,
+      "doses": 1
+    },
+    {
+      "number": 117,
+      "title": "Childhood obesity",
+      "file": "childhood-obesity.md",
+      "category": "Paediatric specialty",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 295,
+      "doses": 2
+    },
+    {
+      "number": 118,
+      "title": "Type 1 diabetes (children)",
+      "file": "type-1-diabetes-children.md",
+      "category": "Paediatric specialty",
+      "source": "ICMR, ISPAD",
+      "status": "Draft",
+      "words": 304,
+      "doses": 3
+    },
+    {
+      "number": 119,
+      "title": "Paediatric epilepsy",
+      "file": "paediatric-epilepsy.md",
+      "category": "Paediatric specialty",
+      "source": "ICMR, ILAE",
+      "status": "Draft",
+      "words": 300,
+      "doses": 3
+    },
+    {
+      "number": 120,
+      "title": "Paediatric skin infections",
+      "file": "paediatric-skin-infections.md",
+      "category": "Paediatric specialty",
+      "source": "ICMR, NCDC",
+      "status": "Draft",
+      "words": 298,
+      "doses": 1
+    },
+    {
+      "number": 121,
+      "title": "Paediatric poisoning",
+      "file": "paediatric-poisoning.md",
+      "category": "Paediatric specialty",
+      "source": "NCDC, WHO",
+      "status": "Draft",
+      "words": 307,
+      "doses": 4
+    },
+    {
+      "number": 122,
+      "title": "Geriatric nutrition",
+      "file": "geriatric-nutrition.md",
+      "category": "Geriatric care",
+      "source": "NPHCE, WHO",
+      "status": "Draft",
+      "words": 288,
+      "doses": 4
+    },
+    {
+      "number": 123,
+      "title": "Sarcopenia & frailty",
+      "file": "sarcopenia-frailty.md",
+      "category": "Geriatric care",
+      "source": "NPHCE, WHO",
+      "status": "Draft",
+      "words": 279,
+      "doses": 3
+    },
+    {
+      "number": 124,
+      "title": "Dementia care",
+      "file": "dementia-care.md",
+      "category": "Geriatric care",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 283,
+      "doses": 2
+    },
+    {
+      "number": 125,
+      "title": "Delirium",
+      "file": "delirium.md",
+      "category": "Geriatric care",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 286,
+      "doses": 2
+    },
+    {
+      "number": 126,
+      "title": "Urinary incontinence",
+      "file": "urinary-incontinence.md",
+      "category": "Geriatric care",
+      "source": "NPHCE, WHO",
+      "status": "Draft",
+      "words": 281,
+      "doses": 1
+    },
+    {
+      "number": 127,
+      "title": "Falls prevention programme",
+      "file": "falls-prevention-programme.md",
+      "category": "Geriatric care",
+      "source": "NPHCE, WHO",
+      "status": "Draft",
+      "words": 272,
+      "doses": 3
+    },
+    {
+      "number": 128,
+      "title": "Polypharmacy review",
+      "file": "polypharmacy-review.md",
+      "category": "Geriatric care",
+      "source": "NPHCE, WHO",
+      "status": "Draft",
+      "words": 303,
+      "doses": 2
+    },
+    {
+      "number": 129,
+      "title": "Palliative home care",
+      "file": "palliative-home-care.md",
+      "category": "Geriatric care",
+      "source": "NPCP, WHO",
+      "status": "Draft",
+      "words": 308,
+      "doses": 3
+    },
+    {
+      "number": 130,
+      "title": "Caregiver support",
+      "file": "caregiver-support.md",
+      "category": "Geriatric care",
+      "source": "NPHCE, WHO",
+      "status": "Draft",
+      "words": 287,
+      "doses": 1
+    },
+    {
+      "number": 131,
+      "title": "Elder abuse screening",
+      "file": "elder-abuse-screening.md",
+      "category": "Geriatric care",
+      "source": "WHO, NPHCE",
+      "status": "Draft",
+      "words": 307,
+      "doses": 1
+    },
+    {
+      "number": 132,
+      "title": "Chronic pain management",
+      "file": "chronic-pain-management.md",
+      "category": "Pain & screening",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 297,
+      "doses": 3
+    },
+    {
+      "number": 133,
+      "title": "Opioid prescribing safety",
+      "file": "opioid-prescribing-safety.md",
+      "category": "Pain & screening",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 310,
+      "doses": 4
+    },
+    {
+      "number": 134,
+      "title": "Wound care formulary",
+      "file": "wound-care-formulary.md",
+      "category": "Pain & screening",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 303,
+      "doses": 1
+    },
+    {
+      "number": 135,
+      "title": "Compression therapy",
+      "file": "compression-therapy.md",
+      "category": "Pain & screening",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 279,
+      "doses": 1
+    },
+    {
+      "number": 136,
+      "title": "Diabetic retinopathy screening",
+      "file": "diabetic-retinopathy-screening.md",
+      "category": "Pain & screening",
+      "source": "ICMR, NPCDCS",
+      "status": "Draft",
+      "words": 288,
+      "doses": 1
+    },
+    {
+      "number": 137,
+      "title": "Hearing loss in adults",
+      "file": "hearing-loss-adults.md",
+      "category": "Pain & screening",
+      "source": "WHO, ICMR",
+      "status": "Draft",
+      "words": 289,
+      "doses": 2
+    },
+    {
+      "number": 138,
+      "title": "Vision screening in adults",
+      "file": "vision-screening-adults.md",
+      "category": "Pain & screening",
+      "source": "WHO, NPCB",
+      "status": "Draft",
+      "words": 291,
+      "doses": 1
+    },
+    {
+      "number": 139,
+      "title": "Oral cancer screening",
+      "file": "oral-cancer-screening.md",
+      "category": "Pain & screening",
+      "source": "NOHP, ICMR",
+      "status": "Draft",
+      "words": 265,
+      "doses": 1
+    },
+    {
+      "number": 140,
+      "title": "Cervical cancer screening",
+      "file": "cervical-cancer-screening.md",
+      "category": "Pain & screening",
+      "source": "NCCP, WHO",
+      "status": "Draft",
+      "words": 289,
+      "doses": 1
+    },
+    {
+      "number": 141,
+      "title": "Breast cancer screening",
+      "file": "breast-cancer-screening.md",
+      "category": "Pain & screening",
+      "source": "NCCP, WHO",
+      "status": "Draft",
+      "words": 285,
+      "doses": 1
+    },
+    {
+      "number": 142,
+      "title": "Smoking cessation",
+      "file": "smoking-cessation.md",
+      "category": "Lifestyle & metabolic",
+      "source": "WHO, NTCP",
+      "status": "Draft",
+      "words": 304,
+      "doses": 5
+    },
+    {
+      "number": 143,
+      "title": "Alcohol use disorder",
+      "file": "alcohol-use-disorder.md",
+      "category": "Lifestyle & metabolic",
+      "source": "WHO, ICMR",
+      "status": "Draft",
+      "words": 292,
+      "doses": 2
+    },
+    {
+      "number": 144,
+      "title": "Substance use disorders",
+      "file": "substance-use-disorders.md",
+      "category": "Lifestyle & metabolic",
+      "source": "WHO, ICMR",
+      "status": "Draft",
+      "words": 321,
+      "doses": 3
+    },
+    {
+      "number": 145,
+      "title": "Adult obesity",
+      "file": "adult-obesity.md",
+      "category": "Lifestyle & metabolic",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 294,
+      "doses": 2
+    },
+    {
+      "number": 146,
+      "title": "Dyslipidaemia",
+      "file": "dyslipidaemia.md",
+      "category": "Lifestyle & metabolic",
+      "source": "ICMR, NPCDCS",
+      "status": "Draft",
+      "words": 277,
+      "doses": 5
+    },
+    {
+      "number": 147,
+      "title": "Metabolic syndrome",
+      "file": "metabolic-syndrome.md",
+      "category": "Lifestyle & metabolic",
+      "source": "ICMR, NPCDCS",
+      "status": "Draft",
+      "words": 279,
+      "doses": 3
+    },
+    {
+      "number": 148,
+      "title": "Vitamin D deficiency",
+      "file": "vitamin-d-deficiency.md",
+      "category": "Lifestyle & metabolic",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 278,
+      "doses": 4
+    },
+    {
+      "number": 149,
+      "title": "Vitamin B12 deficiency",
+      "file": "vitamin-b12-deficiency.md",
+      "category": "Lifestyle & metabolic",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 280,
+      "doses": 4
+    },
+    {
+      "number": 150,
+      "title": "Iron overload & thalassaemia",
+      "file": "iron-overload-thalassaemia.md",
+      "category": "Lifestyle & metabolic",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 292,
+      "doses": 2
+    },
+    {
+      "number": 151,
+      "title": "G6PD deficiency",
+      "file": "g6pd-deficiency.md",
+      "category": "Lifestyle & metabolic",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 259,
+      "doses": 2
+    },
+    {
+      "number": 152,
+      "title": "Electrolyte disorders",
+      "file": "electrolyte-disorders.md",
+      "category": "Critical care",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 337,
+      "doses": 4
+    },
+    {
+      "number": 153,
+      "title": "Acid-base disorders",
+      "file": "acid-base-disorders.md",
+      "category": "Critical care",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 301,
+      "doses": 2
+    },
+    {
+      "number": 154,
+      "title": "Sepsis recognition",
+      "file": "sepsis-recognition.md",
+      "category": "Critical care",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 324,
+      "doses": 5
+    },
+    {
+      "number": 155,
+      "title": "Shock management",
+      "file": "shock-management.md",
+      "category": "Critical care",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 282,
+      "doses": 2
+    },
+    {
+      "number": 156,
+      "title": "Fever of unknown origin",
+      "file": "fever-of-unknown-origin.md",
+      "category": "Critical care",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 305,
+      "doses": 3
+    },
+    {
+      "number": 157,
+      "title": "AMR basics",
+      "file": "antimicrobial-resistance-basics.md",
+      "category": "Critical care",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 280,
+      "doses": 2
+    },
+    {
+      "number": 158,
+      "title": "Hospital-acquired infection",
+      "file": "hospital-acquired-infection.md",
+      "category": "Critical care",
+      "source": "NCDC, WHO",
+      "status": "Draft",
+      "words": 283,
+      "doses": 2
+    },
+    {
+      "number": 159,
+      "title": "Needlestick injury protocol",
+      "file": "needlestick-injury-protocol.md",
+      "category": "Critical care",
+      "source": "NACO, WHO",
+      "status": "Draft",
+      "words": 298,
+      "doses": 1
+    },
+    {
+      "number": 160,
+      "title": "Blood culture collection",
+      "file": "blood-culture-collection.md",
+      "category": "Critical care",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 274,
+      "doses": 3
+    },
+    {
+      "number": 161,
+      "title": "SBAR handover",
+      "file": "sbar-handover.md",
+      "category": "Critical care",
+      "source": "WHO, NHM",
+      "status": "Draft",
+      "words": 267,
+      "doses": 2
+    },
+    {
+      "number": 162,
+      "title": "Snakebite first aid",
+      "file": "snakebite-first-aid.md",
+      "category": "Emergency & envenomation",
+      "source": "National Protocol, WHO",
+      "status": "Draft",
+      "words": 290,
+      "doses": 1
+    },
+    {
+      "number": 163,
+      "title": "Scorpion sting",
+      "file": "scorpion-sting.md",
+      "category": "Emergency & envenomation",
+      "source": "NCDC, ICMR",
+      "status": "Draft",
+      "words": 274,
+      "doses": 2
+    },
+    {
+      "number": 164,
+      "title": "Dog bite wound care",
+      "file": "dog-bite-wound-care.md",
+      "category": "Emergency & envenomation",
+      "source": "NRCP, WHO",
+      "status": "Draft",
+      "words": 302,
+      "doses": 2
+    },
+    {
+      "number": 165,
+      "title": "Heat stroke",
+      "file": "heat-stroke.md",
+      "category": "Emergency & envenomation",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 303,
+      "doses": 1
+    },
+    {
+      "number": 166,
+      "title": "Hypothermia",
+      "file": "hypothermia.md",
+      "category": "Emergency & envenomation",
+      "source": "WHO, ICMR",
+      "status": "Draft",
+      "words": 287,
+      "doses": 1
+    },
+    {
+      "number": 167,
+      "title": "Drowning",
+      "file": "drowning.md",
+      "category": "Emergency & envenomation",
+      "source": "WHO, ICMR",
+      "status": "Draft",
+      "words": 273,
+      "doses": 1
+    },
+    {
+      "number": 168,
+      "title": "Electrocution",
+      "file": "electrocution.md",
+      "category": "Emergency & envenomation",
+      "source": "WHO, ICMR",
+      "status": "Draft",
+      "words": 271,
+      "doses": 1
+    },
+    {
+      "number": 169,
+      "title": "Poisoning antidotes",
+      "file": "poisoning-antidotes.md",
+      "category": "Emergency & envenomation",
+      "source": "NCDC, WHO",
+      "status": "Draft",
+      "words": 316,
+      "doses": 6
+    },
+    {
+      "number": 170,
+      "title": "Envenomation referral",
+      "file": "envenomation-referral.md",
+      "category": "Emergency & envenomation",
+      "source": "National Protocol, WHO",
+      "status": "Draft",
+      "words": 272,
+      "doses": 2
+    },
+    {
+      "number": 171,
+      "title": "Disaster triage",
+      "file": "disaster-triage.md",
+      "category": "Emergency & envenomation",
+      "source": "WHO, NDMA",
+      "status": "Draft",
+      "words": 278,
+      "doses": 2
+    },
+    {
+      "number": 172,
+      "title": "Antenatal care schedule",
+      "file": "antenatal-care-schedule.md",
+      "category": "Maternal health",
+      "source": "RMNCH+A, WHO",
+      "status": "Draft",
+      "words": 349,
+      "doses": 5
+    },
+    {
+      "number": 173,
+      "title": "Postnatal care",
+      "file": "postnatal-care.md",
+      "category": "Maternal health",
+      "source": "RMNCH+A, WHO",
+      "status": "Draft",
+      "words": 304,
+      "doses": 3
+    },
+    {
+      "number": 174,
+      "title": "Labour monitoring",
+      "file": "labour-monitoring.md",
+      "category": "Maternal health",
+      "source": "RMNCH+A, WHO",
+      "status": "Draft",
+      "words": 295,
+      "doses": 1
+    },
+    {
+      "number": 175,
+      "title": "Postpartum haemorrhage",
+      "file": "postpartum-haemorrhage.md",
+      "category": "Maternal health",
+      "source": "RMNCH+A, WHO",
+      "status": "Draft",
+      "words": 315,
+      "doses": 5
+    },
+    {
+      "number": 176,
+      "title": "Pre-eclampsia/eclampsia",
+      "file": "pre-eclampsia-eclampsia.md",
+      "category": "Maternal health",
+      "source": "RMNCH+A, WHO",
+      "status": "Draft",
+      "words": 300,
+      "doses": 5
+    },
+    {
+      "number": 177,
+      "title": "Sepsis in pregnancy",
+      "file": "sepsis-in-pregnancy.md",
+      "category": "Maternal health",
+      "source": "WHO, ICMR",
+      "status": "Draft",
+      "words": 286,
+      "doses": 1
+    },
+    {
+      "number": 178,
+      "title": "Gestational diabetes",
+      "file": "gestational-diabetes.md",
+      "category": "Maternal health",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 277,
+      "doses": 3
+    },
+    {
+      "number": 179,
+      "title": "Family planning counselling",
+      "file": "family-planning-counselling.md",
+      "category": "Maternal health",
+      "source": "NFPP, WHO",
+      "status": "Draft",
+      "words": 299,
+      "doses": 2
+    },
+    {
+      "number": 180,
+      "title": "Safe abortion care",
+      "file": "safe-abortion-care.md",
+      "category": "Maternal health",
+      "source": "MTP Act, WHO",
+      "status": "Draft",
+      "words": 293,
+      "doses": 3
+    },
+    {
+      "number": 181,
+      "title": "Infertility referral",
+      "file": "infertility-referral.md",
+      "category": "Maternal health",
+      "source": "ICMR, WHO",
+      "status": "Draft",
+      "words": 299,
+      "doses": 3
+    },
+    {
+      "number": 182,
+      "title": "Newborn resuscitation",
+      "file": "newborn-resuscitation.md",
+      "category": "Newborn care",
+      "source": "NRP/IAP, WHO",
+      "status": "Draft",
+      "words": 290,
+      "doses": 1
+    },
+    {
+      "number": 183,
+      "title": "Neonatal sepsis",
+      "file": "neonatal-sepsis.md",
+      "category": "Newborn care",
+      "source": "WHO, IMNCI",
+      "status": "Draft",
+      "words": 281,
+      "doses": 3
+    },
+    {
+      "number": 184,
+      "title": "Neonatal jaundice",
+      "file": "neonatal-jaundice.md",
+      "category": "Newborn care",
+      "source": "WHO, IAP",
+      "status": "Draft",
+      "words": 281,
+      "doses": 1
+    },
+    {
+      "number": 185,
+      "title": "Breastfeeding support",
+      "file": "breastfeeding-support.md",
+      "category": "Newborn care",
+      "source": "WHO/UNICEF, RMNCH+A",
+      "status": "Draft",
+      "words": 284,
+      "doses": 1
+    },
+    {
+      "number": 186,
+      "title": "Kangaroo mother care",
+      "file": "kangaroo-mother-care.md",
+      "category": "Newborn care",
+      "source": "WHO, RMNCH+A",
+      "status": "Draft",
+      "words": 266,
+      "doses": 1
+    },
+    {
+      "number": 187,
+      "title": "Low birth weight care",
+      "file": "low-birth-weight-care.md",
+      "category": "Newborn care",
+      "source": "WHO, RMNCH+A",
+      "status": "Draft",
+      "words": 267,
+      "doses": 1
+    },
+    {
+      "number": 188,
+      "title": "Congenital anomalies",
+      "file": "congenital-anomalies.md",
+      "category": "Newborn care",
+      "source": "WHO, RBSK",
+      "status": "Draft",
+      "words": 278,
+      "doses": 2
+    },
+    {
+      "number": 189,
+      "title": "Neonatal hypoglycaemia",
+      "file": "neonatal-hypoglycaemia.md",
+      "category": "Newborn care",
+      "source": "WHO, IAP",
+      "status": "Draft",
+      "words": 256,
+      "doses": 3
+    },
+    {
+      "number": 190,
+      "title": "Birth asphyxia",
+      "file": "birth-asphyxia.md",
+      "category": "Newborn care",
+      "source": "WHO, NRP",
+      "status": "Draft",
+      "words": 259,
+      "doses": 1
+    },
+    {
+      "number": 191,
+      "title": "Neonatal transport",
+      "file": "neonatal-transport.md",
+      "category": "Newborn care",
+      "source": "WHO, RMNCH+A",
+      "status": "Draft",
+      "words": 270,
+      "doses": 1
+    },
+    {
+      "number": 192,
+      "title": "Dengue prevention",
+      "file": "dengue-prevention.md",
+      "category": "Public health & prevention",
+      "source": "NVBDCP, WHO",
+      "status": "Draft",
+      "words": 262,
+      "doses": 1
+    },
+    {
+      "number": 193,
+      "title": "Malaria chemoprophylaxis",
+      "file": "malaria-chemoprophylaxis.md",
+      "category": "Public health & prevention",
+      "source": "NVBDCP, WHO",
+      "status": "Draft",
+      "words": 277,
+      "doses": 4
+    },
+    {
+      "number": 194,
+      "title": "Rabies PrEP",
+      "file": "rabies-pre-exposure-prophylaxis.md",
+      "category": "Public health & prevention",
+      "source": "NRCP, WHO",
+      "status": "Draft",
+      "words": 247,
+      "doses": 4
+    },
+    {
+      "number": 195,
+      "title": "Hepatitis B prevention",
+      "file": "hepatitis-b-prevention.md",
+      "category": "Public health & prevention",
+      "source": "WHO, NVHP",
+      "status": "Draft",
+      "words": 263,
+      "doses": 1
+    },
+    {
+      "number": 196,
+      "title": "HIV PrEP & PEP",
+      "file": "hiv-prevention-prep-pep.md",
+      "category": "Public health & prevention",
+      "source": "NACO, WHO",
+      "status": "Draft",
+      "words": 292,
+      "doses": 1
+    },
+    {
+      "number": 197,
+      "title": "TB infection control",
+      "file": "tb-infection-control.md",
+      "category": "Public health & prevention",
+      "source": "NTEP, WHO",
+      "status": "Draft",
+      "words": 261,
+      "doses": 1
+    },
+    {
+      "number": 198,
+      "title": "Outbreak investigation",
+      "file": "outbreak-investigation.md",
+      "category": "Public health & prevention",
+      "source": "NCDC, WHO",
+      "status": "Draft",
+      "words": 267,
+      "doses": 1
+    },
+    {
+      "number": 199,
+      "title": "Contact tracing",
+      "file": "contact-tracing.md",
+      "category": "Public health & prevention",
+      "source": "NCDC, WHO",
+      "status": "Draft",
+      "words": 252,
+      "doses": 1
+    },
+    {
+      "number": 200,
+      "title": "Isolation & quarantine",
+      "file": "isolation-quarantine.md",
+      "category": "Public health & prevention",
+      "source": "NCDC, WHO",
+      "status": "Draft",
+      "words": 265,
+      "doses": 1
+    },
+    {
+      "number": 201,
+      "title": "Risk communication",
+      "file": "risk-communication.md",
+      "category": "Public health & prevention",
+      "source": "WHO, NCDC",
+      "status": "Draft",
+      "words": 268,
+      "doses": 1
+    }
+  ]
+}

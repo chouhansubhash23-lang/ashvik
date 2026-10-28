@@ -27,3 +27,19 @@ Unified React-based medical software (single file, no build step).
 - Export JSON from Settings for manual backup.
 
 > Security note: Firestore rules are temporarily open (`if true`) while Firebase Auth is being configured. Add auth-based rules before public use.
+
+## Clinical knowledge base (record)
+
+- **201 guidelines**, 21 categories, **74,616 words**, 653 dose mentions.
+- Guidelines: `data/guidelines/` (`index.md` for the full list).
+- Evidence: `evidence/` (sources, raw extracted text, quality checklist, verification log).
+- Evaluation: `evidence/eval/eval-report.md` — **201/201 files 100% structural pass**.
+- Record files: `data/DATA-RECORD.md`, `data/guidelines-manifest.json`, `data/guidelines-manifest.csv`.
+- Regenerate the record after adding data:
+
+```bash
+cd D:\DOCTOR\data-collection
+node make-record.js
+```
+
+> Structural evaluation only; every clinical statement still needs clinician sign-off.
