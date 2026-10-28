@@ -100,6 +100,16 @@ Status legend: **Draft** = AI-compiled, not clinician-reviewed · **Cross-checke
 | 2026-10-28 | Referral | Structured note; stabilise first | NHM | High | Draft | — |
 | 2026-10-28 | Telemedicine | Consent; red flags; e-prescription rules | Telemedicine Guidelines | High | Draft | — |
 | 2026-10-28 | QI/audit | PDSA; indicators | NHM / WHO | Medium | Draft | — |
+| 2026-10-28 | Fever in children | IMNCI danger signs; paracetamol 15 mg/kg | IMNCI / WHO | High | Draft | — |
+| 2026-10-28 | Neonatal danger signs | Urgent referral; warmth; feeding | IMNCI/F-IMNCI | High | Draft | — |
+| 2026-10-28 | Growth monitoring | WHO charts; SAM/MAM criteria | WHO / POSHAN | High | Draft | — |
+| 2026-10-28 | Adolescent health | Confidential care; anaemia; mental health | RKSK / WHO | High | Draft | — |
+| 2026-10-28 | Menopause | HRT individualisation; bone health | ICMR S1 | High | Draft | — |
+| 2026-10-28 | Emergency contraception | LNG 1.5 mg within 72 h; Cu-IUCD 5 days | NFPP / WHO | High | Draft | — |
+| 2026-10-28 | HIV care | Test with consent; link to ART | NACO / WHO | High | Draft | — |
+| 2026-10-28 | TB preventive therapy | Rule out active TB; 6H/3HP | NTEP / WHO | High | Draft | — |
+| 2026-10-28 | Snakebite antivenom | ASV indications; anaphylaxis readiness | National Protocol | High | Draft | ASV availability |
+| 2026-10-28 | Rabies PEP | Wound wash; vaccine 0/3/7/14/28; RIG | NRCP / WHO | High | Draft | — |
 
 ## How to update
 

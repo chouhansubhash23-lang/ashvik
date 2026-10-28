@@ -2,7 +2,7 @@
 
 Generated: 2026-10-28
 
-Scope: 91 guideline files in `ASHVIK/data/guidelines/`.
+Scope: 101 guideline files in `ASHVIK/data/guidelines/`.
 
 > Automated structural check only. A clinician must still verify clinical accuracy.
 
@@ -19,6 +19,7 @@ Scope: 91 guideline files in `ASHVIK/data/guidelines/`.
 | acute-kidney-injury.md | 100% | 12/12 | 481 | 1 | 0 |
 | acute-limb-ischemia.md | 100% | 12/12 | 327 | 1 | 1 |
 | acute-poisoning-agents.md | 100% | 12/12 | 508 | 9 | 0 |
+| adolescent-health.md | 100% | 12/12 | 355 | 4 | 0 |
 | adult-vaccination.md | 100% | 12/12 | 414 | 1 | 0 |
 | anaphylaxis.md | 100% | 12/12 | 437 | 8 | 1 |
 | antibiotic-stewardship.md | 100% | 12/12 | 489 | 6 | 1 |
@@ -43,17 +44,21 @@ Scope: 91 guideline files in `ASHVIK/data/guidelines/`.
 | diabetic-foot.md | 100% | 12/12 | 433 | 1 | 1 |
 | drowning-electrocution.md | 100% | 12/12 | 405 | 1 | 0 |
 | ecg-basics.md | 100% | 12/12 | 419 | 2 | 1 |
+| emergency-contraception.md | 100% | 12/12 | 325 | 3 | 1 |
 | epilepsy.md | 100% | 12/12 | 642 | 10 | 1 |
 | eye-ent-infections.md | 100% | 12/12 | 669 | 1 | 3 |
+| fever-in-children.md | 100% | 12/12 | 368 | 2 | 1 |
 | fever-with-rash-differential.md | 100% | 12/12 | 482 | 2 | 1 |
 | fractures-general.md | 100% | 12/12 | 383 | 3 | 1 |
 | gallstone-disease.md | 100% | 12/12 | 411 | 2 | 1 |
 | geriatric-care.md | 100% | 12/12 | 533 | 1 | 0 |
 | geriatric-falls-fractures.md | 100% | 12/12 | 445 | 2 | 0 |
 | gout.md | 100% | 12/12 | 541 | 9 | 2 |
+| growth-monitoring.md | 100% | 12/12 | 358 | 2 | 0 |
 | hand-hygiene-infection-control.md | 100% | 12/12 | 285 | 1 | 0 |
 | head-injury.md | 100% | 12/12 | 374 | 1 | 1 |
 | hernia.md | 100% | 12/12 | 333 | 3 | 1 |
+| hiv-care-basics.md | 100% | 12/12 | 350 | 1 | 1 |
 | hypertension.md | 100% | 12/12 | 556 | 6 | 1 |
 | immunisation-cold-chain.md | 100% | 12/12 | 327 | 1 | 0 |
 | incision-drainage-variations.md | 100% | 12/12 | 316 | 2 | 1 |
@@ -70,8 +75,10 @@ Scope: 91 guideline files in `ASHVIK/data/guidelines/`.
 | malaria.md | 100% | 12/12 | 727 | 15 | 3 |
 | maternal-care.md | 100% | 12/12 | 645 | 10 | 2 |
 | medical-documentation.md | 100% | 12/12 | 290 | 2 | 0 |
+| menopause-management.md | 100% | 12/12 | 363 | 1 | 1 |
 | menstrual-disorders.md | 100% | 12/12 | 557 | 4 | 2 |
 | migraine.md | 100% | 12/12 | 648 | 12 | 2 |
+| neonatal-danger-signs.md | 100% | 12/12 | 346 | 2 | 1 |
 | ng-tube-urinary-catheter.md | 100% | 12/12 | 369 | 1 | 1 |
 | occupational-health.md | 100% | 12/12 | 494 | 1 | 0 |
 | oral-health.md | 100% | 12/12 | 489 | 2 | 1 |
@@ -84,15 +91,18 @@ Scope: 91 guideline files in `ASHVIK/data/guidelines/`.
 | pocus-basics.md | 100% | 12/12 | 353 | 1 | 1 |
 | pressure-ulcers.md | 100% | 12/12 | 423 | 2 | 1 |
 | quality-improvement-audit.md | 100% | 12/12 | 277 | 2 | 0 |
+| rabies-post-exposure-prophylaxis.md | 100% | 12/12 | 382 | 3 | 1 |
 | referral-communication.md | 100% | 12/12 | 285 | 2 | 0 |
 | scabies-fungal-skin.md | 100% | 12/12 | 706 | 6 | 2 |
 | sexual-assault-care.md | 100% | 12/12 | 424 | 4 | 1 |
 | skin-soft-tissue-infections.md | 100% | 12/12 | 564 | 3 | 2 |
 | snake-bite-poisoning.md | 100% | 12/12 | 651 | 3 | 0 |
+| snakebite-antivenom-protocol.md | 100% | 12/12 | 334 | 3 | 1 |
 | splinting-casting.md | 100% | 12/12 | 322 | 1 | 0 |
 | sti.md | 100% | 12/12 | 587 | 12 | 1 |
 | stroke.md | 100% | 12/12 | 500 | 3 | 1 |
 | suture-materials-techniques.md | 100% | 12/12 | 366 | 2 | 1 |
+| tb-preventive-therapy.md | 100% | 12/12 | 323 | 6 | 1 |
 | telemedicine-basics.md | 100% | 12/12 | 282 | 2 | 0 |
 | thyroid-disorders.md | 100% | 12/12 | 533 | 6 | 2 |
 | tuberculosis.md | 100% | 12/12 | 658 | 5 | 1 |
@@ -134,6 +144,7 @@ All structural checks passed.
 | acute-kidney-injury.md | Draft | — | — |
 | acute-limb-ischemia.md | Draft | — | — |
 | acute-poisoning-agents.md | Draft | — | — |
+| adolescent-health.md | Draft | — | — |
 | adult-vaccination.md | Draft | — | — |
 | anaphylaxis.md | Draft | — | — |
 | antibiotic-stewardship.md | Draft | — | — |
@@ -158,17 +169,21 @@ All structural checks passed.
 | diabetic-foot.md | Draft | — | — |
 | drowning-electrocution.md | Draft | — | — |
 | ecg-basics.md | Draft | — | — |
+| emergency-contraception.md | Draft | — | — |
 | epilepsy.md | Draft | — | — |
 | eye-ent-infections.md | Draft | — | — |
+| fever-in-children.md | Draft | — | — |
 | fever-with-rash-differential.md | Draft | — | — |
 | fractures-general.md | Draft | — | — |
 | gallstone-disease.md | Draft | — | — |
 | geriatric-care.md | Draft | — | — |
 | geriatric-falls-fractures.md | Draft | — | — |
 | gout.md | Draft | — | — |
+| growth-monitoring.md | Draft | — | — |
 | hand-hygiene-infection-control.md | Draft | — | — |
 | head-injury.md | Draft | — | — |
 | hernia.md | Draft | — | — |
+| hiv-care-basics.md | Draft | — | — |
 | hypertension.md | Draft | — | — |
 | immunisation-cold-chain.md | Draft | — | — |
 | incision-drainage-variations.md | Draft | — | — |
@@ -185,8 +200,10 @@ All structural checks passed.
 | malaria.md | Draft | — | — |
 | maternal-care.md | Draft | — | — |
 | medical-documentation.md | Draft | — | — |
+| menopause-management.md | Draft | — | — |
 | menstrual-disorders.md | Draft | — | — |
 | migraine.md | Draft | — | — |
+| neonatal-danger-signs.md | Draft | — | — |
 | ng-tube-urinary-catheter.md | Draft | — | — |
 | occupational-health.md | Draft | — | — |
 | oral-health.md | Draft | — | — |
@@ -199,15 +216,18 @@ All structural checks passed.
 | pocus-basics.md | Draft | — | — |
 | pressure-ulcers.md | Draft | — | — |
 | quality-improvement-audit.md | Draft | — | — |
+| rabies-post-exposure-prophylaxis.md | Draft | — | — |
 | referral-communication.md | Draft | — | — |
 | scabies-fungal-skin.md | Draft | — | — |
 | sexual-assault-care.md | Draft | — | — |
 | skin-soft-tissue-infections.md | Draft | — | — |
 | snake-bite-poisoning.md | Draft | — | — |
+| snakebite-antivenom-protocol.md | Draft | — | — |
 | splinting-casting.md | Draft | — | — |
 | sti.md | Draft | — | — |
 | stroke.md | Draft | — | — |
 | suture-materials-techniques.md | Draft | — | — |
+| tb-preventive-therapy.md | Draft | — | — |
 | telemedicine-basics.md | Draft | — | — |
 | thyroid-disorders.md | Draft | — | — |
 | tuberculosis.md | Draft | — | — |

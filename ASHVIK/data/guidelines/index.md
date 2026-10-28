@@ -96,6 +96,16 @@ Status: **Draft — clinician review required** before clinical use.
 | 89 | Referral communication | [referral-communication.md](referral-communication.md) | NHM, WHO | Draft |
 | 90 | Telemedicine basics | [telemedicine-basics.md](telemedicine-basics.md) | Telemedicine Guidelines, WHO | Draft |
 | 91 | Quality improvement & audit | [quality-improvement-audit.md](quality-improvement-audit.md) | NHM, WHO | Draft |
+| 92 | Fever in children | [fever-in-children.md](fever-in-children.md) | IMNCI, WHO | Draft |
+| 93 | Neonatal danger signs | [neonatal-danger-signs.md](neonatal-danger-signs.md) | IMNCI/F-IMNCI, WHO | Draft |
+| 94 | Growth monitoring | [growth-monitoring.md](growth-monitoring.md) | WHO, POSHAN | Draft |
+| 95 | Adolescent health | [adolescent-health.md](adolescent-health.md) | RKSK, WHO | Draft |
+| 96 | Menopause management | [menopause-management.md](menopause-management.md) | ICMR STW Vol. 3 | Draft |
+| 97 | Emergency contraception | [emergency-contraception.md](emergency-contraception.md) | NFPP, WHO | Draft |
+| 98 | HIV care basics | [hiv-care-basics.md](hiv-care-basics.md) | NACO, WHO | Draft |
+| 99 | TB preventive therapy | [tb-preventive-therapy.md](tb-preventive-therapy.md) | NTEP, WHO | Draft |
+| 100 | Snakebite antivenom protocol | [snakebite-antivenom-protocol.md](snakebite-antivenom-protocol.md) | National Snakebite Protocol | Draft |
+| 101 | Rabies PEP | [rabies-post-exposure-prophylaxis.md](rabies-post-exposure-prophylaxis.md) | NRCP, WHO | Draft |
 
 ## Evidence and evaluation
 
@@ -106,16 +116,16 @@ Status: **Draft — clinician review required** before clinical use.
 
 ## Planned next conditions
 
-1. Fever in children (approach)
-2. Neonatal danger signs
-3. Growth monitoring
-4. Adolescent health
-5. Menopause management
-6. Contraceptive emergency
-7. HIV care basics
-8. TB preventive therapy
-9. Snakebite antivenom protocol
-10. Rabies post-exposure prophylaxis
+1. Acute otitis media in children
+2. Bronchiolitis
+3. Croup
+4. Febrile seizures
+5. Childhood asthma
+6. Paediatric dosing guide
+7. Immunisation AEFI reporting
+8. School health screening
+9. Nutritional anaemia in children
+10. Paediatric dehydration
 
 ## Medical disclaimer
 
