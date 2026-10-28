@@ -52,7 +52,7 @@
   @media (max-width:600px){ .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;} }
   .field { display:flex; flex-direction:column; gap:4px; }
   .field label { font-size:12px; font-weight:500; color:var(--muted); }
-  .field input, .field select, .field textarea { padding:9px 12px; border:1px solid var(--border); border-radius:10px; font-size:14px; font-family:inherit; background:#fff; transition:border-color .15s, box-shadow .15s; }
+  .field input, .field select, .field textarea { width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:10px; font-size:14px; font-family:inherit; background:#fff; transition:border-color .15s, box-shadow .15s; }
   .field input:focus, .field select:focus, .field textarea:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-light); }
   .field textarea { min-height:60px; resize:vertical; }
   .field input[readonly] { background:#f1f5f9; color:var(--muted); }
@@ -647,6 +647,7 @@ function App() {
 
   // History selected patient
   const [historyPatient, setHistoryPatient] = useState("");
+  const [historySearch, setHistorySearch] = useState("");
 
   // Backup/restore
   const fileInputRef = useRef(null);
@@ -977,12 +978,36 @@ function App() {
           <>
             <div className="page-head"><div><h2>{t("history",lang)}</h2><p></p></div></div>
             <div className="card">
-              <Field label={t("selectPatient",lang)}>
-                <select value={historyPatient || selectedId} onChange={e => { setHistoryPatient(e.target.value); setSelectedId(e.target.value); }}>
-                  <option value="">-- {t("selectPatient",lang)} --</option>
-                  {patients.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
-                </select>
-              </Field>
+              <div className="grid grid-2">
+                <Field label="Search patient">
+                  <input
+                    placeholder="Search by name, phone, or address..."
+                    value={historySearch}
+                    onChange={e => setHistorySearch(e.target.value)}
+                  />
+                </Field>
+                <Field label={t("selectPatient",lang)}>
+                  <select value={historyPatient || selectedId} onChange={e => { setHistoryPatient(e.target.value); setSelectedId(e.target.value); }}>
+                    <option value="">-- {t("selectPatient",lang)} --</option>
+                    {patients
+                      .filter(p => (p.name + " " + (p.phone||"") + " " + (p.address||"")).toLowerCase().includes(historySearch.toLowerCase()))
+                      .map(p => <option key={p.id} value={p.id}>{p.name} ({p.age}/{p.sex}) {p.phone ? "· " + p.phone : ""}</option>)}
+                  </select>
+                </Field>
+              </div>
+              {historySearch.trim() && !(historyPatient || selectedId) && (
+                <div style={{marginTop:10}}>
+                  {patients
+                    .filter(p => (p.name + " " + (p.phone||"") + " " + (p.address||"")).toLowerCase().includes(historySearch.toLowerCase()))
+                    .slice(0, 6)
+                    .map(p => (
+                      <button key={p.id} className="btn btn-outline btn-sm" style={{margin:"3px"}}
+                        onClick={() => { setHistoryPatient(p.id); setSelectedId(p.id); setHistorySearch(""); }}>
+                        {p.name} ({p.age}/{p.sex})
+                      </button>
+                    ))}
+                </div>
+              )}
             </div>
             {!(historyPatient || selectedId) ? <div className="card empty">{t("selectPatient",lang)}</div> : (() => {
               const pid = historyPatient || selectedId;
