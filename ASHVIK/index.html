@@ -249,7 +249,15 @@ const DISEASE_TEMPLATES = {
   "Iron deficiency anaemia": { diagnosis:"Iron deficiency anaemia", meds:[["Ferrous sulphate + folic acid","1 tab","OD","3 months","After food"],["Vitamin C 500mg","1 tab","OD","3 months",""]], advice:"Iron-rich diet. Treat worms. Recheck Hb in 4-6 weeks." },
   "Hypothyroidism": { diagnosis:"Hypothyroidism", meds:[["Levothyroxine 50mcg","1 tab","OD","30 days","Empty stomach, 30 min before food"]], advice:"TSH recheck in 6-8 weeks. Lifelong therapy usually." },
   "Acute bronchitis": { diagnosis:"Acute bronchitis", meds:[["Ambroxol syrup","5ml","TDS","5 days",""],["Paracetamol 500mg","1 tab","TDS","3 days","If fever"]], advice:"Avoid unnecessary antibiotics. Hydration, steam inhalation." },
-  "Allergic rhinitis": { diagnosis:"Allergic rhinitis", meds:[["Cetirizine 10mg","1 tab","HS","7 days",""],["Fluticasone nasal spray","2 sprays","OD","14 days","Each nostril"]], advice:"Avoid allergens. Saline nasal rinse." }
+  "Allergic rhinitis": { diagnosis:"Allergic rhinitis", meds:[["Cetirizine 10mg","1 tab","HS","7 days",""],["Fluticasone nasal spray","2 sprays","OD","14 days","Each nostril"]], advice:"Avoid allergens. Saline nasal rinse." },
+  "Pneumonia": { diagnosis:"Community-acquired pneumonia", meds:[["Amoxicillin 500mg","1 tab","TDS","7 days","After food"],["Azithromycin 500mg","1 tab","OD","3 days","If atypical / penicillin allergy"],["Paracetamol 500mg","1 tab","TDS","3 days","Fever"],["Ceftriaxone 1g","1 g IV","OD","5-7 days","Severe cases / hospital setting only"]], advice:"Assess severity (SpO2, respiratory rate, BP). Oxygen if SpO2 <94%. Refer if severe, young child, or danger signs." },
+  "Migraine": { diagnosis:"Migraine", meds:[["Paracetamol 500mg","2 tabs","SOS","3 days","At onset"],["Metoclopramide 10mg","1 tab","TDS","2 days","For nausea / vomiting"],["Sumatriptan 50mg","1 tab","SOS","Max 2/day","At onset; avoid in coronary disease"]], advice:"Rest in a dark quiet room, hydration, trigger diary. Avoid frequent analgesic use (medication-overuse headache)." },
+  "Gastroenteritis/food poisoning": { diagnosis:"Acute gastroenteritis / food poisoning", meds:[["ORS","1 sachet","After each loose stool","3 days","Dissolve in 1 litre clean water"],["Zinc 20mg","1 tab","OD","14 days","Children: 10mg"],["Ondansetron 4mg","1 tab","TDS","2 days","Only if persistent vomiting"]], advice:"Continue fluids and feeding. Avoid antibiotics and anti-diarrhoeals unless indicated. Hand hygiene and safe food/water." },
+  "Tuberculosis": { diagnosis:"Pulmonary tuberculosis (suspected)", meds:[["Isoniazid 300mg","1 tab","OD","As per NTEP","Empty stomach; weight band"],["Rifampicin 450mg","1 tab","OD","As per NTEP","Empty stomach; weight band"],["Pyrazinamide 1500mg","1 tab","OD","As per NTEP","Weight band"],["Ethambutol 1200mg","1 tab","OD","As per NTEP","Weight band"]], advice:"Confirm with sputum CBNAAT. Refer to NTEP/DOTS for free fixed-dose combination and follow-up. Screen household contacts. Notify as per national programme." },
+  "Conjunctivitis": { diagnosis:"Bacterial conjunctivitis", meds:[["Chloramphenicol 0.5% eye drops","1 drop","QID","5 days","Affected eye"],["Lubricant eye drops","1 drop","QID","5 days","Symptom relief"]], advice:"Hygiene, do not share towels. Avoid steroid drops. Refer if vision loss, severe pain or corneal involvement." },
+  "Skin allergy/urticaria": { diagnosis:"Urticaria / allergic reaction", meds:[["Cetirizine 10mg","1 tab","OD","7 days","At night"],["Chlorpheniramine 4mg","1 tab","HS","5 days","If itching is severe"],["Prednisolone 40mg","1 tab","OD","3 days","Short course if severe"]], advice:"Identify and avoid the trigger. Stop the offending drug. Emergency: adrenaline IM if angioedema or anaphylaxis." },
+  "Depression": { diagnosis:"Depressive episode", meds:[["Sertraline 50mg","1 tab","OD","30 days","Morning; review in 2 weeks"]], advice:"Assess suicide risk at every visit. Counseling/CBT alongside medication. Refer to psychiatrist if severe, psychotic or bipolar features." },
+  "Anxiety": { diagnosis:"Generalised anxiety / panic", meds:[["Sertraline 50mg","1 tab","OD","30 days","Morning; start low"],["Propranolol 10mg","1 tab","BD","7 days","For palpitations / tremor"]], advice:"Rule out cardiac and thyroid causes. Breathing exercises and counseling. Avoid long-term benzodiazepines. Refer if severe." }
 };
 
 function loadPatients() {
@@ -465,6 +473,8 @@ function App() {
       const np = { id:uid(), clinical:[], diagnostic:[], consults:[], reports:[], ...data };
       ps.push(np);
       setSelectedId(np.id);
+      if (view === "consult") setConsultPatient(np.id);
+      if (view === "diagnosis") setDxPatient(np.id);
     }
     setPatients(ps); savePatients(ps);
     setPatientModal(false);
@@ -603,7 +613,7 @@ function App() {
       if (sex === "Female" && cond.name === "UTI") score += 1;
       if (!isNaN(temp) && temp >= 100.4 && cond.keywords.includes("fever")) score += 1;
       if (!isNaN(spo2) && spo2 < 94 && (cond.name === "Pneumonia" || cond.name === "COPD" || cond.name === "Asthma")) score += 3;
-      return { ...cond, score, matched };
+      return { ...cond, score, matched, treatment: (DISEASE_TEMPLATES[cond.name] || {}).meds || [], treatmentAdvice: (DISEASE_TEMPLATES[cond.name] || {}).advice || cond.advice };
     }).filter(c => c.score > 0).sort((a,b) => b.score - a.score);
     const top = scored.slice(0,5);
     const suggested = top.length && top[0].score >= 3 ? top[0].name : (top.length ? top[0].name : "Insufficient data — needs clinical evaluation");
@@ -628,12 +638,23 @@ function App() {
     setDxResult({ pid: dxPatient, suggested, top, tests:[...tests], redFlags, doctorDx: dxDoctor, agreement, symptoms: dxSymptoms, notes: dxNotes, chronic: dxChronic, vitals: dxVitals, date: new Date().toISOString().slice(0,10) });
     setTimeout(() => document.getElementById("dxResultCard")?.scrollIntoView({ behavior:"smooth" }), 50);
   };
+  const useDxTreatment = (condName) => {
+    const tpl = DISEASE_TEMPLATES[condName];
+    if (!tpl) { alert("No treatment template for this condition. Please prescribe manually."); return; }
+    if (!dxPatient) { alert("Select a patient first."); return; }
+    setConsultPatient(dxPatient);
+    setConsult(prev => ({ ...prev, diagnosis: tpl.diagnosis, meds: tpl.meds.map(m => [...m]), advice: tpl.advice }));
+    setView("consult");
+    alert("Treatment loaded into New Consultation. Review and edit before saving.");
+  };
   const saveDxNote = () => {
     if (!dxResult) return;
     const ps = [...patients];
     const p = ps.find(x => x.id === dxResult.pid);
+    const topTpl = dxResult.top[0] ? DISEASE_TEMPLATES[dxResult.top[0].name] : null;
+    const medsText = topTpl ? topTpl.meds.map(m => `${m[0]} ${m[1]} ${m[2]} x ${m[3]}`).join("; ") : "";
     p.clinical = p.clinical || [];
-    p.clinical.push({ id:uid(), date: dxResult.date, complaint: dxResult.symptoms.join(", ") + (dxResult.notes ? " | " + dxResult.notes : ""), diagnosis: dxResult.suggested + (dxResult.doctorDx ? " (Dr impression: " + dxResult.doctorDx + ")" : ""), treatment: "Tests: " + dxResult.tests.join(", "), notes: "AI-assisted differential. Red flags: " + (dxResult.redFlags.join("; ") || "none") });
+    p.clinical.push({ id:uid(), date: dxResult.date, complaint: dxResult.symptoms.join(", ") + (dxResult.notes ? " | " + dxResult.notes : ""), diagnosis: dxResult.suggested + (dxResult.doctorDx ? " (Dr impression: " + dxResult.doctorDx + ")" : ""), treatment: (medsText ? "Rx: " + medsText + " | " : "") + "Tests: " + dxResult.tests.join(", "), notes: "AI-assisted differential. Red flags: " + (dxResult.redFlags.join("; ") || "none") });
     setPatients(ps); savePatients(ps);
     alert("Saved to patient clinical history.");
   };
@@ -814,6 +835,7 @@ function App() {
                     <option value="">-- {t("selectPatient",lang)} --</option>
                     {patients.map(p => <option key={p.id} value={p.id}>{p.name} ({p.age}/{p.sex})</option>)}
                   </select>
+                  <button type="button" className="btn btn-outline btn-sm" style={{marginTop:6}} onClick={() => openPatientModal()}>+ New Patient</button>
                 </Field>
                 <Field label={t("date",lang)}><input type="date" value={consult.date} onChange={e => setConsult({...consult, date: e.target.value})} /></Field>
                 <Field label={t("bp",lang)}><input placeholder="120/80" value={consult.bp} onChange={e => setConsult({...consult, bp: e.target.value})} /></Field>
@@ -899,6 +921,7 @@ function App() {
                     <option value="">-- {t("selectPatient",lang)} --</option>
                     {patients.map(p => <option key={p.id} value={p.id}>{p.name} ({p.age}/{p.sex})</option>)}
                   </select>
+                  <button type="button" className="btn btn-outline btn-sm" style={{marginTop:6}} onClick={() => openPatientModal()}>+ New Patient</button>
                 </Field>
                 <Field label="Age / Sex"><input value={dxPatient ? (patients.find(p=>p.id===dxPatient)?.age + " / " + patients.find(p=>p.id===dxPatient)?.sex) : ""} readOnly /></Field>
                 <Field label={t("chronic",lang)}><input value={dxChronic} onChange={e => setDxChronic(e.target.value)} /></Field>
@@ -980,15 +1003,31 @@ function App() {
                       <div className="score-bar"><div className="score-fill" style={{width: Math.min(100, c.score*10) + "%"}}></div></div>
                       <div style={{fontSize:12,color:"var(--muted)",marginTop:4}}>Matched: {c.matched.join(", ") || "-"}</div>
                       <div style={{fontSize:12,marginTop:4}}><b>Tests:</b> {(c.tests||[]).join(", ")}</div>
-                      <div style={{fontSize:12}}><b>Advice:</b> {c.advice}</div>
+                      {c.treatment && c.treatment.length > 0 && (
+                        <div style={{fontSize:12,marginTop:4}}>
+                          <b>Treatment / Rx:</b>
+                          <ul style={{margin:"2px 0 0 16px",padding:0}}>
+                            {c.treatment.map((m,i) => (
+                              <li key={i}><b>{m[0]}</b> — {m[1]} · {m[2]} · {m[3]}{m[4] ? " · " + m[4] : ""}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      <div style={{fontSize:12}}><b>Advice:</b> {c.treatmentAdvice || c.advice}</div>
+                      {c.treatment && c.treatment.length > 0 && (
+                        <button className="btn btn-outline btn-sm" style={{marginTop:6}} onClick={() => useDxTreatment(c.name)}>Use this treatment →</button>
+                      )}
                     </div>
                   ))}
                 <div className="section-title">{t("recommendedTests",lang)}</div>
                 <div>{dxResult.tests.map(tt => <Chip key={tt} label={tt} active={false} onClick={() => {}} />)}</div>
                 <div style={{marginTop:10,fontSize:12,color:"var(--muted)"}}>⚠️ Decision-support suggestion. Final diagnosis must be made by the doctor.</div>
                 <div style={{marginTop:12,display:"flex",gap:8,flexWrap:"wrap"}}>
+                  {dxResult.top[0] && DISEASE_TEMPLATES[dxResult.top[0].name] && (
+                    <button className="btn btn-primary btn-sm" onClick={() => useDxTreatment(dxResult.top[0].name)}>Use suggested treatment → Prescription</button>
+                  )}
                   <button className="btn btn-primary btn-sm" onClick={saveDxNote}>{t("saveNote",lang)}</button>
-                  <button className="btn btn-outline btn-sm" onClick={() => { sessionStorage.setItem("ashvik_dx", JSON.stringify({ diagnosis: dxResult.suggested, tests: dxResult.tests, advice: dxResult.top[0]?.advice || "" })); alert("Copied."); }}>{t("copyDx",lang)}</button>
+                  <button className="btn btn-outline btn-sm" onClick={() => { const tpl = dxResult.top[0] ? DISEASE_TEMPLATES[dxResult.top[0].name] : null; sessionStorage.setItem("ashvik_dx", JSON.stringify({ diagnosis: dxResult.suggested, tests: dxResult.tests, advice: dxResult.top[0]?.advice || "", meds: tpl ? tpl.meds : [] })); alert("Copied."); }}>{t("copyDx",lang)}</button>
                 </div>
               </div>
             )}
