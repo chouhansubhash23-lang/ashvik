@@ -1,4 +1,4 @@
-const CACHE = "ashvik-v3";
+const CACHE = "ashvik-v4";
 const ASSETS = ["./", "./index.html", "./manifest.json"];
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).catch(() => {}));
@@ -17,6 +17,8 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET") return;
+  const url = new URL(req.url);
+  if (url.origin !== self.location.origin) return; // let CDN/OCR libraries use the network directly
   const isHTML = req.mode === "navigate" || (req.headers.get("accept") || "").includes("text/html");
   if (isHTML) {
     // Network-first for the app shell, so updates are never blocked by cache.

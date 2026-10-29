@@ -88,6 +88,7 @@
   .section-title { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.8px; margin:16px 0 8px; }
   .history-item { border:1px solid var(--border); border-radius:10px; padding:12px 14px; margin-bottom:8px; }
   .report-card { border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:10px; }
+  .ocr-panel { background:#f8fafc; border:1px dashed var(--border); border-radius:10px; padding:10px; margin-top:10px; }
   .lang-select { padding:6px 10px; border-radius:8px; border:1px solid rgba(255,255,255,.3); background:rgba(255,255,255,.12); color:#fff; font-size:12px; cursor:pointer; }
   .chart-wrap { background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:10px; }
   .topbar-actions { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
@@ -310,6 +311,249 @@ const BRANDS = {
   "Sertraline 50mg": "Zosert 50, Daxid 50, Serlift 50",
   "Propranolol 10mg": "Ciplar 10, Inderal 10"
 };
+
+// ---- Offline report reader (Tesseract.js + pdf.js) ----
+const TESSERACT_CDN = "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
+const PDFJS_CDN = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js";
+const PDFJS_WORKER = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+
+const _scriptCache = {};
+function loadScript(src) {
+  if (_scriptCache[src]) return _scriptCache[src];
+  _scriptCache[src] = new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = src;
+    s.async = true;
+    s.onload = () => resolve();
+    s.onerror = () => { delete _scriptCache[src]; reject(new Error("Library load nahi hui: " + src)); };
+    document.head.appendChild(s);
+  });
+  return _scriptCache[src];
+}
+
+let _ocrWorkerPromise = null;
+let _ocrProgress = null;
+async function getOcrWorker() {
+  if (!_ocrWorkerPromise) {
+    await loadScript(TESSERACT_CDN);
+    if (!window.Tesseract) throw new Error("OCR engine load nahi hua.");
+    _ocrWorkerPromise = window.Tesseract.createWorker("eng", 1, {
+      logger: m => { if (_ocrProgress) _ocrProgress(m); }
+    }).catch(err => { _ocrWorkerPromise = null; throw err; });
+  }
+  return _ocrWorkerPromise;
+}
+
+async function ocrImageFile(file) {
+  const worker = await getOcrWorker();
+  const { data } = await worker.recognize(file);
+  return (data.text || "").trim();
+}
+
+async function extractPdfText(file, onPage) {
+  await loadScript(PDFJS_CDN);
+  const pdfjsLib = window.pdfjsLib;
+  if (!pdfjsLib) throw new Error("PDF engine load nahi hua.");
+  pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+  const data = new Uint8Array(await file.arrayBuffer());
+  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  const total = Math.min(pdf.numPages, 5);
+  let out = "";
+  for (let i = 1; i <= total; i++) {
+    if (onPage) onPage(i, total);
+    const page = await pdf.getPage(i);
+    let pageText = "";
+    try {
+      const content = await page.getTextContent();
+      const items = (content.items || []).filter(it => it.str && it.str.trim());
+      const rows = new Map();
+      items.forEach(it => {
+        const y = Math.round((it.transform?.[5] || 0) * 2) / 2;
+        if (!rows.has(y)) rows.set(y, []);
+        rows.get(y).push({ x: it.transform?.[4] || 0, str: it.str });
+      });
+      pageText = [...rows.entries()]
+        .sort((a, b) => b[0] - a[0])
+        .map(([, arr]) => arr.sort((a, b) => a.x - b.x).map(a => a.str).join(" ").replace(/\s+/g, " ").trim())
+        .join("\n")
+        .trim();
+    } catch (e) {}
+    if (pageText.length < 20) {
+      const viewport = page.getViewport({ scale: 2 });
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.ceil(viewport.width);
+      canvas.height = Math.ceil(viewport.height);
+      const ctx = canvas.getContext("2d");
+      await page.render({ canvasContext: ctx, viewport }).promise;
+      const blob = await new Promise(res => canvas.toBlob(res, "image/png"));
+      if (blob) {
+        const worker = await getOcrWorker();
+        const { data: ocr } = await worker.recognize(blob);
+        pageText = (ocr.text || "").trim();
+      }
+    }
+    out += pageText + "\n";
+  }
+  if (pdf.numPages > 5) out += `\n[Only first 5 pages read out of ${pdf.numPages}]`;
+  return out.trim();
+}
+
+function aliasHit(line, alias) {
+  const a = String(alias).toLowerCase();
+  if (a.length <= 3 || /[+^]/.test(a)) {
+    const esc = a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return new RegExp("(^|[^a-z0-9])" + esc + "([^a-z0-9]|$)", "i").test(line);
+  }
+  return String(line).toLowerCase().includes(a);
+}
+
+const LAB_TESTS = [
+  { name:"HbA1c", aliases:["hba1c","glycated hemoglobin","glycosylated hemoglobin"], unit:"%" },
+  { name:"Hemoglobin", aliases:["hemoglobin","haemoglobin","hb"], unit:"g/dL", skip:/hba1c|a1c|glycated|glycosylated/ },
+  { name:"WBC", aliases:["total leukocyte count","tlc","wbc","leukocyte count"], unit:"/µL" },
+  { name:"Platelets", aliases:["platelet count","platelets","plt"], unit:"/µL" },
+  { name:"RBC", aliases:["rbc count","rbc","red blood cell count"], unit:"million/µL" },
+  { name:"PCV", aliases:["pcv","hematocrit","haematocrit"], unit:"%" },
+  { name:"MCV", aliases:["mcv"], unit:"fL" },
+  { name:"MCH", aliases:["mch"], unit:"pg" },
+  { name:"MCHC", aliases:["mchc"], unit:"g/dL" },
+  { name:"Neutrophils", aliases:["neutrophils","neutrophil"], unit:"%" },
+  { name:"Lymphocytes", aliases:["lymphocytes","lymphocyte"], unit:"%" },
+  { name:"Eosinophils", aliases:["eosinophils","eosinophil"], unit:"%" },
+  { name:"Monocytes", aliases:["monocytes","monocyte"], unit:"%" },
+  { name:"Basophils", aliases:["basophils","basophil"], unit:"%" },
+  { name:"ESR", aliases:["esr","erythrocyte sedimentation rate"], unit:"mm/hr" },
+  { name:"Fasting Blood Sugar", aliases:["fasting blood sugar","fasting glucose","fbs","glucose fasting"], unit:"mg/dL" },
+  { name:"Postprandial Blood Sugar", aliases:["postprandial blood sugar","postprandial glucose","ppbs","pp sugar","2 hour glucose"], unit:"mg/dL" },
+  { name:"Random Blood Sugar", aliases:["random blood sugar","random glucose","rbs"], unit:"mg/dL" },
+  { name:"Blood Sugar", aliases:["blood sugar","blood glucose","sugar"], unit:"mg/dL", skip:/fasting|postprandial|ppbs|fbs|random|rbs/ },
+  { name:"Urea", aliases:["blood urea","urea"], unit:"mg/dL" },
+  { name:"Creatinine", aliases:["creatinine"], unit:"mg/dL" },
+  { name:"Uric Acid", aliases:["uric acid"], unit:"mg/dL" },
+  { name:"Total Cholesterol", aliases:["total cholesterol"], unit:"mg/dL", skip:/hdl|ldl|vldl/ },
+  { name:"LDL", aliases:["ldl cholesterol","ldl"], unit:"mg/dL", skip:/vldl/ },
+  { name:"HDL", aliases:["hdl cholesterol","hdl"], unit:"mg/dL" },
+  { name:"Triglycerides", aliases:["triglycerides","tg"], unit:"mg/dL" },
+  { name:"VLDL", aliases:["vldl"], unit:"mg/dL" },
+  { name:"SGOT/AST", aliases:["sgot","ast"], unit:"U/L" },
+  { name:"SGPT/ALT", aliases:["sgpt","alt"], unit:"U/L" },
+  { name:"ALP", aliases:["alkaline phosphatase","alp"], unit:"U/L" },
+  { name:"Total Bilirubin", aliases:["total bilirubin","bilirubin total"], unit:"mg/dL" },
+  { name:"Direct Bilirubin", aliases:["direct bilirubin"], unit:"mg/dL" },
+  { name:"TSH", aliases:["tsh","thyroid stimulating hormone"], unit:"µIU/mL" },
+  { name:"T3", aliases:["t3","triiodothyronine"], unit:"ng/dL" },
+  { name:"T4", aliases:["t4","thyroxine"], unit:"µg/dL" },
+  { name:"Sodium", aliases:["sodium","na+"], unit:"mEq/L" },
+  { name:"Potassium", aliases:["potassium","k+"], unit:"mEq/L" },
+  { name:"Calcium", aliases:["calcium"], unit:"mg/dL" },
+  { name:"CRP", aliases:["c-reactive protein","crp"], unit:"mg/L" },
+  { name:"Vitamin D", aliases:["vitamin d","25-oh vitamin d","25 hydroxy vitamin d"], unit:"ng/mL" },
+  { name:"Vitamin B12", aliases:["vitamin b12","b12"], unit:"pg/mL" },
+  { name:"Ferritin", aliases:["ferritin"], unit:"ng/mL" },
+  { name:"PSA", aliases:["psa","prostate specific antigen"], unit:"ng/mL" },
+  { name:"D-Dimer", aliases:["d-dimer","d dimer"], unit:"ng/mL" },
+  { name:"Amylase", aliases:["amylase"], unit:"U/L" },
+  { name:"Lipase", aliases:["lipase"], unit:"U/L" }
+];
+
+const QUAL_TESTS = [
+  { name:"Dengue NS1", aliases:["dengue ns1","ns1 antigen","ns1"], positive:/positive|reactive|detected/i, negative:/negative|non[- ]?reactive|not detected/i },
+  { name:"Dengue IgM", aliases:["dengue igm","igm dengue","dengue igm antibody"], positive:/positive|reactive|detected/i, negative:/negative|non[- ]?reactive|not detected/i },
+  { name:"Dengue IgG", aliases:["dengue igg","igg dengue"], positive:/positive|reactive|detected/i, negative:/negative|non[- ]?reactive|not detected/i },
+  { name:"Malaria Antigen", aliases:["malaria antigen","malaria rdt","mp antigen","pf antigen","pan antigen","malaria parasite"], positive:/positive|reactive|detected/i, negative:/negative|non[- ]?reactive|not detected/i },
+  { name:"Typhoid IgM", aliases:["typhoid igm","typhi dot","typhidot"], positive:/positive|reactive|detected/i, negative:/negative|non[- ]?reactive|not detected/i },
+  { name:"HBsAg", aliases:["hbsag","hepatitis b surface antigen"], positive:/positive|reactive|detected/i, negative:/negative|non[- ]?reactive|not detected/i },
+  { name:"Anti-HCV", aliases:["anti-hcv","anti hcv","hcv antibody"], positive:/positive|reactive|detected/i, negative:/negative|non[- ]?reactive|not detected/i },
+  { name:"HIV", aliases:["hiv"], positive:/positive|reactive|detected/i, negative:/negative|non[- ]?reactive|not detected/i }
+];
+
+function getLabFlag(name, value, sex) {
+  const n = parseFloat(String(value).replace(",", "."));
+  if (isNaN(n)) return "";
+  const male = sex !== "Female";
+  switch (name) {
+    case "Hemoglobin": return n < (male ? 13 : 12) ? "Low" : n > (male ? 17 : 15) ? "High" : "";
+    case "WBC": { const v = n < 100 ? n * 1000 : n; return v < 4000 ? "Low" : v > 11000 ? "High" : ""; }
+    case "Platelets": { const v = n < 10 ? n * 100000 : n < 1000 ? n * 1000 : n; return v < 150000 ? "Low" : v > 450000 ? "High" : ""; }
+    case "Fasting Blood Sugar": return n < 70 ? "Low" : n > 126 ? "High" : "";
+    case "Postprandial Blood Sugar":
+    case "Random Blood Sugar":
+    case "Blood Sugar": return n < 70 ? "Low" : n > 200 ? "High" : "";
+    case "HbA1c": return n > 6.5 ? "High" : "";
+    case "Creatinine": return n > 1.4 ? "High" : "";
+    case "Urea": return n > 40 ? "High" : "";
+    case "Uric Acid": return n > (male ? 7 : 6) ? "High" : "";
+    case "Total Cholesterol": return n > 200 ? "High" : "";
+    case "LDL": return n > 130 ? "High" : "";
+    case "HDL": return n < 40 ? "Low" : "";
+    case "Triglycerides": return n > 150 ? "High" : "";
+    case "SGOT/AST":
+    case "SGPT/ALT": return n > 40 ? "High" : "";
+    case "ALP": return n > 120 ? "High" : "";
+    case "Total Bilirubin": return n > 1.2 ? "High" : "";
+    case "TSH": return n < 0.4 ? "Low" : n > 4.5 ? "High" : "";
+    case "CRP": return n > 10 ? "High" : "";
+    case "ESR": return n > 20 ? "High" : "";
+    case "Sodium": return n < 135 ? "Low" : n > 145 ? "High" : "";
+    case "Potassium": return n < 3.5 ? "Low" : n > 5.5 ? "High" : "";
+    case "Vitamin D": return n < 30 ? "Low" : "";
+    case "Vitamin B12": return n < 200 ? "Low" : "";
+    case "PSA": return n > 4 ? "High" : "";
+    case "D-Dimer": return n > 500 ? "High" : "";
+    case "Amylase": return n > 100 ? "High" : "";
+    case "Lipase": return n > 60 ? "High" : "";
+    default: return "";
+  }
+}
+
+function unitFor(test, line) {
+  const l = line.toLowerCase();
+  if (test.name === "Platelets" || test.name === "WBC") {
+    if (/lakh|lac/.test(l)) return "lakh/µL";
+    if (/10\s*\^?\s*3|x10/.test(l)) return "x10³/µL";
+  }
+  return test.unit;
+}
+
+function parseLabValues(text, sex) {
+  const lines = String(text || "").split(/\r?\n/).map(l => l.replace(/\s+/g, " ").trim()).filter(Boolean);
+  const found = [];
+  for (const test of LAB_TESTS) {
+    for (const line of lines) {
+      const lower = line.toLowerCase();
+      if (test.skip && test.skip.test(lower)) continue;
+      const aliases = test.aliases.slice().sort((a, b) => b.length - a.length);
+      const hit = aliases.find(a => aliasHit(line, a));
+      if (!hit) continue;
+      const idx = lower.indexOf(hit.toLowerCase());
+      const tail = idx >= 0 ? line.slice(idx + hit.length) : line;
+      const m = tail.match(/(\d+(?:[.,]\d+)?)/) || line.match(/(\d+(?:[.,]\d+)?)/);
+      if (!m) continue;
+      const value = m[1].replace(",", ".");
+      found.push({ name:test.name, value, unit:unitFor(test, line), flag:getLabFlag(test.name, value, sex), line });
+      break;
+    }
+  }
+  return found;
+}
+
+function parseQualitative(text) {
+  const lines = String(text || "").split(/\r?\n/).map(l => l.replace(/\s+/g, " ").trim()).filter(Boolean);
+  const found = [];
+  for (const test of QUAL_TESTS) {
+    for (const line of lines) {
+      if (!test.aliases.some(a => aliasHit(line, a))) continue;
+      let value = "";
+      if (test.positive.test(line)) value = "Positive";
+      else if (test.negative.test(line)) value = "Negative";
+      if (value) {
+        found.push({ name:test.name, value, unit:"", flag:value === "Positive" ? "Positive" : "", line });
+        break;
+      }
+    }
+  }
+  return found;
+}
 
 // Shared clinical reasoning engine used by Quick Differential and ASHVIK Doctor.
 function assessCase({ age, sex, symptoms, notes, vitals, chronic }) {
@@ -890,16 +1134,29 @@ function App() {
   // Reports
   const [reportModal, setReportModal] = useState(false);
   const [reportForm, setReportForm] = useState({ pid:"", date:"", name:"", result:"", notes:"", file:null });
+  const [ocrStatus, setOcrStatus] = useState("idle");
+  const [ocrProgress, setOcrProgress] = useState(0);
+  const [ocrText, setOcrText] = useState("");
+  const [ocrValues, setOcrValues] = useState([]);
+  const [ocrError, setOcrError] = useState("");
+  const ocrRunRef = useRef(0);
   const saveReport = () => {
     if (!reportForm.pid || !reportForm.date || !reportForm.name) { alert("Patient, date and test name required."); return; }
     const finish = (fileData, fileType, fileName) => {
       const ps = [...patients];
       const p = ps.find(x => x.id === reportForm.pid);
       p.reports = p.reports || [];
-      p.reports.push({ id:uid(), date:reportForm.date, name:reportForm.name, result:reportForm.result, notes:reportForm.notes, fileData, fileType, fileName });
+      p.reports.push({
+        id:uid(), date:reportForm.date, name:reportForm.name, result:reportForm.result, notes:reportForm.notes,
+        fileData, fileType, fileName,
+        ocrText: ocrText || "",
+        ocrValues: (ocrValues || []).map(({ line, ...v }) => v)
+      });
       setPatients(ps); savePatients(ps);
+      setSelectedId(reportForm.pid);
       setReportModal(false);
       setReportForm({ pid:"", date:"", name:"", result:"", notes:"", file:null });
+      setOcrStatus("idle"); setOcrProgress(0); setOcrText(""); setOcrValues([]); setOcrError("");
     };
     if (reportForm.file) {
       const reader = new FileReader();
@@ -919,6 +1176,57 @@ function App() {
     if (pid) setSelectedId(pid);
     setReportReturnView(fromView);
     setView("reports");
+  };
+  const openReportModal = () => {
+    ocrRunRef.current++;
+    setReportForm({ pid: selectedId || "", date: new Date().toISOString().slice(0,10), name:"", result:"", notes:"", file:null });
+    setOcrStatus("idle"); setOcrProgress(0); setOcrText(""); setOcrValues([]); setOcrError("");
+    setReportModal(true);
+  };
+  const runReportOCR = async (file) => {
+    if (!file) return;
+    const runId = ++ocrRunRef.current;
+    const stale = () => ocrRunRef.current !== runId;
+    setOcrStatus("loading"); setOcrProgress(0); setOcrText(""); setOcrValues([]); setOcrError("");
+    try {
+      const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name || "");
+      let text = "";
+      if (isPdf) {
+        text = await extractPdfText(file, (page, total) => {
+          if (stale()) return;
+          setOcrStatus("reading");
+          setOcrProgress(Math.round((page / total) * 90));
+        });
+      } else if ((file.type || "").startsWith("image/")) {
+        setOcrStatus("reading");
+        _ocrProgress = m => {
+          if (stale()) return;
+          if (m.status === "recognizing text") setOcrProgress(Math.round((m.progress || 0) * 90));
+        };
+        text = await ocrImageFile(file);
+      } else {
+        throw new Error("Sirf PDF ya image file support hai.");
+      }
+      if (stale()) return;
+      setOcrText(text);
+      const p = patients.find(x => x.id === reportForm.pid);
+      const values = [...parseLabValues(text, p?.sex), ...parseQualitative(text)];
+      setOcrValues(values);
+      setOcrProgress(100);
+      setOcrStatus("done");
+      if (!text.trim()) setOcrError("Text nahi mila. Clear photo ya text-based PDF try karein.");
+    } catch (e) {
+      if (stale()) return;
+      setOcrStatus("error");
+      setOcrError(e.message || "Report read nahi ho payi.");
+    } finally {
+      _ocrProgress = null;
+    }
+  };
+  const applyOcrValues = () => {
+    if (!ocrValues.length) return;
+    const lines = ocrValues.map(v => `${v.name}: ${v.value}${v.unit ? " " + v.unit : ""}${v.flag ? " (" + v.flag + ")" : ""}`).join("\n");
+    setReportForm(prev => ({ ...prev, result: prev.result ? prev.result + "\n" + lines : lines }));
   };
 
   // History selected patient
@@ -1557,7 +1865,7 @@ function App() {
               <div><h2>📋 Test Reports</h2><p>ASHVIK Doctor · patient reports & uploads</p></div>
               <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
                 <button className="btn btn-outline" onClick={() => setView(reportReturnView)}>← {reportReturnView === "diagnosis" ? "Quick Differential" : "ASHVIK Doctor"}</button>
-                <button className="btn btn-primary" onClick={() => { setReportForm({ pid: selectedId || "", date: new Date().toISOString().slice(0,10), name:"", result:"", notes:"", file:null }); setReportModal(true); }}>{t("addReport",lang)}</button>
+                <button className="btn btn-primary" onClick={openReportModal}>{t("addReport",lang)}</button>
               </div>
             </div>
             <div className="card">
@@ -1578,6 +1886,20 @@ function App() {
                   </div>
                   <div style={{marginTop:8}}><b>{t("result",lang)}:</b> {r.result || "-"}</div>
                   {r.notes && <div><b>{t("reportNotes",lang)}:</b> {r.notes}</div>}
+                  {r.ocrValues && r.ocrValues.length > 0 && (
+                    <details style={{marginTop:6,fontSize:12}}>
+                      <summary style={{cursor:"pointer",fontWeight:600}}>Parsed values ({r.ocrValues.length})</summary>
+                      <div style={{marginTop:4}}>
+                        {r.ocrValues.map((v, i) => <span key={i} style={{display:"inline-block",marginRight:10,marginBottom:2}}>{v.name}: <b>{v.value}</b> {v.unit}{v.flag ? " (" + v.flag + ")" : ""}</span>)}
+                      </div>
+                    </details>
+                  )}
+                  {r.ocrText && (
+                    <details style={{marginTop:4,fontSize:12}}>
+                      <summary style={{cursor:"pointer",color:"var(--muted)"}}>OCR text</summary>
+                      <pre style={{whiteSpace:"pre-wrap",fontSize:11,maxHeight:180,overflow:"auto"}}>{r.ocrText}</pre>
+                    </details>
+                  )}
                   {r.fileData && <div style={{marginTop:8}}><a href={r.fileData} target="_blank" download={r.fileName||"report"}>📎 {r.fileName || "View file"}</a></div>}
                 </div>
               ))}
@@ -1681,7 +2003,55 @@ function App() {
           <Field label={t("reportName",lang) + " *"}><input placeholder="CBC, Malaria RDT, CXR..." value={reportForm.name} onChange={e => setReportForm({...reportForm, name: e.target.value})} /></Field>
           <Field label={t("reportResult",lang)}><textarea value={reportForm.result} onChange={e => setReportForm({...reportForm, result: e.target.value})} /></Field>
           <Field label={t("reportNotes",lang)}><textarea value={reportForm.notes} onChange={e => setReportForm({...reportForm, notes: e.target.value})} /></Field>
-          <Field label={t("attachFile",lang)}><input type="file" onChange={e => setReportForm({...reportForm, file: e.target.files[0]})} /></Field>
+          <Field label={t("attachFile",lang)}>
+            <input type="file" accept=".pdf,image/*" onChange={e => {
+              const file = e.target.files[0] || null;
+              setReportForm({...reportForm, file});
+              if (file) runReportOCR(file);
+              else { setOcrStatus("idle"); setOcrProgress(0); setOcrText(""); setOcrValues([]); setOcrError(""); }
+            }} />
+          </Field>
+          {ocrStatus !== "idle" && (
+            <div className="ocr-panel">
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",gap:8}}>
+                <b>🩺 Report Reader (offline OCR)</b>
+                <span style={{fontSize:11,color:"var(--muted)"}}>
+                  {ocrStatus === "loading" ? "Preparing..." : ocrStatus === "reading" ? "Reading " + ocrProgress + "%" : ocrStatus === "done" ? "Done" : "Error"}
+                </span>
+              </div>
+              {(ocrStatus === "loading" || ocrStatus === "reading") && (
+                <div className="score-bar" style={{marginTop:6}}><div className="score-fill" style={{width: Math.max(4, ocrProgress) + "%"}}></div></div>
+              )}
+              {ocrError && <div className="alert alert-danger" style={{marginTop:8}}>{ocrError}</div>}
+              {ocrText && (
+                <>
+                  <Field label="Extracted text (verify before saving)" style={{marginTop:8}}>
+                    <textarea rows="4" value={ocrText} onChange={e => setOcrText(e.target.value)} />
+                  </Field>
+                  {ocrValues.length > 0 ? (
+                    <div style={{marginTop:8}}>
+                      <div style={{fontSize:12,fontWeight:600,marginBottom:4}}>Detected values <span style={{fontWeight:400,color:"var(--muted)"}}>(typical adult range; doctor verify)</span></div>
+                      <table style={{width:"100%",fontSize:12}}>
+                        <thead><tr><th align="left">Test</th><th align="left">Value</th><th align="left">Flag</th></tr></thead>
+                        <tbody>
+                          {ocrValues.map((v, i) => (
+                            <tr key={i}>
+                              <td>{v.name}</td>
+                              <td>{v.value} {v.unit}</td>
+                              <td style={{fontWeight:600,color:v.flag === "Positive" || v.flag === "High" ? "var(--danger)" : v.flag === "Low" ? "var(--warn)" : "var(--muted)"}}>{v.flag || "—"}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                      <button type="button" className="btn btn-outline btn-sm" style={{marginTop:6}} onClick={applyOcrValues}>Use detected values in Result</button>
+                    </div>
+                  ) : (
+                    <div style={{fontSize:12,color:"var(--muted)",marginTop:6}}>Koi known lab value detect nahi hui. Text verify karke Result me likhein.</div>
+                  )}
+                </>
+              )}
+            </div>
+          )}
           <div className="modal-actions">
             <button className="btn btn-outline" onClick={() => setReportModal(false)}>{t("cancel",lang)}</button>
             <button className="btn btn-primary" onClick={saveReport}>{t("save",lang)}</button>
@@ -1697,7 +2067,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 // Register service worker for PWA offline
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=3").then(reg => {
+    navigator.serviceWorker.register("./sw.js?v=4").then(reg => {
       reg.update().catch(() => {});
     }).catch(() => {});
   });
