@@ -260,6 +260,48 @@ const DISEASE_TEMPLATES = {
   "Anxiety": { diagnosis:"Generalised anxiety / panic", meds:[["Sertraline 50mg","1 tab","OD","30 days","Morning; start low"],["Propranolol 10mg","1 tab","BD","7 days","For palpitations / tremor"]], advice:"Rule out cardiac and thyroid causes. Breathing exercises and counseling. Avoid long-term benzodiazepines. Refer if severe." }
 };
 
+// Common Indian brand examples for the generic drugs used above.
+// Brand names are examples only - always check availability, strength and patient suitability.
+const BRANDS = {
+  "Paracetamol 500mg": "Crocin 500, Calpol 500, Pacimol 500",
+  "ORS": "Electral, Enerzal, Walyte",
+  "Artemether-Lumefantrine (as per protocol)": "Coartem, Lumether",
+  "Azithromycin 500mg": "Azithral 500, Azee 500, Zithromax",
+  "Zinc 20mg": "Zinconia 20, Z&D, Zinc-20",
+  "Amlodipine 5mg": "Amlopres 5, Stamlo 5, Amlokind 5",
+  "Telmisartan 40mg": "Telma 40, Telsartan 40, Micardis 40",
+  "Metformin 500mg": "Glycomet 500, Glucophage 500",
+  "Glimepiride 1mg": "Amaryl 1, Glimestar 1, Glynase 1",
+  "Salbutamol inhaler": "Asthalin, Ventorlin, Salbair",
+  "Budesonide inhaler": "Budecort, Pulmicort, Foracort (combo)",
+  "Tiotropium inhaler": "Tiova, Spiriva",
+  "Nitrofurantoin 100mg": "Niftran 100, Uvamin 100",
+  "Permethrin 5% cream": "Permite 5%, Scabper",
+  "Cetirizine 10mg": "Cetzine 10, Alerid 10, Zyrtec 10",
+  "Clotrimazole cream": "Candid cream, Canesten",
+  "Terbinafine 250mg": "Lamisil 250, Terbicip 250, Fungicide",
+  "Ferrous sulphate + folic acid": "Autrin, Fefol, Orofer XT",
+  "Vitamin C 500mg": "Limcee 500, Celin 500, Redoxon",
+  "Levothyroxine 50mcg": "Thyronorm 50, Eltroxin 50, Thyrox 50",
+  "Ambroxol syrup": "Mucolite, Ambrodil, Mucinac",
+  "Fluticasone nasal spray": "Flonase, Fluticort",
+  "Amoxicillin 500mg": "Mox 500, Novamox 500, Amoxil 500",
+  "Ceftriaxone 1g": "Monocef 1g, Intacef 1g, Oframax 1g",
+  "Metoclopramide 10mg": "Perinorm 10, Maxolon, Reglan",
+  "Sumatriptan 50mg": "Suminat 50, Imitrex 50",
+  "Ondansetron 4mg": "Ondem 4, Emeset 4, Vomikind 4",
+  "Isoniazid 300mg": "NTEP FDC (HRZE), Isoniazid 300",
+  "Rifampicin 450mg": "NTEP FDC (HRZE), R-Cinex",
+  "Pyrazinamide 1500mg": "NTEP FDC (HRZE), Pyrazinamide 1500",
+  "Ethambutol 1200mg": "NTEP FDC (HRZE), Ethambutol 1200",
+  "Chloramphenicol 0.5% eye drops": "Chloromycetin eye drops",
+  "Lubricant eye drops": "Refresh Tears, Systane, Tears Naturale",
+  "Chlorpheniramine 4mg": "Avil (pheniramine), Chlorpheniramine 4mg",
+  "Prednisolone 40mg": "Wysolone 40, Omnacortil 40",
+  "Sertraline 50mg": "Zosert 50, Daxid 50, Serlift 50",
+  "Propranolol 10mg": "Ciplar 10, Inderal 10"
+};
+
 function loadPatients() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
 }
@@ -531,10 +573,14 @@ function App() {
   });
   const removeMed = (idx) => setConsult(prev => ({ ...prev, meds: prev.meds.filter((_,i) => i !== idx) }));
 
+  const withBrands = (meds) => meds.map(m => {
+    const b = BRANDS[m[0]];
+    return [m[0], m[1], m[2], m[3], [m[4], b ? "Brands: " + b : ""].filter(Boolean).join(" | ")];
+  });
   const applyDisease = (d) => {
     const t = DISEASE_TEMPLATES[d];
     if (!t) return;
-    setConsult(prev => ({ ...prev, diagnosis: t.diagnosis, meds: t.meds.map(m => [...m]), advice: t.advice }));
+    setConsult(prev => ({ ...prev, diagnosis: t.diagnosis, meds: withBrands(t.meds), advice: t.advice }));
   };
 
   const saveConsult = () => {
@@ -658,7 +704,7 @@ function App() {
     if (!tpl) { alert("No treatment template for this condition. Please prescribe manually."); return; }
     if (!dxPatient) { alert("Select a patient first."); return; }
     setConsultPatient(dxPatient);
-    setConsult(prev => ({ ...prev, diagnosis: tpl.diagnosis, meds: tpl.meds.map(m => [...m]), advice: tpl.advice }));
+    setConsult(prev => ({ ...prev, diagnosis: tpl.diagnosis, meds: withBrands(tpl.meds), advice: tpl.advice }));
     setView("consult");
     alert("Treatment loaded into New Consultation. Review and edit before saving.");
   };
@@ -1010,6 +1056,24 @@ function App() {
                     Your impression: <b>{dxResult.doctorDx}</b> | System: <b>{dxResult.suggested}</b>
                   </div>
                 )}
+                {(() => {
+                  const top = dxResult.top[0];
+                  const tpl = top ? DISEASE_TEMPLATES[top.name] : null;
+                  if (!tpl) return null;
+                  return (
+                    <div className="alert alert-info" style={{marginTop:10}}>
+                      <b>Standard treatment — {top.name}</b>
+                      <ul style={{margin:"6px 0 0 18px",padding:0,fontSize:13}}>
+                        {tpl.meds.map((m,i) => (
+                          <li key={i} style={{marginBottom:4}}>
+                            <b>{m[0]}</b> — {m[1]} · {m[2]} · {m[3]}{m[4] ? " · " + m[4] : ""}
+                            {BRANDS[m[0]] && <div style={{fontSize:11,color:"var(--muted)"}}>Brands: {BRANDS[m[0]]}</div>}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })()}
                 <div className="section-title">{t("differential",lang)}</div>
                 {dxResult.top.length === 0 ? <div className="empty">No matching conditions. Enter more symptoms.</div> :
                   dxResult.top.map(c => (
@@ -1023,10 +1087,16 @@ function App() {
                           <b>Treatment / Rx:</b>
                           <ul style={{margin:"2px 0 0 16px",padding:0}}>
                             {c.treatment.map((m,i) => (
-                              <li key={i}><b>{m[0]}</b> — {m[1]} · {m[2]} · {m[3]}{m[4] ? " · " + m[4] : ""}</li>
+                              <li key={i} style={{marginBottom:4}}>
+                                <b>{m[0]}</b> — {m[1]} · {m[2]} · {m[3]}{m[4] ? " · " + m[4] : ""}
+                                {BRANDS[m[0]] && <div style={{fontSize:11,color:"var(--muted)"}}>Brands: {BRANDS[m[0]]}</div>}
+                              </li>
                             ))}
                           </ul>
                         </div>
+                      )}
+                      {(!c.treatment || c.treatment.length === 0) && (
+                        <div style={{fontSize:12,marginTop:4,color:"var(--muted)"}}>No standard template — prescribe manually.</div>
                       )}
                       <div style={{fontSize:12}}><b>Advice:</b> {c.treatmentAdvice || c.advice}</div>
                       {c.treatment && c.treatment.length > 0 && (
