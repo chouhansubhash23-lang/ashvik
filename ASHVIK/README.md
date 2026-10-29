@@ -7,7 +7,7 @@ Unified React-based medical software (single file, no build step).
 - Patients: add/edit/delete/search, start consultation
 - New Consultation: patient, vitals (incl. sugar), symptoms, diagnosis templates, Rx table, advice, tests, follow-up, referral, print Rx
 - ASHVIK Doctor: guided case-taking co-pilot (history → vitals → symptoms → red flags → differential diagnosis → treatment plan → prescription)
-- Diagnosis Assistant: symptoms → differential diagnosis, red flags, doctor impression, save note
+- Quick Differential (inside ASHVIK Doctor): known symptoms → fast differential diagnosis, red flags, doctor impression, save note
 - History & Rx: consultations, clinical notes, test reports, vitals trend charts
 - Test Reports: add/view/delete with file upload
 - Settings: language toggle (English/Hindi/Bangla), backup/restore JSON, PWA install

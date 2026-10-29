@@ -128,7 +128,7 @@ const getDoctorId = () => localStorage.getItem("ashvik_doctor_id") || DEFAULT_DO
 const T = {
   en: {
     app:"ASHVIK", tag:"Clinical Consultation & Diagnosis",
-    dashboard:"Dashboard", patients:"Patients", consult:"New Consultation", diagnosis:"Diagnosis Assist",
+    dashboard:"Dashboard", patients:"Patients", consult:"New Consultation", diagnosis:"Quick Differential",
     history:"History & Rx", reports:"Test Reports", settings:"Settings/Backup",
     addPatient:"+ Add Patient", edit:"Edit", delete:"Delete", save:"Save", cancel:"Cancel",
     name:"Name", age:"Age", sex:"Sex", phone:"Phone", address:"Address", dob:"Date of Birth",
@@ -311,7 +311,7 @@ const BRANDS = {
   "Propranolol 10mg": "Ciplar 10, Inderal 10"
 };
 
-// Shared clinical reasoning engine used by Diagnosis Assist and ASHVIK Doctor.
+// Shared clinical reasoning engine used by Quick Differential and ASHVIK Doctor.
 function assessCase({ age, sex, symptoms, notes, vitals, chronic }) {
   const symptomText = ((symptoms || []).join(" ") + " " + (notes || "")).toLowerCase();
   const chronicL = String(chronic || "").toLowerCase();
@@ -385,7 +385,6 @@ function Sidebar({ view, setView, lang, setLang, t, cloudStatus }) {
     { id:"doctor", label:"ASHVIK Doctor", icon:"🤖" },
     { id:"patients", label:t("patients",lang), icon:"👥" },
     { id:"consult", label:t("consult",lang), icon:"🩺" },
-    { id:"diagnosis", label:t("diagnosis",lang), icon:"🔬" },
     { id:"history", label:t("history",lang), icon:"📁" },
     { id:"reports", label:t("reports",lang), icon:"📋" },
     { id:"settings", label:t("settings",lang), icon:"⚙️" },
@@ -397,7 +396,7 @@ function Sidebar({ view, setView, lang, setLang, t, cloudStatus }) {
         <div><h1>{t("app",lang)}</h1><p>{t("tag",lang)}</p></div>
       </div>
       {items.map(it => (
-        <button key={it.id} className={"nav-btn" + (view===it.id?" active":"")} onClick={() => setView(it.id)}>
+        <button key={it.id} className={"nav-btn" + ((view===it.id || (it.id==="doctor" && view==="diagnosis"))?" active":"")} onClick={() => setView(it.id)}>
           <span>{it.icon}</span>{it.label}
         </button>
       ))}
@@ -701,7 +700,7 @@ function App() {
     w.document.close();
   };
 
-  // Diagnosis assistant state
+  // Quick Differential state (opened from ASHVIK Doctor)
   const [dxPatient, setDxPatient] = useState("");
   const [dxSymptoms, setDxSymptoms] = useState([]);
   const [dxNotes, setDxNotes] = useState("");
@@ -1002,7 +1001,7 @@ function App() {
               <div className="card-head" style={{marginBottom:8}}><h3 style={{fontSize:14}}>{t("quickActions",lang)}</h3></div>
               <button className="btn btn-primary btn-sm" onClick={() => setView("consult")}>+ {t("consult",lang)}</button>
               <button className="btn btn-outline btn-sm" onClick={() => setView("patients")} style={{marginLeft:6}}>{t("patients",lang)}</button>
-              <button className="btn btn-outline btn-sm" onClick={() => setView("diagnosis")} style={{marginLeft:6}}>{t("diagnosis",lang)}</button>
+              <button className="btn btn-outline btn-sm" onClick={() => setView("doctor")} style={{marginLeft:6}}>🤖 ASHVIK Doctor</button>
             </div>
             <div className="card" style={{padding:"12px 16px",marginBottom:12}}>
               <div className="card-head" style={{marginBottom:8}}><h3 style={{fontSize:14}}>{t("recentConsults",lang)}</h3></div>
@@ -1051,13 +1050,16 @@ function App() {
           <>
             <div className="page-head">
               <div><h2>🤖 ASHVIK Doctor</h2><p>Guided case-taking → differential diagnosis → treatment plan</p></div>
-              <button className="btn btn-outline" onClick={dmReset}>New Case</button>
+              <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                <button className="btn btn-outline" onClick={() => setView("diagnosis")}>⚡ Quick Differential</button>
+                <button className="btn btn-outline" onClick={dmReset}>New Case</button>
+              </div>
             </div>
 
             <div className="card">
               <div className="card-head"><h3>Consultation</h3><span className="sub">ASHVIK asks, you answer</span></div>
               <div className="chat">
-                {dmMessages.length === 0 && <div className="msg ashvik"><div className="who">ASHVIK</div>Namaste. Patient select karke "Start Consultation" dabayein. Main guided case-taking karunga aur management plan banaunga.</div>}
+                {dmMessages.length === 0 && <div className="msg ashvik"><div className="who">ASHVIK</div>Namaste. Patient select karke "Start Consultation" dabayein. Main guided case-taking karunga aur management plan banaunga. Agar symptoms already pate hain to upar ⚡ Quick Differential use karein.</div>}
                 {dmMessages.map((m,i) => (
                   <div key={i} className={"msg " + m.role}><div className="who">{m.role === "ashvik" ? "ASHVIK" : "Doctor"}</div>{m.text}</div>
                 ))}
@@ -1241,11 +1243,11 @@ function App() {
             </div>
 
             <div className="card">
-              <div className="card-head"><h3>3. Diagnosis Assist & Working Diagnosis</h3></div>
+              <div className="card-head"><h3>3. Quick Differential & Working Diagnosis</h3></div>
               <div className="alert alert-info">
-                Pehle patient, vitals aur symptoms bharo. Phir <b>Run Diagnosis Assist</b> dabao — differential diagnosis, standard treatment aur Indian brand names milenge. Diagnosis likhna optional hai.
+                Pehle patient, vitals aur symptoms bharo. Phir <b>Open Quick Differential</b> dabao — differential diagnosis, standard treatment aur Indian brand names milenge. Diagnosis likhna optional hai.
               </div>
-              <button className="btn btn-primary" style={{marginBottom:12}} onClick={startDxFromConsult}>Run Diagnosis Assist →</button>
+              <button className="btn btn-primary" style={{marginBottom:12}} onClick={startDxFromConsult}>Open Quick Differential →</button>
               <div className="section-title">Quick treatment template (optional)</div>
               <div style={{marginBottom:8}}>
                 {Object.keys(DISEASE_TEMPLATES).map(d => <Chip key={d} label={d} active={consult.diagnosis === DISEASE_TEMPLATES[d].diagnosis} onClick={() => applyDisease(d)} />)}
@@ -1290,8 +1292,11 @@ function App() {
         {view === "diagnosis" && (
           <>
             <div className="page-head">
-              <div><h2>{t("diagnosis",lang)}</h2><p>Symptoms → Differential Diagnosis</p></div>
-              <button className="btn btn-primary" onClick={generateDx}>{t("generate",lang)}</button>
+              <div><h2>⚡ Quick Differential</h2><p>ASHVIK Doctor · fast mode — known symptoms se turant differential</p></div>
+              <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                <button className="btn btn-outline" onClick={() => setView("doctor")}>← ASHVIK Doctor</button>
+                <button className="btn btn-primary" onClick={generateDx}>{t("generate",lang)}</button>
+              </div>
             </div>
             <div className="card">
               <div className="card-head"><h3>1. {t("selectPatient",lang)}</h3></div>
@@ -1368,7 +1373,7 @@ function App() {
             </div>
             {dxResult && (
               <div className="card" id="dxResultCard">
-                <div className="card-head"><h3>6. {t("diagnosis",lang)} {t("result",lang)}</h3></div>
+                <div className="card-head"><h3>6. Quick Differential Result</h3></div>
                 {dxResult.redFlags.length > 0 && (
                   <div className="alert alert-danger">
                     <b>{t("redFlags",lang)}:</b>
