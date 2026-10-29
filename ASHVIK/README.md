@@ -9,7 +9,8 @@ Unified React-based medical software (single file, no build step).
 - ASHVIK Doctor: guided case-taking co-pilot (history → vitals → symptoms → red flags → differential diagnosis → treatment plan → prescription)
 - Quick Differential (inside ASHVIK Doctor): known symptoms → fast differential diagnosis, red flags, doctor impression, save note
 - Symptomatic treatment for every case, in addition to disease-specific Rx: fever/body ache → paracetamol (only if not already in the disease template), loose motion → ORS + racecadotril (adults) or zinc (under 5), cold/runny nose → age-appropriate cetirizine + saline nasal drops, vomiting → ORS, sore throat → warm saline gargle. These are shown as **Symptomatic treatment**, merged into Quick Differential/Doctor Mode prescriptions without duplicating disease medicines, and remain doctor-editable. Paediatric, pregnancy, renal and interaction checks remain the doctor's responsibility.
-- Report-aware diagnosis: OCR values from the patient's latest reports are auto-loaded into both ASHVIK Doctor and Quick Differential. Abnormal labs add evidence to the differential (e.g. low Hb → anaemia, high HbA1c/sugar → diabetes, low platelets/positive NS1 → dengue, high TSH → hypothyroidism, Widal O ≥1:200 → typhoid) and are shown separately as **Report-based findings** for doctor verification. Widal titres are parsed separately because OCR often reads `1:250` as `1.250`; existing reports with OCR text are re-read automatically.
+- Report-aware diagnosis: OCR values from the patient's latest reports are auto-loaded into both ASHVIK Doctor and Quick Differential. Abnormal labs add evidence where a matching condition exists (e.g. low Hb → anaemia, high HbA1c/sugar → diabetes, low platelets/positive NS1 → dengue, high TSH → hypothyroidism, Widal O ≥1:200 → typhoid, urine nitrite/leukocyte esterase/pus cells → UTI). Other abnormalities — liver enzymes/bilirubin, renal function, INR, troponin and D-dimer — are surfaced as **Report-based findings** and red flags for doctor verification. Widal titres are parsed separately because OCR often reads `1:250` as `1.250`; existing reports with OCR text are re-read automatically.
+- Basic lab reference library: **109 report items** — 86 quantitative tests, 19 qualitative/serology items and 4 Widal titres — across CBC, diabetes, kidney/electrolytes, liver, lipid, thyroid, inflammation, iron/vitamins, cardiac/thrombosis, coagulation, pancreas, serology, urine and stool. OCR values are flagged Low/High against typical adult intervals used by Indian NABL-accredited labs, and the range is shown next to each parsed value. Reports also include a collapsible **Basic lab reference ranges** panel. Ranges are method- and population-dependent; the lab's own printed interval and the doctor's judgement always take precedence.
 - History & Rx: consultations, clinical notes, test reports, vitals trend charts
 - Test Reports (inside ASHVIK Doctor): add/view/delete patient reports, attach PDF/image, and read printed reports with on-device OCR (Tesseract.js + pdf.js). First use loads the OCR/PDF libraries from CDN; the report file itself never leaves the device.
 - Settings: language toggle (English/Hindi/Bangla), backup/restore JSON, PWA install
@@ -38,6 +39,21 @@ Unified React-based medical software (single file, no build step).
 - Set IDs in **Settings → Clinic / Company & Doctor → Save & Reload**.
 - Defaults: `demo-clinic` / `doctor-1` (change per clinic).
 - Current Firestore rules are temporary/open; add Auth-based rules before real multi-tenant use.
+
+## Basic lab reference (record)
+
+- **109 report items** (86 quantitative + 19 qualitative/serology + 4 Widal), 14 categories, embedded in `index.html` for offline OCR flagging and report-aware diagnosis.
+- Human-readable record: `data/LAB-REFERENCE.md`.
+- Machine-readable record: `data/lab-reference.json`.
+- Sources: typical adult reference intervals used by Indian NABL-accredited labs, cross-checked with Focus Diagnostics' 2025 reference chart and standard clinical cut-offs (ADA, WHO/ICMR-style anaemia thresholds, serology/coagulation/cardiac cut-offs).
+- Regenerate the records after editing the embedded table:
+
+```bash
+cd D:\DOCTOR
+node data-collection\make-lab-reference.js
+```
+
+> These are reference intervals, not diagnostic rules. Paediatric, pregnancy, critical-care and analyser-specific ranges differ; always use the interval printed on the patient's own report.
 
 ## Clinical knowledge base (record)
 

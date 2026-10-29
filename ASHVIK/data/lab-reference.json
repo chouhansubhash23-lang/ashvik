@@ -1,0 +1,1674 @@
+{
+  "title": "ASHVIK basic pathology reference library",
+  "version": 1,
+  "collected": "2026-10-29",
+  "quantitativeCount": 86,
+  "qualitativeCount": 19,
+  "widalTitreCount": 4,
+  "testCount": 109,
+  "source": {
+    "primary": "Typical adult reference intervals used by Indian NABL-accredited laboratories; cross-checked with Focus Diagnostics' Normal Lab Values & Reference Ranges (January 2025).",
+    "supporting": [
+      "ADA diabetes diagnostic cut-offs (fasting, post-load and HbA1c).",
+      "WHO/ICMR-style adult haemoglobin and nutritional anaemia cut-offs.",
+      "Standard clinical cut-offs for serology, coagulation, cardiac and urine routine tests."
+    ],
+    "url": "https://focusdiagnostics.in/normal-lab-values"
+  },
+  "caveat": "Reference intervals are method- and population-dependent. Paediatric, pregnancy, critical-care and some analyser-specific ranges differ. Always use the interval printed on the patient's own report; the doctor remains the final approver.",
+  "categories": [
+    "CBC",
+    "Diabetes",
+    "Kidney",
+    "Liver",
+    "Lipid",
+    "Thyroid",
+    "Inflammation",
+    "Iron/Vitamins",
+    "Cardiac",
+    "Coagulation",
+    "Pancreas",
+    "Serology",
+    "Urine",
+    "Stool"
+  ],
+  "tests": [
+    {
+      "name": "Hemoglobin",
+      "aliases": [
+        "hemoglobin",
+        "haemoglobin",
+        "hb"
+      ],
+      "unit": "g/dL",
+      "category": "CBC",
+      "low": null,
+      "high": null,
+      "maleLow": 13.5,
+      "maleHigh": 17.5,
+      "femaleLow": 12,
+      "femaleHigh": 16,
+      "note": "Adult; pregnancy and children need separate ranges"
+    },
+    {
+      "name": "RBC",
+      "aliases": [
+        "rbc count",
+        "rbc",
+        "red blood cell count"
+      ],
+      "unit": "million/µL",
+      "category": "CBC",
+      "low": null,
+      "high": null,
+      "maleLow": 4.5,
+      "maleHigh": 5.5,
+      "femaleLow": 4,
+      "femaleHigh": 5,
+      "note": ""
+    },
+    {
+      "name": "WBC",
+      "aliases": [
+        "total leukocyte count",
+        "tlc",
+        "wbc",
+        "leukocyte count"
+      ],
+      "unit": "/µL",
+      "category": "CBC",
+      "low": 4000,
+      "high": 11000,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Platelets",
+      "aliases": [
+        "platelet count",
+        "platelets",
+        "plt"
+      ],
+      "unit": "/µL",
+      "category": "CBC",
+      "low": 150000,
+      "high": 400000,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "PCV",
+      "aliases": [
+        "pcv",
+        "hematocrit",
+        "haematocrit"
+      ],
+      "unit": "%",
+      "category": "CBC",
+      "low": null,
+      "high": null,
+      "maleLow": 40,
+      "maleHigh": 54,
+      "femaleLow": 36,
+      "femaleHigh": 48,
+      "note": ""
+    },
+    {
+      "name": "MCV",
+      "aliases": [
+        "mcv"
+      ],
+      "unit": "fL",
+      "category": "CBC",
+      "low": 80,
+      "high": 100,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "MCH",
+      "aliases": [
+        "mch"
+      ],
+      "unit": "pg",
+      "category": "CBC",
+      "low": 27,
+      "high": 33,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "MCHC",
+      "aliases": [
+        "mchc"
+      ],
+      "unit": "g/dL",
+      "category": "CBC",
+      "low": 32,
+      "high": 36,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "RDW",
+      "aliases": [
+        "rdw",
+        "red cell distribution width"
+      ],
+      "unit": "%",
+      "category": "CBC",
+      "low": 11.5,
+      "high": 14.5,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "MPV",
+      "aliases": [
+        "mpv",
+        "mean platelet volume"
+      ],
+      "unit": "fL",
+      "category": "CBC",
+      "low": 7.5,
+      "high": 11.5,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Neutrophils",
+      "aliases": [
+        "neutrophils",
+        "neutrophil"
+      ],
+      "unit": "%",
+      "category": "CBC",
+      "low": 40,
+      "high": 75,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Lymphocytes",
+      "aliases": [
+        "lymphocytes",
+        "lymphocyte"
+      ],
+      "unit": "%",
+      "category": "CBC",
+      "low": 20,
+      "high": 45,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Monocytes",
+      "aliases": [
+        "monocytes",
+        "monocyte"
+      ],
+      "unit": "%",
+      "category": "CBC",
+      "low": 2,
+      "high": 10,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Eosinophils",
+      "aliases": [
+        "eosinophils",
+        "eosinophil"
+      ],
+      "unit": "%",
+      "category": "CBC",
+      "low": 1,
+      "high": 6,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Basophils",
+      "aliases": [
+        "basophils",
+        "basophil"
+      ],
+      "unit": "%",
+      "category": "CBC",
+      "low": 0,
+      "high": 2,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "ESR",
+      "aliases": [
+        "esr",
+        "erythrocyte sedimentation rate"
+      ],
+      "unit": "mm/hr",
+      "category": "CBC",
+      "low": null,
+      "high": null,
+      "maleLow": 0,
+      "maleHigh": 15,
+      "femaleLow": 0,
+      "femaleHigh": 20,
+      "note": ""
+    },
+    {
+      "name": "HbA1c",
+      "aliases": [
+        "hba1c",
+        "glycated hemoglobin",
+        "glycosylated hemoglobin",
+        "a1c"
+      ],
+      "unit": "%",
+      "category": "Diabetes",
+      "low": 0,
+      "high": 5.7,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": "Prediabetes 5.7-6.4; diabetes >=6.5"
+    },
+    {
+      "name": "Fasting Blood Sugar",
+      "aliases": [
+        "fasting blood sugar",
+        "fasting glucose",
+        "fbs",
+        "glucose fasting"
+      ],
+      "unit": "mg/dL",
+      "category": "Diabetes",
+      "low": 70,
+      "high": 100,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": "Prediabetes 100-125; diabetes >=126"
+    },
+    {
+      "name": "Postprandial Blood Sugar",
+      "aliases": [
+        "postprandial blood sugar",
+        "postprandial glucose",
+        "ppbs",
+        "pp sugar",
+        "2 hour glucose"
+      ],
+      "unit": "mg/dL",
+      "category": "Diabetes",
+      "low": 0,
+      "high": 140,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": "2-hour post-meal"
+    },
+    {
+      "name": "Random Blood Sugar",
+      "aliases": [
+        "random blood sugar",
+        "random glucose",
+        "rbs"
+      ],
+      "unit": "mg/dL",
+      "category": "Diabetes",
+      "low": 0,
+      "high": 140,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Blood Sugar",
+      "aliases": [
+        "blood sugar",
+        "blood glucose",
+        "sugar"
+      ],
+      "unit": "mg/dL",
+      "category": "Diabetes",
+      "low": 70,
+      "high": 200,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": "Generic/random; use fasting or PP value when available"
+    },
+    {
+      "name": "Urea",
+      "aliases": [
+        "blood urea",
+        "urea"
+      ],
+      "unit": "mg/dL",
+      "category": "Kidney",
+      "low": 15,
+      "high": 40,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "BUN",
+      "aliases": [
+        "blood urea nitrogen",
+        "bun"
+      ],
+      "unit": "mg/dL",
+      "category": "Kidney",
+      "low": 7,
+      "high": 20,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Creatinine",
+      "aliases": [
+        "creatinine"
+      ],
+      "unit": "mg/dL",
+      "category": "Kidney",
+      "low": null,
+      "high": null,
+      "maleLow": 0.7,
+      "maleHigh": 1.3,
+      "femaleLow": 0.6,
+      "femaleHigh": 1.1,
+      "note": ""
+    },
+    {
+      "name": "eGFR",
+      "aliases": [
+        "egfr",
+        "estimated gfr",
+        "gfr"
+      ],
+      "unit": "mL/min/1.73m²",
+      "category": "Kidney",
+      "low": 90,
+      "high": null,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ">=90 normal; <60 suggests chronic kidney disease"
+    },
+    {
+      "name": "Uric Acid",
+      "aliases": [
+        "uric acid"
+      ],
+      "unit": "mg/dL",
+      "category": "Kidney",
+      "low": null,
+      "high": null,
+      "maleLow": 3.4,
+      "maleHigh": 7,
+      "femaleLow": 2.4,
+      "femaleHigh": 6,
+      "note": ""
+    },
+    {
+      "name": "Sodium",
+      "aliases": [
+        "sodium",
+        "na+",
+        "na"
+      ],
+      "unit": "mEq/L",
+      "category": "Kidney",
+      "low": 136,
+      "high": 145,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Potassium",
+      "aliases": [
+        "potassium",
+        "k+",
+        "k"
+      ],
+      "unit": "mEq/L",
+      "category": "Kidney",
+      "low": 3.5,
+      "high": 5,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Chloride",
+      "aliases": [
+        "chloride",
+        "cl-",
+        "cl"
+      ],
+      "unit": "mEq/L",
+      "category": "Kidney",
+      "low": 98,
+      "high": 106,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Bicarbonate",
+      "aliases": [
+        "bicarbonate",
+        "hco3",
+        "co2"
+      ],
+      "unit": "mEq/L",
+      "category": "Kidney",
+      "low": 22,
+      "high": 29,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Calcium",
+      "aliases": [
+        "calcium"
+      ],
+      "unit": "mg/dL",
+      "category": "Kidney",
+      "low": 8.5,
+      "high": 10.5,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Phosphorus",
+      "aliases": [
+        "phosphorus",
+        "phosphate"
+      ],
+      "unit": "mg/dL",
+      "category": "Kidney",
+      "low": 2.5,
+      "high": 4.5,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Magnesium",
+      "aliases": [
+        "magnesium"
+      ],
+      "unit": "mg/dL",
+      "category": "Kidney",
+      "low": 1.7,
+      "high": 2.2,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Total Bilirubin",
+      "aliases": [
+        "total bilirubin",
+        "bilirubin total",
+        "bilirubin"
+      ],
+      "unit": "mg/dL",
+      "category": "Liver",
+      "low": 0.1,
+      "high": 1.2,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Direct Bilirubin",
+      "aliases": [
+        "direct bilirubin",
+        "bilirubin direct",
+        "bilirubin (direct)"
+      ],
+      "unit": "mg/dL",
+      "category": "Liver",
+      "low": 0,
+      "high": 0.3,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Indirect Bilirubin",
+      "aliases": [
+        "indirect bilirubin",
+        "bilirubin indirect",
+        "bilirubin (indirect)"
+      ],
+      "unit": "mg/dL",
+      "category": "Liver",
+      "low": 0.3,
+      "high": 0.9,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "SGOT/AST",
+      "aliases": [
+        "sgot",
+        "ast",
+        "aspartate aminotransferase"
+      ],
+      "unit": "U/L",
+      "category": "Liver",
+      "low": null,
+      "high": null,
+      "maleLow": 10,
+      "maleHigh": 40,
+      "femaleLow": 10,
+      "femaleHigh": 35,
+      "note": ""
+    },
+    {
+      "name": "SGPT/ALT",
+      "aliases": [
+        "sgpt",
+        "alt",
+        "alanine aminotransferase"
+      ],
+      "unit": "U/L",
+      "category": "Liver",
+      "low": null,
+      "high": null,
+      "maleLow": 10,
+      "maleHigh": 40,
+      "femaleLow": 10,
+      "femaleHigh": 35,
+      "note": ""
+    },
+    {
+      "name": "ALP",
+      "aliases": [
+        "alkaline phosphatase",
+        "alp"
+      ],
+      "unit": "U/L",
+      "category": "Liver",
+      "low": 44,
+      "high": 147,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "GGT",
+      "aliases": [
+        "ggt",
+        "gamma glutamyl transferase"
+      ],
+      "unit": "U/L",
+      "category": "Liver",
+      "low": null,
+      "high": null,
+      "maleLow": 8,
+      "maleHigh": 61,
+      "femaleLow": 5,
+      "femaleHigh": 36,
+      "note": ""
+    },
+    {
+      "name": "Total Protein",
+      "aliases": [
+        "total protein"
+      ],
+      "unit": "g/dL",
+      "category": "Liver",
+      "low": 6,
+      "high": 8.3,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Albumin",
+      "aliases": [
+        "albumin"
+      ],
+      "unit": "g/dL",
+      "category": "Liver",
+      "low": 3.5,
+      "high": 5.5,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Globulin",
+      "aliases": [
+        "globulin"
+      ],
+      "unit": "g/dL",
+      "category": "Liver",
+      "low": 2,
+      "high": 3.5,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "A/G Ratio",
+      "aliases": [
+        "a/g ratio",
+        "ag ratio",
+        "albumin globulin ratio"
+      ],
+      "unit": "",
+      "category": "Liver",
+      "low": 1,
+      "high": 2,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Total Cholesterol",
+      "aliases": [
+        "total cholesterol"
+      ],
+      "unit": "mg/dL",
+      "category": "Lipid",
+      "low": 0,
+      "high": 200,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "LDL",
+      "aliases": [
+        "ldl cholesterol",
+        "ldl"
+      ],
+      "unit": "mg/dL",
+      "category": "Lipid",
+      "low": 0,
+      "high": 100,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "HDL",
+      "aliases": [
+        "hdl cholesterol",
+        "hdl"
+      ],
+      "unit": "mg/dL",
+      "category": "Lipid",
+      "low": null,
+      "high": null,
+      "maleLow": 40,
+      "maleHigh": 100,
+      "femaleLow": 50,
+      "femaleHigh": 100,
+      "note": ""
+    },
+    {
+      "name": "Triglycerides",
+      "aliases": [
+        "triglycerides",
+        "tg"
+      ],
+      "unit": "mg/dL",
+      "category": "Lipid",
+      "low": 0,
+      "high": 150,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "VLDL",
+      "aliases": [
+        "vldl"
+      ],
+      "unit": "mg/dL",
+      "category": "Lipid",
+      "low": 5,
+      "high": 40,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Non-HDL",
+      "aliases": [
+        "non-hdl cholesterol",
+        "non-hdl",
+        "non hdl"
+      ],
+      "unit": "mg/dL",
+      "category": "Lipid",
+      "low": 0,
+      "high": 130,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Total Cholesterol/HDL Ratio",
+      "aliases": [
+        "total cholesterol/hdl ratio",
+        "cholesterol hdl ratio",
+        "tc/hdl"
+      ],
+      "unit": "",
+      "category": "Lipid",
+      "low": null,
+      "high": null,
+      "maleLow": 0,
+      "maleHigh": 5,
+      "femaleLow": 0,
+      "femaleHigh": 4.5,
+      "note": ""
+    },
+    {
+      "name": "TSH",
+      "aliases": [
+        "tsh",
+        "thyroid stimulating hormone"
+      ],
+      "unit": "µIU/mL",
+      "category": "Thyroid",
+      "low": 0.4,
+      "high": 4,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": "Lab-specific upper limits commonly 4.0-4.5"
+    },
+    {
+      "name": "FT3",
+      "aliases": [
+        "free t3",
+        "ft3"
+      ],
+      "unit": "pg/mL",
+      "category": "Thyroid",
+      "low": 2.3,
+      "high": 4.2,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "FT4",
+      "aliases": [
+        "free t4",
+        "ft4"
+      ],
+      "unit": "ng/dL",
+      "category": "Thyroid",
+      "low": 0.8,
+      "high": 1.8,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "T3",
+      "aliases": [
+        "t3",
+        "triiodothyronine"
+      ],
+      "unit": "ng/dL",
+      "category": "Thyroid",
+      "low": 80,
+      "high": 200,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "T4",
+      "aliases": [
+        "t4",
+        "thyroxine"
+      ],
+      "unit": "µg/dL",
+      "category": "Thyroid",
+      "low": 5,
+      "high": 12,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Anti-TPO",
+      "aliases": [
+        "anti-tpo",
+        "anti tpo",
+        "thyroid peroxidase antibody"
+      ],
+      "unit": "IU/mL",
+      "category": "Thyroid",
+      "low": 0,
+      "high": 35,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "CRP",
+      "aliases": [
+        "c-reactive protein",
+        "crp"
+      ],
+      "unit": "mg/L",
+      "category": "Inflammation",
+      "low": 0,
+      "high": 10,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "hs-CRP",
+      "aliases": [
+        "hs-crp",
+        "hs crp",
+        "high sensitivity crp"
+      ],
+      "unit": "mg/L",
+      "category": "Inflammation",
+      "low": 0,
+      "high": 3,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": "Cardiac risk: <1 low, 1-3 moderate, >3 high"
+    },
+    {
+      "name": "Procalcitonin",
+      "aliases": [
+        "procalcitonin",
+        "pct"
+      ],
+      "unit": "ng/mL",
+      "category": "Inflammation",
+      "low": 0,
+      "high": 0.5,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Ferritin",
+      "aliases": [
+        "ferritin"
+      ],
+      "unit": "ng/mL",
+      "category": "Iron/Vitamins",
+      "low": null,
+      "high": null,
+      "maleLow": 20,
+      "maleHigh": 250,
+      "femaleLow": 10,
+      "femaleHigh": 120,
+      "note": "Acute inflammation can raise ferritin"
+    },
+    {
+      "name": "Serum Iron",
+      "aliases": [
+        "serum iron",
+        "iron"
+      ],
+      "unit": "µg/dL",
+      "category": "Iron/Vitamins",
+      "low": null,
+      "high": null,
+      "maleLow": 65,
+      "maleHigh": 175,
+      "femaleLow": 50,
+      "femaleHigh": 170,
+      "note": ""
+    },
+    {
+      "name": "TIBC",
+      "aliases": [
+        "tibc",
+        "total iron binding capacity"
+      ],
+      "unit": "µg/dL",
+      "category": "Iron/Vitamins",
+      "low": 250,
+      "high": 370,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Transferrin Saturation",
+      "aliases": [
+        "transferrin saturation",
+        "iron saturation"
+      ],
+      "unit": "%",
+      "category": "Iron/Vitamins",
+      "low": 20,
+      "high": 50,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Vitamin D",
+      "aliases": [
+        "vitamin d",
+        "25-oh vitamin d",
+        "25 hydroxy vitamin d"
+      ],
+      "unit": "ng/mL",
+      "category": "Iron/Vitamins",
+      "low": 30,
+      "high": 100,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": "Deficiency <20; insufficiency 20-29"
+    },
+    {
+      "name": "Vitamin B12",
+      "aliases": [
+        "vitamin b12",
+        "b12"
+      ],
+      "unit": "pg/mL",
+      "category": "Iron/Vitamins",
+      "low": 200,
+      "high": 900,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Folate",
+      "aliases": [
+        "folate",
+        "folic acid"
+      ],
+      "unit": "ng/mL",
+      "category": "Iron/Vitamins",
+      "low": 3,
+      "high": 17,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Troponin I",
+      "aliases": [
+        "troponin i",
+        "troponin"
+      ],
+      "unit": "ng/mL",
+      "category": "Cardiac",
+      "low": 0,
+      "high": 0.04,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": "Any elevation needs urgent cardiac evaluation"
+    },
+    {
+      "name": "CK-MB",
+      "aliases": [
+        "ck-mb",
+        "ck mb"
+      ],
+      "unit": "U/L",
+      "category": "Cardiac",
+      "low": 0,
+      "high": 25,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "BNP",
+      "aliases": [
+        "bnp",
+        "brain natriuretic peptide"
+      ],
+      "unit": "pg/mL",
+      "category": "Cardiac",
+      "low": 0,
+      "high": 100,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "LDH",
+      "aliases": [
+        "ldh",
+        "lactate dehydrogenase"
+      ],
+      "unit": "U/L",
+      "category": "Cardiac",
+      "low": 140,
+      "high": 280,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Homocysteine",
+      "aliases": [
+        "homocysteine"
+      ],
+      "unit": "µmol/L",
+      "category": "Cardiac",
+      "low": 5,
+      "high": 15,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "D-Dimer",
+      "aliases": [
+        "d-dimer",
+        "d dimer"
+      ],
+      "unit": "ng/mL",
+      "category": "Cardiac",
+      "low": 0,
+      "high": 500,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "PT",
+      "aliases": [
+        "prothrombin time",
+        "pt"
+      ],
+      "unit": "sec",
+      "category": "Coagulation",
+      "low": 11,
+      "high": 13.5,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "INR",
+      "aliases": [
+        "inr",
+        "international normalized ratio"
+      ],
+      "unit": "",
+      "category": "Coagulation",
+      "low": 0.8,
+      "high": 1.2,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "aPTT",
+      "aliases": [
+        "aptt",
+        "activated partial thromboplastin time"
+      ],
+      "unit": "sec",
+      "category": "Coagulation",
+      "low": 25,
+      "high": 35,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Fibrinogen",
+      "aliases": [
+        "fibrinogen"
+      ],
+      "unit": "mg/dL",
+      "category": "Coagulation",
+      "low": 200,
+      "high": 400,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Amylase",
+      "aliases": [
+        "amylase"
+      ],
+      "unit": "U/L",
+      "category": "Pancreas",
+      "low": 25,
+      "high": 125,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Lipase",
+      "aliases": [
+        "lipase"
+      ],
+      "unit": "U/L",
+      "category": "Pancreas",
+      "low": 10,
+      "high": 140,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "PSA",
+      "aliases": [
+        "psa",
+        "prostate specific antigen"
+      ],
+      "unit": "ng/mL",
+      "category": "Serology",
+      "low": 0,
+      "high": 4,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "ASO",
+      "aliases": [
+        "aso",
+        "anti-streptolysin o"
+      ],
+      "unit": "IU/mL",
+      "category": "Serology",
+      "low": 0,
+      "high": 200,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "RA Factor",
+      "aliases": [
+        "ra factor",
+        "rheumatoid factor",
+        "ra"
+      ],
+      "unit": "IU/mL",
+      "category": "Serology",
+      "low": 0,
+      "high": 14,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Urine pH",
+      "aliases": [
+        "urine ph",
+        "ph (urine)",
+        "ph"
+      ],
+      "unit": "",
+      "category": "Urine",
+      "low": 4.5,
+      "high": 8,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Urine Specific Gravity",
+      "aliases": [
+        "urine specific gravity",
+        "specific gravity",
+        "sp. gravity",
+        "sp gravity"
+      ],
+      "unit": "",
+      "category": "Urine",
+      "low": 1.005,
+      "high": 1.03,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Urine RBC",
+      "aliases": [
+        "urine rbc",
+        "rbc (urine)",
+        "red blood cells (urine)",
+        "rbc"
+      ],
+      "unit": "/HPF",
+      "category": "Urine",
+      "low": 0,
+      "high": 2,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    },
+    {
+      "name": "Urine WBC",
+      "aliases": [
+        "urine wbc",
+        "wbc (urine)",
+        "pus cells",
+        "pus cell",
+        "wbc"
+      ],
+      "unit": "/HPF",
+      "category": "Urine",
+      "low": 0,
+      "high": 5,
+      "maleLow": null,
+      "maleHigh": null,
+      "femaleLow": null,
+      "femaleHigh": null,
+      "note": ""
+    }
+  ],
+  "qualitative": [
+    {
+      "name": "Dengue NS1",
+      "aliases": [
+        "dengue ns1",
+        "ns1 antigen",
+        "ns1"
+      ],
+      "category": "Serology",
+      "expected": "Non-reactive / negative",
+      "note": ""
+    },
+    {
+      "name": "Dengue IgM",
+      "aliases": [
+        "dengue igm",
+        "igm dengue",
+        "dengue igm antibody"
+      ],
+      "category": "Serology",
+      "expected": "Non-reactive / negative",
+      "note": ""
+    },
+    {
+      "name": "Dengue IgG",
+      "aliases": [
+        "dengue igg",
+        "igg dengue"
+      ],
+      "category": "Serology",
+      "expected": "Non-reactive / negative",
+      "note": ""
+    },
+    {
+      "name": "Malaria Antigen",
+      "aliases": [
+        "malaria antigen",
+        "malaria rdt",
+        "mp antigen",
+        "pf antigen",
+        "pan antigen",
+        "malaria parasite"
+      ],
+      "category": "Serology",
+      "expected": "Non-reactive / negative",
+      "note": ""
+    },
+    {
+      "name": "Typhoid IgM",
+      "aliases": [
+        "typhoid igm",
+        "typhi dot",
+        "typhidot"
+      ],
+      "category": "Serology",
+      "expected": "Non-reactive / negative",
+      "note": ""
+    },
+    {
+      "name": "HBsAg",
+      "aliases": [
+        "hbsag",
+        "hepatitis b surface antigen"
+      ],
+      "category": "Serology",
+      "expected": "Non-reactive / negative",
+      "note": ""
+    },
+    {
+      "name": "Anti-HCV",
+      "aliases": [
+        "anti-hcv",
+        "anti hcv",
+        "hcv antibody"
+      ],
+      "category": "Serology",
+      "expected": "Non-reactive / negative",
+      "note": ""
+    },
+    {
+      "name": "HIV",
+      "aliases": [
+        "hiv"
+      ],
+      "category": "Serology",
+      "expected": "Non-reactive / negative",
+      "note": ""
+    },
+    {
+      "name": "VDRL",
+      "aliases": [
+        "vdrl",
+        "vdrl test"
+      ],
+      "category": "Serology",
+      "expected": "Non-reactive / negative",
+      "note": ""
+    },
+    {
+      "name": "Urine Protein",
+      "aliases": [
+        "urine protein",
+        "protein (urine)",
+        "albumin (urine)",
+        "protein"
+      ],
+      "category": "Urine",
+      "expected": "Negative",
+      "note": ""
+    },
+    {
+      "name": "Urine Glucose",
+      "aliases": [
+        "urine glucose",
+        "glucose (urine)",
+        "sugar (urine)",
+        "glucose",
+        "sugar"
+      ],
+      "category": "Urine",
+      "expected": "Negative",
+      "note": ""
+    },
+    {
+      "name": "Urine Ketones",
+      "aliases": [
+        "urine ketones",
+        "ketone bodies",
+        "ketones (urine)",
+        "ketones"
+      ],
+      "category": "Urine",
+      "expected": "Negative",
+      "note": ""
+    },
+    {
+      "name": "Urine Blood",
+      "aliases": [
+        "urine blood",
+        "blood (urine)",
+        "occult blood (urine)",
+        "blood"
+      ],
+      "category": "Urine",
+      "expected": "Negative",
+      "note": ""
+    },
+    {
+      "name": "Urine Nitrite",
+      "aliases": [
+        "urine nitrite",
+        "nitrite"
+      ],
+      "category": "Urine",
+      "expected": "Negative",
+      "note": "Positive supports UTI; correlate with urine WBC/pus cells and symptoms"
+    },
+    {
+      "name": "Urine Leukocyte Esterase",
+      "aliases": [
+        "urine leukocyte esterase",
+        "leukocyte esterase",
+        "leucocyte esterase"
+      ],
+      "category": "Urine",
+      "expected": "Negative",
+      "note": "Positive supports UTI; correlate with urine WBC/pus cells and symptoms"
+    },
+    {
+      "name": "Urine Bilirubin",
+      "aliases": [
+        "urine bilirubin",
+        "bilirubin (urine)",
+        "bilirubin"
+      ],
+      "category": "Urine",
+      "expected": "Negative",
+      "note": ""
+    },
+    {
+      "name": "Urobilinogen",
+      "aliases": [
+        "urobilinogen",
+        "urine urobilinogen"
+      ],
+      "category": "Other",
+      "expected": "Negative",
+      "note": ""
+    },
+    {
+      "name": "Stool Occult Blood",
+      "aliases": [
+        "stool occult blood",
+        "occult blood",
+        "fecal occult blood"
+      ],
+      "category": "Stool",
+      "expected": "Negative",
+      "note": ""
+    },
+    {
+      "name": "Stool Ova/Cyst",
+      "aliases": [
+        "stool ova",
+        "ova/cyst",
+        "ova and cyst",
+        "ova cyst",
+        "parasite",
+        "ova",
+        "cyst"
+      ],
+      "category": "Stool",
+      "expected": "Negative",
+      "note": ""
+    }
+  ],
+  "widal": [
+    {
+      "name": "Widal Typhi O",
+      "cutoff": ">=1:200 positive; 1:125-199 borderline; <=1:100 negative",
+      "note": "Report cut-off used; repeat/confirm if borderline"
+    },
+    {
+      "name": "Widal Typhi H",
+      "cutoff": ">=1:200 supportive; 1:125-199 borderline",
+      "note": "Supportive; clinical correlation needed"
+    },
+    {
+      "name": "Widal Para A H",
+      "cutoff": ">=1:200 positive range",
+      "note": "Paratyphoid A"
+    },
+    {
+      "name": "Widal Para B H",
+      "cutoff": ">=1:200 positive range",
+      "note": "Paratyphoid B"
+    }
+  ]
+}

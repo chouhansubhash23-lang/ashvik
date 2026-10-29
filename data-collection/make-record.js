@@ -93,7 +93,7 @@ md += `- Evaluation report: \`evidence/eval/eval-report.md\`\n`;
 md += `- Raw PDFs are kept locally and excluded from Git (size).\n`;
 
 md += `\n## Machine-readable files\n\n`;
-md += `- \`guidelines-manifest.json\`\n- \`guidelines-manifest.csv\`\n`;
+md += `- \`guidelines-manifest.json\`\n- \`guidelines-manifest.csv\`\n- \`lab-reference.json\` — 109 report items (86 quantitative + 19 qualitative/serology + 4 Widal)\n- \`LAB-REFERENCE.md\` — source, ranges and caveats for the lab reference library\n`;
 
 fs.writeFileSync(OUT_MD, md);
 fs.writeFileSync(OUT_JSON, JSON.stringify({

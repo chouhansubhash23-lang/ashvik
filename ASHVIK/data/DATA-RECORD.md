@@ -255,3 +255,5 @@
 
 - `guidelines-manifest.json`
 - `guidelines-manifest.csv`
+- `lab-reference.json` — 109 report items (86 quantitative + 19 qualitative/serology + 4 Widal)
+- `LAB-REFERENCE.md` — source, ranges and caveats for the lab reference library
