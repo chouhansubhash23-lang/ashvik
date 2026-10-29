@@ -288,6 +288,9 @@ const BRANDS = {
   "Nitrofurantoin 100mg": "Niftran 100, Uvamin 100",
   "Permethrin 5% cream": "Permite 5%, Scabper",
   "Cetirizine 10mg": "Cetzine 10, Alerid 10, Zyrtec 10",
+  "Cetirizine 5mg": "Cetzine 5, Alerid 5, Zyrtec 5",
+  "Racecadotril 100mg": "Redotil 100, Zedott 100, Enuff 100",
+  "Saline nasal drops": "Nasoclear, Salinase, Sinarest Saline",
   "Clotrimazole cream": "Candid cream, Canesten",
   "Terbinafine 250mg": "Lamisil 250, Terbicip 250, Fungicide",
   "Ferrous sulphate + folic acid": "Autrin, Fefol, Orofer XT",
@@ -625,6 +628,84 @@ function getLatestReportLabs(patient) {
   return { values: [...map.values()], count: reports.length, date: reports[0]?.date || "", name: reports[0]?.name || "" };
 }
 
+function drugKey(name) {
+  const m = String(name || "").toLowerCase().match(/[a-z]+/);
+  return m ? m[0] : "";
+}
+
+function mergeMeds(base, extra) {
+  const out = [];
+  [...(base || []), ...(extra || [])].forEach(m => {
+    if (!m || !m[0]) return;
+    const k = drugKey(m[0]);
+    if (!out.some(x => drugKey(x[0]) === k)) out.push(m);
+  });
+  return out;
+}
+
+function extraMeds(base, extra) {
+  const keys = new Set((base || []).map(m => drugKey(m[0])));
+  return (extra || []).filter(m => m && m[0] && !keys.has(drugKey(m[0])));
+}
+
+// Symptom-based treatment added to every case, in addition to disease-specific Rx.
+function buildSymptomaticMeds({ age, symptoms, notes, vitals }) {
+  const text = ((symptoms || []).join(" ") + " " + (notes || "")).toLowerCase();
+  const temp = parseFloat(vitals?.temp);
+  const ageNum = Number(age) || 0;
+  const meds = [];
+  const add = (m) => {
+    if (!meds.some(x => drugKey(x[0]) === drugKey(m[0]))) meds.push(m);
+  };
+
+  const fever = (!isNaN(temp) && temp >= 100.4) || /fever|body ache|headache|joint pain|chills/i.test(text);
+  if (fever) add(["Paracetamol 500mg", "1 tab", "TDS", "3 days", "After food; max 3 g/day"]);
+
+  const loose = /diarrh|loose motion|loose stool|watery stool|dast|दस्त/i.test(text);
+  if (loose) {
+    add(["ORS", "1 sachet", "After each loose stool", "3 days", "Dissolve 1 sachet in 1 litre clean water"]);
+    if (ageNum >= 12) add(["Racecadotril 100mg", "1 cap", "TDS", "3 days", "After food; avoid if bloody diarrhoea; continue ORS"]);
+    else if (ageNum > 0 && ageNum < 5) add(["Zinc 20mg", "1 tab", "OD", "14 days", "Children under 5; continue ORS"]);
+  }
+
+  const cold = /cold|runny nose|sneez|nasal|naak|जुकाम/i.test(text);
+  if (cold) {
+    if (ageNum >= 12) add(["Cetirizine 10mg", "1 tab", "OD", "5 days", "At night; may cause drowsiness"]);
+    else if (ageNum >= 6) add(["Cetirizine 5mg", "1 tab", "OD", "5 days", "At night; may cause drowsiness"]);
+    add(["Saline nasal drops", "2 drops each nostril", "TDS", "5 days", "Steam inhalation; avoid decongestant overuse"]);
+  }
+
+  const vomit = /vomit|vomiting|nausea|dehydrat/i.test(text);
+  if (vomit) add(["ORS", "1 sachet", "Sips frequently", "3 days", "Small frequent sips; seek help if unable to drink"]);
+
+  const throat = /sore throat|throat pain/i.test(text);
+  if (throat) add(["Warm saline gargle", "—", "TDS", "3 days", "Not for young children"]);
+
+  return meds;
+}
+
+function buildSymptomaticAdvice({ symptoms, notes, vitals }) {
+  const text = ((symptoms || []).join(" ") + " " + (notes || "")).toLowerCase();
+  const temp = parseFloat(vitals?.temp);
+  const out = [];
+  if ((!isNaN(temp) && temp >= 100.4) || /fever|body ache|headache|joint pain|chills/i.test(text)) {
+    out.push("Fever: paracetamol, fluids, rest; review if fever persists >3 days or worsens.");
+  }
+  if (/diarrh|loose motion|loose stool|watery stool|dast|दस्त/i.test(text)) {
+    out.push("Loose motion: ORS after each stool, continue food; avoid loperamide if fever or blood in stool.");
+  }
+  if (/cold|runny nose|sneez|nasal|naak|जुकाम/i.test(text)) {
+    out.push("Cold: steam inhalation, saline nasal drops, warm fluids; cetirizine may cause drowsiness.");
+  }
+  if (/vomit|vomiting|nausea|dehydrat/i.test(text)) {
+    out.push("Vomiting: small frequent ORS sips; seek care if unable to drink or urine output falls.");
+  }
+  if (/sore throat|throat pain/i.test(text)) {
+    out.push("Sore throat: warm saline gargle and warm fluids.");
+  }
+  return out;
+}
+
 function assessCase({ age, sex, symptoms, notes, vitals, chronic, labs }) {
   const symptomText = ((symptoms || []).join(" ") + " " + (notes || "")).toLowerCase();
   const chronicL = String(chronic || "").toLowerCase();
@@ -812,7 +893,9 @@ function assessCase({ age, sex, symptoms, notes, vitals, chronic, labs }) {
 
   const tests = new Set();
   top.slice(0, 3).forEach(c => (c.tests || []).forEach(t => tests.add(t)));
-  return { top, suggested, redFlags: [...new Set(redFlags)], tests: [...tests], labFindings };
+  const symptomatic = buildSymptomaticMeds({ age, symptoms, notes, vitals });
+  const symptomaticAdvice = buildSymptomaticAdvice({ symptoms, notes, vitals });
+  return { top, suggested, redFlags: [...new Set(redFlags)], tests: [...tests], labFindings, symptomatic, symptomaticAdvice };
 }
 
 function loadPatients() {
@@ -1093,7 +1176,10 @@ function App() {
   const applyDisease = (d) => {
     const t = DISEASE_TEMPLATES[d];
     if (!t) return;
-    setConsult(prev => ({ ...prev, diagnosis: t.diagnosis, meds: withBrands(t.meds), advice: t.advice }));
+    const p = patients.find(x => x.id === consultPatient);
+    const sx = buildSymptomaticMeds({ age: p?.age, symptoms: consult.symptoms, notes: consult.symptomNotes, vitals: { temp: consult.temp } });
+    const advice = [t.advice, ...buildSymptomaticAdvice({ symptoms: consult.symptoms, notes: consult.symptomNotes, vitals: { temp: consult.temp } })].filter(Boolean).join(" ");
+    setConsult(prev => ({ ...prev, diagnosis: t.diagnosis, meds: withBrands(mergeMeds(t.meds, sx)), advice }));
   };
 
   const saveConsult = () => {
@@ -1184,7 +1270,7 @@ function App() {
       if (sys.includes(doctorDxL) || doctorDxL.includes(sys.split(" ")[0])) agreement = "✅ System agrees with your clinical impression.";
       else agreement = "⚠️ System suggestion differs from your impression — review both and the differential list.";
     }
-    setDxResult({ pid: dxPatient, suggested:a.suggested, top:a.top, tests:a.tests, redFlags:a.redFlags, labFindings:a.labFindings, labsUsed:labInfo.values, reportInfo:labInfo, doctorDx:dxDoctor, agreement, symptoms:dxSymptoms, notes:dxNotes, chronic:dxChronic, vitals:dxVitals, date: new Date().toISOString().slice(0,10) });
+    setDxResult({ pid: dxPatient, suggested:a.suggested, top:a.top, tests:a.tests, redFlags:a.redFlags, labFindings:a.labFindings, symptomatic:a.symptomatic, symptomaticAdvice:a.symptomaticAdvice, labsUsed:labInfo.values, reportInfo:labInfo, doctorDx:dxDoctor, agreement, symptoms:dxSymptoms, notes:dxNotes, chronic:dxChronic, vitals:dxVitals, date: new Date().toISOString().slice(0,10) });
     setTimeout(() => document.getElementById("dxResultCard")?.scrollIntoView({ behavior:"smooth" }), 50);
   };
   const dxToConsult = () => ({
@@ -1193,10 +1279,17 @@ function App() {
   });
   const useDxTreatment = (condName) => {
     const tpl = DISEASE_TEMPLATES[condName];
-    if (!tpl) { alert("No treatment template for this condition. Please prescribe manually."); return; }
+    const sx = dxResult?.symptomatic || [];
+    if (!tpl && sx.length === 0) { alert("No treatment template for this condition. Please prescribe manually."); return; }
     if (!dxPatient) { alert("Select a patient first."); return; }
     setConsultPatient(dxPatient);
-    setConsult(prev => ({ ...prev, ...dxToConsult(), diagnosis: tpl.diagnosis, meds: withBrands(tpl.meds), advice: tpl.advice }));
+    setConsult(prev => ({
+      ...prev,
+      ...dxToConsult(),
+      diagnosis: tpl ? tpl.diagnosis : (dxResult?.suggested || condName),
+      meds: withBrands(mergeMeds(tpl ? tpl.meds : [], sx)),
+      advice: [tpl?.advice, ...(dxResult?.symptomaticAdvice || [])].filter(Boolean).join(" ")
+    }));
     setView("consult");
     alert("Treatment loaded into New Consultation. Review and edit before saving.");
   };
@@ -1231,9 +1324,10 @@ function App() {
     const ps = [...patients];
     const p = ps.find(x => x.id === dxResult.pid);
     const topTpl = dxResult.top[0] ? DISEASE_TEMPLATES[dxResult.top[0].name] : null;
-    const medsText = topTpl ? topTpl.meds.map(m => `${m[0]} ${m[1]} ${m[2]} x ${m[3]}`).join("; ") : "";
+    const meds = mergeMeds(topTpl ? topTpl.meds : [], dxResult.symptomatic || []);
+    const medsText = meds.map(m => `${m[0]} ${m[1]} ${m[2]} x ${m[3]}`).join("; ");
     p.clinical = p.clinical || [];
-    p.clinical.push({ id:uid(), date: dxResult.date, complaint: dxResult.symptoms.join(", ") + (dxResult.notes ? " | " + dxResult.notes : ""), diagnosis: dxResult.suggested + (dxResult.doctorDx ? " (Dr impression: " + dxResult.doctorDx + ")" : ""), treatment: (medsText ? "Rx: " + medsText + " | " : "") + "Tests: " + dxResult.tests.join(", "), notes: "AI-assisted differential. Red flags: " + (dxResult.redFlags.join("; ") || "none") + " | Labs: " + ((dxResult.labFindings || []).join("; ") || "none") });
+    p.clinical.push({ id:uid(), date: dxResult.date, complaint: dxResult.symptoms.join(", ") + (dxResult.notes ? " | " + dxResult.notes : ""), diagnosis: dxResult.suggested + (dxResult.doctorDx ? " (Dr impression: " + dxResult.doctorDx + ")" : ""), treatment: (medsText ? "Rx: " + medsText + " | " : "") + "Tests: " + dxResult.tests.join(", "), notes: "AI-assisted differential. Red flags: " + (dxResult.redFlags.join("; ") || "none") + " | Labs: " + ((dxResult.labFindings || []).join("; ") || "none") + " | Symptomatic advice: " + ((dxResult.symptomaticAdvice || []).join(" ") || "none") });
     setPatients(ps); savePatients(ps);
     alert("Saved to patient clinical history.");
   };
@@ -1321,13 +1415,18 @@ function App() {
     setTimeout(() => document.getElementById("dmPlanCard")?.scrollIntoView({ behavior:"smooth" }), 80);
   };
   const dmLoadPrescription = () => {
-    if (!dmPlan || !dmPlan.tpl) { alert("No treatment template available. Prescribe manually."); return; }
+    if (!dmPlan) return;
+    const tpl = dmPlan.tpl;
+    const sx = dmPlan.symptomatic || [];
+    if (!tpl && sx.length === 0) { alert("No treatment template available. Prescribe manually."); return; }
     setConsultPatient(dmPatient);
     setConsult(prev => ({
       ...prev,
       bp: dmVitals.bp, pulse: dmVitals.pulse, temp: dmVitals.temp, spo2: dmVitals.spo2, weight: dmVitals.weight, sugar: dmVitals.sugar,
       symptoms: [...dmSymptoms], symptomNotes: dmNotes,
-      diagnosis: dmPlan.tpl.diagnosis, meds: withBrands(dmPlan.tpl.meds), advice: dmPlan.tpl.advice,
+      diagnosis: tpl ? tpl.diagnosis : dmPlan.suggested,
+      meds: withBrands(mergeMeds(tpl ? tpl.meds : [], sx)),
+      advice: [tpl?.advice, ...(dmPlan.symptomaticAdvice || [])].filter(Boolean).join(" "),
       tests: dmPlan.tests.join(", ")
     }));
     setView("consult");
@@ -1338,14 +1437,15 @@ function App() {
     const p = ps.find(x => x.id === dmPatient);
     if (!p) return;
     const tpl = dmPlan.tpl;
-    const medsText = tpl ? tpl.meds.map(m => `${m[0]} ${m[1]} ${m[2]} x ${m[3]}`).join("; ") : "";
+    const meds = mergeMeds(tpl ? tpl.meds : [], dmPlan.symptomatic || []);
+    const medsText = meds.map(m => `${m[0]} ${m[1]} ${m[2]} x ${m[3]}`).join("; ");
     p.clinical = p.clinical || [];
     p.clinical.push({
       id: uid(), date: dmPlan.date,
       complaint: `${dmPlan.complaint}${dmPlan.duration ? " · " + dmPlan.duration : ""} | Symptoms: ${dmSymptoms.join(", ")}${dmNotes ? " | " + dmNotes : ""}`,
       diagnosis: dmPlan.suggested,
       treatment: (medsText ? "Rx: " + medsText + " | " : "") + "Tests: " + dmPlan.tests.join(", "),
-      notes: "ASHVIK Doctor plan. Red flags: " + (dmPlan.redFlags.join("; ") || "none") + " | Labs: " + ((dmPlan.labFindings || []).join("; ") || "none")
+      notes: "ASHVIK Doctor plan. Red flags: " + (dmPlan.redFlags.join("; ") || "none") + " | Labs: " + ((dmPlan.labFindings || []).join("; ") || "none") + " | Symptomatic advice: " + ((dmPlan.symptomaticAdvice || []).join(" ") || "none")
     });
     setPatients(ps); savePatients(ps);
     setDmSaved(true);
@@ -1709,6 +1809,25 @@ function App() {
                   <div className="alert alert-info"><b>Report-based findings:</b><ul>{dmPlan.labFindings.map((f,i) => <li key={i}>{f}</li>)}</ul></div>
                 )}
                 <div className="alert alert-success"><b>ASHVIK impression:</b> {dmPlan.suggested} <span style={{color:"var(--muted)",fontSize:12}}>(score {dmPlan.top[0]?.score || 0})</span></div>
+                {(() => {
+                  const extra = extraMeds(dmPlan.tpl ? dmPlan.tpl.meds : [], dmPlan.symptomatic || []);
+                  const advice = dmPlan.symptomaticAdvice || [];
+                  if (!extra.length) return null;
+                  return (
+                    <div className="alert alert-warn">
+                      <b>Symptomatic treatment</b>
+                      <ul style={{margin:"6px 0 0 18px",padding:0,fontSize:13}}>
+                        {extra.map((m,i) => (
+                          <li key={i} style={{marginBottom:4}}>
+                            <b>{m[0]}</b> — {m[1]} · {m[2]} · {m[3]}{m[4] ? " · " + m[4] : ""}
+                            {BRANDS[m[0]] && <div style={{fontSize:11,color:"var(--muted)"}}>Brands: {BRANDS[m[0]]}</div>}
+                          </li>
+                        ))}
+                      </ul>
+                      {advice.length > 0 && <div style={{fontSize:12,marginTop:4}}>{advice.join(" ")}</div>}
+                    </div>
+                  );
+                })()}
                 <div className="section-title">Differential diagnosis</div>
                 {dmPlan.top.length === 0 ? <div className="empty">Insufficient data. Add more symptoms or clinical findings.</div> :
                   dmPlan.top.map(c => (
@@ -1737,7 +1856,7 @@ function App() {
                 <div>{dmPlan.tests.map(t => <Chip key={t} label={t} active={false} onClick={() => {}} />)}</div>
                 <div style={{marginTop:10,fontSize:12,color:"var(--muted)"}}>⚠️ ASHVIK decision-support hai. Final diagnosis, prescription aur referral decision doctor ka hai.</div>
                 <div style={{marginTop:12,display:"flex",gap:8,flexWrap:"wrap"}}>
-                  {dmPlan.tpl && <button className="btn btn-primary btn-sm" onClick={dmLoadPrescription}>Load into Prescription →</button>}
+                  {(dmPlan.tpl || (dmPlan.symptomatic || []).length > 0) && <button className="btn btn-primary btn-sm" onClick={dmLoadPrescription}>Load into Prescription →</button>}
                   <button className="btn btn-outline btn-sm" onClick={dmSaveCase} disabled={dmSaved}>{dmSaved ? "Saved ✓" : "Save Case to Patient"}</button>
                   <button className="btn btn-outline btn-sm" onClick={() => openDoctorReports(dmPatient, "doctor")}>📋 Reports / Upload</button>
                   <button className="btn btn-outline btn-sm" onClick={dmReset}>New Case</button>
@@ -1961,19 +2080,39 @@ function App() {
                 {(() => {
                   const top = dxResult.top[0];
                   const tpl = top ? DISEASE_TEMPLATES[top.name] : null;
-                  if (!tpl) return null;
+                  const sxExtra = extraMeds(tpl ? tpl.meds : [], dxResult.symptomatic || []);
+                  const sxAdvice = dxResult.symptomaticAdvice || [];
+                  if (!tpl && sxExtra.length === 0) return null;
                   return (
-                    <div className="alert alert-info" style={{marginTop:10}}>
-                      <b>Standard treatment — {top.name}</b>
-                      <ul style={{margin:"6px 0 0 18px",padding:0,fontSize:13}}>
-                        {tpl.meds.map((m,i) => (
-                          <li key={i} style={{marginBottom:4}}>
-                            <b>{m[0]}</b> — {m[1]} · {m[2]} · {m[3]}{m[4] ? " · " + m[4] : ""}
-                            {BRANDS[m[0]] && <div style={{fontSize:11,color:"var(--muted)"}}>Brands: {BRANDS[m[0]]}</div>}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    <>
+                      {tpl && (
+                        <div className="alert alert-info" style={{marginTop:10}}>
+                          <b>Standard treatment — {top.name}</b>
+                          <ul style={{margin:"6px 0 0 18px",padding:0,fontSize:13}}>
+                            {tpl.meds.map((m,i) => (
+                              <li key={i} style={{marginBottom:4}}>
+                                <b>{m[0]}</b> — {m[1]} · {m[2]} · {m[3]}{m[4] ? " · " + m[4] : ""}
+                                {BRANDS[m[0]] && <div style={{fontSize:11,color:"var(--muted)"}}>Brands: {BRANDS[m[0]]}</div>}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {sxExtra.length > 0 && (
+                        <div className="alert alert-warn" style={{marginTop:10}}>
+                          <b>Symptomatic treatment</b>
+                          <ul style={{margin:"6px 0 0 18px",padding:0,fontSize:13}}>
+                            {sxExtra.map((m,i) => (
+                              <li key={i} style={{marginBottom:4}}>
+                                <b>{m[0]}</b> — {m[1]} · {m[2]} · {m[3]}{m[4] ? " · " + m[4] : ""}
+                                {BRANDS[m[0]] && <div style={{fontSize:11,color:"var(--muted)"}}>Brands: {BRANDS[m[0]]}</div>}
+                              </li>
+                            ))}
+                          </ul>
+                          {sxAdvice.length > 0 && <div style={{fontSize:12,marginTop:4}}>{sxAdvice.join(" ")}</div>}
+                        </div>
+                      )}
+                    </>
                   );
                 })()}
                 <div className="section-title">{t("differential",lang)}</div>
@@ -2010,12 +2149,12 @@ function App() {
                 <div>{dxResult.tests.map(tt => <Chip key={tt} label={tt} active={false} onClick={() => {}} />)}</div>
                 <div style={{marginTop:10,fontSize:12,color:"var(--muted)"}}>⚠️ Decision-support suggestion. Final diagnosis must be made by the doctor.</div>
                 <div style={{marginTop:12,display:"flex",gap:8,flexWrap:"wrap"}}>
-                  {dxResult.top[0] && DISEASE_TEMPLATES[dxResult.top[0].name] && (
+                  {dxResult.top[0] && (DISEASE_TEMPLATES[dxResult.top[0].name] || (dxResult.symptomatic || []).length > 0) && (
                     <button className="btn btn-primary btn-sm" onClick={() => useDxTreatment(dxResult.top[0].name)}>Use suggested treatment → Prescription</button>
                   )}
                   <button className="btn btn-outline btn-sm" onClick={prescribeFromDx}>Prescribe manually →</button>
                   <button className="btn btn-primary btn-sm" onClick={saveDxNote}>{t("saveNote",lang)}</button>
-                  <button className="btn btn-outline btn-sm" onClick={() => { const tpl = dxResult.top[0] ? DISEASE_TEMPLATES[dxResult.top[0].name] : null; sessionStorage.setItem("ashvik_dx", JSON.stringify({ diagnosis: dxResult.suggested, tests: dxResult.tests, advice: dxResult.top[0]?.advice || "", meds: tpl ? tpl.meds : [] })); alert("Copied."); }}>{t("copyDx",lang)}</button>
+                  <button className="btn btn-outline btn-sm" onClick={() => { const tpl = dxResult.top[0] ? DISEASE_TEMPLATES[dxResult.top[0].name] : null; sessionStorage.setItem("ashvik_dx", JSON.stringify({ diagnosis: dxResult.suggested, tests: dxResult.tests, advice: [dxResult.top[0]?.advice, ...(dxResult.symptomaticAdvice || [])].filter(Boolean).join(" "), meds: mergeMeds(tpl ? tpl.meds : [], dxResult.symptomatic || []) })); alert("Copied."); }}>{t("copyDx",lang)}</button>
                 </div>
               </div>
             )}
