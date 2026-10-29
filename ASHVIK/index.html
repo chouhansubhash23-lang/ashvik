@@ -555,6 +555,46 @@ function parseQualitative(text) {
   return found;
 }
 
+// Widal is semi-quantitative (1:80, 1:160, 1:250...). OCR often misreads
+// "1:250" as "1.250", so parse titres separately instead of as plain numbers.
+function parseWidal(text) {
+  const raw = String(text || "");
+  const start = raw.search(/WIDAL\s*(?:TEST)?/i);
+  if (start < 0) return [];
+  let section = raw.slice(start);
+  const end = section.search(/Interpretation\s+of\s+Test|INTERPRETATION\s+OF\s+TEST/i);
+  if (end >= 0) section = section.slice(0, end);
+  if (!/typhi|para\s*typhi/i.test(section)) return [];
+  const lines = section.split(/\r?\n/).map(l => l.replace(/\s+/g, " ").trim()).filter(Boolean);
+  const titres = [];
+  lines.forEach((line) => {
+    const re = /\b1\s*[:：.,\-/]\s*(\d{1,4})\b/g;
+    let m;
+    while ((m = re.exec(line))) {
+      const n = parseInt(m[1], 10);
+      if (n >= 20 && n <= 10240) titres.push({ n, line });
+    }
+  });
+  if (!titres.length) return [];
+  const defs = [
+    { name:"Widal Typhi O", re:/typhi\s*['"‘’]?\s*o\b/i },
+    { name:"Widal Typhi H", re:/typhi\s*['"‘’]?\s*h\b/i },
+    { name:"Widal Para A H", re:/para\s*a\s*['"‘’]?\s*h\b/i },
+    { name:"Widal Para B H", re:/para\s*b\s*['"‘’]?\s*h\b/i }
+  ];
+  const used = new Set();
+  const out = [];
+  defs.forEach((d) => {
+    let t = titres.find(x => !used.has(x) && d.re.test(x.line));
+    if (!t) t = titres.find(x => !used.has(x));
+    if (!t) return;
+    used.add(t);
+    const flag = t.n >= 200 ? "Positive" : t.n >= 125 ? "Borderline" : "Negative";
+    out.push({ name:d.name, value:"1:" + t.n, unit:"titre", flag, line:t.line });
+  });
+  return out;
+}
+
 // Shared clinical reasoning engine used by Quick Differential and ASHVIK Doctor.
 function labValueText(v) {
   if (!v) return "";
@@ -563,13 +603,23 @@ function labValueText(v) {
   return raw + unit;
 }
 
+function getReportLabs(report) {
+  const vals = Array.isArray(report?.ocrValues) ? report.ocrValues.slice() : [];
+  // Existing reports may have OCR text but no parsed values (older version).
+  // Recover Widal titres on the fly so the doctor does not have to re-upload.
+  parseWidal(report?.ocrText).forEach(v => {
+    if (!vals.some(x => x && x.name === v.name)) vals.push(v);
+  });
+  return vals;
+}
+
 function getLatestReportLabs(patient) {
   const reports = (patient?.reports || [])
-    .filter(r => Array.isArray(r.ocrValues) && r.ocrValues.length)
-    .slice()
+    .map(r => ({ ...r, _labs: getReportLabs(r) }))
+    .filter(r => r._labs.length)
     .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
   const map = new Map();
-  reports.forEach(r => r.ocrValues.forEach(v => {
+  reports.forEach(r => r._labs.forEach(v => {
     if (v && v.name && !map.has(v.name)) map.set(v.name, { ...v, reportDate: r.date, reportName: r.name });
   }));
   return { values: [...map.values()], count: reports.length, date: reports[0]?.date || "", name: reports[0]?.name || "" };
@@ -613,6 +663,16 @@ function assessCase({ age, sex, symptoms, notes, vitals, chronic, labs }) {
   const creat = labNum("Creatinine");
   const sodium = labNum("Sodium");
   const potassium = labNum("Potassium");
+  const labTitre = (name) => {
+    const v = lab[name];
+    if (!v) return NaN;
+    const m = String(v.value).match(/(\d{1,4})\s*(?:titre)?\s*$/i);
+    return m ? parseInt(m[1], 10) : NaN;
+  };
+  const widalO = labTitre("Widal Typhi O");
+  const widalH = labTitre("Widal Typhi H");
+  const widalAH = labTitre("Widal Para A H");
+  const widalBH = labTitre("Widal Para B H");
   const sugarValues = [fbs, ppbs, rbs, bs].filter(n => !isNaN(n));
   const highSugar = sugarValues.length ? Math.max(...sugarValues) : NaN;
 
@@ -650,7 +710,16 @@ function assessCase({ age, sex, symptoms, notes, vitals, chronic, labs }) {
       if (labPos("Dengue IgM")) score += 3;
     }
     if (cond.name === "Malaria" && labPos("Malaria Antigen")) score += 6;
-    if (cond.name === "Typhoid" && labPos("Typhoid IgM")) score += 6;
+    if (cond.name === "Typhoid") {
+      if (labPos("Typhoid IgM")) score += 6;
+      // Widal: the report itself uses >1:200 as diagnostic, 1:125 needs confirmation.
+      if (!isNaN(widalO) && widalO >= 200) score += 8;
+      else if (!isNaN(widalO) && widalO >= 125) score += 3;
+      if (!isNaN(widalH) && widalH >= 200) score += 4;
+      else if (!isNaN(widalH) && widalH >= 125) score += 2;
+      if (!isNaN(widalAH) && widalAH >= 200) score += 3;
+      if (!isNaN(widalBH) && widalBH >= 200) score += 3;
+    }
     if (cond.name === "Hypothyroidism") {
       if (!isNaN(tsh) && tsh > 4.5) score += 4;
       if (!isNaN(t4) && t4 < 0.8) score += 2;
@@ -698,6 +767,10 @@ function assessCase({ age, sex, symptoms, notes, vitals, chronic, labs }) {
   if (labPos("Dengue IgM")) addLab("Dengue IgM", "positive (dengue)");
   if (labPos("Malaria Antigen")) addLab("Malaria Antigen", "positive (malaria)");
   if (labPos("Typhoid IgM")) addLab("Typhoid IgM", "positive (typhoid)");
+  if (!isNaN(widalO) && widalO >= 125) addLab("Widal Typhi O", widalO >= 200 ? "positive (typhoid range; report cutoff >1:200)" : "borderline (repeat after 3 days)");
+  if (!isNaN(widalH) && widalH >= 125) addLab("Widal Typhi H", widalH >= 200 ? "positive (supportive)" : "borderline (supportive; repeat after 3 days)");
+  if (!isNaN(widalAH) && widalAH >= 200) addLab("Widal Para A H", "positive (paratyphoid A range)");
+  if (!isNaN(widalBH) && widalBH >= 200) addLab("Widal Para B H", "positive (paratyphoid B range)");
   if (labPos("HBsAg")) addLab("HBsAg", "positive (hepatitis B — refer)");
   if (labPos("Anti-HCV")) addLab("Anti-HCV", "positive (hepatitis C — refer)");
   if (labPos("HIV")) addLab("HIV", "reactive (confirm/refer)");
@@ -1358,7 +1431,13 @@ function App() {
       if (stale()) return;
       setOcrText(text);
       const p = patients.find(x => x.id === reportForm.pid);
-      const values = [...parseLabValues(text, p?.sex), ...parseQualitative(text)];
+      const seen = new Set();
+      const values = [...parseLabValues(text, p?.sex), ...parseQualitative(text), ...parseWidal(text)]
+        .filter(v => {
+          if (!v || !v.name || seen.has(v.name)) return false;
+          seen.add(v.name);
+          return true;
+        });
       setOcrValues(values);
       setOcrProgress(100);
       setOcrStatus("done");
@@ -2052,31 +2131,34 @@ function App() {
             </div>
             {!selectedPatient ? <div className="card empty">{t("selectPatient",lang)}</div> :
               (selectedPatient.reports||[]).length === 0 ? <div className="card empty">{t("noData",lang)}</div> :
-              (selectedPatient.reports||[]).slice().sort((a,b)=>b.date.localeCompare(a.date)).map(r => (
-                <div className="report-card" key={r.id}>
-                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                    <h3 style={{margin:0,fontSize:15}}>{r.name} <span style={{fontSize:12,color:"var(--muted)",fontWeight:400}}>{r.date}</span></h3>
-                    <button className="btn btn-danger btn-sm" onClick={() => deleteReport(selectedId, r.id)}>{t("delete",lang)}</button>
+              (selectedPatient.reports||[]).slice().sort((a,b)=>b.date.localeCompare(a.date)).map(r => {
+                const rv = getReportLabs(r);
+                return (
+                  <div className="report-card" key={r.id}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                      <h3 style={{margin:0,fontSize:15}}>{r.name} <span style={{fontSize:12,color:"var(--muted)",fontWeight:400}}>{r.date}</span></h3>
+                      <button className="btn btn-danger btn-sm" onClick={() => deleteReport(selectedId, r.id)}>{t("delete",lang)}</button>
+                    </div>
+                    <div style={{marginTop:8}}><b>{t("result",lang)}:</b> {r.result || "-"}</div>
+                    {r.notes && <div><b>{t("reportNotes",lang)}:</b> {r.notes}</div>}
+                    {rv.length > 0 && (
+                      <details style={{marginTop:6,fontSize:12}}>
+                        <summary style={{cursor:"pointer",fontWeight:600}}>Parsed values ({rv.length})</summary>
+                        <div style={{marginTop:4}}>
+                          {rv.map((v, i) => <span key={i} style={{display:"inline-block",marginRight:10,marginBottom:2}}>{v.name}: <b>{labValueText(v)}</b>{v.flag ? " (" + v.flag + ")" : ""}</span>)}
+                        </div>
+                      </details>
+                    )}
+                    {r.ocrText && (
+                      <details style={{marginTop:4,fontSize:12}}>
+                        <summary style={{cursor:"pointer",color:"var(--muted)"}}>OCR text</summary>
+                        <pre style={{whiteSpace:"pre-wrap",fontSize:11,maxHeight:180,overflow:"auto"}}>{r.ocrText}</pre>
+                      </details>
+                    )}
+                    {r.fileData && <div style={{marginTop:8}}><a href={r.fileData} target="_blank" download={r.fileName||"report"}>📎 {r.fileName || "View file"}</a></div>}
                   </div>
-                  <div style={{marginTop:8}}><b>{t("result",lang)}:</b> {r.result || "-"}</div>
-                  {r.notes && <div><b>{t("reportNotes",lang)}:</b> {r.notes}</div>}
-                  {r.ocrValues && r.ocrValues.length > 0 && (
-                    <details style={{marginTop:6,fontSize:12}}>
-                      <summary style={{cursor:"pointer",fontWeight:600}}>Parsed values ({r.ocrValues.length})</summary>
-                      <div style={{marginTop:4}}>
-                        {r.ocrValues.map((v, i) => <span key={i} style={{display:"inline-block",marginRight:10,marginBottom:2}}>{v.name}: <b>{labValueText(v)}</b>{v.flag ? " (" + v.flag + ")" : ""}</span>)}
-                      </div>
-                    </details>
-                  )}
-                  {r.ocrText && (
-                    <details style={{marginTop:4,fontSize:12}}>
-                      <summary style={{cursor:"pointer",color:"var(--muted)"}}>OCR text</summary>
-                      <pre style={{whiteSpace:"pre-wrap",fontSize:11,maxHeight:180,overflow:"auto"}}>{r.ocrText}</pre>
-                    </details>
-                  )}
-                  {r.fileData && <div style={{marginTop:8}}><a href={r.fileData} target="_blank" download={r.fileName||"report"}>📎 {r.fileName || "View file"}</a></div>}
-                </div>
-              ))}
+                );
+              })}
           </>
         )}
 
