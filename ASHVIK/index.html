@@ -1095,7 +1095,6 @@ function Sidebar({ view, setView, lang, setLang, t, cloudStatus }) {
     { id:"dashboard", label:t("dashboard",lang), icon:"📊" },
     { id:"doctor", label:"ASHVIK Doctor", icon:"🤖" },
     { id:"patients", label:t("patients",lang), icon:"👥" },
-    { id:"consult", label:t("consult",lang), icon:"🩺" },
     { id:"history", label:t("history",lang), icon:"📁" },
     { id:"settings", label:t("settings",lang), icon:"⚙️" },
   ];
@@ -1293,8 +1292,9 @@ function App() {
       ps.push(np);
       setSelectedId(np.id);
       if (view === "consult") setConsultPatient(np.id);
+      if (view === "doctor" && doctorMode === "quick") setConsultPatient(np.id);
+      if (view === "doctor" && doctorMode === "guided") setDmPatient(np.id);
       if (view === "diagnosis") setDxPatient(np.id);
-      if (view === "doctor") setDmPatient(np.id);
     }
     setPatients(ps); savePatients(ps);
     setPatientModal(false);
@@ -1457,14 +1457,14 @@ function App() {
       meds: withBrands(mergeMeds(tpl ? tpl.meds : [], sx)),
       advice: [tpl?.advice, ...(dxResult?.symptomaticAdvice || [])].filter(Boolean).join(" ")
     }));
-    setView("consult");
+    setDoctorMode("quick"); setView("doctor");
     alert("Treatment loaded into New Consultation. Review and edit before saving.");
   };
   const prescribeFromDx = () => {
     if (!dxPatient) { alert("Select a patient first."); return; }
     setConsultPatient(dxPatient);
     setConsult(prev => ({ ...prev, ...dxToConsult() }));
-    setView("consult");
+    setDoctorMode("quick"); setView("doctor");
   };
   const startDxFromConsult = () => {
     if (!consultPatient) { alert("Select a patient first."); return; }
@@ -1515,6 +1515,10 @@ function App() {
   const [dmMessages, setDmMessages] = useState([]);
   const [dmPlan, setDmPlan] = useState(null);
   const [dmSaved, setDmSaved] = useState(false);
+  const [doctorMode, setDoctorMode] = useState("guided"); // guided | quick
+  useEffect(() => {
+    if (view === "consult") { setDoctorMode("quick"); setView("doctor"); }
+  }, [view]);
 
   const dmAsk = (text) => setDmMessages(prev => [...prev, { role:"ashvik", text }]);
   const dmAnswer = (text) => setDmMessages(prev => [...prev, { role:"doctor", text }]);
@@ -1596,7 +1600,7 @@ function App() {
       advice: [tpl?.advice, ...(dmPlan.symptomaticAdvice || [])].filter(Boolean).join(" "),
       tests: dmPlan.tests.join(", ")
     }));
-    setView("consult");
+    setDoctorMode("quick"); setView("doctor");
   };
   const dmSaveCase = () => {
     if (!dmPlan) return;
@@ -1796,7 +1800,7 @@ function App() {
               <div><h2>{t("dashboard",lang)}</h2><p>{t("tag",lang)}</p></div>
               <div className="topbar-actions">
                 <span className={"badge " + (online ? "badge-m" : "badge-o")}>{online ? t("online",lang) : t("offline",lang)}</span>
-                <button className="btn btn-primary" onClick={() => setView("consult")}>{t("consult",lang)}</button>
+                <button className="btn btn-primary" onClick={() => { setDoctorMode("quick"); setView("doctor"); }}>{t("consult",lang)}</button>
               </div>
             </div>
             <div className="grid grid-3" style={{gap:10}}>
@@ -1806,7 +1810,7 @@ function App() {
             </div>
             <div className="card" style={{padding:"12px 16px",marginBottom:12}}>
               <div className="card-head" style={{marginBottom:8}}><h3 style={{fontSize:14}}>{t("quickActions",lang)}</h3></div>
-              <button className="btn btn-primary btn-sm" onClick={() => setView("consult")}>+ {t("consult",lang)}</button>
+              <button className="btn btn-primary btn-sm" onClick={() => { setDoctorMode("quick"); setView("doctor"); }}>+ {t("consult",lang)}</button>
               <button className="btn btn-outline btn-sm" onClick={() => setView("patients")} style={{marginLeft:6}}>{t("patients",lang)}</button>
               <button className="btn btn-outline btn-sm" onClick={() => setView("doctor")} style={{marginLeft:6}}>🤖 ASHVIK Doctor</button>
             </div>
@@ -1844,7 +1848,7 @@ function App() {
                       <td>
                         <button className="btn btn-outline btn-sm" onClick={() => openPatientModal(p)}>{t("edit",lang)}</button>{" "}
                         <button className="btn btn-danger btn-sm" onClick={() => deletePatient(p.id)}>{t("delete",lang)}</button>{" "}
-                        <button className="btn btn-outline btn-sm" onClick={() => { setConsultPatient(p.id); setView("consult"); }}>{t("startConsult",lang)}</button>
+                        <button className="btn btn-outline btn-sm" onClick={() => { setConsultPatient(p.id); setDoctorMode("quick"); setView("doctor"); }}>{t("startConsult",lang)}</button>
                       </td>
                     </tr>
                   ))}
@@ -1856,14 +1860,27 @@ function App() {
         {view === "doctor" && (
           <>
             <div className="page-head">
-              <div><h2>🤖 ASHVIK Doctor</h2><p>Guided case-taking → differential diagnosis → treatment plan</p></div>
-              <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
-                <button className="btn btn-outline" onClick={() => setView("diagnosis")}>⚡ Quick Differential</button>
-                <button className="btn btn-outline" onClick={() => openDoctorReports(dmPatient, "doctor")}>📋 Reports</button>
-                <button className="btn btn-outline" onClick={dmReset}>New Case</button>
-              </div>
+               <div><h2>{doctorMode === "quick" ? "Quick Consultation" : "ASHVIK Doctor"}</h2><p>{doctorMode === "quick" ? "Fast consultation, prescription, follow-up" : "Guided case-taking → differential diagnosis → treatment plan"}</p></div>
+               <div style={{display:"flex",gap:8,flexWrap:"wrap",alignItems:"center"}}>
+                 <div style={{display:"flex",gap:6}}>
+                   <button className={"btn btn-sm " + (doctorMode === "guided" ? "btn-primary" : "btn-outline")} onClick={() => setDoctorMode("guided")}>Guided</button>
+                   <button className={"btn btn-sm " + (doctorMode === "quick" ? "btn-primary" : "btn-outline")} onClick={() => setDoctorMode("quick")}>Quick</button>
+                 </div>
+                 {doctorMode === "guided" && (
+                   <>
+                     <button className="btn btn-outline" onClick={() => setView("diagnosis")}>Quick Differential</button>
+                     <button className="btn btn-outline" onClick={() => openDoctorReports(dmPatient, "doctor")}>Reports</button>
+                     <button className="btn btn-outline" onClick={dmReset}>New Case</button>
+                   </>
+                 )}
+                 {doctorMode === "quick" && (
+                   <button className="btn btn-outline" onClick={() => openDoctorReports(consultPatient, "doctor")}>Reports</button>
+                 )}
+               </div>
             </div>
 
+            {doctorMode === "guided" && (
+              <>
             <div className="card">
               <div className="card-head"><h3>Consultation</h3><span className="sub">ASHVIK asks, you answer</span></div>
               <div className="chat">
@@ -2030,13 +2047,15 @@ function App() {
                 </div>
               </div>
             )}
+              </>
+            )}
           </>
         )}
 
-        {view === "consult" && (
+        {view === "doctor" && doctorMode === "quick" && (
           <>
             <div className="page-head">
-              <div><h2>{t("consult",lang)}</h2><p></p></div>
+              <div><h2></h2><p></p></div>
               <div className="topbar-actions">
                 <button className="btn btn-outline" onClick={resetConsult}>{t("reset",lang)}</button>
                 <button className="btn btn-primary" onClick={saveConsult}>{t("save",lang)}</button>
@@ -2650,7 +2669,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 // Register service worker for PWA offline
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=5").then(reg => {
+    navigator.serviceWorker.register("./sw.js?v=6").then(reg => {
       reg.update().catch(() => {});
     }).catch(() => {});
   });
