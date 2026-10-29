@@ -556,13 +556,59 @@ function parseQualitative(text) {
 }
 
 // Shared clinical reasoning engine used by Quick Differential and ASHVIK Doctor.
-function assessCase({ age, sex, symptoms, notes, vitals, chronic }) {
+function getLatestReportLabs(patient) {
+  const reports = (patient?.reports || [])
+    .filter(r => Array.isArray(r.ocrValues) && r.ocrValues.length)
+    .slice()
+    .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+  const map = new Map();
+  reports.forEach(r => r.ocrValues.forEach(v => {
+    if (v && v.name && !map.has(v.name)) map.set(v.name, { ...v, reportDate: r.date, reportName: r.name });
+  }));
+  return { values: [...map.values()], count: reports.length, date: reports[0]?.date || "", name: reports[0]?.name || "" };
+}
+
+function assessCase({ age, sex, symptoms, notes, vitals, chronic, labs }) {
   const symptomText = ((symptoms || []).join(" ") + " " + (notes || "")).toLowerCase();
   const chronicL = String(chronic || "").toLowerCase();
   const temp = parseFloat(vitals?.temp);
   const spo2 = parseFloat(vitals?.spo2);
   const sugar = parseFloat(vitals?.sugar);
   const ageNum = Number(age) || 0;
+
+  // Report / lab values (from OCR) are used as additional clinical evidence.
+  const lab = {};
+  (labs || []).forEach(v => { if (v && v.name) lab[v.name] = v; });
+  const labNum = (name) => {
+    const v = lab[name];
+    if (!v) return NaN;
+    return parseFloat(String(v.value).replace(",", "."));
+  };
+  const labPos = (name) => {
+    const v = lab[name];
+    return !!(v && /positive|reactive|detected/i.test(String(v.value)));
+  };
+  const hb = labNum("Hemoglobin");
+  const hba1c = labNum("HbA1c");
+  const fbs = labNum("Fasting Blood Sugar");
+  const ppbs = labNum("Postprandial Blood Sugar");
+  const rbs = labNum("Random Blood Sugar");
+  const bs = labNum("Blood Sugar");
+  const ferritin = labNum("Ferritin");
+  const plateletRaw = labNum("Platelets");
+  const plateletAbs = isNaN(plateletRaw) ? NaN : plateletRaw < 10 ? plateletRaw * 100000 : plateletRaw < 1000 ? plateletRaw * 1000 : plateletRaw;
+  const wbcRaw = labNum("WBC");
+  const wbcAbs = isNaN(wbcRaw) ? NaN : wbcRaw < 100 ? wbcRaw * 1000 : wbcRaw;
+  const tsh = labNum("TSH");
+  const t4 = labNum("T4");
+  const esr = labNum("ESR");
+  const crp = labNum("CRP");
+  const creat = labNum("Creatinine");
+  const sodium = labNum("Sodium");
+  const potassium = labNum("Potassium");
+  const sugarValues = [fbs, ppbs, rbs, bs].filter(n => !isNaN(n));
+  const highSugar = sugarValues.length ? Math.max(...sugarValues) : NaN;
+
   const scored = CONDITIONS.map(cond => {
     let score = 0; const matched = [];
     cond.keywords.forEach(kw => { if (symptomText.includes(kw.toLowerCase())) { score += 2; matched.push(kw); } });
@@ -570,16 +616,93 @@ function assessCase({ age, sex, symptoms, notes, vitals, chronic }) {
     if (chronicL.includes("hypertension") && cond.name === "Hypertension") score += 3;
     if (chronicL.includes("asthma") && cond.name === "Asthma") score += 3;
     if (chronicL.includes("copd") && cond.name === "COPD") score += 3;
-    if (ageNum < 5 && ["Pneumonia", "Acute diarrhoea"].includes(cond.name)) score += 1;
-    if (ageNum > 60 && ["Hypertension", "Type 2 Diabetes", "COPD"].includes(cond.name)) score += 1;
-    if (sex === "Female" && cond.name === "UTI") score += 1;
+    if (ageNum < 5 && matched.length > 0 && ["Pneumonia", "Acute diarrhoea"].includes(cond.name)) score += 1;
+    if (ageNum > 60 && matched.length > 0 && ["Hypertension", "Type 2 Diabetes", "COPD"].includes(cond.name)) score += 1;
+    if (sex === "Female" && matched.length > 0 && cond.name === "UTI") score += 1;
     if (!isNaN(temp) && temp >= 100.4 && cond.keywords.includes("fever")) score += 1;
     if (!isNaN(spo2) && spo2 < 94 && ["Pneumonia", "COPD", "Asthma"].includes(cond.name)) score += 3;
     if (!isNaN(sugar) && sugar >= 200 && cond.name === "Type 2 Diabetes") score += 3;
+
+    // Lab-driven scoring
+    if (cond.name === "Iron deficiency anaemia") {
+      if (!isNaN(hb) && hb < (sex === "Female" ? 12 : 13)) score += 3;
+      if (!isNaN(hb) && hb < 9) score += 2;
+      if (!isNaN(ferritin) && ferritin < 30) score += 2;
+    }
+    if (cond.name === "Type 2 Diabetes") {
+      if (!isNaN(hba1c) && hba1c >= 6.5) score += 4;
+      if (!isNaN(fbs) && fbs >= 126) score += 3;
+      if (!isNaN(ppbs) && ppbs >= 200) score += 3;
+      if (!isNaN(rbs) && rbs >= 200) score += 3;
+      if (!isNaN(bs) && bs >= 200) score += 2;
+    }
+    if (cond.name === "Dengue") {
+      if (!isNaN(plateletAbs) && plateletAbs < 150000) score += 3;
+      if (!isNaN(plateletAbs) && plateletAbs < 100000) score += 2;
+      if (labPos("Dengue NS1")) score += 6;
+      if (labPos("Dengue IgM")) score += 3;
+    }
+    if (cond.name === "Malaria" && labPos("Malaria Antigen")) score += 6;
+    if (cond.name === "Typhoid" && labPos("Typhoid IgM")) score += 6;
+    if (cond.name === "Hypothyroidism") {
+      if (!isNaN(tsh) && tsh > 4.5) score += 4;
+      if (!isNaN(t4) && t4 < 0.8) score += 2;
+    }
+    if (cond.name === "Pneumonia" && matched.length > 0) {
+      if (!isNaN(wbcAbs) && wbcAbs > 11000) score += 2;
+      if (!isNaN(crp) && crp > 10) score += 1;
+    }
+    if (cond.name === "UTI" && matched.length > 0 && !isNaN(wbcAbs) && wbcAbs > 11000) score += 1;
+    if (cond.name === "Tuberculosis" && matched.length > 0) {
+      if (!isNaN(esr) && esr > 40) score += 2;
+      if (!isNaN(crp) && crp > 20) score += 1;
+    }
+    if (cond.name === "Viral fever" && matched.length > 0 && !isNaN(wbcAbs) && wbcAbs < 4000) score += 1;
+
     return { ...cond, score, matched, treatment: (DISEASE_TEMPLATES[cond.name] || {}).meds || [], treatmentAdvice: (DISEASE_TEMPLATES[cond.name] || {}).advice || cond.advice };
   }).filter(c => c.score > 0).sort((a, b) => b.score - a.score);
   const top = scored.slice(0, 5);
   const suggested = top.length ? top[0].name : "Insufficient data — needs clinical evaluation";
+
+  const labFindings = [];
+  const seenLab = new Set();
+  const addLab = (name, text) => {
+    if (!lab[name] || seenLab.has(name)) return;
+    const v = lab[name];
+    const rawVal = String(v.value);
+    const unitText = v.unit && !rawVal.includes(v.unit) && !rawVal.includes("/") && !rawVal.includes("%") ? " " + v.unit : "";
+    labFindings.push(`${name}: ${rawVal}${unitText} — ${text}`);
+    seenLab.add(name);
+  };
+  if (!isNaN(hb) && hb < (sex === "Female" ? 12 : 13)) addLab("Hemoglobin", "low (anaemia)");
+  if (!isNaN(hba1c) && hba1c >= 6.5) addLab("HbA1c", "high (diabetes range)");
+  if (!isNaN(fbs) && fbs >= 126) addLab("Fasting Blood Sugar", "high (diabetes range)");
+  if (!isNaN(ppbs) && ppbs >= 200) addLab("Postprandial Blood Sugar", "high (diabetes range)");
+  if (!isNaN(rbs) && rbs >= 200) addLab("Random Blood Sugar", "high (diabetes range)");
+  if (!isNaN(bs) && bs >= 200) addLab("Blood Sugar", "high (diabetes range)");
+  if (!isNaN(plateletAbs) && plateletAbs < 150000) addLab("Platelets", "low (monitor for dengue/bleeding)");
+  if (!isNaN(wbcAbs) && wbcAbs > 11000) addLab("WBC", "high (infection/inflammation)");
+  if (!isNaN(wbcAbs) && wbcAbs < 4000) addLab("WBC", "low (viral/other cause)");
+  if (!isNaN(tsh) && tsh > 4.5) addLab("TSH", "high (hypothyroidism)");
+  if (!isNaN(creat) && creat > 1.4) addLab("Creatinine", "high (renal impairment)");
+  if (!isNaN(esr) && esr > 20) addLab("ESR", "high (inflammation/infection)");
+  if (!isNaN(crp) && crp > 10) addLab("CRP", "high (inflammation/infection)");
+  if (!isNaN(sodium) && (sodium < 135 || sodium > 145)) addLab("Sodium", sodium < 135 ? "low (hyponatraemia)" : "high (hypernatraemia)");
+  if (!isNaN(potassium) && (potassium < 3.5 || potassium > 5)) addLab("Potassium", potassium < 3.5 ? "low (hypokalaemia)" : "high (hyperkalaemia)");
+  if (labPos("Dengue NS1")) addLab("Dengue NS1", "positive (dengue)");
+  if (labPos("Dengue IgM")) addLab("Dengue IgM", "positive (dengue)");
+  if (labPos("Malaria Antigen")) addLab("Malaria Antigen", "positive (malaria)");
+  if (labPos("Typhoid IgM")) addLab("Typhoid IgM", "positive (typhoid)");
+  if (labPos("HBsAg")) addLab("HBsAg", "positive (hepatitis B — refer)");
+  if (labPos("Anti-HCV")) addLab("Anti-HCV", "positive (hepatitis C — refer)");
+  if (labPos("HIV")) addLab("HIV", "reactive (confirm/refer)");
+  Object.values(lab).forEach(v => {
+    if (!v || seenLab.has(v.name)) return;
+    if (v.flag === "High" || v.flag === "Low" || v.flag === "Positive") {
+      addLab(v.name, (v.flag === "Positive" ? "positive" : v.flag.toLowerCase()) + " (report flag)");
+    }
+  });
+
   const redFlags = [];
   if (symptomText.includes("chest pain")) redFlags.push("Chest pain — rule out cardiac/MI, refer if acute");
   if (symptomText.includes("breathlessness")) redFlags.push("Breathlessness — assess SpO2, consider pneumonia/asthma/COPD");
@@ -593,9 +716,25 @@ function assessCase({ age, sex, symptoms, notes, vitals, chronic }) {
   if (symptomText.includes("seizure")) redFlags.push("Seizure — urgent evaluation");
   if (!isNaN(sugar) && sugar >= 300) redFlags.push("Blood sugar " + sugar + " mg/dL — very high, rule out DKA/HHS");
   if (!isNaN(sugar) && sugar < 70) redFlags.push("Blood sugar " + sugar + " mg/dL — hypoglycaemia, treat urgently");
+  if (!isNaN(highSugar) && highSugar >= 300) redFlags.push("Report sugar " + highSugar + " mg/dL — very high, rule out DKA/HHS");
+  if (!isNaN(hb) && hb < 7) redFlags.push("Severe anaemia (Hb " + hb + " g/dL) — urgent evaluation");
+  if (!isNaN(plateletAbs) && plateletAbs < 50000) redFlags.push("Platelets " + plateletAbs + "/µL — high bleeding risk, urgent");
+  if (!isNaN(wbcAbs) && (wbcAbs > 20000 || wbcAbs < 2000)) redFlags.push("WBC " + wbcAbs + "/µL — urgent review");
+  if (!isNaN(creat) && creat > 2) redFlags.push("Creatinine " + creat + " mg/dL — renal impairment, refer");
+  if (!isNaN(tsh) && tsh > 10) redFlags.push("TSH " + tsh + " — marked hypothyroidism, treat/refer");
+  if (!isNaN(crp) && crp > 100) redFlags.push("CRP " + crp + " — severe inflammation/infection");
+  if (!isNaN(potassium) && potassium > 6) redFlags.push("Potassium " + potassium + " mEq/L — hyperkalaemia, urgent");
+  if (!isNaN(potassium) && potassium < 3) redFlags.push("Potassium " + potassium + " mEq/L — hypokalaemia, treat");
+  if (!isNaN(sodium) && (sodium < 125 || sodium > 155)) redFlags.push("Sodium " + sodium + " mEq/L — severe sodium abnormality, urgent");
+  if (labPos("Dengue NS1")) redFlags.push("Dengue NS1 positive — confirm and monitor platelets");
+  if (labPos("Malaria Antigen")) redFlags.push("Malaria antigen positive — treat per protocol");
+  if (labPos("HBsAg")) redFlags.push("HBsAg positive — hepatitis B, refer/confirm");
+  if (labPos("Anti-HCV")) redFlags.push("Anti-HCV positive — hepatitis C, refer/confirm");
+  if (labPos("HIV")) redFlags.push("HIV reactive — confirm and refer");
+
   const tests = new Set();
   top.slice(0, 3).forEach(c => (c.tests || []).forEach(t => tests.add(t)));
-  return { top, suggested, redFlags, tests: [...tests] };
+  return { top, suggested, redFlags: [...new Set(redFlags)], tests: [...tests], labFindings };
 }
 
 function loadPatients() {
@@ -958,7 +1097,8 @@ function App() {
     if (!dxPatient) { alert("Select a patient."); return; }
     const p = patients.find(x => x.id === dxPatient);
     if (!p) { alert("Patient not found."); return; }
-    const a = assessCase({ age:p.age, sex:p.sex, symptoms:dxSymptoms, notes:dxNotes, vitals:dxVitals, chronic:dxChronic });
+    const labInfo = getLatestReportLabs(p);
+    const a = assessCase({ age:p.age, sex:p.sex, symptoms:dxSymptoms, notes:dxNotes, vitals:dxVitals, chronic:dxChronic, labs:labInfo.values });
     const doctorDxL = dxDoctor.trim().toLowerCase();
     let agreement = "";
     if (dxDoctor.trim()) {
@@ -966,7 +1106,7 @@ function App() {
       if (sys.includes(doctorDxL) || doctorDxL.includes(sys.split(" ")[0])) agreement = "✅ System agrees with your clinical impression.";
       else agreement = "⚠️ System suggestion differs from your impression — review both and the differential list.";
     }
-    setDxResult({ pid: dxPatient, suggested:a.suggested, top:a.top, tests:a.tests, redFlags:a.redFlags, doctorDx:dxDoctor, agreement, symptoms:dxSymptoms, notes:dxNotes, chronic:dxChronic, vitals:dxVitals, date: new Date().toISOString().slice(0,10) });
+    setDxResult({ pid: dxPatient, suggested:a.suggested, top:a.top, tests:a.tests, redFlags:a.redFlags, labFindings:a.labFindings, labsUsed:labInfo.values, reportInfo:labInfo, doctorDx:dxDoctor, agreement, symptoms:dxSymptoms, notes:dxNotes, chronic:dxChronic, vitals:dxVitals, date: new Date().toISOString().slice(0,10) });
     setTimeout(() => document.getElementById("dxResultCard")?.scrollIntoView({ behavior:"smooth" }), 50);
   };
   const dxToConsult = () => ({
@@ -1015,7 +1155,7 @@ function App() {
     const topTpl = dxResult.top[0] ? DISEASE_TEMPLATES[dxResult.top[0].name] : null;
     const medsText = topTpl ? topTpl.meds.map(m => `${m[0]} ${m[1]} ${m[2]} x ${m[3]}`).join("; ") : "";
     p.clinical = p.clinical || [];
-    p.clinical.push({ id:uid(), date: dxResult.date, complaint: dxResult.symptoms.join(", ") + (dxResult.notes ? " | " + dxResult.notes : ""), diagnosis: dxResult.suggested + (dxResult.doctorDx ? " (Dr impression: " + dxResult.doctorDx + ")" : ""), treatment: (medsText ? "Rx: " + medsText + " | " : "") + "Tests: " + dxResult.tests.join(", "), notes: "AI-assisted differential. Red flags: " + (dxResult.redFlags.join("; ") || "none") });
+    p.clinical.push({ id:uid(), date: dxResult.date, complaint: dxResult.symptoms.join(", ") + (dxResult.notes ? " | " + dxResult.notes : ""), diagnosis: dxResult.suggested + (dxResult.doctorDx ? " (Dr impression: " + dxResult.doctorDx + ")" : ""), treatment: (medsText ? "Rx: " + medsText + " | " : "") + "Tests: " + dxResult.tests.join(", "), notes: "AI-assisted differential. Red flags: " + (dxResult.redFlags.join("; ") || "none") + " | Labs: " + ((dxResult.labFindings || []).join("; ") || "none") });
     setPatients(ps); savePatients(ps);
     alert("Saved to patient clinical history.");
   };
@@ -1085,16 +1225,19 @@ function App() {
     if (dmFlags.length) dmAnswer("Red flags: " + dmFlags.join(", "));
     const p = patients.find(x => x.id === dmPatient);
     if (!p) { alert("Patient not found."); return; }
+    const labInfo = getLatestReportLabs(p);
     const a = assessCase({
       age: p.age, sex: p.sex,
       symptoms: [...dmSymptoms],
       notes: `${dmComplaint} ${dmDuration} ${dmNotes} ${dmFlags.join(" ")}`,
       vitals: dmVitals,
-      chronic: `${dmChronic} ${dmAllergies} ${dmCurrentMeds}`
+      chronic: `${dmChronic} ${dmAllergies} ${dmCurrentMeds}`,
+      labs: labInfo.values
     });
     const top = a.top[0];
     const tpl = top ? DISEASE_TEMPLATES[top.name] : null;
-    setDmPlan({ ...a, patient: p, tpl, complaint: dmComplaint, duration: dmDuration, severity: dmSeverity, vitals: dmVitals, chronic: dmChronic, allergies: dmAllergies, currentMeds: dmCurrentMeds, flags: dmFlags, date: new Date().toISOString().slice(0,10) });
+    setDmPlan({ ...a, patient: p, tpl, reportInfo: labInfo, complaint: dmComplaint, duration: dmDuration, severity: dmSeverity, vitals: dmVitals, chronic: dmChronic, allergies: dmAllergies, currentMeds: dmCurrentMeds, flags: dmFlags, date: new Date().toISOString().slice(0,10) });
+    if (labInfo.values.length > 0) dmAsk(`Latest report se ${labInfo.values.length} lab values diagnosis me include ki gayi hain.`);
     dmAsk("Case summary aur management plan ready hai. Neeche dekhein — treatment edit karke prescription me bhej sakte hain. Final diagnosis aur prescription aapki approval se hoga.");
     setDmStep(6);
     setTimeout(() => document.getElementById("dmPlanCard")?.scrollIntoView({ behavior:"smooth" }), 80);
@@ -1124,7 +1267,7 @@ function App() {
       complaint: `${dmPlan.complaint}${dmPlan.duration ? " · " + dmPlan.duration : ""} | Symptoms: ${dmSymptoms.join(", ")}${dmNotes ? " | " + dmNotes : ""}`,
       diagnosis: dmPlan.suggested,
       treatment: (medsText ? "Rx: " + medsText + " | " : "") + "Tests: " + dmPlan.tests.join(", "),
-      notes: "ASHVIK Doctor plan. Red flags: " + (dmPlan.redFlags.join("; ") || "none")
+      notes: "ASHVIK Doctor plan. Red flags: " + (dmPlan.redFlags.join("; ") || "none") + " | Labs: " + ((dmPlan.labFindings || []).join("; ") || "none")
     });
     setPatients(ps); savePatients(ps);
     setDmSaved(true);
@@ -1478,6 +1621,9 @@ function App() {
                 {dmPlan.redFlags.length > 0 && (
                   <div className="alert alert-danger"><b>Red flags:</b><ul>{dmPlan.redFlags.map((r,i) => <li key={i}>{r}</li>)}</ul></div>
                 )}
+                {dmPlan.labFindings && dmPlan.labFindings.length > 0 && (
+                  <div className="alert alert-info"><b>Report-based findings:</b><ul>{dmPlan.labFindings.map((f,i) => <li key={i}>{f}</li>)}</ul></div>
+                )}
                 <div className="alert alert-success"><b>ASHVIK impression:</b> {dmPlan.suggested} <span style={{color:"var(--muted)",fontSize:12}}>(score {dmPlan.top[0]?.score || 0})</span></div>
                 <div className="section-title">Differential diagnosis</div>
                 {dmPlan.top.length === 0 ? <div className="empty">Insufficient data. Add more symptoms or clinical findings.</div> :
@@ -1659,6 +1805,7 @@ function App() {
               {!dxPatient ? <div className="empty">{t("selectPatient",lang)}</div> : (() => {
                 const p = patients.find(x => x.id === dxPatient);
                 const cs = (p.consults||[]).slice().sort((a,b)=>b.date.localeCompare(a.date));
+                const labInfo = getLatestReportLabs(p);
                 return (
                   <>
                     <div className="alert alert-info" style={{marginBottom:8}}>
@@ -1671,6 +1818,22 @@ function App() {
                       <div>{(p.reports||[]).slice(0,5).map(r => (
                         <div key={r.id} style={{fontSize:13,padding:"4px 0",borderBottom:"1px solid var(--border)"}}>{r.date} — <b>{r.name}</b>: {r.result||""}</div>
                       ))}</div>
+                    )}
+                    {labInfo.values.length > 0 && (
+                      <div style={{marginTop:8}}>
+                        <div className="section-title">Report values used in diagnosis</div>
+                        <div style={{fontSize:12}}>
+                          {labInfo.values.map((v, i) => (
+                            <span key={i} style={{display:"inline-block",marginRight:10,marginBottom:3}}>
+                              {v.name}: <b>{v.value}</b> {v.unit}{v.flag ? " (" + v.flag + ")" : ""}
+                            </span>
+                          ))}
+                        </div>
+                        <div style={{fontSize:11,color:"var(--muted)",marginTop:4}}>Auto-loaded from latest OCR report. Doctor verify.</div>
+                      </div>
+                    )}
+                    {(p.reports||[]).length > 0 && labInfo.values.length === 0 && (
+                      <div style={{fontSize:12,color:"var(--muted)",marginTop:6}}>Report attached hai, lekin OCR values nahi. Report me file upload karke OCR chalayein.</div>
                     )}
                   </>
                 );
@@ -1694,6 +1857,12 @@ function App() {
                   <div className="alert alert-danger">
                     <b>{t("redFlags",lang)}:</b>
                     <ul>{dxResult.redFlags.map((r,i) => <li key={i}>{r}</li>)}</ul>
+                  </div>
+                )}
+                {dxResult.labFindings && dxResult.labFindings.length > 0 && (
+                  <div className="alert alert-info">
+                    <b>Report-based findings:</b>
+                    <ul>{dxResult.labFindings.map((f,i) => <li key={i}>{f}</li>)}</ul>
                   </div>
                 )}
                 <div className="alert alert-success">
