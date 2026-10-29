@@ -386,7 +386,6 @@ function Sidebar({ view, setView, lang, setLang, t, cloudStatus }) {
     { id:"patients", label:t("patients",lang), icon:"👥" },
     { id:"consult", label:t("consult",lang), icon:"🩺" },
     { id:"history", label:t("history",lang), icon:"📁" },
-    { id:"reports", label:t("reports",lang), icon:"📋" },
     { id:"settings", label:t("settings",lang), icon:"⚙️" },
   ];
   return (
@@ -396,7 +395,7 @@ function Sidebar({ view, setView, lang, setLang, t, cloudStatus }) {
         <div><h1>{t("app",lang)}</h1><p>{t("tag",lang)}</p></div>
       </div>
       {items.map(it => (
-        <button key={it.id} className={"nav-btn" + ((view===it.id || (it.id==="doctor" && view==="diagnosis"))?" active":"")} onClick={() => setView(it.id)}>
+        <button key={it.id} className={"nav-btn" + ((view===it.id || (it.id==="doctor" && (view==="diagnosis" || view==="reports")))? " active":"")} onClick={() => setView(it.id)}>
           <span>{it.icon}</span>{it.label}
         </button>
       ))}
@@ -915,6 +914,12 @@ function App() {
     p.reports = (p.reports || []).filter(r => r.id !== rid);
     setPatients(ps); savePatients(ps);
   };
+  const [reportReturnView, setReportReturnView] = useState("doctor");
+  const openDoctorReports = (pid, fromView) => {
+    if (pid) setSelectedId(pid);
+    setReportReturnView(fromView);
+    setView("reports");
+  };
 
   // History selected patient
   const [historyPatient, setHistoryPatient] = useState("");
@@ -1052,6 +1057,7 @@ function App() {
               <div><h2>🤖 ASHVIK Doctor</h2><p>Guided case-taking → differential diagnosis → treatment plan</p></div>
               <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
                 <button className="btn btn-outline" onClick={() => setView("diagnosis")}>⚡ Quick Differential</button>
+                <button className="btn btn-outline" onClick={() => openDoctorReports(dmPatient, "doctor")}>📋 Reports</button>
                 <button className="btn btn-outline" onClick={dmReset}>New Case</button>
               </div>
             </div>
@@ -1195,6 +1201,7 @@ function App() {
                 <div style={{marginTop:12,display:"flex",gap:8,flexWrap:"wrap"}}>
                   {dmPlan.tpl && <button className="btn btn-primary btn-sm" onClick={dmLoadPrescription}>Load into Prescription →</button>}
                   <button className="btn btn-outline btn-sm" onClick={dmSaveCase} disabled={dmSaved}>{dmSaved ? "Saved ✓" : "Save Case to Patient"}</button>
+                  <button className="btn btn-outline btn-sm" onClick={() => openDoctorReports(dmPatient, "doctor")}>📋 Reports / Upload</button>
                   <button className="btn btn-outline btn-sm" onClick={dmReset}>New Case</button>
                 </div>
               </div>
@@ -1295,6 +1302,7 @@ function App() {
               <div><h2>⚡ Quick Differential</h2><p>ASHVIK Doctor · fast mode — known symptoms se turant differential</p></div>
               <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
                 <button className="btn btn-outline" onClick={() => setView("doctor")}>← ASHVIK Doctor</button>
+                <button className="btn btn-outline" onClick={() => openDoctorReports(dxPatient, "diagnosis")}>📋 Reports</button>
                 <button className="btn btn-primary" onClick={generateDx}>{t("generate",lang)}</button>
               </div>
             </div>
@@ -1546,8 +1554,11 @@ function App() {
         {view === "reports" && (
           <>
             <div className="page-head">
-              <div><h2>{t("reports",lang)}</h2><p></p></div>
-              <button className="btn btn-primary" onClick={() => { setReportForm({ pid: selectedId || "", date: new Date().toISOString().slice(0,10), name:"", result:"", notes:"", file:null }); setReportModal(true); }}>{t("addReport",lang)}</button>
+              <div><h2>📋 Test Reports</h2><p>ASHVIK Doctor · patient reports & uploads</p></div>
+              <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                <button className="btn btn-outline" onClick={() => setView(reportReturnView)}>← {reportReturnView === "diagnosis" ? "Quick Differential" : "ASHVIK Doctor"}</button>
+                <button className="btn btn-primary" onClick={() => { setReportForm({ pid: selectedId || "", date: new Date().toISOString().slice(0,10), name:"", result:"", notes:"", file:null }); setReportModal(true); }}>{t("addReport",lang)}</button>
+              </div>
             </div>
             <div className="card">
               <Field label={t("selectPatient",lang)}>
