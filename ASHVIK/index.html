@@ -317,6 +317,7 @@ function assessCase({ age, sex, symptoms, notes, vitals, chronic }) {
   const chronicL = String(chronic || "").toLowerCase();
   const temp = parseFloat(vitals?.temp);
   const spo2 = parseFloat(vitals?.spo2);
+  const sugar = parseFloat(vitals?.sugar);
   const ageNum = Number(age) || 0;
   const scored = CONDITIONS.map(cond => {
     let score = 0; const matched = [];
@@ -330,6 +331,7 @@ function assessCase({ age, sex, symptoms, notes, vitals, chronic }) {
     if (sex === "Female" && cond.name === "UTI") score += 1;
     if (!isNaN(temp) && temp >= 100.4 && cond.keywords.includes("fever")) score += 1;
     if (!isNaN(spo2) && spo2 < 94 && ["Pneumonia", "COPD", "Asthma"].includes(cond.name)) score += 3;
+    if (!isNaN(sugar) && sugar >= 200 && cond.name === "Type 2 Diabetes") score += 3;
     return { ...cond, score, matched, treatment: (DISEASE_TEMPLATES[cond.name] || {}).meds || [], treatmentAdvice: (DISEASE_TEMPLATES[cond.name] || {}).advice || cond.advice };
   }).filter(c => c.score > 0).sort((a, b) => b.score - a.score);
   const top = scored.slice(0, 5);
@@ -345,6 +347,8 @@ function assessCase({ age, sex, symptoms, notes, vitals, chronic }) {
   if (symptomText.includes("severe dehydration") || symptomText.includes("no urine")) redFlags.push("Severe dehydration — urgent ORS/IV");
   if (symptomText.includes("high fever")) redFlags.push("High fever — investigate cause, watch for sepsis");
   if (symptomText.includes("seizure")) redFlags.push("Seizure — urgent evaluation");
+  if (!isNaN(sugar) && sugar >= 300) redFlags.push("Blood sugar " + sugar + " mg/dL — very high, rule out DKA/HHS");
+  if (!isNaN(sugar) && sugar < 70) redFlags.push("Blood sugar " + sugar + " mg/dL — hypoglycaemia, treat urgently");
   const tests = new Set();
   top.slice(0, 3).forEach(c => (c.tests || []).forEach(t => tests.add(t)));
   return { top, suggested, redFlags, tests: [...tests] };
@@ -701,7 +705,7 @@ function App() {
   const [dxPatient, setDxPatient] = useState("");
   const [dxSymptoms, setDxSymptoms] = useState([]);
   const [dxNotes, setDxNotes] = useState("");
-  const [dxVitals, setDxVitals] = useState({ bp:"", pulse:"", temp:"", spo2:"", weight:"" });
+  const [dxVitals, setDxVitals] = useState({ bp:"", pulse:"", temp:"", spo2:"", weight:"", sugar:"" });
   const [dxChronic, setDxChronic] = useState("");
   const [dxAllergies, setDxAllergies] = useState("");
   const [dxDoctor, setDxDoctor] = useState("");
@@ -724,7 +728,7 @@ function App() {
     setTimeout(() => document.getElementById("dxResultCard")?.scrollIntoView({ behavior:"smooth" }), 50);
   };
   const dxToConsult = () => ({
-    bp: dxVitals.bp, pulse: dxVitals.pulse, temp: dxVitals.temp, spo2: dxVitals.spo2, weight: dxVitals.weight,
+    bp: dxVitals.bp, pulse: dxVitals.pulse, temp: dxVitals.temp, spo2: dxVitals.spo2, weight: dxVitals.weight, sugar: dxVitals.sugar,
     symptoms: [...dxSymptoms], symptomNotes: dxNotes
   });
   const useDxTreatment = (condName) => {
@@ -749,7 +753,7 @@ function App() {
     setDxPatient(consultPatient);
     setDxSymptoms([...consult.symptoms]);
     setDxNotes(consult.symptomNotes);
-    setDxVitals({ bp: consult.bp, pulse: consult.pulse, temp: consult.temp, spo2: consult.spo2, weight: consult.weight });
+    setDxVitals({ bp: consult.bp, pulse: consult.pulse, temp: consult.temp, spo2: consult.spo2, weight: consult.weight, sugar: consult.sugar });
     setDxChronic(p?.chronic || "");
     setDxAllergies(p?.allergies || "");
     setDxDoctor("");
@@ -782,7 +786,7 @@ function App() {
   const [dmSeverity, setDmSeverity] = useState("");
   const [dmSymptoms, setDmSymptoms] = useState([]);
   const [dmNotes, setDmNotes] = useState("");
-  const [dmVitals, setDmVitals] = useState({ bp:"", pulse:"", temp:"", spo2:"", weight:"" });
+  const [dmVitals, setDmVitals] = useState({ bp:"", pulse:"", temp:"", spo2:"", weight:"", sugar:"" });
   const [dmChronic, setDmChronic] = useState("");
   const [dmAllergies, setDmAllergies] = useState("");
   const [dmCurrentMeds, setDmCurrentMeds] = useState("");
@@ -797,7 +801,7 @@ function App() {
   const dmToggleFlag = (f) => setDmFlags(prev => prev.includes(f) ? prev.filter(x => x !== f) : [...prev, f]);
   const dmReset = () => {
     setDmStep(0); setDmPatient(""); setDmComplaint(""); setDmDuration(""); setDmSeverity("");
-    setDmSymptoms([]); setDmNotes(""); setDmVitals({ bp:"", pulse:"", temp:"", spo2:"", weight:"" });
+    setDmSymptoms([]); setDmNotes(""); setDmVitals({ bp:"", pulse:"", temp:"", spo2:"", weight:"", sugar:"" });
     setDmChronic(""); setDmAllergies(""); setDmCurrentMeds(""); setDmFlags([]);
     setDmMessages([]); setDmPlan(null); setDmSaved(false);
   };
@@ -826,7 +830,7 @@ function App() {
     setDmStep(3);
   };
   const dmNextFromVitals = () => {
-    dmAnswer(`Vitals: BP ${dmVitals.bp || "—"}, Pulse ${dmVitals.pulse || "—"}, Temp ${dmVitals.temp || "—"}, SpO2 ${dmVitals.spo2 || "—"}, Weight ${dmVitals.weight || "—"}`);
+    dmAnswer(`Vitals: BP ${dmVitals.bp || "—"}, Pulse ${dmVitals.pulse || "—"}, Temp ${dmVitals.temp || "—"}, SpO2 ${dmVitals.spo2 || "—"}, Weight ${dmVitals.weight || "—"}, Sugar ${dmVitals.sugar || "—"}`);
     dmAsk("Purani bimari, allergy aur current medicines bataayein.");
     setDmStep(4);
   };
@@ -858,7 +862,7 @@ function App() {
     setConsultPatient(dmPatient);
     setConsult(prev => ({
       ...prev,
-      bp: dmVitals.bp, pulse: dmVitals.pulse, temp: dmVitals.temp, spo2: dmVitals.spo2, weight: dmVitals.weight,
+      bp: dmVitals.bp, pulse: dmVitals.pulse, temp: dmVitals.temp, spo2: dmVitals.spo2, weight: dmVitals.weight, sugar: dmVitals.sugar,
       symptoms: [...dmSymptoms], symptomNotes: dmNotes,
       diagnosis: dmPlan.tpl.diagnosis, meds: withBrands(dmPlan.tpl.meds), advice: dmPlan.tpl.advice,
       tests: dmPlan.tests.join(", ")
@@ -1111,7 +1115,10 @@ function App() {
                   <Field label="Temp (°F)"><input type="number" step="0.1" value={dmVitals.temp} onChange={e => setDmVitals({...dmVitals, temp:e.target.value})} /></Field>
                   <Field label="SpO2 (%)"><input type="number" value={dmVitals.spo2} onChange={e => setDmVitals({...dmVitals, spo2:e.target.value})} /></Field>
                 </div>
-                <Field label="Weight (kg)" style={{marginTop:10}}><input type="number" step="0.1" value={dmVitals.weight} onChange={e => setDmVitals({...dmVitals, weight:e.target.value})} /></Field>
+                <div className="grid grid-2" style={{marginTop:10}}>
+                  <Field label="Weight (kg)"><input type="number" step="0.1" value={dmVitals.weight} onChange={e => setDmVitals({...dmVitals, weight:e.target.value})} /></Field>
+                  <Field label="Blood Sugar (mg/dL)"><input type="number" value={dmVitals.sugar} onChange={e => setDmVitals({...dmVitals, sugar:e.target.value})} /></Field>
+                </div>
                 <button className="btn btn-primary" style={{marginTop:10}} onClick={dmNextFromVitals}>Next →</button>
               </div>
             )}
@@ -1149,7 +1156,7 @@ function App() {
                   <div style={{fontSize:13}}>
                     <b>Complaint:</b> {dmPlan.complaint}{dmPlan.duration ? " · " + dmPlan.duration : ""}{dmPlan.severity ? " · severity " + dmPlan.severity + "/10" : ""}<br/>
                     <b>Symptoms:</b> {dmSymptoms.join(", ") || "—"}{dmNotes ? " | " + dmNotes : ""}<br/>
-                    <b>Vitals:</b> BP {dmPlan.vitals.bp || "—"} · Pulse {dmPlan.vitals.pulse || "—"} · Temp {dmPlan.vitals.temp || "—"} · SpO2 {dmPlan.vitals.spo2 || "—"} · Wt {dmPlan.vitals.weight || "—"}
+                    <b>Vitals:</b> BP {dmPlan.vitals.bp || "—"} · Pulse {dmPlan.vitals.pulse || "—"} · Temp {dmPlan.vitals.temp || "—"} · SpO2 {dmPlan.vitals.spo2 || "—"} · Wt {dmPlan.vitals.weight || "—"} · Sugar {dmPlan.vitals.sugar || "—"}
                   </div>
                 </div>
                 {dmPlan.redFlags.length > 0 && (
@@ -1295,7 +1302,7 @@ function App() {
                     const p = patients.find(x => x.id === pid);
                     if (p) { setDxChronic(p.chronic||""); setDxAllergies(p.allergies||"");
                       const cs = (p.consults||[]).slice().sort((a,b)=>b.date.localeCompare(a.date));
-                      if (cs.length) { const c = cs[0]; setDxVitals({ bp:c.vitals.bp||"", pulse:c.vitals.pulse||"", temp:c.vitals.temp||"", spo2:c.vitals.spo2||"", weight:c.vitals.weight||"" }); }
+                      if (cs.length) { const c = cs[0]; setDxVitals({ bp:c.vitals.bp||"", pulse:c.vitals.pulse||"", temp:c.vitals.temp||"", spo2:c.vitals.spo2||"", weight:c.vitals.weight||"", sugar:c.vitals.sugar||"" }); }
                     }
                   }}>
                     <option value="">-- {t("selectPatient",lang)} --</option>
@@ -1315,6 +1322,8 @@ function App() {
                 <Field label={t("pulse",lang)}><input type="number" value={dxVitals.pulse} onChange={e => setDxVitals({...dxVitals, pulse: e.target.value})} /></Field>
                 <Field label={t("temp",lang)}><input type="number" step="0.1" value={dxVitals.temp} onChange={e => setDxVitals({...dxVitals, temp: e.target.value})} /></Field>
                 <Field label={t("spo2",lang)}><input type="number" value={dxVitals.spo2} onChange={e => setDxVitals({...dxVitals, spo2: e.target.value})} /></Field>
+                <Field label="Weight (kg)"><input type="number" step="0.1" value={dxVitals.weight} onChange={e => setDxVitals({...dxVitals, weight: e.target.value})} /></Field>
+                <Field label="Blood Sugar (mg/dL)"><input type="number" value={dxVitals.sugar} onChange={e => setDxVitals({...dxVitals, sugar: e.target.value})} /></Field>
               </div>
             </div>
             <div className="card">
