@@ -585,7 +585,10 @@ function App() {
 
   const saveConsult = () => {
     if (!consultPatient) { alert("Select a patient."); return; }
-    if (!consult.diagnosis.trim()) { alert("Diagnosis required."); return; }
+    const hasMeds = consult.meds.some(m => (m[0] || "").trim());
+    if (!consult.diagnosis.trim() && !hasMeds) {
+      if (!confirm("No diagnosis or medicine entered. Save this consultation anyway?")) return;
+    }
     const pIdx = patients.findIndex(x => x.id === consultPatient);
     const ps = [...patients];
     const p = ps[pIdx];
@@ -653,6 +656,7 @@ function App() {
   const [dxAllergies, setDxAllergies] = useState("");
   const [dxDoctor, setDxDoctor] = useState("");
   const [dxResult, setDxResult] = useState(null);
+  const [autoDx, setAutoDx] = useState(false);
   const toggleDxSymptom = (s) => setDxSymptoms(prev => prev.includes(s) ? prev.filter(x=>x!==s) : [...prev, s]);
   const generateDx = () => {
     if (!dxPatient) { alert("Select a patient."); return; }
@@ -699,15 +703,45 @@ function App() {
     setDxResult({ pid: dxPatient, suggested, top, tests:[...tests], redFlags, doctorDx: dxDoctor, agreement, symptoms: dxSymptoms, notes: dxNotes, chronic: dxChronic, vitals: dxVitals, date: new Date().toISOString().slice(0,10) });
     setTimeout(() => document.getElementById("dxResultCard")?.scrollIntoView({ behavior:"smooth" }), 50);
   };
+  const dxToConsult = () => ({
+    bp: dxVitals.bp, pulse: dxVitals.pulse, temp: dxVitals.temp, spo2: dxVitals.spo2, weight: dxVitals.weight,
+    symptoms: [...dxSymptoms], symptomNotes: dxNotes
+  });
   const useDxTreatment = (condName) => {
     const tpl = DISEASE_TEMPLATES[condName];
     if (!tpl) { alert("No treatment template for this condition. Please prescribe manually."); return; }
     if (!dxPatient) { alert("Select a patient first."); return; }
     setConsultPatient(dxPatient);
-    setConsult(prev => ({ ...prev, diagnosis: tpl.diagnosis, meds: withBrands(tpl.meds), advice: tpl.advice }));
+    setConsult(prev => ({ ...prev, ...dxToConsult(), diagnosis: tpl.diagnosis, meds: withBrands(tpl.meds), advice: tpl.advice }));
     setView("consult");
     alert("Treatment loaded into New Consultation. Review and edit before saving.");
   };
+  const prescribeFromDx = () => {
+    if (!dxPatient) { alert("Select a patient first."); return; }
+    setConsultPatient(dxPatient);
+    setConsult(prev => ({ ...prev, ...dxToConsult() }));
+    setView("consult");
+  };
+  const startDxFromConsult = () => {
+    if (!consultPatient) { alert("Select a patient first."); return; }
+    if (!consult.symptoms.length && !consult.symptomNotes.trim()) { alert("Enter at least one symptom first."); return; }
+    const p = patients.find(x => x.id === consultPatient);
+    setDxPatient(consultPatient);
+    setDxSymptoms([...consult.symptoms]);
+    setDxNotes(consult.symptomNotes);
+    setDxVitals({ bp: consult.bp, pulse: consult.pulse, temp: consult.temp, spo2: consult.spo2, weight: consult.weight });
+    setDxChronic(p?.chronic || "");
+    setDxAllergies(p?.allergies || "");
+    setDxDoctor("");
+    setDxResult(null);
+    setAutoDx(true);
+    setView("diagnosis");
+  };
+  useEffect(() => {
+    if (!autoDx) return;
+    setAutoDx(false);
+    generateDx();
+  }, [autoDx, view]);
   const saveDxNote = () => {
     if (!dxResult) return;
     const ps = [...patients];
@@ -919,13 +953,17 @@ function App() {
             </div>
 
             <div className="card">
-              <div className="card-head"><h3>3. {t("diagnosisLabel",lang)}</h3></div>
-              <div className="alert alert-info">Click a common condition to auto-fill a treatment template (edit as needed).</div>
+              <div className="card-head"><h3>3. Diagnosis Assist & Working Diagnosis</h3></div>
+              <div className="alert alert-info">
+                Pehle patient, vitals aur symptoms bharo. Phir <b>Run Diagnosis Assist</b> dabao — differential diagnosis, standard treatment aur Indian brand names milenge. Diagnosis likhna optional hai.
+              </div>
+              <button className="btn btn-primary" style={{marginBottom:12}} onClick={startDxFromConsult}>Run Diagnosis Assist →</button>
+              <div className="section-title">Quick treatment template (optional)</div>
               <div style={{marginBottom:8}}>
                 {Object.keys(DISEASE_TEMPLATES).map(d => <Chip key={d} label={d} active={consult.diagnosis === DISEASE_TEMPLATES[d].diagnosis} onClick={() => applyDisease(d)} />)}
               </div>
               <div className="grid grid-2">
-                <Field label={t("diagnosisLabel",lang) + " *"}><input value={consult.diagnosis} onChange={e => setConsult({...consult, diagnosis: e.target.value})} /></Field>
+                <Field label={t("diagnosisLabel",lang) + " (optional)"}><input placeholder="Doctor's working diagnosis (optional)" value={consult.diagnosis} onChange={e => setConsult({...consult, diagnosis: e.target.value})} /></Field>
                 <Field label="ICD / Code"><input placeholder="e.g. J20.9" value={consult.code} onChange={e => setConsult({...consult, code: e.target.value})} /></Field>
               </div>
             </div>
@@ -1028,7 +1066,7 @@ function App() {
               })()}
             </div>
             <div className="card">
-              <div className="card-head"><h3>5. {t("doctorDx",lang)}</h3></div>
+              <div className="card-head"><h3>5. {t("doctorDx",lang)} (optional)</h3></div>
               <Field label={t("doctorDx",lang)}>
                 <input placeholder="e.g. Malaria, Viral fever, Dengue..." value={dxDoctor} onChange={e => setDxDoctor(e.target.value)} />
               </Field>
@@ -1111,6 +1149,7 @@ function App() {
                   {dxResult.top[0] && DISEASE_TEMPLATES[dxResult.top[0].name] && (
                     <button className="btn btn-primary btn-sm" onClick={() => useDxTreatment(dxResult.top[0].name)}>Use suggested treatment → Prescription</button>
                   )}
+                  <button className="btn btn-outline btn-sm" onClick={prescribeFromDx}>Prescribe manually →</button>
                   <button className="btn btn-primary btn-sm" onClick={saveDxNote}>{t("saveNote",lang)}</button>
                   <button className="btn btn-outline btn-sm" onClick={() => { const tpl = dxResult.top[0] ? DISEASE_TEMPLATES[dxResult.top[0].name] : null; sessionStorage.setItem("ashvik_dx", JSON.stringify({ diagnosis: dxResult.suggested, tests: dxResult.tests, advice: dxResult.top[0]?.advice || "", meds: tpl ? tpl.meds : [] })); alert("Copied."); }}>{t("copyDx",lang)}</button>
                 </div>
