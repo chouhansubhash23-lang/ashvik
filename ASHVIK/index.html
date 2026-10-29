@@ -44,6 +44,13 @@
   .card-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap:8px; flex-wrap:wrap; }
   .card-head h3 { margin:0; font-size:16px; font-weight:600; }
   .card-head .sub { font-size:12px; color:var(--muted); }
+  .chat { display:flex; flex-direction:column; gap:10px; max-height:460px; overflow:auto; padding:4px 2px; }
+  .msg { max-width:82%; padding:10px 14px; border-radius:14px; font-size:14px; line-height:1.45; white-space:pre-wrap; }
+  .msg.ashvik { background:#f0fdfa; border:1px solid #99f6e4; align-self:flex-start; border-bottom-left-radius:4px; }
+  .msg.doctor { background:var(--primary); color:#fff; align-self:flex-end; border-bottom-right-radius:4px; }
+  .msg .who { font-size:10px; text-transform:uppercase; letter-spacing:.5px; opacity:.65; margin-bottom:3px; }
+  .dm-plan { border:1px solid var(--border); border-radius:10px; padding:12px 14px; margin-top:10px; }
+  .dm-plan h4 { margin:0 0 6px; font-size:14px; }
   .grid { display:grid; gap:12px; }
   .grid-2 { grid-template-columns:repeat(2,1fr); }
   .grid-3 { grid-template-columns:repeat(3,1fr); }
@@ -206,6 +213,8 @@ const t = (key, lang) => (T[lang] && T[lang][key]) || T.en[key] || key;
 // ---------- Data ----------
 const SYMPTOMS = ["Fever","Cough","Cold/Runny nose","Sore throat","Body ache","Headache","Breathlessness","Chest pain","Vomiting","Diarrhoea","Abdominal pain","Burning urination","Rash","Joint pain","Weakness","Dizziness","Loss of appetite","Weight loss","Night sweats","Itching","Wheeze","Chills/Sweating","Frequent urination","Thirst","Constipation","Nausea","Red eyes","Sneezing","Fatigue","Pallor","Weight gain","Dry skin","Sleep disturbance","Low mood"];
 
+const RED_FLAG_QUESTIONS = ["Breathlessness at rest","Chest pain","Bleeding","Confusion / unconscious","Severe dehydration / no urine","High fever >103°F","Blood in stool","Seizure"];
+
 const CONDITIONS = [
   { name:"Viral fever", keywords:["fever","body ache","headache","cold","runny nose","sore throat","weakness"], tests:["CBC","Malaria RDT (if fever>3d)"], advice:"Rest, fluids, paracetamol. Avoid antibiotics unless bacterial signs.", redFlags:["breathlessness","chest pain","confusion","fever>103"] },
   { name:"Malaria", keywords:["fever","chills","sweating","headache","vomiting","weakness"], tests:["Malaria RDT + smear"], advice:"ACT per protocol. Monitor for severe signs. Refer if danger signs.", redFlags:["confusion","jaundice","bleeding","severe weakness"] },
@@ -302,6 +311,45 @@ const BRANDS = {
   "Propranolol 10mg": "Ciplar 10, Inderal 10"
 };
 
+// Shared clinical reasoning engine used by Diagnosis Assist and ASHVIK Doctor.
+function assessCase({ age, sex, symptoms, notes, vitals, chronic }) {
+  const symptomText = ((symptoms || []).join(" ") + " " + (notes || "")).toLowerCase();
+  const chronicL = String(chronic || "").toLowerCase();
+  const temp = parseFloat(vitals?.temp);
+  const spo2 = parseFloat(vitals?.spo2);
+  const ageNum = Number(age) || 0;
+  const scored = CONDITIONS.map(cond => {
+    let score = 0; const matched = [];
+    cond.keywords.forEach(kw => { if (symptomText.includes(kw.toLowerCase())) { score += 2; matched.push(kw); } });
+    if (chronicL.includes("diabetes") && cond.name === "Type 2 Diabetes") score += 3;
+    if (chronicL.includes("hypertension") && cond.name === "Hypertension") score += 3;
+    if (chronicL.includes("asthma") && cond.name === "Asthma") score += 3;
+    if (chronicL.includes("copd") && cond.name === "COPD") score += 3;
+    if (ageNum < 5 && ["Pneumonia", "Acute diarrhoea"].includes(cond.name)) score += 1;
+    if (ageNum > 60 && ["Hypertension", "Type 2 Diabetes", "COPD"].includes(cond.name)) score += 1;
+    if (sex === "Female" && cond.name === "UTI") score += 1;
+    if (!isNaN(temp) && temp >= 100.4 && cond.keywords.includes("fever")) score += 1;
+    if (!isNaN(spo2) && spo2 < 94 && ["Pneumonia", "COPD", "Asthma"].includes(cond.name)) score += 3;
+    return { ...cond, score, matched, treatment: (DISEASE_TEMPLATES[cond.name] || {}).meds || [], treatmentAdvice: (DISEASE_TEMPLATES[cond.name] || {}).advice || cond.advice };
+  }).filter(c => c.score > 0).sort((a, b) => b.score - a.score);
+  const top = scored.slice(0, 5);
+  const suggested = top.length ? top[0].name : "Insufficient data — needs clinical evaluation";
+  const redFlags = [];
+  if (symptomText.includes("chest pain")) redFlags.push("Chest pain — rule out cardiac/MI, refer if acute");
+  if (symptomText.includes("breathlessness")) redFlags.push("Breathlessness — assess SpO2, consider pneumonia/asthma/COPD");
+  if (!isNaN(spo2) && spo2 < 94) redFlags.push("SpO2 " + spo2 + "% — hypoxia, urgent evaluation");
+  if (!isNaN(temp) && temp >= 103) redFlags.push("High fever ≥103°F — investigate cause, watch for sepsis");
+  if (symptomText.includes("confusion") || symptomText.includes("altered")) redFlags.push("Altered sensorium — emergency");
+  if (symptomText.includes("bleeding")) redFlags.push("Bleeding — evaluate (dengue/menorrhagia)");
+  if (symptomText.includes("blood in stool")) redFlags.push("Blood in stool — dysentery, refer if severe");
+  if (symptomText.includes("severe dehydration") || symptomText.includes("no urine")) redFlags.push("Severe dehydration — urgent ORS/IV");
+  if (symptomText.includes("high fever")) redFlags.push("High fever — investigate cause, watch for sepsis");
+  if (symptomText.includes("seizure")) redFlags.push("Seizure — urgent evaluation");
+  const tests = new Set();
+  top.slice(0, 3).forEach(c => (c.tests || []).forEach(t => tests.add(t)));
+  return { top, suggested, redFlags, tests: [...tests] };
+}
+
 function loadPatients() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
 }
@@ -330,6 +378,7 @@ function escapeAttr(s){ return String(s||"").replace(/"/g,"&quot;"); }
 function Sidebar({ view, setView, lang, setLang, t, cloudStatus }) {
   const items = [
     { id:"dashboard", label:t("dashboard",lang), icon:"📊" },
+    { id:"doctor", label:"ASHVIK Doctor", icon:"🤖" },
     { id:"patients", label:t("patients",lang), icon:"👥" },
     { id:"consult", label:t("consult",lang), icon:"🩺" },
     { id:"diagnosis", label:t("diagnosis",lang), icon:"🔬" },
@@ -532,6 +581,7 @@ function App() {
       setSelectedId(np.id);
       if (view === "consult") setConsultPatient(np.id);
       if (view === "diagnosis") setDxPatient(np.id);
+      if (view === "doctor") setDmPatient(np.id);
     }
     setPatients(ps); savePatients(ps);
     setPatientModal(false);
@@ -661,46 +711,16 @@ function App() {
   const generateDx = () => {
     if (!dxPatient) { alert("Select a patient."); return; }
     const p = patients.find(x => x.id === dxPatient);
-    const symptomText = (dxSymptoms.join(" ") + " " + dxNotes).toLowerCase();
-    const chronicL = dxChronic.toLowerCase();
-    const temp = parseFloat(dxVitals.temp);
-    const spo2 = parseFloat(dxVitals.spo2);
-    const age = p.age, sex = p.sex;
-    const scored = CONDITIONS.map(cond => {
-      let score = 0; const matched = [];
-      cond.keywords.forEach(kw => { if (symptomText.includes(kw.toLowerCase())) { score += 2; matched.push(kw); } });
-      if (chronicL.includes("diabetes") && cond.name === "Type 2 Diabetes") score += 3;
-      if (chronicL.includes("hypertension") && cond.name === "Hypertension") score += 3;
-      if (chronicL.includes("asthma") && cond.name === "Asthma") score += 3;
-      if (chronicL.includes("copd") && cond.name === "COPD") score += 3;
-      if (age < 5 && ["Pneumonia","Acute diarrhoea"].includes(cond.name)) score += 1;
-      if (age > 60 && ["Hypertension","Type 2 Diabetes","COPD"].includes(cond.name)) score += 1;
-      if (sex === "Female" && cond.name === "UTI") score += 1;
-      if (!isNaN(temp) && temp >= 100.4 && cond.keywords.includes("fever")) score += 1;
-      if (!isNaN(spo2) && spo2 < 94 && (cond.name === "Pneumonia" || cond.name === "COPD" || cond.name === "Asthma")) score += 3;
-      return { ...cond, score, matched, treatment: (DISEASE_TEMPLATES[cond.name] || {}).meds || [], treatmentAdvice: (DISEASE_TEMPLATES[cond.name] || {}).advice || cond.advice };
-    }).filter(c => c.score > 0).sort((a,b) => b.score - a.score);
-    const top = scored.slice(0,5);
-    const suggested = top.length && top[0].score >= 3 ? top[0].name : (top.length ? top[0].name : "Insufficient data — needs clinical evaluation");
-    const redFlags = [];
-    if (symptomText.includes("chest pain")) redFlags.push("Chest pain — rule out cardiac/MI, refer if acute");
-    if (symptomText.includes("breathlessness")) redFlags.push("Breathlessness — assess SpO2, consider pneumonia/asthma/COPD");
-    if (!isNaN(spo2) && spo2 < 94) redFlags.push("SpO2 " + spo2 + "% — hypoxia, urgent evaluation");
-    if (!isNaN(temp) && temp >= 103) redFlags.push("High fever ≥103°F — investigate cause, watch for sepsis");
-    if (symptomText.includes("confusion") || symptomText.includes("altered")) redFlags.push("Altered sensorium — emergency");
-    if (symptomText.includes("bleeding")) redFlags.push("Bleeding — evaluate (dengue/menorrhagia)");
-    if (symptomText.includes("blood in stool")) redFlags.push("Blood in stool — dysentery, refer if severe");
-    if (symptomText.includes("severe dehydration") || symptomText.includes("no urine")) redFlags.push("Severe dehydration — urgent ORS/IV");
-    const tests = new Set();
-    top.slice(0,3).forEach(c => (c.tests||[]).forEach(t => tests.add(t)));
+    if (!p) { alert("Patient not found."); return; }
+    const a = assessCase({ age:p.age, sex:p.sex, symptoms:dxSymptoms, notes:dxNotes, vitals:dxVitals, chronic:dxChronic });
     const doctorDxL = dxDoctor.trim().toLowerCase();
     let agreement = "";
     if (dxDoctor.trim()) {
-      const sys = suggested.toLowerCase();
+      const sys = a.suggested.toLowerCase();
       if (sys.includes(doctorDxL) || doctorDxL.includes(sys.split(" ")[0])) agreement = "✅ System agrees with your clinical impression.";
       else agreement = "⚠️ System suggestion differs from your impression — review both and the differential list.";
     }
-    setDxResult({ pid: dxPatient, suggested, top, tests:[...tests], redFlags, doctorDx: dxDoctor, agreement, symptoms: dxSymptoms, notes: dxNotes, chronic: dxChronic, vitals: dxVitals, date: new Date().toISOString().slice(0,10) });
+    setDxResult({ pid: dxPatient, suggested:a.suggested, top:a.top, tests:a.tests, redFlags:a.redFlags, doctorDx:dxDoctor, agreement, symptoms:dxSymptoms, notes:dxNotes, chronic:dxChronic, vitals:dxVitals, date: new Date().toISOString().slice(0,10) });
     setTimeout(() => document.getElementById("dxResultCard")?.scrollIntoView({ behavior:"smooth" }), 50);
   };
   const dxToConsult = () => ({
@@ -752,6 +772,117 @@ function App() {
     p.clinical.push({ id:uid(), date: dxResult.date, complaint: dxResult.symptoms.join(", ") + (dxResult.notes ? " | " + dxResult.notes : ""), diagnosis: dxResult.suggested + (dxResult.doctorDx ? " (Dr impression: " + dxResult.doctorDx + ")" : ""), treatment: (medsText ? "Rx: " + medsText + " | " : "") + "Tests: " + dxResult.tests.join(", "), notes: "AI-assisted differential. Red flags: " + (dxResult.redFlags.join("; ") || "none") });
     setPatients(ps); savePatients(ps);
     alert("Saved to patient clinical history.");
+  };
+
+  // ---- ASHVIK Doctor Mode (guided clinical co-pilot) ----
+  const [dmStep, setDmStep] = useState(0);
+  const [dmPatient, setDmPatient] = useState("");
+  const [dmComplaint, setDmComplaint] = useState("");
+  const [dmDuration, setDmDuration] = useState("");
+  const [dmSeverity, setDmSeverity] = useState("");
+  const [dmSymptoms, setDmSymptoms] = useState([]);
+  const [dmNotes, setDmNotes] = useState("");
+  const [dmVitals, setDmVitals] = useState({ bp:"", pulse:"", temp:"", spo2:"", weight:"" });
+  const [dmChronic, setDmChronic] = useState("");
+  const [dmAllergies, setDmAllergies] = useState("");
+  const [dmCurrentMeds, setDmCurrentMeds] = useState("");
+  const [dmFlags, setDmFlags] = useState([]);
+  const [dmMessages, setDmMessages] = useState([]);
+  const [dmPlan, setDmPlan] = useState(null);
+  const [dmSaved, setDmSaved] = useState(false);
+
+  const dmAsk = (text) => setDmMessages(prev => [...prev, { role:"ashvik", text }]);
+  const dmAnswer = (text) => setDmMessages(prev => [...prev, { role:"doctor", text }]);
+  const dmToggleSymptom = (s) => setDmSymptoms(prev => prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s]);
+  const dmToggleFlag = (f) => setDmFlags(prev => prev.includes(f) ? prev.filter(x => x !== f) : [...prev, f]);
+  const dmReset = () => {
+    setDmStep(0); setDmPatient(""); setDmComplaint(""); setDmDuration(""); setDmSeverity("");
+    setDmSymptoms([]); setDmNotes(""); setDmVitals({ bp:"", pulse:"", temp:"", spo2:"", weight:"" });
+    setDmChronic(""); setDmAllergies(""); setDmCurrentMeds(""); setDmFlags([]);
+    setDmMessages([]); setDmPlan(null); setDmSaved(false);
+  };
+  const dmStart = () => {
+    if (!dmPatient) { alert("Select patient first."); return; }
+    const p = patients.find(x => x.id === dmPatient);
+    if (!p) { alert("Patient not found."); return; }
+    setDmChronic(p.chronic || ""); setDmAllergies(p.allergies || "");
+    setDmMessages([
+      { role:"ashvik", text:"Namaste. Main ASHVIK hoon — aaj main aapka clinical co-pilot hoon. Main case history, differential diagnosis aur treatment plan taiyar karunga. Final diagnosis aur prescription aapki approval se hoga." },
+      { role:"doctor", text:`Patient: ${p.name}, ${p.age}/${p.sex}${p.phone ? " · " + p.phone : ""}` },
+      { role:"ashvik", text:"Chief complaint kya hai? Kitne din se hai aur severity 1-10 me kitni hai?" }
+    ]);
+    setDmStep(1);
+  };
+  const dmNextFromComplaint = () => {
+    if (!dmComplaint.trim()) { alert("Chief complaint likhein."); return; }
+    dmAnswer(`${dmComplaint}${dmDuration ? " · " + dmDuration : ""}${dmSeverity ? " · severity " + dmSeverity + "/10" : ""}`);
+    dmAsk("Ab symptoms select karein. Neeche notes me associated symptoms bhi likh sakte hain.");
+    setDmStep(2);
+  };
+  const dmNextFromSymptoms = () => {
+    if (!dmSymptoms.length && !dmNotes.trim()) { alert("Kam se kam ek symptom select karein."); return; }
+    dmAnswer(`Symptoms: ${dmSymptoms.join(", ") || "—"}${dmNotes ? " | " + dmNotes : ""}`);
+    dmAsk("Vitals bhar dein. Agar koi vital available nahi hai to khali chhod dein.");
+    setDmStep(3);
+  };
+  const dmNextFromVitals = () => {
+    dmAnswer(`Vitals: BP ${dmVitals.bp || "—"}, Pulse ${dmVitals.pulse || "—"}, Temp ${dmVitals.temp || "—"}, SpO2 ${dmVitals.spo2 || "—"}, Weight ${dmVitals.weight || "—"}`);
+    dmAsk("Purani bimari, allergy aur current medicines bataayein.");
+    setDmStep(4);
+  };
+  const dmNextFromHistory = () => {
+    dmAnswer(`History: ${dmChronic || "none"} | Allergy: ${dmAllergies || "none"}${dmCurrentMeds ? " | Current meds: " + dmCurrentMeds : ""}`);
+    dmAsk("Last safety check — koi red flag? Jo bhi apply ho, select karein.");
+    setDmStep(5);
+  };
+  const dmGenerate = () => {
+    if (dmFlags.length) dmAnswer("Red flags: " + dmFlags.join(", "));
+    const p = patients.find(x => x.id === dmPatient);
+    if (!p) { alert("Patient not found."); return; }
+    const a = assessCase({
+      age: p.age, sex: p.sex,
+      symptoms: [...dmSymptoms],
+      notes: `${dmComplaint} ${dmDuration} ${dmNotes} ${dmFlags.join(" ")}`,
+      vitals: dmVitals,
+      chronic: `${dmChronic} ${dmAllergies} ${dmCurrentMeds}`
+    });
+    const top = a.top[0];
+    const tpl = top ? DISEASE_TEMPLATES[top.name] : null;
+    setDmPlan({ ...a, patient: p, tpl, complaint: dmComplaint, duration: dmDuration, severity: dmSeverity, vitals: dmVitals, chronic: dmChronic, allergies: dmAllergies, currentMeds: dmCurrentMeds, flags: dmFlags, date: new Date().toISOString().slice(0,10) });
+    dmAsk("Case summary aur management plan ready hai. Neeche dekhein — treatment edit karke prescription me bhej sakte hain. Final diagnosis aur prescription aapki approval se hoga.");
+    setDmStep(6);
+    setTimeout(() => document.getElementById("dmPlanCard")?.scrollIntoView({ behavior:"smooth" }), 80);
+  };
+  const dmLoadPrescription = () => {
+    if (!dmPlan || !dmPlan.tpl) { alert("No treatment template available. Prescribe manually."); return; }
+    setConsultPatient(dmPatient);
+    setConsult(prev => ({
+      ...prev,
+      bp: dmVitals.bp, pulse: dmVitals.pulse, temp: dmVitals.temp, spo2: dmVitals.spo2, weight: dmVitals.weight,
+      symptoms: [...dmSymptoms], symptomNotes: dmNotes,
+      diagnosis: dmPlan.tpl.diagnosis, meds: withBrands(dmPlan.tpl.meds), advice: dmPlan.tpl.advice,
+      tests: dmPlan.tests.join(", ")
+    }));
+    setView("consult");
+  };
+  const dmSaveCase = () => {
+    if (!dmPlan) return;
+    const ps = [...patients];
+    const p = ps.find(x => x.id === dmPatient);
+    if (!p) return;
+    const tpl = dmPlan.tpl;
+    const medsText = tpl ? tpl.meds.map(m => `${m[0]} ${m[1]} ${m[2]} x ${m[3]}`).join("; ") : "";
+    p.clinical = p.clinical || [];
+    p.clinical.push({
+      id: uid(), date: dmPlan.date,
+      complaint: `${dmPlan.complaint}${dmPlan.duration ? " · " + dmPlan.duration : ""} | Symptoms: ${dmSymptoms.join(", ")}${dmNotes ? " | " + dmNotes : ""}`,
+      diagnosis: dmPlan.suggested,
+      treatment: (medsText ? "Rx: " + medsText + " | " : "") + "Tests: " + dmPlan.tests.join(", "),
+      notes: "ASHVIK Doctor plan. Red flags: " + (dmPlan.redFlags.join("; ") || "none")
+    });
+    setPatients(ps); savePatients(ps);
+    setDmSaved(true);
+    alert("Case saved to patient clinical history.");
   };
 
   // Reports
@@ -909,6 +1040,156 @@ function App() {
                   ))}
                 </tbody></table>}
             </div>
+          </>
+        )}
+
+        {view === "doctor" && (
+          <>
+            <div className="page-head">
+              <div><h2>🤖 ASHVIK Doctor</h2><p>Guided case-taking → differential diagnosis → treatment plan</p></div>
+              <button className="btn btn-outline" onClick={dmReset}>New Case</button>
+            </div>
+
+            <div className="card">
+              <div className="card-head"><h3>Consultation</h3><span className="sub">ASHVIK asks, you answer</span></div>
+              <div className="chat">
+                {dmMessages.length === 0 && <div className="msg ashvik"><div className="who">ASHVIK</div>Namaste. Patient select karke "Start Consultation" dabayein. Main guided case-taking karunga aur management plan banaunga.</div>}
+                {dmMessages.map((m,i) => (
+                  <div key={i} className={"msg " + m.role}><div className="who">{m.role === "ashvik" ? "ASHVIK" : "Doctor"}</div>{m.text}</div>
+                ))}
+              </div>
+            </div>
+
+            {dmStep === 0 && (
+              <div className="card">
+                <div className="card-head"><h3>1. Patient</h3></div>
+                <div className="grid grid-2">
+                  <Field label="Select patient *">
+                    <select value={dmPatient} onChange={e => setDmPatient(e.target.value)}>
+                      <option value="">-- Select Patient --</option>
+                      {patients.map(p => <option key={p.id} value={p.id}>{p.name} ({p.age}/{p.sex})</option>)}
+                    </select>
+                    <button type="button" className="btn btn-outline btn-sm" style={{marginTop:6}} onClick={() => openPatientModal()}>+ New Patient</button>
+                  </Field>
+                  <Field label="Selected patient">
+                    <input readOnly value={(() => { const p = patients.find(x => x.id === dmPatient); return p ? `${p.name} · ${p.age}/${p.sex} · ${p.phone || "no phone"}` : "—"; })()} />
+                  </Field>
+                </div>
+                <button className="btn btn-primary" style={{marginTop:10}} onClick={dmStart}>Start Consultation →</button>
+              </div>
+            )}
+
+            {dmStep === 1 && (
+              <div className="card">
+                <div className="card-head"><h3>2. Chief Complaint</h3></div>
+                <Field label="Chief complaint *"><input placeholder="e.g. Fever with cough" value={dmComplaint} onChange={e => setDmComplaint(e.target.value)} /></Field>
+                <div className="grid grid-2" style={{marginTop:10}}>
+                  <Field label="Duration"><input placeholder="e.g. 3 days" value={dmDuration} onChange={e => setDmDuration(e.target.value)} /></Field>
+                  <Field label="Severity (1-10)"><input type="number" min="1" max="10" value={dmSeverity} onChange={e => setDmSeverity(e.target.value)} /></Field>
+                </div>
+                <button className="btn btn-primary" style={{marginTop:10}} onClick={dmNextFromComplaint}>Next →</button>
+              </div>
+            )}
+
+            {dmStep === 2 && (
+              <div className="card">
+                <div className="card-head"><h3>3. Symptoms</h3></div>
+                <div>{SYMPTOMS.map(s => <Chip key={s} label={s} active={dmSymptoms.includes(s)} onClick={() => dmToggleSymptom(s)} />)}</div>
+                <Field label="Associated symptoms / notes" style={{marginTop:10}}>
+                  <textarea placeholder="Onset, duration, associated symptoms..." value={dmNotes} onChange={e => setDmNotes(e.target.value)} />
+                </Field>
+                <button className="btn btn-primary" style={{marginTop:10}} onClick={dmNextFromSymptoms}>Next →</button>
+              </div>
+            )}
+
+            {dmStep === 3 && (
+              <div className="card">
+                <div className="card-head"><h3>4. Vitals</h3></div>
+                <div className="grid grid-4">
+                  <Field label="BP"><input placeholder="120/80" value={dmVitals.bp} onChange={e => setDmVitals({...dmVitals, bp:e.target.value})} /></Field>
+                  <Field label="Pulse"><input type="number" value={dmVitals.pulse} onChange={e => setDmVitals({...dmVitals, pulse:e.target.value})} /></Field>
+                  <Field label="Temp (°F)"><input type="number" step="0.1" value={dmVitals.temp} onChange={e => setDmVitals({...dmVitals, temp:e.target.value})} /></Field>
+                  <Field label="SpO2 (%)"><input type="number" value={dmVitals.spo2} onChange={e => setDmVitals({...dmVitals, spo2:e.target.value})} /></Field>
+                </div>
+                <Field label="Weight (kg)" style={{marginTop:10}}><input type="number" step="0.1" value={dmVitals.weight} onChange={e => setDmVitals({...dmVitals, weight:e.target.value})} /></Field>
+                <button className="btn btn-primary" style={{marginTop:10}} onClick={dmNextFromVitals}>Next →</button>
+              </div>
+            )}
+
+            {dmStep === 4 && (
+              <div className="card">
+                <div className="card-head"><h3>5. History</h3></div>
+                <Field label="Chronic conditions"><input value={dmChronic} onChange={e => setDmChronic(e.target.value)} /></Field>
+                <div className="grid grid-2" style={{marginTop:10}}>
+                  <Field label="Allergies"><input value={dmAllergies} onChange={e => setDmAllergies(e.target.value)} /></Field>
+                  <Field label="Current medicines"><input value={dmCurrentMeds} onChange={e => setDmCurrentMeds(e.target.value)} /></Field>
+                </div>
+                <button className="btn btn-primary" style={{marginTop:10}} onClick={dmNextFromHistory}>Next →</button>
+              </div>
+            )}
+
+            {dmStep === 5 && (
+              <div className="card">
+                <div className="card-head"><h3>6. Red Flags</h3></div>
+                <div>{RED_FLAG_QUESTIONS.map(f => <Chip key={f} label={f} active={dmFlags.includes(f)} onClick={() => dmToggleFlag(f)} />)}</div>
+                <div style={{marginTop:10,fontSize:12,color:"var(--muted)"}}>Koi bhi red flag ho to urgent evaluation/referral consider karein.</div>
+                <button className="btn btn-primary" style={{marginTop:10}} onClick={dmGenerate}>Generate ASHVIK Plan →</button>
+              </div>
+            )}
+
+            {dmStep === 6 && dmPlan && (
+              <div className="card" id="dmPlanCard">
+                <div className="card-head"><h3>ASHVIK Case Sheet & Management Plan</h3><span className="sub">{dmPlan.date}</span></div>
+                <div className="dm-plan">
+                  <h4>Patient</h4>
+                  <div style={{fontSize:13}}><b>{dmPlan.patient.name}</b> · {dmPlan.patient.age}/{dmPlan.patient.sex} · {dmPlan.patient.phone || "no phone"}<br/>Allergy: {dmPlan.allergies || "none"} · Chronic: {dmPlan.chronic || "none"}</div>
+                </div>
+                <div className="dm-plan">
+                  <h4>Case Summary</h4>
+                  <div style={{fontSize:13}}>
+                    <b>Complaint:</b> {dmPlan.complaint}{dmPlan.duration ? " · " + dmPlan.duration : ""}{dmPlan.severity ? " · severity " + dmPlan.severity + "/10" : ""}<br/>
+                    <b>Symptoms:</b> {dmSymptoms.join(", ") || "—"}{dmNotes ? " | " + dmNotes : ""}<br/>
+                    <b>Vitals:</b> BP {dmPlan.vitals.bp || "—"} · Pulse {dmPlan.vitals.pulse || "—"} · Temp {dmPlan.vitals.temp || "—"} · SpO2 {dmPlan.vitals.spo2 || "—"} · Wt {dmPlan.vitals.weight || "—"}
+                  </div>
+                </div>
+                {dmPlan.redFlags.length > 0 && (
+                  <div className="alert alert-danger"><b>Red flags:</b><ul>{dmPlan.redFlags.map((r,i) => <li key={i}>{r}</li>)}</ul></div>
+                )}
+                <div className="alert alert-success"><b>ASHVIK impression:</b> {dmPlan.suggested} <span style={{color:"var(--muted)",fontSize:12}}>(score {dmPlan.top[0]?.score || 0})</span></div>
+                <div className="section-title">Differential diagnosis</div>
+                {dmPlan.top.length === 0 ? <div className="empty">Insufficient data. Add more symptoms or clinical findings.</div> :
+                  dmPlan.top.map(c => (
+                    <div className="result-item" key={c.name}>
+                      <div style={{display:"flex",justifyContent:"space-between"}}><b>{c.name}</b><span>Score: {c.score}</span></div>
+                      <div className="score-bar"><div className="score-fill" style={{width: Math.min(100, c.score*10) + "%"}}></div></div>
+                      <div style={{fontSize:12,color:"var(--muted)",marginTop:4}}>Matched: {c.matched.join(", ") || "-"}</div>
+                      <div style={{fontSize:12,marginTop:4}}><b>Tests:</b> {(c.tests||[]).join(", ")}</div>
+                      {c.treatment && c.treatment.length > 0 && (
+                        <div style={{fontSize:12,marginTop:4}}>
+                          <b>Treatment / Rx:</b>
+                          <ul style={{margin:"2px 0 0 16px",padding:0}}>
+                            {c.treatment.map((m,i) => (
+                              <li key={i} style={{marginBottom:4}}>
+                                <b>{m[0]}</b> — {m[1]} · {m[2]} · {m[3]}{m[4] ? " · " + m[4] : ""}
+                                {BRANDS[m[0]] && <div style={{fontSize:11,color:"var(--muted)"}}>Brands: {BRANDS[m[0]]}</div>}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      <div style={{fontSize:12}}><b>Advice:</b> {c.treatmentAdvice || c.advice}</div>
+                    </div>
+                  ))}
+                <div className="section-title">Recommended tests</div>
+                <div>{dmPlan.tests.map(t => <Chip key={t} label={t} active={false} onClick={() => {}} />)}</div>
+                <div style={{marginTop:10,fontSize:12,color:"var(--muted)"}}>⚠️ ASHVIK decision-support hai. Final diagnosis, prescription aur referral decision doctor ka hai.</div>
+                <div style={{marginTop:12,display:"flex",gap:8,flexWrap:"wrap"}}>
+                  {dmPlan.tpl && <button className="btn btn-primary btn-sm" onClick={dmLoadPrescription}>Load into Prescription →</button>}
+                  <button className="btn btn-outline btn-sm" onClick={dmSaveCase} disabled={dmSaved}>{dmSaved ? "Saved ✓" : "Save Case to Patient"}</button>
+                  <button className="btn btn-outline btn-sm" onClick={dmReset}>New Case</button>
+                </div>
+              </div>
+            )}
           </>
         )}
 
